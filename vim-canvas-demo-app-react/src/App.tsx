@@ -1,39 +1,50 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
-import "./App.css";
-import { useVimOSUser } from "./hooks/useVimOSUser";
+import userSvg from "@/assets/user.svg";
+import patientSvg from "@/assets/patient.svg";
+import encounterSvg from "@/assets/encounter.svg";
+import referralSvg from "@/assets/referral.svg";
+import orderSvg from "@/assets/order.svg";
+import {
+  CollapsibleEntity,
+  CollapsibleEntityContent,
+} from "./components/ui/collapsibleEntity";
+import { useVimOSEncounter } from "./hooks/useEncounter";
+import { useVimOSOrders } from "./hooks/useOrders";
+import { useVimOSPatient } from "./hooks/usePatient";
+import { useVimOSReferral } from "./hooks/useReferral";
 
 function App() {
-  const [count, setCount] = useState(0);
-  const user = useVimOSUser();
+  const { patient } = useVimOSPatient();
+  const { encounter } = useVimOSEncounter();
+  const { referral } = useVimOSReferral();
+  const { orders } = useVimOSOrders();
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <h1>
-        Hello ${user.demographics?.firstName} ${user.demographics?.lastName}
-      </h1>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <div className="w-full h-full absolute top-0 left-0">
+      <CollapsibleEntity entityTitle="User" entityIconUrl={userSvg}>
+        <CollapsibleEntityContent>Hello</CollapsibleEntityContent>
+      </CollapsibleEntity>
+
+      {patient && (
+        <CollapsibleEntity entityTitle="Patient" entityIconUrl={patientSvg}>
+          <CollapsibleEntityContent>Hello</CollapsibleEntityContent>
+        </CollapsibleEntity>
+      )}
+      {encounter && (
+        <CollapsibleEntity entityTitle="Encounter" entityIconUrl={encounterSvg}>
+          <CollapsibleEntityContent>Hello</CollapsibleEntityContent>
+        </CollapsibleEntity>
+      )}
+      {referral && (
+        <CollapsibleEntity entityTitle="Referral" entityIconUrl={referralSvg}>
+          <CollapsibleEntityContent>Hello</CollapsibleEntityContent>
+        </CollapsibleEntity>
+      )}
+      {orders && (
+        <CollapsibleEntity entityTitle="Order" entityIconUrl={orderSvg}>
+          <CollapsibleEntityContent>Hello</CollapsibleEntityContent>
+        </CollapsibleEntity>
+      )}
+    </div>
   );
 }
 

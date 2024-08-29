@@ -5,12 +5,18 @@ settings:
   excludeLinksFromLockfile: false
 
 dependencies:
+  '@cfworker/jwt':
+    specifier: ^5.2.1
+    version: 5.2.1
   react:
     specifier: ^18.3.1
     version: 18.3.1
   react-dom:
     specifier: ^18.3.1
     version: 18.3.1(react@18.3.1)
+  vim-os-js-browser:
+    specifier: ^1.0.2
+    version: 1.0.2
 
 devDependencies:
   '@cloudflare/workers-types':
@@ -263,6 +269,12 @@ packages:
       '@babel/helper-validator-identifier': 7.24.7
       to-fast-properties: 2.0.0
     dev: true
+
+  /@cfworker/jwt@5.2.1:
+    resolution: {integrity: sha512-LjAIgcgVIBVTts2TscQCHAt7iy1rB5pySm6DMkJttN6UYwIDkuHrfj0EFg9TcgIOUuMxlaKSNhbKM5f3/myi+A==}
+    dependencies:
+      rfc4648: 1.5.3
+    dev: false
 
   /@cloudflare/kv-asset-handler@0.3.4:
     resolution: {integrity: sha512-YLPHc8yASwjNkmcDMQMY35yiWjoKAKnhUbPRszBRS0YgH+IXtsMp61j+yTcnCE3oO2DgP0U3iejLC8FTtKDC8Q==}
@@ -2231,6 +2243,10 @@ packages:
     engines: {iojs: '>=1.0.0', node: '>=0.10.0'}
     dev: true
 
+  /rfc4648@1.5.3:
+    resolution: {integrity: sha512-MjOWxM065+WswwnmNONOT+bD1nXzY9Km6u3kzvnx8F8/HXGZdz3T6e6vZJ8Q/RIMUSp/nxqjH3GwvJDy8ijeQQ==}
+    dev: false
+
   /rollup-plugin-inject@3.0.2:
     resolution: {integrity: sha512-ptg9PQwzs3orn4jkgXJ74bfs5vYz1NCZlSQMBUA0wKcGp5i5pA1AO3fOUEte8enhGUC+iapTCzEWw2jEFFUO/w==}
     deprecated: This package has been deprecated and is no longer maintained. Please use @rollup/plugin-inject.
@@ -2517,6 +2533,12 @@ packages:
       punycode: 2.3.1
     dev: true
 
+  /vim-os-js-browser@1.0.2:
+    resolution: {integrity: sha512-k9295iWdjkTBmefBynuoxqpArxxd8ek441q9lhYfq2IujroxmaBZNMkg/28gRKXaMbvfVFtT5NA+XUb4jVd7rA==}
+    dependencies:
+      zod: 3.23.8
+    dev: false
+
   /vite@5.4.2:
     resolution: {integrity: sha512-dDrQTRHp5C1fTFzcSaMxjk6vdpKvT+2/mIdE07Gw2ykehT49O0z/VHS3zZ8iV/Gh8BJJKHWOe5RjaNrW5xf/GA==}
     engines: {node: ^18.0.0 || >=20.0.0}
@@ -2686,4 +2708,3 @@ packages:
 
   /zod@3.23.8:
     resolution: {integrity: sha512-XBx9AXhXktjUqnepgTiE5flcKIYWi/rme0Eaj+5Y0lftuGBq+jyRu/md4WnuxqgP1ubdpNCsYEYPxrzVHD8d6g==}
-    dev: true

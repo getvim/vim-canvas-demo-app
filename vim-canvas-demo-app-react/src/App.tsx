@@ -11,8 +11,14 @@ import { useVimOSEncounter } from "./hooks/useEncounter";
 import { useVimOSOrders } from "./hooks/useOrders";
 import { useVimOSPatient } from "./hooks/usePatient";
 import { useVimOSReferral } from "./hooks/useReferral";
+import { Switch } from "./components/ui/switch";
+import { Label } from "./components/ui/label";
+import { Separator } from "./components/ui/separator";
+import { SessionContextContent } from "./components/SessionContextContent";
+import { useAppConfig } from "./hooks/useAppConfig";
 
 function App() {
+  const { setJsonMode } = useAppConfig();
   const { patient } = useVimOSPatient();
   const { encounter } = useVimOSEncounter();
   const { referral } = useVimOSReferral();
@@ -20,8 +26,16 @@ function App() {
 
   return (
     <div className="w-full h-full absolute top-0 left-0">
+      <div className="p-5 flex items-center space-x-2 justify-end">
+        <Label htmlFor="json-mode">JSON Mode</Label>
+        <Switch id="json-mode" onCheckedChange={setJsonMode} />
+      </div>
+      <Separator className="w-[calc(100%-20px)] ml-[10px] bg-gray-300" />
+
       <CollapsibleEntity entityTitle="User" entityIconUrl={userSvg}>
-        <CollapsibleEntityContent>Hello</CollapsibleEntityContent>
+        <CollapsibleEntityContent>
+          <SessionContextContent />
+        </CollapsibleEntityContent>
       </CollapsibleEntity>
 
       {patient && (

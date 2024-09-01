@@ -8,6 +8,7 @@ import {
   VimOSReferralProvider,
   VimOSOrdersProvider,
 } from "./hooks/providers";
+import { AppConfigProvider } from "./hooks/providers/AppConfigContext";
 
 export const AppWrapper: React.FC<React.PropsWithChildren> = ({ children }) => {
   const [vimOS, setVimOS] = useState<SDK | undefined>(undefined);
@@ -23,14 +24,16 @@ export const AppWrapper: React.FC<React.PropsWithChildren> = ({ children }) => {
     return <div>Loading VimSDK...</div>;
   }
   return (
-    <VimOSContext.Provider value={vimOS}>
-      <VimOSPatientProvider>
-        <VimOSReferralProvider>
-          <VimOSOrdersProvider>
-            <VimOSEncounterProvider>{children}</VimOSEncounterProvider>
-          </VimOSOrdersProvider>
-        </VimOSReferralProvider>
-      </VimOSPatientProvider>
-    </VimOSContext.Provider>
+    <AppConfigProvider>
+      <VimOSContext.Provider value={vimOS}>
+        <VimOSPatientProvider>
+          <VimOSReferralProvider>
+            <VimOSOrdersProvider>
+              <VimOSEncounterProvider>{children}</VimOSEncounterProvider>
+            </VimOSOrdersProvider>
+          </VimOSReferralProvider>
+        </VimOSPatientProvider>
+      </VimOSContext.Provider>
+    </AppConfigProvider>
   );
 };

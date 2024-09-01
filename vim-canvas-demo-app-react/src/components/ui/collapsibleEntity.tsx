@@ -22,14 +22,14 @@ export function CollapsibleEntity({
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <Collapsible open={isOpen} onOpenChange={setIsOpen} className="w-full">
+    <Collapsible open={isOpen} onOpenChange={setIsOpen} className="w-full mb-4">
       <CollapsibleTrigger asChild>
         <Button
           variant="ghost"
           className={cn(
-            "w-[calc(100%-16px)] h-fit flex items-center bg-white justify-between rounded-lg p-4 m-4 mx-2",
+            "w-[calc(100%-16px)] h-fit flex items-center bg-white justify-between rounded-lg p-4 m-4 mb-0 mx-2",
             {
-              "mb-0 rounded-b-none": isOpen,
+              "rounded-b-none": isOpen,
             }
           )}
         >
@@ -53,8 +53,8 @@ export function CollapsibleEntity({
 
 export const CollapsibleEntityContent = ({ children }: PropsWithChildren) => {
   return (
-    <CollapsibleContent>
-      <div className="w-[calc(100%-16px)] flex items-center bg-white justify-between rounded-b-lg px-7 pt-1 pb-5 mb-4 mx-2">
+    <CollapsibleContent className="animateCollapsibleContent">
+      <div className="w-[calc(100%-16px)] flex items-center bg-white justify-between rounded-b-lg px-7 pt-1 pb-5 mx-2">
         {children}
       </div>
     </CollapsibleContent>

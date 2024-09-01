@@ -1,21 +1,22 @@
-import userSvg from "@/assets/user.svg";
-import patientSvg from "@/assets/patient.svg";
 import encounterSvg from "@/assets/encounter.svg";
-import referralSvg from "@/assets/referral.svg";
 import orderSvg from "@/assets/order.svg";
+import patientSvg from "@/assets/patient.svg";
+import referralSvg from "@/assets/referral.svg";
+import userSvg from "@/assets/user.svg";
+import { PatientContent } from "./components/PatientContent";
+import { SessionContextContent } from "./components/SessionContextContent";
 import {
   CollapsibleEntity,
   CollapsibleEntityContent,
 } from "./components/ui/collapsibleEntity";
+import { Label } from "./components/ui/label";
+import { Separator } from "./components/ui/separator";
+import { Switch } from "./components/ui/switch";
+import { useAppConfig } from "./hooks/useAppConfig";
 import { useVimOSEncounter } from "./hooks/useEncounter";
 import { useVimOSOrders } from "./hooks/useOrders";
 import { useVimOSPatient } from "./hooks/usePatient";
 import { useVimOSReferral } from "./hooks/useReferral";
-import { Switch } from "./components/ui/switch";
-import { Label } from "./components/ui/label";
-import { Separator } from "./components/ui/separator";
-import { SessionContextContent } from "./components/SessionContextContent";
-import { useAppConfig } from "./hooks/useAppConfig";
 
 function App() {
   const { setJsonMode } = useAppConfig();
@@ -40,7 +41,9 @@ function App() {
 
       {patient && (
         <CollapsibleEntity entityTitle="Patient" entityIconUrl={patientSvg}>
-          <CollapsibleEntityContent>Hello</CollapsibleEntityContent>
+          <CollapsibleEntityContent>
+            <PatientContent />
+          </CollapsibleEntityContent>
         </CollapsibleEntity>
       )}
       {encounter && (

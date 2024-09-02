@@ -2,10 +2,24 @@ import { useVimOsContext } from "@/hooks/useVimOsContext";
 import { Separator } from "./ui/separator";
 import { useAppConfig } from "@/hooks/useAppConfig";
 import { JSONView } from "./ui/jsonView";
+import { useEffect, useState } from "react";
+import { SessionContext } from "vim-os-js-browser/types";
 
 export const SessionContextContent = () => {
   const { jsonMode } = useAppConfig();
   const { sessionContext } = useVimOsContext();
+
+  const [idToken, setIdToken] = useState<
+    SessionContext.GetIdTokenResponse["idToken"] | undefined
+  >();
+
+  useEffect(() => {
+    if (sessionContext) {
+      (async () => {
+        setIdToken((await sessionContext.getIdToken())?.idToken);
+      })();
+    }
+  }, [sessionContext, setIdToken]);
 
   return (
     <div className="w-full">
@@ -13,7 +27,7 @@ export const SessionContextContent = () => {
         <JSONView value={sessionContext} />
       ) : (
         <>
-          <h2 className="my-3 text-sm font-bold">Identifier</h2>
+          <h2 className="my-3 text-sm font-bold">Identifiers</h2>
           <div className="mb-2">
             <div className="mb-4">
               <h3 className="text-xs mt-2 font-semibold">EHR username</h3>
@@ -32,6 +46,16 @@ export const SessionContextContent = () => {
               <p className="font-thin text-xs">
                 {sessionContext?.user?.identifiers?.vimUserID ?? "--"}
               </p>
+            </div>
+            <div className="mb-4">
+              <h3 className="text-xs mt-2 font-semibold">Session ID</h3>
+              <p className="font-thin text-xs">
+                {sessionContext?.sessionId ?? "--"}
+              </p>
+            </div>
+            <div className="mb-4">
+              <h3 className="text-xs mt-2 font-semibold">ID Token</h3>
+              <p className="font-thin text-xs  truncate">{idToken ?? "--"}</p>
             </div>
           </div>
           <Separator className="mb-1" />

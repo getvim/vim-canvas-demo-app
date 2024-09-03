@@ -1,0 +1,130 @@
+[
+  {
+    "id": "3470793422",
+    "label": "Robert Carlson",
+    "ehrProviderId": "51fef7b6-696e-4d72-a6b0-e547d680fe25",
+    "npi": "3470793422",
+    "demographics": {
+      "firstName": "Robert",
+      "lastName": "Carlson",
+      "middleName": "H"
+    },
+    "facility": {
+      "facilityEhrId": "6",
+      "phoneNumber": {
+        "number": "506-587-8352",
+        "countryDialingCode": "+1"
+      },
+      "name": "Raynor, DuBuque and Thiel",
+      "address": {
+        "address1": "201 N PINE ISLAND RD, STE 1",
+        "zipCode": "33324",
+        "state": "FL",
+        "city": "FORT LAUDERDALE"
+      }
+    },
+    "contact_info": {
+      "mobilePhoneNumber": "790-917-8346",
+      "email": "robert@getvim.com"
+    },
+    "specialty": [
+      "Cardilogist"
+    ]
+  },
+  {
+    "id": "5317694401",
+    "label": "Christopher Gray",
+    "ehrProviderId": "72f72e98-1744-469c-a747-f3dadf18b27f",
+    "npi": "5317694401",
+    "demographics": {
+      "firstName": "Christopher",
+      "lastName": "Gray",
+      "middleName": "M"
+    },
+    "facility": {
+      "facilityEhrId": "7",
+      "phoneNumber": {
+        "number": "984-849-0689",
+        "countryDialingCode": "+1"
+      },
+      "name": "Larkin Inc",
+      "address": {
+        "address1": "2577 Wunsch Roads Apt. 735",
+        "zipCode": "60482",
+        "state": "Nevada",
+        "city": "Houston"
+      }
+    },
+    "contact_info": {
+      "mobilePhoneNumber": "202-960-6384",
+      "email": "christopher@getvim.com"
+    },
+    "specialty": [
+      "Chiropractor"
+    ]
+  },
+  {
+    "id": "1031033311",
+    "label": "Michele Lagarde-May",
+    "ehrProviderId": "4999cb24-ad8e-44a8-b129-751c103bfe0e",
+    "npi": "1031033311",
+    "demographics": {
+      "firstName": "Michele",
+      "lastName": "Lagarde-May",
+      "middleName": "K"
+    },
+    "facility": {
+      "facilityEhrId": "8",
+      "phoneNumber": {
+        "number": "845-599-5335",
+        "countryDialingCode": "+1"
+      },
+      "name": "Labadie, Wintheiser and Lehner",
+      "address": {
+        "address1": "7625 Jess Plains Apt. 115",
+        "zipCode": "15184",
+        "state": "Ohio",
+        "city": "Cartwrightville"
+      }
+    },
+    "contact_info": {
+      "mobilePhoneNumber": "302-509-3000",
+      "email": "michele@getvim.com"
+    },
+    "specialty": [
+      "Acupuncturist"
+    ]
+  },
+  {
+    "id": "5216586043",
+    "label": "Gabou Mendy",
+    "ehrProviderId": "d991ee0a-19c2-4a22-b96e-7904f3c684a4",
+    "npi": "5216586043",
+    "demographics": {
+      "firstName": "Gabou",
+      "lastName": "Mendy",
+      "middleName": "T"
+    },
+    "facility": {
+      "facilityEhrId": "9",
+      "phoneNumber": {
+        "number": "751-688-8289",
+        "countryDialingCode": "+1"
+      },
+      "name": "Kessler - Terry",
+      "address": {
+        "address1": "713 Nicolas Hills Apt. 561",
+        "zipCode": "05611-1017",
+        "state": "Indiana",
+        "city": "Kierahaven"
+      }
+    },
+    "contact_info": {
+      "mobilePhoneNumber": "573-732-9778",
+      "email": "gabou@getvim.com"
+    },
+    "specialty": [
+      "Mental health counselor"
+    ]
+  }
+]

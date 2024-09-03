@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { SDK } from "vim-os-js-browser/types";
 import { loadSdk } from "vim-os-js-browser";
+import { Toaster } from "@/components/ui/toaster";
 import {
   VimOSContext,
   VimOSPatientProvider,
   VimOSEncounterProvider,
   VimOSReferralProvider,
   VimOSOrdersProvider,
-} from "./hooks/providers";
-import { AppConfigProvider } from "./hooks/providers/AppConfigContext";
+} from "@/hooks/providers";
+import { AppConfigProvider } from "@/hooks/providers/AppConfigContext";
 
 export const AppWrapper: React.FC<React.PropsWithChildren> = ({ children }) => {
   const [vimOS, setVimOS] = useState<SDK | undefined>(undefined);
@@ -25,6 +26,7 @@ export const AppWrapper: React.FC<React.PropsWithChildren> = ({ children }) => {
   }
   return (
     <AppConfigProvider>
+      <Toaster />
       <VimOSContext.Provider value={vimOS}>
         <VimOSPatientProvider>
           <VimOSReferralProvider>

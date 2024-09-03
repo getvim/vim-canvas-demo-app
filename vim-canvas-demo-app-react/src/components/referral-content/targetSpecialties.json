@@ -1,0 +1,3986 @@
+[
+    {
+        "id": "Anesthesiology",
+        "type": "specialty",
+        "label": "Anesthesiology",
+        "description": ""
+    },
+    {
+        "id": "Audiologists",
+        "type": "specialty",
+        "label": "Audiologists",
+        "description": ""
+    },
+    {
+        "id": "Cardiology",
+        "type": "specialty",
+        "label": "Cardiology",
+        "description": ""
+    },
+    {
+        "id": "Cardiothoracic surgeon",
+        "type": "specialty",
+        "label": "Cardiothoracic surgeon",
+        "description": ""
+    },
+    {
+        "id": "Cardiovascular Disease",
+        "type": "specialty",
+        "label": "Cardiovascular Disease",
+        "description": ""
+    },
+    {
+        "id": "Certified Clinical Nurse Specialist",
+        "type": "specialty",
+        "label": "Certified Clinical Nurse Specialist",
+        "description": ""
+    },
+    {
+        "id": "Certified Nurse Midwife",
+        "type": "specialty",
+        "label": "Certified Nurse Midwife",
+        "description": ""
+    },
+    {
+        "id": "Certified Psychologist",
+        "type": "specialty",
+        "label": "Certified Psychologist",
+        "description": ""
+    },
+    {
+        "id": "Certified Registered Nurse anesthesiologist",
+        "type": "specialty",
+        "label": "Certified Registered Nurse anesthesiologist",
+        "description": ""
+    },
+    {
+        "id": "Chemical pathologist",
+        "type": "specialty",
+        "label": "Chemical pathologist",
+        "description": ""
+    },
+    {
+        "id": "Child and Adolescent Psychiatry",
+        "type": "specialty",
+        "label": "Child and Adolescent Psychiatry",
+        "description": ""
+    },
+    {
+        "id": "Chiropractor",
+        "type": "specialty",
+        "label": "Chiropractor",
+        "description": ""
+    },
+    {
+        "id": "Clinical allergist",
+        "type": "specialty",
+        "label": "Clinical allergist",
+        "description": ""
+    },
+    {
+        "id": "Clinical cytogeneticist",
+        "type": "specialty",
+        "label": "Clinical cytogeneticist",
+        "description": ""
+    },
+    {
+        "id": "Clinical geneticist",
+        "type": "specialty",
+        "label": "Clinical geneticist",
+        "description": ""
+    },
+    {
+        "id": "Clinical hematology",
+        "type": "specialty",
+        "label": "Clinical hematology",
+        "description": ""
+    },
+    {
+        "id": "Clinical immunologist",
+        "type": "specialty",
+        "label": "Clinical immunologist",
+        "description": ""
+    },
+    {
+        "id": "Clinical molecular geneticist",
+        "type": "specialty",
+        "label": "Clinical molecular geneticist",
+        "description": ""
+    },
+    {
+        "id": "Clinical neurophysiologist",
+        "type": "specialty",
+        "label": "Clinical neurophysiologist",
+        "description": ""
+    },
+    {
+        "id": "Clinical nurse specialist",
+        "type": "specialty",
+        "label": "Clinical nurse specialist",
+        "description": ""
+    },
+    {
+        "id": "Clinical physiologist",
+        "type": "specialty",
+        "label": "Clinical physiologist",
+        "description": ""
+    },
+    {
+        "id": "Clinical psychologist",
+        "type": "specialty",
+        "label": "Clinical psychologist",
+        "description": ""
+    },
+    {
+        "id": "Clinical social worker",
+        "type": "specialty",
+        "label": "Clinical social worker",
+        "description": ""
+    },
+    {
+        "id": "Colorectal Surgery",
+        "type": "specialty",
+        "label": "Colorectal Surgery",
+        "description": ""
+    },
+    {
+        "id": "Community child health doctor",
+        "type": "specialty",
+        "label": "Community child health doctor",
+        "description": ""
+    },
+    {
+        "id": "Community pediatrician",
+        "type": "specialty",
+        "label": "Community pediatrician",
+        "description": ""
+    },
+    {
+        "id": "Breast surgeon",
+        "type": "specialty",
+        "label": "Breast surgeon",
+        "description": "Nurse Practitioner - Plastic Surgery"
+    },
+    {
+        "id": "Community-based speech and language therapist",
+        "type": "specialty",
+        "label": "Community-based speech and language therapist",
+        "description": "Speech-Language Pathology"
+    },
+    {
+        "id": "Hospital-based speech and language therapist",
+        "type": "specialty",
+        "label": "Hospital-based speech and language therapist",
+        "description": "Speech-Language Pathology"
+    },
+    {
+        "id": "Hyperbaric medicine",
+        "type": "specialty",
+        "label": "Hyperbaric medicine",
+        "description": "Preventive Medicine - Undersea and Hyperbaric Medicine"
+    },
+    {
+        "id": "Neuropathologist",
+        "type": "specialty",
+        "label": "Neuropathologist",
+        "description": "Pathology - Neuropathology"
+    },
+    {
+        "id": "Portable x-ray supplier",
+        "type": "specialty",
+        "label": "Portable x-ray supplier",
+        "description": "Portable X-ray and/or Other Portable Diagnostic Imaging Supplier"
+    },
+    {
+        "id": "Proctology",
+        "type": "specialty",
+        "label": "Proctology",
+        "description": "General Surgery - Colon & Rectal Surgery"
+    },
+    {
+        "id": "Restorative dentist",
+        "type": "specialty",
+        "label": "Restorative dentist",
+        "description": "Dentistry"
+    },
+    {
+        "id": "Speech and language therapist",
+        "type": "specialty",
+        "label": "Speech and language therapist",
+        "description": "Clinic/Center - Hearing and Speech"
+    },
+    {
+        "id": "Licensed practical nurse",
+        "type": "specialty",
+        "label": "Licensed practical nurse",
+        "description": "Nurse Practitioner"
+    },
+    {
+        "id": "Nurse practitioner",
+        "type": "specialty",
+        "label": "Nurse practitioner",
+        "description": "Nurse Practitioner"
+    },
+    {
+        "id": "Registered nurse",
+        "type": "specialty",
+        "label": "Registered nurse",
+        "description": "Nurse Practitioner"
+    },
+    {
+        "id": "Hospice and palliative medicine",
+        "type": "specialty",
+        "label": "Hospice and palliative medicine",
+        "description": "Physical Medicine & Rehabilitation - Hospice and Palliative Medicine"
+    },
+    {
+        "id": "Ophthalmology",
+        "type": "specialty",
+        "label": "Ophthalmology",
+        "description": "Ophthalmology"
+    },
+    {
+        "id": "Accident and Emergency doctor",
+        "type": "specialty",
+        "label": "Accident and Emergency doctor",
+        "description": ""
+    },
+    {
+        "id": "Acupuncturist",
+        "type": "specialty",
+        "label": "Acupuncturist",
+        "description": ""
+    },
+    {
+        "id": "Addiction Medicine",
+        "type": "specialty",
+        "label": "Addiction Medicine",
+        "description": ""
+    },
+    {
+        "id": "Allergy/Immunology",
+        "type": "specialty",
+        "label": "Allergy/Immunology",
+        "description": ""
+    },
+    {
+        "id": "Palliative care physician",
+        "type": "specialty",
+        "label": "Palliative care physician",
+        "description": "Physical Medicine & Rehabilitation - Hospice and Palliative Medicine"
+    },
+    {
+        "id": "Terminal care consult",
+        "type": "specialty",
+        "label": "Terminal care consult",
+        "description": "Physical Medicine & Rehabilitation - Hospice and Palliative Medicine"
+    },
+    {
+        "id": "Mental handicap psychiatry service",
+        "type": "specialty",
+        "label": "Mental handicap psychiatry service",
+        "description": "Psychiatry"
+    },
+    {
+        "id": "Hospital-based occupational therapist",
+        "type": "specialty",
+        "label": "Hospital-based occupational therapist",
+        "description": "Occupational Therapy"
+    },
+    {
+        "id": "Primary care",
+        "type": "specialty",
+        "label": "Primary care",
+        "description": "Family Medicine"
+    },
+    {
+        "id": "Sport medicine",
+        "type": "specialty",
+        "label": "Sport medicine",
+        "description": "Family Medicine - Sports Medicine"
+    },
+    {
+        "id": "General pathologist",
+        "type": "specialty",
+        "label": "General pathologist",
+        "description": "Pathology"
+    },
+    {
+        "id": "Pathologic anatomy; clinical pathology",
+        "type": "specialty",
+        "label": "Pathologic anatomy; clinical pathology",
+        "description": "Pathology"
+    },
+    {
+        "id": "Pathology",
+        "type": "specialty",
+        "label": "Pathology",
+        "description": "Pathology"
+    },
+    {
+        "id": "Dental care",
+        "type": "specialty",
+        "label": "Dental care",
+        "description": "Dentistry"
+    },
+    {
+        "id": "Dental general practice",
+        "type": "specialty",
+        "label": "Dental general practice",
+        "description": "Dentistry"
+    },
+    {
+        "id": "Dental surgeon",
+        "type": "specialty",
+        "label": "Dental surgeon",
+        "description": "Dentistry - Oral and Maxillofacial Surgery"
+    },
+    {
+        "id": "Denturist",
+        "type": "specialty",
+        "label": "Denturist",
+        "description": "Dentistry"
+    },
+    {
+        "id": "Endodontics",
+        "type": "specialty",
+        "label": "Endodontics",
+        "description": "Dentistry - Endodontics"
+    },
+    {
+        "id": "Mental health counseling",
+        "type": "specialty",
+        "label": "Mental health counseling",
+        "description": "Psychology"
+    },
+    {
+        "id": "Mental health counseling service",
+        "type": "specialty",
+        "label": "Mental health counseling service",
+        "description": "Psychology"
+    },
+    {
+        "id": "Mental health counselor",
+        "type": "specialty",
+        "label": "Mental health counselor",
+        "description": "Psychology"
+    },
+    {
+        "id": "Mental health team",
+        "type": "specialty",
+        "label": "Mental health team",
+        "description": "Psychology"
+    },
+    {
+        "id": "Mental health worker",
+        "type": "specialty",
+        "label": "Mental health worker",
+        "description": "Psychology"
+    },
+    {
+        "id": "Community-based dietitian",
+        "type": "specialty",
+        "label": "Community-based dietitian",
+        "description": "Dietary"
+    },
+    {
+        "id": "Dietitian",
+        "type": "specialty",
+        "label": "Dietitian",
+        "description": "Dietary"
+    },
+    {
+        "id": "Home registered dietitian",
+        "type": "specialty",
+        "label": "Home registered dietitian",
+        "description": "Dietary"
+    },
+    {
+        "id": "Hospital-based dietitian",
+        "type": "specialty",
+        "label": "Hospital-based dietitian",
+        "description": "Dietary"
+    },
+    {
+        "id": "Nutrition",
+        "type": "specialty",
+        "label": "Nutrition",
+        "description": "Nutrition"
+    },
+    {
+        "id": "Optometrist",
+        "type": "specialty",
+        "label": "Optometrist",
+        "description": "Optometry"
+    },
+    {
+        "id": "Pain medicine",
+        "type": "specialty",
+        "label": "Pain medicine",
+        "description": "Pain Medicine"
+    },
+    {
+        "id": "Physical medicine",
+        "type": "specialty",
+        "label": "Physical medicine",
+        "description": "Physical Medicine & Rehabilitation"
+    },
+    {
+        "id": "Community-based physiotherapist",
+        "type": "specialty",
+        "label": "Community-based physiotherapist",
+        "description": "Physical Therapy"
+    },
+    {
+        "id": "Community-based podiatrist",
+        "type": "specialty",
+        "label": "Community-based podiatrist",
+        "description": "Podiatry"
+    },
+    {
+        "id": "Community-based podiatry service",
+        "type": "specialty",
+        "label": "Community-based podiatry service",
+        "description": "Podiatry"
+    },
+    {
+        "id": "Dme",
+        "type": "specialty",
+        "label": "Dme",
+        "description": "Durable Medical Equipment & Medical Supplies"
+    },
+    {
+        "id": "Emergency medicine",
+        "type": "specialty",
+        "label": "Emergency medicine",
+        "description": "Emergency Medicine"
+    },
+    {
+        "id": "Geneticist",
+        "type": "specialty",
+        "label": "Geneticist",
+        "description": "Medical Genetics"
+    },
+    {
+        "id": "Hospital-based physiotherapist",
+        "type": "specialty",
+        "label": "Hospital-based physiotherapist",
+        "description": "Physical Therapy"
+    },
+    {
+        "id": "Hospital-based podiatrist",
+        "type": "specialty",
+        "label": "Hospital-based podiatrist",
+        "description": "Podiatry"
+    },
+    {
+        "id": "Hospital-based podiatry service",
+        "type": "specialty",
+        "label": "Hospital-based podiatry service",
+        "description": "Podiatry"
+    },
+    {
+        "id": "Medical genetics",
+        "type": "specialty",
+        "label": "Medical genetics",
+        "description": "Medical Genetics"
+    },
+    {
+        "id": "Physiotherapy",
+        "type": "specialty",
+        "label": "Physiotherapy",
+        "description": "Physical Therapy"
+    },
+    {
+        "id": "Podiatry",
+        "type": "specialty",
+        "label": "Podiatry",
+        "description": "Podiatry"
+    },
+    {
+        "id": "Podiatry - surgical chiropody",
+        "type": "specialty",
+        "label": "Podiatry - surgical chiropody",
+        "description": "Podiatry - Foot Surgery"
+    },
+    {
+        "id": "Podiatry service",
+        "type": "specialty",
+        "label": "Podiatry service",
+        "description": "Podiatry"
+    },
+    {
+        "id": "Private stage registered podiatry service",
+        "type": "specialty",
+        "label": "Private stage registered podiatry service",
+        "description": "Podiatry"
+    },
+    {
+        "id": "Radiology",
+        "type": "specialty",
+        "label": "Radiology",
+        "description": "Radiology"
+    },
+    {
+        "id": "Roentgenology, radiology (osteopaths only)",
+        "type": "specialty",
+        "label": "Roentgenology, radiology (osteopaths only)",
+        "description": "Osteopathic Medicine"
+    },
+    {
+        "id": "Diagnostic radiology",
+        "type": "specialty",
+        "label": "Diagnostic radiology",
+        "description": "Radiology"
+    },
+    {
+        "id": "Diagnostic x-ray",
+        "type": "specialty",
+        "label": "Diagnostic x-ray",
+        "description": "Radiology"
+    },
+    {
+        "id": "Geriatric medicine",
+        "type": "specialty",
+        "label": "Geriatric medicine",
+        "description": "Family Medicine - Geriatric Medicine"
+    },
+    {
+        "id": "Immunology",
+        "type": "specialty",
+        "label": "Immunology",
+        "description": "Allergy & Immunology"
+    },
+    {
+        "id": "Independent occ. therapist",
+        "type": "specialty",
+        "label": "Independent occ. therapist",
+        "description": "Occupational Therapy"
+    },
+    {
+        "id": "Medical ophthalmologist",
+        "type": "specialty",
+        "label": "Medical ophthalmologist",
+        "description": "Ophthalmology"
+    },
+    {
+        "id": "Neuropsychiatry",
+        "type": "specialty",
+        "label": "Neuropsychiatry",
+        "description": "Psychiatry - Neuropsychiatry"
+    },
+    {
+        "id": "Ob/neo natal",
+        "type": "specialty",
+        "label": "Ob/neo natal",
+        "description": "Pediatrics - Neonatology-Perinatology"
+    },
+    {
+        "id": "Ophthalmology, cataracts",
+        "type": "specialty",
+        "label": "Ophthalmology, cataracts",
+        "description": "Ophthalmology"
+    },
+    {
+        "id": "Physical therapist",
+        "type": "specialty",
+        "label": "Physical therapist",
+        "description": "Physical Therapy"
+    },
+    {
+        "id": "Psychiatrist for the elderly mentally ill",
+        "type": "specialty",
+        "label": "Psychiatrist for the elderly mentally ill",
+        "description": "Psychiatry - Geriatric Psychiatry"
+    },
+    {
+        "id": "Sleep medicine",
+        "type": "specialty",
+        "label": "Sleep medicine",
+        "description": "Family Medicine - Sleep Medicine"
+    },
+    {
+        "id": "Forensic psychiatry",
+        "type": "specialty",
+        "label": "Forensic psychiatry",
+        "description": "Psychiatry"
+    },
+    {
+        "id": "Gynecologist",
+        "type": "specialty",
+        "label": "Gynecologist",
+        "description": "Obstetrics & Gynecology"
+    },
+    {
+        "id": "Gynecology (osteopaths only)",
+        "type": "specialty",
+        "label": "Gynecology (osteopaths only)",
+        "description": "Obstetrics & Gynecology"
+    },
+    {
+        "id": "Liaison psychiatrist",
+        "type": "specialty",
+        "label": "Liaison psychiatrist",
+        "description": "Psychiatry"
+    },
+    {
+        "id": "Liaison psychiatry service",
+        "type": "specialty",
+        "label": "Liaison psychiatry service",
+        "description": "Psychiatry"
+    },
+    {
+        "id": "Neonatal-perinatal medicine",
+        "type": "specialty",
+        "label": "Neonatal-perinatal medicine",
+        "description": "Pediatrics - Neonatology-Perinatology"
+    },
+    {
+        "id": "Nuclear medicine",
+        "type": "specialty",
+        "label": "Nuclear medicine",
+        "description": "Nuclear Medicine"
+    },
+    {
+        "id": "Nurse midwife",
+        "type": "specialty",
+        "label": "Nurse midwife",
+        "description": "Midwife"
+    },
+    {
+        "id": "Ob - gynecology",
+        "type": "specialty",
+        "label": "Ob - gynecology",
+        "description": "Obstetrics & Gynecology"
+    },
+    {
+        "id": "Obstetrician",
+        "type": "specialty",
+        "label": "Obstetrician",
+        "description": "Obstetrics & Gynecology - Obstetrics"
+    },
+    {
+        "id": "Obstetrician and gynecologist",
+        "type": "specialty",
+        "label": "Obstetrician and gynecologist",
+        "description": "Obstetrics & Gynecology"
+    },
+    {
+        "id": "Physical medicine and rehabilitation",
+        "type": "specialty",
+        "label": "Physical medicine and rehabilitation",
+        "description": "Physical Medicine & Rehabilitation"
+    },
+    {
+        "id": "Plastic and reconstructive surgery",
+        "type": "specialty",
+        "label": "Plastic and reconstructive surgery",
+        "description": "Plastic Surgery - Reconstructive Surgery"
+    },
+    {
+        "id": "Preventive medicine",
+        "type": "specialty",
+        "label": "Preventive medicine",
+        "description": "Preventive Medicine"
+    },
+    {
+        "id": "Psychiatric aftercare",
+        "type": "specialty",
+        "label": "Psychiatric aftercare",
+        "description": "Psychiatry"
+    },
+    {
+        "id": "Psychiatry",
+        "type": "specialty",
+        "label": "Psychiatry",
+        "description": "Psychiatry"
+    },
+    {
+        "id": "Psychiatry service",
+        "type": "specialty",
+        "label": "Psychiatry service",
+        "description": "Psychiatry"
+    },
+    {
+        "id": "Rehabilitation physician",
+        "type": "specialty",
+        "label": "Rehabilitation physician",
+        "description": "Physical Medicine & Rehabilitation"
+    },
+    {
+        "id": "Rehabilitation psychiatrist",
+        "type": "specialty",
+        "label": "Rehabilitation psychiatrist",
+        "description": "Psychology - Rehabilitation"
+    },
+    {
+        "id": "Transplant surgeon",
+        "type": "specialty",
+        "label": "Transplant surgeon",
+        "description": "Transplant Surgery"
+    },
+    {
+        "id": "Adult intensive care specialist",
+        "type": "specialty",
+        "label": "Adult intensive care specialist",
+        "description": "Internal Medicine - Critical Care"
+    },
+    {
+        "id": "Case manager",
+        "type": "specialty",
+        "label": "Case manager",
+        "description": "Case Management"
+    },
+    {
+        "id": "Community-based occupational therapist",
+        "type": "specialty",
+        "label": "Community-based occupational therapist",
+        "description": "Occupational Therapy"
+    },
+    {
+        "id": "Critical care (intensivists)",
+        "type": "specialty",
+        "label": "Critical care (intensivists)",
+        "description": "Internal Medicine - Critical Care"
+    },
+    {
+        "id": "Family medicine",
+        "type": "specialty",
+        "label": "Family medicine",
+        "description": "Family Medicine"
+    },
+    {
+        "id": "Family practice",
+        "type": "specialty",
+        "label": "Family practice",
+        "description": "Family Medicine"
+    },
+    {
+        "id": "Gastrointestinal surgeon",
+        "type": "specialty",
+        "label": "Gastrointestinal surgeon",
+        "description": "General Surgery"
+    },
+    {
+        "id": "General practice",
+        "type": "specialty",
+        "label": "General practice",
+        "description": "Internal Medicine"
+    },
+    {
+        "id": "General physician",
+        "type": "specialty",
+        "label": "General physician",
+        "description": "Internal Medicine"
+    },
+    {
+        "id": "General practitioner",
+        "type": "specialty",
+        "label": "General practitioner",
+        "description": "Internal Medicine"
+    },
+    {
+        "id": "Hematology",
+        "type": "specialty",
+        "label": "Hematology",
+        "description": "Hematology & Oncology - Hematology"
+    },
+    {
+        "id": "Hematology/oncology",
+        "type": "specialty",
+        "label": "Hematology/oncology",
+        "description": "Hematology & Oncology"
+    },
+    {
+        "id": "Independent - billing audiologist",
+        "type": "specialty",
+        "label": "Independent - billing audiologist",
+        "description": "Audiology"
+    },
+    {
+        "id": "Independent - billing psychologist",
+        "type": "specialty",
+        "label": "Independent - billing psychologist",
+        "description": "Psychology"
+    },
+    {
+        "id": "Intensive care specialist",
+        "type": "specialty",
+        "label": "Intensive care specialist",
+        "description": "Internal Medicine - Critical Care"
+    },
+    {
+        "id": "Internal medicine",
+        "type": "specialty",
+        "label": "Internal medicine",
+        "description": "Internal Medicine"
+    },
+    {
+        "id": "Licensed psychologist",
+        "type": "specialty",
+        "label": "Licensed psychologist",
+        "description": "Psychology"
+    },
+    {
+        "id": "Licensed psychologist (billing independently)",
+        "type": "specialty",
+        "label": "Licensed psychologist (billing independently)",
+        "description": "Psychology"
+    },
+    {
+        "id": "Mammography screening center",
+        "type": "specialty",
+        "label": "Mammography screening center",
+        "description": "Clinic/Center - Radiology, Mammography"
+    },
+    {
+        "id": "Medical supply company with certified orthotist",
+        "type": "specialty",
+        "label": "Medical supply company with certified orthotist",
+        "description": "Prosthetic/Orthotic Supplier"
+    },
+    {
+        "id": "Obstetrics",
+        "type": "specialty",
+        "label": "Obstetrics",
+        "description": "Obstetrics & Gynecology - Obstetrics"
+    },
+    {
+        "id": "Obstetrics (osteopaths only)",
+        "type": "specialty",
+        "label": "Obstetrics (osteopaths only)",
+        "description": "Obstetrics & Gynecology - Obstetrics"
+    },
+    {
+        "id": "Occupational medicine",
+        "type": "specialty",
+        "label": "Occupational medicine",
+        "description": "Occupational Therapy"
+    },
+    {
+        "id": "Occupational therapy",
+        "type": "specialty",
+        "label": "Occupational therapy",
+        "description": "Occupational Therapy"
+    },
+    {
+        "id": "Pediatric hematology- oncology",
+        "type": "specialty",
+        "label": "Pediatric hematology- oncology",
+        "description": "Pediatrics - Hematology & Oncology"
+    },
+    {
+        "id": "Pediatric surgery",
+        "type": "specialty",
+        "label": "Pediatric surgery",
+        "description": "General Surgery - Pediatrics"
+    },
+    {
+        "id": "Pediatric intensive care specialist",
+        "type": "specialty",
+        "label": "Pediatric intensive care specialist",
+        "description": "Pediatrics - Critical Care"
+    },
+    {
+        "id": "Pediatric oncologist",
+        "type": "specialty",
+        "label": "Pediatric oncologist",
+        "description": "Pediatrics - Hematology & Oncology"
+    },
+    {
+        "id": "Physician",
+        "type": "specialty",
+        "label": "Physician",
+        "description": "Family Medicine"
+    },
+    {
+        "id": "Physician assistant",
+        "type": "specialty",
+        "label": "Physician assistant",
+        "description": "Physician Assistant"
+    },
+    {
+        "id": "Psychologist",
+        "type": "specialty",
+        "label": "Psychologist",
+        "description": "Psychology"
+    },
+    {
+        "id": "Social services department occupational therapist",
+        "type": "specialty",
+        "label": "Social services department occupational therapist",
+        "description": "Occupational Therapy"
+    },
+    {
+        "id": "Trauma surgeon",
+        "type": "specialty",
+        "label": "Trauma surgeon",
+        "description": "General Surgery - Trauma Surgery"
+    },
+    {
+        "id": "Upper gastrointestinal surgeon",
+        "type": "specialty",
+        "label": "Upper gastrointestinal surgeon",
+        "description": "General Surgery"
+    },
+    {
+        "id": "Anesthetist",
+        "type": "specialty",
+        "label": "Anesthetist",
+        "description": "Anesthesiology"
+    },
+    {
+        "id": "Blood transfusion doctor",
+        "type": "specialty",
+        "label": "Blood transfusion doctor",
+        "description": "Hematology & Oncology - Hematology"
+    },
+    {
+        "id": "Burns referral",
+        "type": "specialty",
+        "label": "Burns referral",
+        "description": "Plastic Surgery"
+    },
+    {
+        "id": "Chest physician",
+        "type": "specialty",
+        "label": "Chest physician",
+        "description": "Pulmonology"
+    },
+    {
+        "id": "Diabetologist",
+        "type": "specialty",
+        "label": "Diabetologist",
+        "description": "Endocrinology"
+    },
+    {
+        "id": "Ent",
+        "type": "specialty",
+        "label": "Ent",
+        "description": "Otolaryngology"
+    },
+    {
+        "id": "Ear, nose and throat surgeon",
+        "type": "specialty",
+        "label": "Ear, nose and throat surgeon",
+        "description": "Otolaryngology"
+    },
+    {
+        "id": "Genitourinary physician",
+        "type": "specialty",
+        "label": "Genitourinary physician",
+        "description": "Urology - Female Urogynecology Pelvic and Reconstructive Surgery"
+    },
+    {
+        "id": "Hepatology",
+        "type": "specialty",
+        "label": "Hepatology",
+        "description": "Gastroenterology - Hepatology"
+    },
+    {
+        "id": "Legal medicine",
+        "type": "specialty",
+        "label": "Legal medicine",
+        "description": "Legal Medicine"
+    },
+    {
+        "id": "Licensed clinical social worker",
+        "type": "specialty",
+        "label": "Licensed clinical social worker",
+        "description": "Social Worker"
+    },
+    {
+        "id": "Licensed massage therapist",
+        "type": "specialty",
+        "label": "Licensed massage therapist",
+        "description": "Massage Therapy"
+    },
+    {
+        "id": "Medical oncology",
+        "type": "specialty",
+        "label": "Medical oncology",
+        "description": "Hematology & Oncology - Oncology"
+    },
+    {
+        "id": "Medical toxicology",
+        "type": "specialty",
+        "label": "Medical toxicology",
+        "description": "Preventive Medicine - Medical Toxicology"
+    },
+    {
+        "id": "Medical microbiologist",
+        "type": "specialty",
+        "label": "Medical microbiologist",
+        "description": "Pathology"
+    },
+    {
+        "id": "Medical supply company with certified prosthetist",
+        "type": "specialty",
+        "label": "Medical supply company with certified prosthetist",
+        "description": "Prosthetic/Orthotic Supplier"
+    },
+    {
+        "id": "Oncology",
+        "type": "specialty",
+        "label": "Oncology",
+        "description": "Hematology & Oncology - Oncology"
+    },
+    {
+        "id": "Oral surgery",
+        "type": "specialty",
+        "label": "Oral surgery",
+        "description": "Oral Maxillofacial Surgery"
+    },
+    {
+        "id": "Orthopedic surgery",
+        "type": "specialty",
+        "label": "Orthopedic surgery",
+        "description": "Orthopedic Surgery"
+    },
+    {
+        "id": "Otolaryngology",
+        "type": "specialty",
+        "label": "Otolaryngology",
+        "description": "Otolaryngology"
+    },
+    {
+        "id": "Otology, laryngology, rhinology",
+        "type": "specialty",
+        "label": "Otology, laryngology, rhinology",
+        "description": "Otolaryngology"
+    },
+    {
+        "id": "Pediatric neurologist",
+        "type": "specialty",
+        "label": "Pediatric neurologist",
+        "description": "Neurology - Pediatrics"
+    },
+    {
+        "id": "Pediatrics",
+        "type": "specialty",
+        "label": "Pediatrics",
+        "description": "Pediatrics"
+    },
+    {
+        "id": "Prosthodontics",
+        "type": "specialty",
+        "label": "Prosthodontics",
+        "description": "Dentistry - Prosthodontics"
+    },
+    {
+        "id": "Psychotherapist",
+        "type": "specialty",
+        "label": "Psychotherapist",
+        "description": "Psychology"
+    },
+    {
+        "id": "Radiation oncology",
+        "type": "specialty",
+        "label": "Radiation oncology",
+        "description": "Radiology - Radiation Oncology"
+    },
+    {
+        "id": "Reproductive endocrinology/infertility",
+        "type": "specialty",
+        "label": "Reproductive endocrinology/infertility",
+        "description": "Obstetrics & Gynecology - Reproductive Endocrinology and Infertility"
+    },
+    {
+        "id": "Vascular and interventional radiology",
+        "type": "specialty",
+        "label": "Vascular and interventional radiology",
+        "description": "Radiology - Vascular & Interventional"
+    },
+    {
+        "id": "Aerospace medicine",
+        "type": "specialty",
+        "label": "Aerospace medicine",
+        "description": "Preventive Medicine - Aerospace Medicine"
+    },
+    {
+        "id": "Ambulance service supplier",
+        "type": "specialty",
+        "label": "Ambulance service supplier",
+        "description": "Ambulance"
+    },
+    {
+        "id": "Bariatric surgery",
+        "type": "specialty",
+        "label": "Bariatric surgery",
+        "description": "Plastic Surgery"
+    },
+    {
+        "id": "Cardiac electrophysiology",
+        "type": "specialty",
+        "label": "Cardiac electrophysiology",
+        "description": "Cardiology - Electrophysiology"
+    },
+    {
+        "id": "Cardiac surgery",
+        "type": "specialty",
+        "label": "Cardiac surgery",
+        "description": "Cardiothoracic Surgery"
+    },
+    {
+        "id": "Child",
+        "type": "specialty",
+        "label": "Child",
+        "description": "Pediatrics"
+    },
+    {
+        "id": "Chiropractor, licensed (effective july 1973)",
+        "type": "specialty",
+        "label": "Chiropractor, licensed (effective july 1973)",
+        "description": "Chiropractor"
+    },
+    {
+        "id": "Dermatology",
+        "type": "specialty",
+        "label": "Dermatology",
+        "description": "Dermatology"
+    },
+    {
+        "id": "Diabetes educator",
+        "type": "specialty",
+        "label": "Diabetes educator",
+        "description": "Nurse Practitioner - Diabetes Educator"
+    },
+    {
+        "id": "Endocrinology",
+        "type": "specialty",
+        "label": "Endocrinology",
+        "description": "Endocrinology"
+    },
+    {
+        "id": "Gastroenterology",
+        "type": "specialty",
+        "label": "Gastroenterology",
+        "description": "Gastroenterology"
+    },
+    {
+        "id": "General surgery",
+        "type": "specialty",
+        "label": "General surgery",
+        "description": "General Surgery"
+    },
+    {
+        "id": "Geriatric psychiatry",
+        "type": "specialty",
+        "label": "Geriatric psychiatry",
+        "description": "Psychiatry - Geriatric Psychiatry"
+    },
+    {
+        "id": "Gynecologic oncology",
+        "type": "specialty",
+        "label": "Gynecologic oncology",
+        "description": "Obstetrics & Gynecology - Oncology"
+    },
+    {
+        "id": "Hand surgery",
+        "type": "specialty",
+        "label": "Hand surgery",
+        "description": "Orthopedic Surgery - Hand"
+    },
+    {
+        "id": "Hepatobiliary surgeon",
+        "type": "specialty",
+        "label": "Hepatobiliary surgeon",
+        "description": "General Surgery"
+    },
+    {
+        "id": "Home health",
+        "type": "specialty",
+        "label": "Home health",
+        "description": "Home Health"
+    },
+    {
+        "id": "Hospital based physician",
+        "type": "specialty",
+        "label": "Hospital based physician",
+        "description": "Hospital Medicine"
+    },
+    {
+        "id": "Infectious disease",
+        "type": "specialty",
+        "label": "Infectious disease",
+        "description": "Infectious Diseases"
+    },
+    {
+        "id": "Interventional radiology",
+        "type": "specialty",
+        "label": "Interventional radiology",
+        "description": "Radiology - Vascular & Interventional"
+    },
+    {
+        "id": "Manipulative therapy (osteopaths only)",
+        "type": "specialty",
+        "label": "Manipulative therapy (osteopaths only)",
+        "description": "Osteopathic Medicine"
+    },
+    {
+        "id": "Maxillofacial surgery",
+        "type": "specialty",
+        "label": "Maxillofacial surgery",
+        "description": "Oral Maxillofacial Surgery"
+    },
+    {
+        "id": "Nephrology",
+        "type": "specialty",
+        "label": "Nephrology",
+        "description": "Nephrology"
+    },
+    {
+        "id": "Neurological surgery",
+        "type": "specialty",
+        "label": "Neurological surgery",
+        "description": "Neurological Surgery"
+    },
+    {
+        "id": "Neurology",
+        "type": "specialty",
+        "label": "Neurology",
+        "description": "Neurology"
+    },
+    {
+        "id": "Neurosurgery",
+        "type": "specialty",
+        "label": "Neurosurgery",
+        "description": "Neurological Surgery"
+    },
+    {
+        "id": "Nurse anesthetist",
+        "type": "specialty",
+        "label": "Nurse anesthetist",
+        "description": "Nurse Practitioner - Anesthesiology"
+    },
+    {
+        "id": "Orthodontics",
+        "type": "specialty",
+        "label": "Orthodontics",
+        "description": "Dentistry - Orthodontics and Dentofacial Orthopedics"
+    },
+    {
+        "id": "Osteopath",
+        "type": "specialty",
+        "label": "Osteopath",
+        "description": "Osteopathic Medicine"
+    },
+    {
+        "id": "Osteopathic manipulative therapy",
+        "type": "specialty",
+        "label": "Osteopathic manipulative therapy",
+        "description": "Osteopathic Medicine"
+    },
+    {
+        "id": "Pancreatic surgeon",
+        "type": "specialty",
+        "label": "Pancreatic surgeon",
+        "description": "General Surgery"
+    },
+    {
+        "id": "Pediatric cardiology",
+        "type": "specialty",
+        "label": "Pediatric cardiology",
+        "description": "Pediatrics - Cardiology"
+    },
+    {
+        "id": "Pediatric clinical psychologist",
+        "type": "specialty",
+        "label": "Pediatric clinical psychologist",
+        "description": "Psychology - Child & Adolescent"
+    },
+    {
+        "id": "Pediatric community dentist",
+        "type": "specialty",
+        "label": "Pediatric community dentist",
+        "description": "Dentistry - Pediatrics"
+    },
+    {
+        "id": "Pediatric endocrinology",
+        "type": "specialty",
+        "label": "Pediatric endocrinology",
+        "description": "Pediatrics - Endocrinology"
+    },
+    {
+        "id": "Pediatric gastroenterology",
+        "type": "specialty",
+        "label": "Pediatric gastroenterology",
+        "description": "Pediatrics - Gastroenterology"
+    },
+    {
+        "id": "Pediatric infectious diseases",
+        "type": "specialty",
+        "label": "Pediatric infectious diseases",
+        "description": "Pediatrics - Infectious Diseases"
+    },
+    {
+        "id": "Pediatric nephrology",
+        "type": "specialty",
+        "label": "Pediatric nephrology",
+        "description": "Pediatrics - Nephrology"
+    },
+    {
+        "id": "Pediatric orthopedic surgery",
+        "type": "specialty",
+        "label": "Pediatric orthopedic surgery",
+        "description": "Orthopedic Surgery - Pediatrics"
+    },
+    {
+        "id": "Pediatric otolaryngology",
+        "type": "specialty",
+        "label": "Pediatric otolaryngology",
+        "description": "Otolaryngology - Pediatrics"
+    },
+    {
+        "id": "Pediatric pulmonology",
+        "type": "specialty",
+        "label": "Pediatric pulmonology",
+        "description": "Pediatrics - Pulmonology"
+    },
+    {
+        "id": "Pediatric rehabilitation medicine",
+        "type": "specialty",
+        "label": "Pediatric rehabilitation medicine",
+        "description": "Physical Medicine & Rehabilitation - Pediatrics"
+    },
+    {
+        "id": "Pediatric rheumatology",
+        "type": "specialty",
+        "label": "Pediatric rheumatology",
+        "description": "Pediatrics - Rheumatology"
+    },
+    {
+        "id": "Pediatric urology",
+        "type": "specialty",
+        "label": "Pediatric urology",
+        "description": "Urology - Pediatrics"
+    },
+    {
+        "id": "Pediatric dentist",
+        "type": "specialty",
+        "label": "Pediatric dentist",
+        "description": "Dentistry - Pediatrics"
+    },
+    {
+        "id": "Pediatric dietitian",
+        "type": "specialty",
+        "label": "Pediatric dietitian",
+        "description": "Dietary - Pediatrics"
+    },
+    {
+        "id": "Peripheral vascular diseases or surgery",
+        "type": "specialty",
+        "label": "Peripheral vascular diseases or surgery",
+        "description": "General Surgery - Vascular Surgery"
+    },
+    {
+        "id": "Peripheral vascular diseases or surgery (osteopaths only)",
+        "type": "specialty",
+        "label": "Peripheral vascular diseases or surgery (osteopaths only)",
+        "description": "General Surgery - Vascular Surgery"
+    },
+    {
+        "id": "Phlebology",
+        "type": "specialty",
+        "label": "Phlebology",
+        "description": "Phlebology"
+    },
+    {
+        "id": "Psychogeriatric day hospital",
+        "type": "specialty",
+        "label": "Psychogeriatric day hospital",
+        "description": "Psychiatry - Geriatric Psychiatry"
+    },
+    {
+        "id": "Psychogeriatric service",
+        "type": "specialty",
+        "label": "Psychogeriatric service",
+        "description": "Psychiatry - Geriatric Psychiatry"
+    },
+    {
+        "id": "Psychogeriatrician",
+        "type": "specialty",
+        "label": "Psychogeriatrician",
+        "description": "Psychiatry - Geriatric Psychiatry"
+    },
+    {
+        "id": "Public health physician",
+        "type": "specialty",
+        "label": "Public health physician",
+        "description": "Public Health - Welfare"
+    },
+    {
+        "id": "Public health or welfare agencies",
+        "type": "specialty",
+        "label": "Public health or welfare agencies",
+        "description": "Community/Behavioral Health Agency"
+    },
+    {
+        "id": "Pulmonary diseases",
+        "type": "specialty",
+        "label": "Pulmonary diseases",
+        "description": "Pulmonology"
+    },
+    {
+        "id": "Pulmonology",
+        "type": "specialty",
+        "label": "Pulmonology",
+        "description": "Pulmonology"
+    },
+    {
+        "id": "Radiation therapy (osteopaths only)",
+        "type": "specialty",
+        "label": "Radiation therapy (osteopaths only)",
+        "description": "Radiologic Technologist - Radiation Therapy"
+    },
+    {
+        "id": "Radiotherapist",
+        "type": "specialty",
+        "label": "Radiotherapist",
+        "description": "Radiology - Radiation Oncology"
+    },
+    {
+        "id": "Respiratory physician",
+        "type": "specialty",
+        "label": "Respiratory physician",
+        "description": "Pulmonology"
+    },
+    {
+        "id": "Rheumatology",
+        "type": "specialty",
+        "label": "Rheumatology",
+        "description": "Rheumatology"
+    },
+    {
+        "id": "Spinal cord injury medicine",
+        "type": "specialty",
+        "label": "Spinal cord injury medicine",
+        "description": "Neurological Surgery"
+    },
+    {
+        "id": "Surgery",
+        "type": "specialty",
+        "label": "Surgery",
+        "description": "General Surgery"
+    },
+    {
+        "id": "Surgical oncology",
+        "type": "specialty",
+        "label": "Surgical oncology",
+        "description": "General Surgery - Surgical Oncology"
+    },
+    {
+        "id": "Thoracic surgery",
+        "type": "specialty",
+        "label": "Thoracic surgery",
+        "description": "Cardiothoracic Surgery"
+    },
+    {
+        "id": "Thoracic physician",
+        "type": "specialty",
+        "label": "Thoracic physician",
+        "description": "Cardiothoracic Surgery"
+    },
+    {
+        "id": "Uro-gynecology",
+        "type": "specialty",
+        "label": "Uro-gynecology",
+        "description": "Urology - Female Urogynecology Pelvic and Reconstructive Surgery"
+    },
+    {
+        "id": "Urology",
+        "type": "specialty",
+        "label": "Urology",
+        "description": "Urology"
+    },
+    {
+        "id": "Vascular surgery",
+        "type": "specialty",
+        "label": "Vascular surgery",
+        "description": "General Surgery - Vascular Surgery"
+    },
+    {
+        "id": "Venereologist",
+        "type": "specialty",
+        "label": "Venereologist",
+        "description": "Infectious Diseases"
+    },
+    {
+        "id": "Wound care",
+        "type": "specialty",
+        "label": "Wound care",
+        "description": "Nurse Practitioner - Wound Care"
+    },
+    {
+        "id": "Ophthalmology, otology, laryngology, rhinology",
+        "type": "specialty",
+        "label": "Ophthalmology, otology, laryngology, rhinology",
+        "description": "Otolaryngology - Otology & Neurotology"
+    },
+    {
+        "id": "Psychiatry, neurology (osteopaths only)",
+        "type": "specialty",
+        "label": "Psychiatry, neurology (osteopaths only)",
+        "description": "Osteopathic Medicine"
+    },
+    {
+        "id": "Family planning doctor",
+        "type": "specialty",
+        "label": "Family planning doctor",
+        "description": ""
+    },
+    {
+        "id": "Pedodontics",
+        "type": "specialty",
+        "label": "Pedodontics",
+        "description": ""
+    },
+    {
+        "id": "Periodontics",
+        "type": "specialty",
+        "label": "Periodontics",
+        "description": ""
+    },
+    {
+        "id": "Clinic or group practice",
+        "type": "specialty",
+        "label": "Clinic or group practice",
+        "description": "Clinic/Center"
+    },
+    {
+        "id": "Cranio-sacral therapy",
+        "type": "specialty",
+        "label": "Cranio-sacral therapy",
+        "description": ""
+    },
+    {
+        "id": "Depression management program",
+        "type": "specialty",
+        "label": "Depression management program",
+        "description": "Clinic/Center - Adult Mental Health"
+    },
+    {
+        "id": "Diagnostic laboratory",
+        "type": "specialty",
+        "label": "Diagnostic laboratory",
+        "description": "Clinical Medical Laboratory"
+    },
+    {
+        "id": "Endocrine surgeon",
+        "type": "specialty",
+        "label": "Endocrine surgeon",
+        "description": ""
+    },
+    {
+        "id": "Functional medicine",
+        "type": "specialty",
+        "label": "Functional medicine",
+        "description": ""
+    },
+    {
+        "id": "Independent hygienist",
+        "type": "specialty",
+        "label": "Independent hygienist",
+        "description": ""
+    },
+    {
+        "id": "Independent laboratory",
+        "type": "specialty",
+        "label": "Independent laboratory",
+        "description": "Clinical Medical Laboratory"
+    },
+    {
+        "id": "Individual co",
+        "type": "specialty",
+        "label": "Individual co",
+        "description": ""
+    },
+    {
+        "id": "Individual cp",
+        "type": "specialty",
+        "label": "Individual cp",
+        "description": ""
+    },
+    {
+        "id": "Individual cpo",
+        "type": "specialty",
+        "label": "Individual cpo",
+        "description": ""
+    },
+    {
+        "id": "Individuals not included in 055, 056 or 057",
+        "type": "specialty",
+        "label": "Individuals not included in 055, 056 or 057",
+        "description": ""
+    },
+    {
+        "id": "Md",
+        "type": "specialty",
+        "label": "Md",
+        "description": ""
+    },
+    {
+        "id": "Medical records",
+        "type": "specialty",
+        "label": "Medical records",
+        "description": ""
+    },
+    {
+        "id": "Medical consultation",
+        "type": "specialty",
+        "label": "Medical consultation",
+        "description": ""
+    },
+    {
+        "id": "Miscellaneous",
+        "type": "specialty",
+        "label": "Miscellaneous",
+        "description": ""
+    },
+    {
+        "id": "Multispecialty clinic or group practice",
+        "type": "specialty",
+        "label": "Multispecialty clinic or group practice",
+        "description": "Clinic/Center - Multi-Specialty"
+    },
+    {
+        "id": "Other medical care",
+        "type": "specialty",
+        "label": "Other medical care",
+        "description": "Internal Medicine"
+    },
+    {
+        "id": "Other supplier",
+        "type": "specialty",
+        "label": "Other supplier",
+        "description": "Durable Medical Equipment & Medical Supplies"
+    },
+    {
+        "id": "Private doctor",
+        "type": "specialty",
+        "label": "Private doctor",
+        "description": "Internal Medicine"
+    },
+    {
+        "id": "Smoking cessation counseling",
+        "type": "specialty",
+        "label": "Smoking cessation counseling",
+        "description": "Counselor - Addiction (Substance Use Disorder)"
+    },
+    {
+        "id": "Unknown",
+        "type": "specialty",
+        "label": "Unknown",
+        "description": ""
+    },
+    {
+        "id": "Voluntary health or charitable agencies",
+        "type": "specialty",
+        "label": "Voluntary health or charitable agencies",
+        "description": "Voluntary or Charitable"
+    },
+    {
+        "id": "*surgery",
+        "type": "specialty",
+        "label": "*surgery",
+        "description": "General Surgery"
+    },
+    {
+        "id": "Behavior health provider",
+        "type": "specialty",
+        "label": "Behavior health provider",
+        "description": "Community/Behavioral Health Agency"
+    },
+    {
+        "id": "Behavioral health",
+        "type": "specialty",
+        "label": "Behavioral health",
+        "description": "Behavioral Health"
+    },
+    {
+        "id": "Cardiac imaging lab",
+        "type": "specialty",
+        "label": "Cardiac imaging lab",
+        "description": "Cardiology"
+    },
+    {
+        "id": "Cardiologist",
+        "type": "specialty",
+        "label": "Cardiologist",
+        "description": "Cardiology"
+    },
+    {
+        "id": "Care management",
+        "type": "specialty",
+        "label": "Care management",
+        "description": "Health Maintenance Organization"
+    },
+    {
+        "id": "Care manager",
+        "type": "specialty",
+        "label": "Care manager",
+        "description": "Nursing Home Administrator"
+    },
+    {
+        "id": "Certified home healthcare agency",
+        "type": "specialty",
+        "label": "Certified home healthcare agency",
+        "description": "Nursing Care Agency"
+    },
+    {
+        "id": "Child development services",
+        "type": "specialty",
+        "label": "Child development services",
+        "description": "Early Intervention Provider Agency"
+    },
+    {
+        "id": "Colon cancer screening",
+        "type": "specialty",
+        "label": "Colon cancer screening",
+        "description": "General Surgery - Colon & Rectal Surgery"
+    },
+    {
+        "id": "Colon and rectal surgeon",
+        "type": "specialty",
+        "label": "Colon and rectal surgeon",
+        "description": "General Surgery - Colon & Rectal Surgery"
+    },
+    {
+        "id": "Community resources",
+        "type": "specialty",
+        "label": "Community resources",
+        "description": "Community/Behavioral Health Agency"
+    },
+    {
+        "id": "Counseling",
+        "type": "specialty",
+        "label": "Counseling",
+        "description": "Counselor"
+    },
+    {
+        "id": "Development evaluation",
+        "type": "specialty",
+        "label": "Development evaluation",
+        "description": "Developmental Therapy"
+    },
+    {
+        "id": "Developmental",
+        "type": "specialty",
+        "label": "Developmental",
+        "description": "Developmental Therapy"
+    },
+    {
+        "id": "Developmental pediatrics",
+        "type": "specialty",
+        "label": "Developmental pediatrics",
+        "description": "Pediatrics - Developmental and Behavioral"
+    },
+    {
+        "id": "Diagnostic imaging",
+        "type": "specialty",
+        "label": "Diagnostic imaging",
+        "description": "Radiology - Diagnostic Ultrasound"
+    },
+    {
+        "id": "Durable medical equipment",
+        "type": "specialty",
+        "label": "Durable medical equipment",
+        "description": "Durable Medical Equipment & Medical Supplies"
+    },
+    {
+        "id": "Endodontist",
+        "type": "specialty",
+        "label": "Endodontist",
+        "description": "Dentistry - Endodontics"
+    },
+    {
+        "id": "Ent (ear, nose, throat)",
+        "type": "specialty",
+        "label": "Ent (ear, nose, throat)",
+        "description": "Otolaryngology"
+    },
+    {
+        "id": "Ent and allergy",
+        "type": "specialty",
+        "label": "Ent and allergy",
+        "description": "Otolaryngology - Allergy"
+    },
+    {
+        "id": "Ear, nose and throat",
+        "type": "specialty",
+        "label": "Ear, nose and throat",
+        "description": "Otolaryngology"
+    },
+    {
+        "id": "Early intervention",
+        "type": "specialty",
+        "label": "Early intervention",
+        "description": "Early Intervention Provider Agency"
+    },
+    {
+        "id": "Electrophysiology",
+        "type": "specialty",
+        "label": "Electrophysiology",
+        "description": "Cardiology - Electrophysiology"
+    },
+    {
+        "id": "Gi - colonoscopy",
+        "type": "specialty",
+        "label": "Gi - colonoscopy",
+        "description": "General Surgery - Colon & Rectal Surgery"
+    },
+    {
+        "id": "Genetics",
+        "type": "specialty",
+        "label": "Genetics",
+        "description": "Medical Genetics"
+    },
+    {
+        "id": "Gynecology",
+        "type": "specialty",
+        "label": "Gynecology",
+        "description": "Obstetrics & Gynecology"
+    },
+    {
+        "id": "Home health agency",
+        "type": "specialty",
+        "label": "Home health agency",
+        "description": "Home Health"
+    },
+    {
+        "id": "Home health services",
+        "type": "specialty",
+        "label": "Home health services",
+        "description": "Home Health Aide"
+    },
+    {
+        "id": "Home healthcare",
+        "type": "specialty",
+        "label": "Home healthcare",
+        "description": "Home Health"
+    },
+    {
+        "id": "Homecare",
+        "type": "specialty",
+        "label": "Homecare",
+        "description": "Home Health"
+    },
+    {
+        "id": "Hospital",
+        "type": "specialty",
+        "label": "Hospital",
+        "description": "Clinic/Center"
+    },
+    {
+        "id": "Imaging",
+        "type": "specialty",
+        "label": "Imaging",
+        "description": "Clinic/Center - Magnetic Resonance Imaging (MRI)"
+    },
+    {
+        "id": "Maternal fetal medicine",
+        "type": "specialty",
+        "label": "Maternal fetal medicine",
+        "description": "Obstetrics & Gynecology - Maternal & Fetal Medicine"
+    },
+    {
+        "id": "Mental health",
+        "type": "specialty",
+        "label": "Mental health",
+        "description": "Clinic/Center - Mental Health"
+    },
+    {
+        "id": "Neuro psych eval",
+        "type": "specialty",
+        "label": "Neuro psych eval",
+        "description": "Clinical Neuropsychology"
+    },
+    {
+        "id": "Neuropsychological testing",
+        "type": "specialty",
+        "label": "Neuropsychological testing",
+        "description": "Clinical Neuropsychology"
+    },
+    {
+        "id": "Neuropsychology",
+        "type": "specialty",
+        "label": "Neuropsychology",
+        "description": "Clinical Neuropsychology"
+    },
+    {
+        "id": "Ob high risk",
+        "type": "specialty",
+        "label": "Ob high risk",
+        "description": "Nurse Practitioner - Obstetric, High-Risk"
+    },
+    {
+        "id": "Orthopedic",
+        "type": "specialty",
+        "label": "Orthopedic",
+        "description": "Orthopedic Surgery"
+    },
+    {
+        "id": "Otolaryngologists - ear,nose,throat & allergy",
+        "type": "specialty",
+        "label": "Otolaryngologists - ear,nose,throat & allergy",
+        "description": "Otolaryngology - Allergy"
+    },
+    {
+        "id": "Obstetrics & gynecology",
+        "type": "specialty",
+        "label": "Obstetrics & gynecology",
+        "description": "Obstetrics & Gynecology"
+    },
+    {
+        "id": "Obstetrics and gynecology",
+        "type": "specialty",
+        "label": "Obstetrics and gynecology",
+        "description": "Obstetrics & Gynecology"
+    },
+    {
+        "id": "Obstetrics/ gynecology",
+        "type": "specialty",
+        "label": "Obstetrics/ gynecology",
+        "description": "Obstetrics & Gynecology"
+    },
+    {
+        "id": "Ophthalmologist/retina specialist",
+        "type": "specialty",
+        "label": "Ophthalmologist/retina specialist",
+        "description": "Ophthalmology - Retina"
+    },
+    {
+        "id": "Oral surgeon",
+        "type": "specialty",
+        "label": "Oral surgeon",
+        "description": "Dentistry - Oral and Maxillofacial Surgery"
+    },
+    {
+        "id": "Oral and maxillofacial surgery",
+        "type": "specialty",
+        "label": "Oral and maxillofacial surgery",
+        "description": "Oral Maxillofacial Surgery"
+    },
+    {
+        "id": "Orthopaedics",
+        "type": "specialty",
+        "label": "Orthopaedics",
+        "description": "Orthopedic Surgery"
+    },
+    {
+        "id": "Orthopedic - hand surgery",
+        "type": "specialty",
+        "label": "Orthopedic - hand surgery",
+        "description": "Orthopedic Surgery - Hand"
+    },
+    {
+        "id": "Orthopedic - hip and knee",
+        "type": "specialty",
+        "label": "Orthopedic - hip and knee",
+        "description": "Orthopedic Surgery - Foot and Ankle"
+    },
+    {
+        "id": "Orthopedic - sports medicine",
+        "type": "specialty",
+        "label": "Orthopedic - sports medicine",
+        "description": "Orthopedic Surgery - Sports Medicine"
+    },
+    {
+        "id": "Orthopedics",
+        "type": "specialty",
+        "label": "Orthopedics",
+        "description": "Orthopedic Surgery"
+    },
+    {
+        "id": "Physical therapy",
+        "type": "specialty",
+        "label": "Physical therapy",
+        "description": "Physical Therapy"
+    },
+    {
+        "id": "Pain management",
+        "type": "specialty",
+        "label": "Pain management",
+        "description": "Pain Medicine"
+    },
+    {
+        "id": "Pediatric neurology",
+        "type": "specialty",
+        "label": "Pediatric neurology",
+        "description": "Neurology - Pediatrics"
+    },
+    {
+        "id": "Pediatric orthopedic",
+        "type": "specialty",
+        "label": "Pediatric orthopedic",
+        "description": "Orthopedic Surgery - Pediatrics"
+    },
+    {
+        "id": "Pediatric orthopedics",
+        "type": "specialty",
+        "label": "Pediatric orthopedics",
+        "description": "Orthopedic Surgery - Pediatrics"
+    },
+    {
+        "id": "Pelvic floor therapy",
+        "type": "specialty",
+        "label": "Pelvic floor therapy",
+        "description": "Obstetrics & Gynecology - Female Pelvic Medicine and Reconstructive Surgery"
+    },
+    {
+        "id": "Perinatalogist",
+        "type": "specialty",
+        "label": "Perinatalogist",
+        "description": "Obstetrics & Gynecology - Maternal & Fetal Medicine"
+    },
+    {
+        "id": "Perinatologist",
+        "type": "specialty",
+        "label": "Perinatologist",
+        "description": "Pediatrics - Neonatology-Perinatology"
+    },
+    {
+        "id": "Physical  therapy",
+        "type": "specialty",
+        "label": "Physical  therapy",
+        "description": "Physical Therapy"
+    },
+    {
+        "id": "Physical therapy/home",
+        "type": "specialty",
+        "label": "Physical therapy/home",
+        "description": "Physical Therapy"
+    },
+    {
+        "id": "Psychology",
+        "type": "specialty",
+        "label": "Psychology",
+        "description": "Psychology"
+    },
+    {
+        "id": "Pulmonary",
+        "type": "specialty",
+        "label": "Pulmonary",
+        "description": "Pulmonology"
+    },
+    {
+        "id": "Rectal surgery",
+        "type": "specialty",
+        "label": "Rectal surgery",
+        "description": "General Surgery - Colon & Rectal Surgery"
+    },
+    {
+        "id": "Sleep study-consult w/sleep specialist",
+        "type": "specialty",
+        "label": "Sleep study-consult w/sleep specialist",
+        "description": "Clinic/Center - Sleep Disorder Diagnostic"
+    },
+    {
+        "id": "Social worker",
+        "type": "specialty",
+        "label": "Social worker",
+        "description": "Social Worker"
+    },
+    {
+        "id": "Social worker-ih",
+        "type": "specialty",
+        "label": "Social worker-ih",
+        "description": "Social Worker"
+    },
+    {
+        "id": "Speech therapist",
+        "type": "specialty",
+        "label": "Speech therapist",
+        "description": "Clinic/Center - Hearing and Speech"
+    },
+    {
+        "id": "Speech therapy",
+        "type": "specialty",
+        "label": "Speech therapy",
+        "description": "Clinic/Center - Hearing and Speech"
+    },
+    {
+        "id": "Therapist",
+        "type": "specialty",
+        "label": "Therapist",
+        "description": "Counselor"
+    },
+    {
+        "id": "Transplant surgery",
+        "type": "specialty",
+        "label": "Transplant surgery",
+        "description": "Transplant Surgery"
+    },
+    {
+        "id": "Urogynecology",
+        "type": "specialty",
+        "label": "Urogynecology",
+        "description": "Urology - Female Urogynecology Pelvic and Reconstructive Surgery"
+    },
+    {
+        "id": "Vascular",
+        "type": "specialty",
+        "label": "Vascular",
+        "description": "General Surgery - Vascular Surgery"
+    },
+    {
+        "id": "Adhd clinics",
+        "type": "specialty",
+        "label": "Adhd clinics",
+        "description": "Clinic/Center - Adolescent and Children Mental Health"
+    },
+    {
+        "id": "Audiology",
+        "type": "specialty",
+        "label": "Audiology",
+        "description": "Audiology"
+    },
+    {
+        "id": "Acute rehab",
+        "type": "specialty",
+        "label": "Acute rehab",
+        "description": "Clinic/Center - Rehabilitation"
+    },
+    {
+        "id": "Adolescent med",
+        "type": "specialty",
+        "label": "Adolescent med",
+        "description": "Internal Medicine - Adolescent Medicine"
+    },
+    {
+        "id": "Allergist",
+        "type": "specialty",
+        "label": "Allergist",
+        "description": "Allergy & Immunology"
+    },
+    {
+        "id": "Allergy",
+        "type": "specialty",
+        "label": "Allergy",
+        "description": "Allergy & Immunology"
+    },
+    {
+        "id": "Allergy & immunology",
+        "type": "specialty",
+        "label": "Allergy & immunology",
+        "description": "Allergy & Immunology"
+    },
+    {
+        "id": "Autism diagnostic clinic",
+        "type": "specialty",
+        "label": "Autism diagnostic clinic",
+        "description": "Clinic/Center - Developmental Disabilities"
+    },
+    {
+        "id": "Btl counseling",
+        "type": "specialty",
+        "label": "Btl counseling",
+        "description": "Clinic/Center - Sleep Disorder Diagnostic"
+    },
+    {
+        "id": "Bariatriac surgery",
+        "type": "specialty",
+        "label": "Bariatriac surgery",
+        "description": "General Surgery"
+    },
+    {
+        "id": "Bariatrics",
+        "type": "specialty",
+        "label": "Bariatrics",
+        "description": "General Surgery"
+    },
+    {
+        "id": "Behavioral, mental health / psycology /adhd",
+        "type": "specialty",
+        "label": "Behavioral, mental health / psycology /adhd",
+        "description": "Behavioral Health"
+    },
+    {
+        "id": "Breast surgeon/oncology",
+        "type": "specialty",
+        "label": "Breast surgeon/oncology",
+        "description": "Plastic Surgery - Reconstructive Surgery"
+    },
+    {
+        "id": "Cdsa",
+        "type": "specialty",
+        "label": "Cdsa",
+        "description": "Clinic/Center - Developmental Disabilities"
+    },
+    {
+        "id": "Cardio elec physio",
+        "type": "specialty",
+        "label": "Cardio elec physio",
+        "description": "Cardiology - Electrophysiology"
+    },
+    {
+        "id": "Cardio electrophysiology",
+        "type": "specialty",
+        "label": "Cardio electrophysiology",
+        "description": "Cardiology - Electrophysiology"
+    },
+    {
+        "id": "Cardiothoracic vascular surgery",
+        "type": "specialty",
+        "label": "Cardiothoracic vascular surgery",
+        "description": "Cardiothoracic Surgery"
+    },
+    {
+        "id": "Chest clinic",
+        "type": "specialty",
+        "label": "Chest clinic",
+        "description": "Pulmonology"
+    },
+    {
+        "id": "Colon and rectal surgery",
+        "type": "specialty",
+        "label": "Colon and rectal surgery",
+        "description": "General Surgery - Colon & Rectal Surgery"
+    },
+    {
+        "id": "Colonoscopy",
+        "type": "specialty",
+        "label": "Colonoscopy",
+        "description": "Gastroenterology"
+    },
+    {
+        "id": "Dermatologist",
+        "type": "specialty",
+        "label": "Dermatologist",
+        "description": "Dermatology"
+    },
+    {
+        "id": "Dental",
+        "type": "specialty",
+        "label": "Dental",
+        "description": "Dentistry"
+    },
+    {
+        "id": "Dietician",
+        "type": "specialty",
+        "label": "Dietician",
+        "description": "Dietary"
+    },
+    {
+        "id": "Emg/ncv - neurology studies",
+        "type": "specialty",
+        "label": "Emg/ncv - neurology studies",
+        "description": "Neurology"
+    },
+    {
+        "id": "Endocrine surgery",
+        "type": "specialty",
+        "label": "Endocrine surgery",
+        "description": "Endocrinology"
+    },
+    {
+        "id": "Ent- otolaryngology",
+        "type": "specialty",
+        "label": "Ent- otolaryngology",
+        "description": "Otolaryngology"
+    },
+    {
+        "id": "Ear, nose",
+        "type": "specialty",
+        "label": "Ear, nose",
+        "description": "Otolaryngology"
+    },
+    {
+        "id": "Ear, nose, throat",
+        "type": "specialty",
+        "label": "Ear, nose, throat",
+        "description": "Otolaryngology"
+    },
+    {
+        "id": "Ears, nose and throat",
+        "type": "specialty",
+        "label": "Ears, nose and throat",
+        "description": "Otolaryngology"
+    },
+    {
+        "id": "Feeding/swallowing therapy",
+        "type": "specialty",
+        "label": "Feeding/swallowing therapy",
+        "description": "Speech-Language Pathology"
+    },
+    {
+        "id": "Gyn",
+        "type": "specialty",
+        "label": "Gyn",
+        "description": "Obstetrics & Gynecology"
+    },
+    {
+        "id": "Gastric surgery",
+        "type": "specialty",
+        "label": "Gastric surgery",
+        "description": "Gastroenterology"
+    },
+    {
+        "id": "General medical",
+        "type": "specialty",
+        "label": "General medical",
+        "description": "Family Medicine"
+    },
+    {
+        "id": "Genetic counseling",
+        "type": "specialty",
+        "label": "Genetic counseling",
+        "description": "Genetic Counselor"
+    },
+    {
+        "id": "Gynecology (phc)",
+        "type": "specialty",
+        "label": "Gynecology (phc)",
+        "description": "Obstetrics & Gynecology"
+    },
+    {
+        "id": "Hand specialist",
+        "type": "specialty",
+        "label": "Hand specialist",
+        "description": "General Surgery - Hand Surgery"
+    },
+    {
+        "id": "Hepatologist/gastroenterologist",
+        "type": "specialty",
+        "label": "Hepatologist/gastroenterologist",
+        "description": "Gastroenterology - Hepatology"
+    },
+    {
+        "id": "Hernia surgeon",
+        "type": "specialty",
+        "label": "Hernia surgeon",
+        "description": "General Surgery"
+    },
+    {
+        "id": "High risk specialty",
+        "type": "specialty",
+        "label": "High risk specialty",
+        "description": "Multi-Specialty"
+    },
+    {
+        "id": "Home care",
+        "type": "specialty",
+        "label": "Home care",
+        "description": "Home Health"
+    },
+    {
+        "id": "Home health assessment",
+        "type": "specialty",
+        "label": "Home health assessment",
+        "description": "Home Health"
+    },
+    {
+        "id": "Hyperbaric medicine/wound care",
+        "type": "specialty",
+        "label": "Hyperbaric medicine/wound care",
+        "description": "Preventive Medicine - Undersea and Hyperbaric Medicine"
+    },
+    {
+        "id": "Internal gyn",
+        "type": "specialty",
+        "label": "Internal gyn",
+        "description": "Obstetrics & Gynecology"
+    },
+    {
+        "id": "Lipid clinic vandy 322-2318",
+        "type": "specialty",
+        "label": "Lipid clinic vandy 322-2318",
+        "description": "Plastic Surgery"
+    },
+    {
+        "id": "Mfm",
+        "type": "specialty",
+        "label": "Mfm",
+        "description": "Obstetrics & Gynecology - Maternal & Fetal Medicine"
+    },
+    {
+        "id": "Mammogram",
+        "type": "specialty",
+        "label": "Mammogram",
+        "description": "Clinic/Center - Radiology, Mammography"
+    },
+    {
+        "id": "Mental health/addictive services",
+        "type": "specialty",
+        "label": "Mental health/addictive services",
+        "description": "Clinic/Center - Rehabilitation, Substance Use Disorder"
+    },
+    {
+        "id": "Nephrologist",
+        "type": "specialty",
+        "label": "Nephrologist",
+        "description": "Nephrology"
+    },
+    {
+        "id": "Nph clinic",
+        "type": "specialty",
+        "label": "Nph clinic",
+        "description": "Neurology - Clinical Neurophysiology"
+    },
+    {
+        "id": "Nutrition/ dietitian",
+        "type": "specialty",
+        "label": "Nutrition/ dietitian",
+        "description": "Dietary"
+    },
+    {
+        "id": "Neuropsych/psychology",
+        "type": "specialty",
+        "label": "Neuropsych/psychology",
+        "description": "Clinical Neuropsychology"
+    },
+    {
+        "id": "Ob/gyn",
+        "type": "specialty",
+        "label": "Ob/gyn",
+        "description": "Obstetrics & Gynecology"
+    },
+    {
+        "id": "Orthopedic -pain management",
+        "type": "specialty",
+        "label": "Orthopedic -pain management",
+        "description": "Physical Medicine & Rehabilitation - Pain Medicine"
+    },
+    {
+        "id": "Ophthalmic plastic surgery",
+        "type": "specialty",
+        "label": "Ophthalmic plastic surgery",
+        "description": "Clinic/Center - Ophthalmologic Surgery"
+    },
+    {
+        "id": "Opthalmology",
+        "type": "specialty",
+        "label": "Opthalmology",
+        "description": "Ophthalmology"
+    },
+    {
+        "id": "Pt - gait and balance training-physical therapy",
+        "type": "specialty",
+        "label": "Pt - gait and balance training-physical therapy",
+        "description": "Physical Therapy"
+    },
+    {
+        "id": "Pain medicine/manangment",
+        "type": "specialty",
+        "label": "Pain medicine/manangment",
+        "description": "Pain Medicine"
+    },
+    {
+        "id": "Pediatric allergist/immunologist",
+        "type": "specialty",
+        "label": "Pediatric allergist/immunologist",
+        "description": "Pediatrics - Allergy & Immunology"
+    },
+    {
+        "id": "Pediatric cardiologist",
+        "type": "specialty",
+        "label": "Pediatric cardiologist",
+        "description": "Pediatrics - Cardiology"
+    },
+    {
+        "id": "Pediatric dermatology",
+        "type": "specialty",
+        "label": "Pediatric dermatology",
+        "description": "Dermatology - Pediatrics"
+    },
+    {
+        "id": "Pediatric nutrition",
+        "type": "specialty",
+        "label": "Pediatric nutrition",
+        "description": "Dietary - Pediatrics"
+    },
+    {
+        "id": "Pediatric ophthalmology",
+        "type": "specialty",
+        "label": "Pediatric ophthalmology",
+        "description": "Ophthalmology - Pediatrics"
+    },
+    {
+        "id": "Pediatric ophthalmology/optometry",
+        "type": "specialty",
+        "label": "Pediatric ophthalmology/optometry",
+        "description": "Ophthalmology - Pediatrics"
+    },
+    {
+        "id": "Pediatric orthopaedic",
+        "type": "specialty",
+        "label": "Pediatric orthopaedic",
+        "description": "Orthopedic Surgery - Pediatrics"
+    },
+    {
+        "id": "Physiatrist",
+        "type": "specialty",
+        "label": "Physiatrist",
+        "description": "Physical Medicine & Rehabilitation"
+    },
+    {
+        "id": "Physiatry",
+        "type": "specialty",
+        "label": "Physiatry",
+        "description": "Physical Medicine & Rehabilitation"
+    },
+    {
+        "id": "Physical medicine & rehabilitation",
+        "type": "specialty",
+        "label": "Physical medicine & rehabilitation",
+        "description": "Physical Medicine & Rehabilitation"
+    },
+    {
+        "id": "Physical medicine and rehabiliation",
+        "type": "specialty",
+        "label": "Physical medicine and rehabiliation",
+        "description": "Physical Medicine & Rehabilitation"
+    },
+    {
+        "id": "Podiatrist",
+        "type": "specialty",
+        "label": "Podiatrist",
+        "description": "Podiatry"
+    },
+    {
+        "id": "Psych/mental health",
+        "type": "specialty",
+        "label": "Psych/mental health",
+        "description": "Psychiatry"
+    },
+    {
+        "id": "Psychotherapy",
+        "type": "specialty",
+        "label": "Psychotherapy",
+        "description": "Psychology - Group Psychotherapy"
+    },
+    {
+        "id": "Pulmonary department",
+        "type": "specialty",
+        "label": "Pulmonary department",
+        "description": "Pulmonary Function Technologist"
+    },
+    {
+        "id": "Sleep study",
+        "type": "specialty",
+        "label": "Sleep study",
+        "description": "Clinic/Center - Sleep Disorder Diagnostic"
+    },
+    {
+        "id": "Spine specialist",
+        "type": "specialty",
+        "label": "Spine specialist",
+        "description": "Orthopedic Surgery - Spine"
+    },
+    {
+        "id": "Sleep lab",
+        "type": "specialty",
+        "label": "Sleep lab",
+        "description": "Clinic/Center - Sleep Disorder Diagnostic"
+    },
+    {
+        "id": "Sleep study-home sleep test",
+        "type": "specialty",
+        "label": "Sleep study-home sleep test",
+        "description": "Clinic/Center - Sleep Disorder Diagnostic"
+    },
+    {
+        "id": "Social services",
+        "type": "specialty",
+        "label": "Social services",
+        "description": "Social Worker"
+    },
+    {
+        "id": "Speech pathologist",
+        "type": "specialty",
+        "label": "Speech pathologist",
+        "description": "Speech-Language Pathology"
+    },
+    {
+        "id": "Speech pathology",
+        "type": "specialty",
+        "label": "Speech pathology",
+        "description": "Speech-Language Pathology"
+    },
+    {
+        "id": "Spine surgery",
+        "type": "specialty",
+        "label": "Spine surgery",
+        "description": "Orthopedic Surgery - Spine"
+    },
+    {
+        "id": "Sports medicine",
+        "type": "specialty",
+        "label": "Sports medicine",
+        "description": "Internal Medicine - Sports Medicine"
+    },
+    {
+        "id": "Stroke",
+        "type": "specialty",
+        "label": "Stroke",
+        "description": "Neurology - Vascular Neurology"
+    },
+    {
+        "id": "Therapy",
+        "type": "specialty",
+        "label": "Therapy",
+        "description": "Counselor"
+    },
+    {
+        "id": "Acupuncture and herbal clinic",
+        "type": "specialty",
+        "label": "Acupuncture and herbal clinic",
+        "description": "Acupuncture"
+    },
+    {
+        "id": "Addiction psychiatry",
+        "type": "specialty",
+        "label": "Addiction psychiatry",
+        "description": "Psychiatry - Addiction Medicine"
+    },
+    {
+        "id": "Adolescent medicine",
+        "type": "specialty",
+        "label": "Adolescent medicine",
+        "description": "Pediatrics - Adolescent Medicine"
+    },
+    {
+        "id": "Allergy and asthma",
+        "type": "specialty",
+        "label": "Allergy and asthma",
+        "description": "Allergy & Immunology"
+    },
+    {
+        "id": "Allergy and immunology",
+        "type": "specialty",
+        "label": "Allergy and immunology",
+        "description": "Allergy & Immunology"
+    },
+    {
+        "id": "Allergy, asthma and sinus center",
+        "type": "specialty",
+        "label": "Allergy, asthma and sinus center",
+        "description": "Allergy & Immunology"
+    },
+    {
+        "id": "Ambulatory-72 hrs",
+        "type": "specialty",
+        "label": "Ambulatory-72 hrs",
+        "description": "Clinic/Center - Ambulatory Surgery"
+    },
+    {
+        "id": "Anesthesiology and pain consultants",
+        "type": "specialty",
+        "label": "Anesthesiology and pain consultants",
+        "description": "Anesthesiology - Pain Medicine"
+    },
+    {
+        "id": "Bariatric medicine",
+        "type": "specialty",
+        "label": "Bariatric medicine",
+        "description": "Preventive Medicine - Obesity Medicine"
+    },
+    {
+        "id": "Behavioral therapy",
+        "type": "specialty",
+        "label": "Behavioral therapy",
+        "description": "Behavioral Health"
+    },
+    {
+        "id": "Breast specialist",
+        "type": "specialty",
+        "label": "Breast specialist",
+        "description": "Clinic/Center - Radiology, Mammography"
+    },
+    {
+        "id": "Chiropractor, licensed",
+        "type": "specialty",
+        "label": "Chiropractor, licensed",
+        "description": "Chiropractor"
+    },
+    {
+        "id": "Cardiac electrophysiologist",
+        "type": "specialty",
+        "label": "Cardiac electrophysiologist",
+        "description": "Cardiology - Electrophysiology"
+    },
+    {
+        "id": "Cardiac rehab",
+        "type": "specialty",
+        "label": "Cardiac rehab",
+        "description": "Clinic/Center - Rehabilitation, Cardiac Facilities"
+    },
+    {
+        "id": "Child & adolescent psychiatry",
+        "type": "specialty",
+        "label": "Child & adolescent psychiatry",
+        "description": "Psychiatry - Child & Adolescent"
+    },
+    {
+        "id": "Child developmental",
+        "type": "specialty",
+        "label": "Child developmental",
+        "description": "Pediatrics - Developmental and Behavioral"
+    },
+    {
+        "id": "Colon & rectal surgery",
+        "type": "specialty",
+        "label": "Colon & rectal surgery",
+        "description": "General Surgery - Colon & Rectal Surgery"
+    },
+    {
+        "id": "Corneal specialist",
+        "type": "specialty",
+        "label": "Corneal specialist",
+        "description": "Ophthalmology - Cornea and External Disease"
+    },
+    {
+        "id": "Counselor",
+        "type": "specialty",
+        "label": "Counselor",
+        "description": "Counselor"
+    },
+    {
+        "id": "Endocrinology/nephrology",
+        "type": "specialty",
+        "label": "Endocrinology/nephrology",
+        "description": "Endocrinology"
+    },
+    {
+        "id": "Ent/ot",
+        "type": "specialty",
+        "label": "Ent/ot",
+        "description": "Otolaryngology"
+    },
+    {
+        "id": "Early intervention program",
+        "type": "specialty",
+        "label": "Early intervention program",
+        "description": "Early Intervention Provider Agency"
+    },
+    {
+        "id": "Early intervention services",
+        "type": "specialty",
+        "label": "Early intervention services",
+        "description": "Early Intervention Provider Agency"
+    },
+    {
+        "id": "Electrophysiologist",
+        "type": "specialty",
+        "label": "Electrophysiologist",
+        "description": "Cardiology - Electrophysiology"
+    },
+    {
+        "id": "Epilepsy",
+        "type": "specialty",
+        "label": "Epilepsy",
+        "description": "Neurology - Clinical Neurophysiology"
+    },
+    {
+        "id": "Gastroenterology screening",
+        "type": "specialty",
+        "label": "Gastroenterology screening",
+        "description": "Gastroenterology"
+    },
+    {
+        "id": "Gynecologist (obgyn)",
+        "type": "specialty",
+        "label": "Gynecologist (obgyn)",
+        "description": "Obstetrics & Gynecology"
+    },
+    {
+        "id": "Hiv",
+        "type": "specialty",
+        "label": "Hiv",
+        "description": "Infectious Diseases"
+    },
+    {
+        "id": "Home health care",
+        "type": "specialty",
+        "label": "Home health care",
+        "description": "Home Health"
+    },
+    {
+        "id": "Home health\\skilled nursing",
+        "type": "specialty",
+        "label": "Home health\\skilled nursing",
+        "description": "Skilled Nursing Facility"
+    },
+    {
+        "id": "Home health provider",
+        "type": "specialty",
+        "label": "Home health provider",
+        "description": "Home Health"
+    },
+    {
+        "id": "Infertility",
+        "type": "specialty",
+        "label": "Infertility",
+        "description": "Obstetrics & Gynecology - Reproductive Endocrinology and Infertility"
+    },
+    {
+        "id": "Ivf",
+        "type": "specialty",
+        "label": "Ivf",
+        "description": "Obstetrics & Gynecology - Reproductive Endocrinology and Infertility"
+    },
+    {
+        "id": "Interventional pain management",
+        "type": "specialty",
+        "label": "Interventional pain management",
+        "description": "Pain Medicine"
+    },
+    {
+        "id": "Lab",
+        "type": "specialty",
+        "label": "Lab",
+        "description": "Clinical Medical Laboratory"
+    },
+    {
+        "id": "Lactation consultant",
+        "type": "specialty",
+        "label": "Lactation consultant",
+        "description": "Lactation Consultant, Non-RN"
+    },
+    {
+        "id": "Naturopathy",
+        "type": "specialty",
+        "label": "Naturopathy",
+        "description": "Naturopathy"
+    },
+    {
+        "id": "Neuro endocrinology",
+        "type": "specialty",
+        "label": "Neuro endocrinology",
+        "description": "Endocrinology"
+    },
+    {
+        "id": "Neuro oncology",
+        "type": "specialty",
+        "label": "Neuro oncology",
+        "description": "Neurology"
+    },
+    {
+        "id": "Neuro-ophthalmology",
+        "type": "specialty",
+        "label": "Neuro-ophthalmology",
+        "description": "Ophthalmology - Neuro-Ophthalmology"
+    },
+    {
+        "id": "Neurology studies - emg/ncv",
+        "type": "specialty",
+        "label": "Neurology studies - emg/ncv",
+        "description": "Neurology - Clinical Neurophysiology"
+    },
+    {
+        "id": "Neuropthamology",
+        "type": "specialty",
+        "label": "Neuropthamology",
+        "description": "Ophthalmology - Neuro-Ophthalmology"
+    },
+    {
+        "id": "Oculofacial plastic surgery",
+        "type": "specialty",
+        "label": "Oculofacial plastic surgery",
+        "description": "Plastic Surgery - Reconstructive Surgery"
+    },
+    {
+        "id": "Orthotics",
+        "type": "specialty",
+        "label": "Orthotics",
+        "description": "Orthotics"
+    },
+    {
+        "id": "Opthalmogy, retinal",
+        "type": "specialty",
+        "label": "Opthalmogy, retinal",
+        "description": "Ophthalmology - Retina"
+    },
+    {
+        "id": "Orthology",
+        "type": "specialty",
+        "label": "Orthology",
+        "description": "Medical Genetics"
+    },
+    {
+        "id": "Orthopedic hand surgery",
+        "type": "specialty",
+        "label": "Orthopedic hand surgery",
+        "description": "Orthopedic Surgery - Hand"
+    },
+    {
+        "id": "Pain",
+        "type": "specialty",
+        "label": "Pain",
+        "description": "Pain Medicine"
+    },
+    {
+        "id": "Psychology/psychiatry",
+        "type": "specialty",
+        "label": "Psychology/psychiatry",
+        "description": "Psychology"
+    },
+    {
+        "id": "Pt - massage-physical therapy",
+        "type": "specialty",
+        "label": "Pt - massage-physical therapy",
+        "description": "Massage Therapy"
+    },
+    {
+        "id": "Pt - myofascial release-physical therapy",
+        "type": "specialty",
+        "label": "Pt - myofascial release-physical therapy",
+        "description": "Physical Therapy"
+    },
+    {
+        "id": "Pt/ ot",
+        "type": "specialty",
+        "label": "Pt/ ot",
+        "description": "Physical Therapy"
+    },
+    {
+        "id": "Pain specialist",
+        "type": "specialty",
+        "label": "Pain specialist",
+        "description": "Pain Medicine"
+    },
+    {
+        "id": "Palliative care",
+        "type": "specialty",
+        "label": "Palliative care",
+        "description": "Hospice & Palliative Medicine"
+    },
+    {
+        "id": "Pediatric",
+        "type": "specialty",
+        "label": "Pediatric",
+        "description": "Pediatrics"
+    },
+    {
+        "id": "Pediatric audiologists group",
+        "type": "specialty",
+        "label": "Pediatric audiologists group",
+        "description": "Audiology"
+    },
+    {
+        "id": "Pediatric dental",
+        "type": "specialty",
+        "label": "Pediatric dental",
+        "description": "Dentistry - Pediatrics"
+    },
+    {
+        "id": "Pediatric gi",
+        "type": "specialty",
+        "label": "Pediatric gi",
+        "description": "Pediatrics - Gastroenterology"
+    },
+    {
+        "id": "Pediatric nephrologist",
+        "type": "specialty",
+        "label": "Pediatric nephrologist",
+        "description": "Pediatrics - Nephrology"
+    },
+    {
+        "id": "Pediatric neurosurgeon",
+        "type": "specialty",
+        "label": "Pediatric neurosurgeon",
+        "description": "Neurology - Pediatrics"
+    },
+    {
+        "id": "Pediatric occupational therapy",
+        "type": "specialty",
+        "label": "Pediatric occupational therapy",
+        "description": "Occupational Therapy"
+    },
+    {
+        "id": "Pediatric opthalmology",
+        "type": "specialty",
+        "label": "Pediatric opthalmology",
+        "description": "Ophthalmology - Pediatrics"
+    },
+    {
+        "id": "Pediatric optometrist",
+        "type": "specialty",
+        "label": "Pediatric optometrist",
+        "description": "Optometry - Pediatrics"
+    },
+    {
+        "id": "Pediatric neurosurgery",
+        "type": "specialty",
+        "label": "Pediatric neurosurgery",
+        "description": "Neurology - Pediatrics"
+    },
+    {
+        "id": "Perform care",
+        "type": "specialty",
+        "label": "Perform care",
+        "description": "Program of All-Inclusive Care for the Elderly (PACE) Provider Organization"
+    },
+    {
+        "id": "Phychiatry",
+        "type": "specialty",
+        "label": "Phychiatry",
+        "description": "Psychiatry - Neuropsychiatry"
+    },
+    {
+        "id": "Physical, speech and occupational therapies",
+        "type": "specialty",
+        "label": "Physical, speech and occupational therapies",
+        "description": "Occupational Therapy"
+    },
+    {
+        "id": "Physical, speech, occupational therapy",
+        "type": "specialty",
+        "label": "Physical, speech, occupational therapy",
+        "description": "Physical Therapy"
+    },
+    {
+        "id": "Plastic surgery",
+        "type": "specialty",
+        "label": "Plastic surgery",
+        "description": "Plastic Surgery"
+    },
+    {
+        "id": "Podiatry.",
+        "type": "specialty",
+        "label": "Podiatry.",
+        "description": "Podiatry"
+    },
+    {
+        "id": "Pulmonary lab - pft",
+        "type": "specialty",
+        "label": "Pulmonary lab - pft",
+        "description": "Respiratory Therapy - Pulmonary Diagnostics"
+    },
+    {
+        "id": "Pulmonary rehab",
+        "type": "specialty",
+        "label": "Pulmonary rehab",
+        "description": "Respiratory Therapy - Pulmonary Rehabilitation"
+    },
+    {
+        "id": "Pulmonologist/im",
+        "type": "specialty",
+        "label": "Pulmonologist/im",
+        "description": "Pulmonology"
+    },
+    {
+        "id": "Retinal specialist",
+        "type": "specialty",
+        "label": "Retinal specialist",
+        "description": "Ophthalmology - Retina"
+    },
+    {
+        "id": "Spine specialists",
+        "type": "specialty",
+        "label": "Spine specialists",
+        "description": "Orthopedic Surgery - Spine"
+    },
+    {
+        "id": "Skilled nursing facility",
+        "type": "specialty",
+        "label": "Skilled nursing facility",
+        "description": "Skilled Nursing Facility"
+    },
+    {
+        "id": "Social work",
+        "type": "specialty",
+        "label": "Social work",
+        "description": "Social Worker"
+    },
+    {
+        "id": "Tobacco cessation counseling",
+        "type": "specialty",
+        "label": "Tobacco cessation counseling",
+        "description": "Preventive Medicine - Addiction Medicine"
+    },
+    {
+        "id": "Transplant",
+        "type": "specialty",
+        "label": "Transplant",
+        "description": "Transplant Surgery"
+    },
+    {
+        "id": "Urogyn",
+        "type": "specialty",
+        "label": "Urogyn",
+        "description": "Urology - Female Urogynecology Pelvic and Reconstructive Surgery"
+    },
+    {
+        "id": "Vestibular rehab",
+        "type": "specialty",
+        "label": "Vestibular rehab",
+        "description": "Clinic/Center - Physical Therapy"
+    },
+    {
+        "id": "Hand",
+        "type": "specialty",
+        "label": "Hand",
+        "description": "General Surgery - Hand Surgery"
+    },
+    {
+        "id": "Inter med/gastro",
+        "type": "specialty",
+        "label": "Inter med/gastro",
+        "description": "Gastroenterology"
+    },
+    {
+        "id": "*physical therapy",
+        "type": "specialty",
+        "label": "*physical therapy",
+        "description": "Physical Therapy"
+    },
+    {
+        "id": "Accupuncturist",
+        "type": "specialty",
+        "label": "Accupuncturist",
+        "description": "Acupuncture"
+    },
+    {
+        "id": "Allergy/immunotherapy",
+        "type": "specialty",
+        "label": "Allergy/immunotherapy",
+        "description": "Allergy & Immunology"
+    },
+    {
+        "id": "Bariatric surgeon",
+        "type": "specialty",
+        "label": "Bariatric surgeon",
+        "description": "Plastic Surgery"
+    },
+    {
+        "id": "Bariatric",
+        "type": "specialty",
+        "label": "Bariatric",
+        "description": "Preventive Medicine - Obesity Medicine"
+    },
+    {
+        "id": "Bone health",
+        "type": "specialty",
+        "label": "Bone health",
+        "description": "Osteopathic Medicine"
+    },
+    {
+        "id": "Breast surgery",
+        "type": "specialty",
+        "label": "Breast surgery",
+        "description": "Plastic Surgery - Reconstructive Surgery"
+    },
+    {
+        "id": "Burn surgeons",
+        "type": "specialty",
+        "label": "Burn surgeons",
+        "description": "Dermatology"
+    },
+    {
+        "id": "Case manager nfmc",
+        "type": "specialty",
+        "label": "Case manager nfmc",
+        "description": "Case Management"
+    },
+    {
+        "id": "Community resource",
+        "type": "specialty",
+        "label": "Community resource",
+        "description": "Community/Behavioral Health Agency"
+    },
+    {
+        "id": "Dementia",
+        "type": "specialty",
+        "label": "Dementia",
+        "description": "Alzheimer Center (Dementia Center)"
+    },
+    {
+        "id": "Dentist",
+        "type": "specialty",
+        "label": "Dentist",
+        "description": "Dentistry"
+    },
+    {
+        "id": "Developmental pediatrician",
+        "type": "specialty",
+        "label": "Developmental pediatrician",
+        "description": "Pediatrics - Developmental and Behavioral"
+    },
+    {
+        "id": "Endocrine for adult",
+        "type": "specialty",
+        "label": "Endocrine for adult",
+        "description": "Endocrinology"
+    },
+    {
+        "id": "Endocrinology, diabetes and metabolism",
+        "type": "specialty",
+        "label": "Endocrinology, diabetes and metabolism",
+        "description": "Endocrinology"
+    },
+    {
+        "id": "Facial pain",
+        "type": "specialty",
+        "label": "Facial pain",
+        "description": "Dentistry - Orofacial Pain"
+    },
+    {
+        "id": "Foot and ankle surgery",
+        "type": "specialty",
+        "label": "Foot and ankle surgery",
+        "description": "Orthopedic Surgery - Foot and Ankle"
+    },
+    {
+        "id": "Gastroentrtology",
+        "type": "specialty",
+        "label": "Gastroentrtology",
+        "description": "Gastroenterology"
+    },
+    {
+        "id": "Genitourinary center",
+        "type": "specialty",
+        "label": "Genitourinary center",
+        "description": "Urology"
+    },
+    {
+        "id": "Home health facility",
+        "type": "specialty",
+        "label": "Home health facility",
+        "description": "Home Health"
+    },
+    {
+        "id": "Infants and toddlers",
+        "type": "specialty",
+        "label": "Infants and toddlers",
+        "description": "Pediatrics"
+    },
+    {
+        "id": "Lymphedema center",
+        "type": "specialty",
+        "label": "Lymphedema center",
+        "description": "Internal Medicine"
+    },
+    {
+        "id": "Meals on wheels",
+        "type": "specialty",
+        "label": "Meals on wheels",
+        "description": "Meals"
+    },
+    {
+        "id": "Movement disorders",
+        "type": "specialty",
+        "label": "Movement disorders",
+        "description": "Neurology - Neuromuscular Medicine"
+    },
+    {
+        "id": "Narcotic pain management",
+        "type": "specialty",
+        "label": "Narcotic pain management",
+        "description": "Pain Medicine"
+    },
+    {
+        "id": "Neuro rehabilitation",
+        "type": "specialty",
+        "label": "Neuro rehabilitation",
+        "description": "Physical Therapy - Neurology"
+    },
+    {
+        "id": "Neuromuscular",
+        "type": "specialty",
+        "label": "Neuromuscular",
+        "description": "Neurology - Neuromuscular Medicine"
+    },
+    {
+        "id": "Nutritionist",
+        "type": "specialty",
+        "label": "Nutritionist",
+        "description": "Nutrition"
+    },
+    {
+        "id": "Oncology (breast)",
+        "type": "specialty",
+        "label": "Oncology (breast)",
+        "description": "General Surgery - Surgical Oncology"
+    },
+    {
+        "id": "Opthamology",
+        "type": "specialty",
+        "label": "Opthamology",
+        "description": "Optometry"
+    },
+    {
+        "id": "Optometry",
+        "type": "specialty",
+        "label": "Optometry",
+        "description": "Optometry"
+    },
+    {
+        "id": "Orthopedic care specialist",
+        "type": "specialty",
+        "label": "Orthopedic care specialist",
+        "description": "Orthopedic Surgery"
+    },
+    {
+        "id": "Otolaryngolgoy",
+        "type": "specialty",
+        "label": "Otolaryngolgoy",
+        "description": "Otolaryngology"
+    },
+    {
+        "id": "Otoneurology",
+        "type": "specialty",
+        "label": "Otoneurology",
+        "description": "Otolaryngology - Otology & Neurotology"
+    },
+    {
+        "id": "Ped dermatology",
+        "type": "specialty",
+        "label": "Ped dermatology",
+        "description": "Dermatology - Pediatrics"
+    },
+    {
+        "id": "Pft - pulmonary studies",
+        "type": "specialty",
+        "label": "Pft - pulmonary studies",
+        "description": "Respiratory Therapy - Pulmonary Diagnostics"
+    },
+    {
+        "id": "Pt - anodyne tx-physical therapy",
+        "type": "specialty",
+        "label": "Pt - anodyne tx-physical therapy",
+        "description": "Physical Therapy"
+    },
+    {
+        "id": "Pt - electric stimulation-physical therapy",
+        "type": "specialty",
+        "label": "Pt - electric stimulation-physical therapy",
+        "description": "Physical Therapy - Neurology"
+    },
+    {
+        "id": "Pt - therapeutic graded exercise-physical therapy",
+        "type": "specialty",
+        "label": "Pt - therapeutic graded exercise-physical therapy",
+        "description": "Physical Therapy"
+    },
+    {
+        "id": "Pain managment",
+        "type": "specialty",
+        "label": "Pain managment",
+        "description": "Pain Medicine"
+    },
+    {
+        "id": "Pain medicine/interventional pan medicine",
+        "type": "specialty",
+        "label": "Pain medicine/interventional pan medicine",
+        "description": "Pain Medicine"
+    },
+    {
+        "id": "Palliative care - compassus",
+        "type": "specialty",
+        "label": "Palliative care - compassus",
+        "description": "Hospice & Palliative Medicine"
+    },
+    {
+        "id": "Pediatric aba therapy",
+        "type": "specialty",
+        "label": "Pediatric aba therapy",
+        "description": "Developmental Therapy"
+    },
+    {
+        "id": "Pediatric anesthesiologist",
+        "type": "specialty",
+        "label": "Pediatric anesthesiologist",
+        "description": "Anesthesiology - Pediatrics"
+    },
+    {
+        "id": "Pediatric dermatologist",
+        "type": "specialty",
+        "label": "Pediatric dermatologist",
+        "description": "Dermatology - Pediatrics"
+    },
+    {
+        "id": "Pediatric developmental",
+        "type": "specialty",
+        "label": "Pediatric developmental",
+        "description": "Pediatrics - Developmental and Behavioral"
+    },
+    {
+        "id": "Pediatric ent",
+        "type": "specialty",
+        "label": "Pediatric ent",
+        "description": "Otolaryngology - Pediatrics"
+    },
+    {
+        "id": "Pediatric endocrinologist",
+        "type": "specialty",
+        "label": "Pediatric endocrinologist",
+        "description": "Pediatrics - Endocrinology"
+    },
+    {
+        "id": "Pediatric gastroenterologist",
+        "type": "specialty",
+        "label": "Pediatric gastroenterologist",
+        "description": "Pediatrics - Gastroenterology"
+    },
+    {
+        "id": "Pediatric hematology",
+        "type": "specialty",
+        "label": "Pediatric hematology",
+        "description": "Pediatrics - Hematology & Oncology"
+    },
+    {
+        "id": "Pediatric ophthalmologist",
+        "type": "specialty",
+        "label": "Pediatric ophthalmologist",
+        "description": "Ophthalmology - Pediatrics"
+    },
+    {
+        "id": "Pelvic pain",
+        "type": "specialty",
+        "label": "Pelvic pain",
+        "description": "Obstetrics & Gynecology - Female Pelvic Medicine and Reconstructive Surgery"
+    },
+    {
+        "id": "Podiatry (foot clinic of new york)",
+        "type": "specialty",
+        "label": "Podiatry (foot clinic of new york)",
+        "description": "Podiatry - Foot Surgery"
+    },
+    {
+        "id": "Podiatry/ ankle surgeon",
+        "type": "specialty",
+        "label": "Podiatry/ ankle surgeon",
+        "description": "Podiatry - Foot Surgery"
+    },
+    {
+        "id": "Primary medical services",
+        "type": "specialty",
+        "label": "Primary medical services",
+        "description": "Clinic/Center - Primary Care"
+    },
+    {
+        "id": "Rehabilation",
+        "type": "specialty",
+        "label": "Rehabilation",
+        "description": "Physical Medicine & Rehabilitation"
+    },
+    {
+        "id": "Rehabilitation services",
+        "type": "specialty",
+        "label": "Rehabilitation services",
+        "description": "Clinic/Center - Rehabilitation"
+    },
+    {
+        "id": "Spine surgeon",
+        "type": "specialty",
+        "label": "Spine surgeon",
+        "description": "Orthopedic Surgery - Spine"
+    },
+    {
+        "id": "Surgical oncology plastics",
+        "type": "specialty",
+        "label": "Surgical oncology plastics",
+        "description": "Plastic Surgery"
+    },
+    {
+        "id": "Senior placement",
+        "type": "specialty",
+        "label": "Senior placement",
+        "description": "Hospice"
+    },
+    {
+        "id": "Sleep specialty",
+        "type": "specialty",
+        "label": "Sleep specialty",
+        "description": "Clinic/Center - Sleep Disorder Diagnostic"
+    },
+    {
+        "id": "Social work (psychosocial)",
+        "type": "specialty",
+        "label": "Social work (psychosocial)",
+        "description": "Social Worker"
+    },
+    {
+        "id": "Spinecare and rehabilitation medicine",
+        "type": "specialty",
+        "label": "Spinecare and rehabilitation medicine",
+        "description": "Orthopedic Surgery - Spine"
+    },
+    {
+        "id": "Uro/gyn",
+        "type": "specialty",
+        "label": "Uro/gyn",
+        "description": "Urology - Female Urogynecology Pelvic and Reconstructive Surgery"
+    },
+    {
+        "id": "Uro/gynecology",
+        "type": "specialty",
+        "label": "Uro/gynecology",
+        "description": "Urology - Female Urogynecology Pelvic and Reconstructive Surgery"
+    },
+    {
+        "id": "Urogynecolgy",
+        "type": "specialty",
+        "label": "Urogynecolgy",
+        "description": "Urology - Female Urogynecology Pelvic and Reconstructive Surgery"
+    },
+    {
+        "id": "Vaccines",
+        "type": "specialty",
+        "label": "Vaccines",
+        "description": "Nurse Practitioner"
+    },
+    {
+        "id": "Vascular surgeon",
+        "type": "specialty",
+        "label": "Vascular surgeon",
+        "description": "General Surgery - Vascular Surgery"
+    },
+    {
+        "id": "Vein",
+        "type": "specialty",
+        "label": "Vein",
+        "description": "General Surgery - Vascular Surgery"
+    },
+    {
+        "id": "Vein specialist",
+        "type": "specialty",
+        "label": "Vein specialist",
+        "description": "Specialist/Technologist Cardiovascular - Vascular Specialist"
+    },
+    {
+        "id": "Ortho hip/leg/knee",
+        "type": "specialty",
+        "label": "Ortho hip/leg/knee",
+        "description": "Orthopedic Surgery - Foot and Ankle"
+    },
+    {
+        "id": "Ortho knee",
+        "type": "specialty",
+        "label": "Ortho knee",
+        "description": "Orthopedic Surgery"
+    },
+    {
+        "id": "Uro gynecologist",
+        "type": "specialty",
+        "label": "Uro gynecologist",
+        "description": "Urology - Female Urogynecology Pelvic and Reconstructive Surgery"
+    },
+    {
+        "id": "Allergy/asthma",
+        "type": "specialty",
+        "label": "Allergy/asthma",
+        "description": "Allergy & Immunology"
+    },
+    {
+        "id": "Assisted living",
+        "type": "specialty",
+        "label": "Assisted living",
+        "description": "Assisted Living Facility"
+    },
+    {
+        "id": "Autusm evaluation",
+        "type": "specialty",
+        "label": "Autusm evaluation",
+        "description": "Neurology - Neurodevelopmental Disabilities"
+    },
+    {
+        "id": "Ambulatory eeg-48 hrs",
+        "type": "specialty",
+        "label": "Ambulatory eeg-48 hrs",
+        "description": "Specialist/Technologist, Other - EEG"
+    },
+    {
+        "id": "Autism",
+        "type": "specialty",
+        "label": "Autism",
+        "description": "Neurology - Neurodevelopmental Disabilities"
+    },
+    {
+        "id": "Bariatric/weight loss surgery",
+        "type": "specialty",
+        "label": "Bariatric/weight loss surgery",
+        "description": "General Surgery"
+    },
+    {
+        "id": "Breast oncology",
+        "type": "specialty",
+        "label": "Breast oncology",
+        "description": "Plastic Surgery - Reconstructive Surgery"
+    },
+    {
+        "id": "Cardiovascular",
+        "type": "specialty",
+        "label": "Cardiovascular",
+        "description": "Cardiology"
+    },
+    {
+        "id": "Chiropractic",
+        "type": "specialty",
+        "label": "Chiropractic",
+        "description": "Chiropractor"
+    },
+    {
+        "id": "Endocrinology/diabetes",
+        "type": "specialty",
+        "label": "Endocrinology/diabetes",
+        "description": "Endocrinology"
+    },
+    {
+        "id": "Feeding therapy",
+        "type": "specialty",
+        "label": "Feeding therapy",
+        "description": "Dietary - Pediatrics"
+    },
+    {
+        "id": "Family nurse practitioner",
+        "type": "specialty",
+        "label": "Family nurse practitioner",
+        "description": "Nurse Practitioner"
+    },
+    {
+        "id": "Gi pediatric",
+        "type": "specialty",
+        "label": "Gi pediatric",
+        "description": "Pediatrics - Gastroenterology"
+    },
+    {
+        "id": "Gastroenterology diagnostic",
+        "type": "specialty",
+        "label": "Gastroenterology diagnostic",
+        "description": "Gastroenterology"
+    },
+    {
+        "id": "General surgery, cholecystecomy",
+        "type": "specialty",
+        "label": "General surgery, cholecystecomy",
+        "description": "General Surgery - Surgical Oncology"
+    },
+    {
+        "id": "Geriatrics",
+        "type": "specialty",
+        "label": "Geriatrics",
+        "description": "Internal Medicine - Geriatric Medicine"
+    },
+    {
+        "id": "Glaucoma specialist",
+        "type": "specialty",
+        "label": "Glaucoma specialist",
+        "description": "Ophthalmology - Glaucoma"
+    },
+    {
+        "id": "Gynecology oncology",
+        "type": "specialty",
+        "label": "Gynecology oncology",
+        "description": "Obstetrics & Gynecology - Oncology"
+    },
+    {
+        "id": "Headache specialist",
+        "type": "specialty",
+        "label": "Headache specialist",
+        "description": "Clinic/Center - Pain"
+    },
+    {
+        "id": "Hearing",
+        "type": "specialty",
+        "label": "Hearing",
+        "description": "Clinic/Center - Hearing and Speech"
+    },
+    {
+        "id": "Internal case management-clinical",
+        "type": "specialty",
+        "label": "Internal case management-clinical",
+        "description": "Case Management"
+    },
+    {
+        "id": "Internal maternity care coordination",
+        "type": "specialty",
+        "label": "Internal maternity care coordination",
+        "description": "Clinic/Center - Birthing"
+    },
+    {
+        "id": "Internal medicine - gastroenterology",
+        "type": "specialty",
+        "label": "Internal medicine - gastroenterology",
+        "description": "Gastroenterology"
+    },
+    {
+        "id": "Musculoskeletal oncology",
+        "type": "specialty",
+        "label": "Musculoskeletal oncology",
+        "description": "General Surgery - Surgical Oncology"
+    },
+    {
+        "id": "Memory",
+        "type": "specialty",
+        "label": "Memory",
+        "description": "Neurology"
+    },
+    {
+        "id": "Movement disorder",
+        "type": "specialty",
+        "label": "Movement disorder",
+        "description": "Neurology - Neuromuscular Medicine"
+    },
+    {
+        "id": "Neurodevelopment",
+        "type": "specialty",
+        "label": "Neurodevelopment",
+        "description": "Neurology - Neurodevelopmental Disabilities"
+    },
+    {
+        "id": "Neuro-otology",
+        "type": "specialty",
+        "label": "Neuro-otology",
+        "description": "Otolaryngology - Otology & Neurotology"
+    },
+    {
+        "id": "Neurogeneticist",
+        "type": "specialty",
+        "label": "Neurogeneticist",
+        "description": "Neurology - Clinical Neurophysiology"
+    },
+    {
+        "id": "Neurodevelopmental",
+        "type": "specialty",
+        "label": "Neurodevelopmental",
+        "description": "Neurology - Neurodevelopmental Disabilities"
+    },
+    {
+        "id": "Neurology/pediatrics",
+        "type": "specialty",
+        "label": "Neurology/pediatrics",
+        "description": "Neurology - Pediatrics"
+    },
+    {
+        "id": "Neurosurgeon",
+        "type": "specialty",
+        "label": "Neurosurgeon",
+        "description": "Neurological Surgery"
+    },
+    {
+        "id": "Nursing home",
+        "type": "specialty",
+        "label": "Nursing home",
+        "description": "Skilled Nursing Facility"
+    },
+    {
+        "id": "Occuloplastic specialist",
+        "type": "specialty",
+        "label": "Occuloplastic specialist",
+        "description": "Technician/Technologist - Ocularist"
+    },
+    {
+        "id": "Oculoplastic",
+        "type": "specialty",
+        "label": "Oculoplastic",
+        "description": "Technician/Technologist - Ocularist"
+    },
+    {
+        "id": "Orthopaedic surgery",
+        "type": "specialty",
+        "label": "Orthopaedic surgery",
+        "description": "Orthopedic Surgery"
+    },
+    {
+        "id": "Orthopedic oncology",
+        "type": "specialty",
+        "label": "Orthopedic oncology",
+        "description": "Orthopedic Surgery"
+    },
+    {
+        "id": "Orthopedics/dpm",
+        "type": "specialty",
+        "label": "Orthopedics/dpm",
+        "description": "Chiropractor - Orthopedic"
+    },
+    {
+        "id": "Orthotist and prosthetist",
+        "type": "specialty",
+        "label": "Orthotist and prosthetist",
+        "description": "Prosthetic/Orthotic Supplier"
+    },
+    {
+        "id": "Osteopathic manipulation medicine",
+        "type": "specialty",
+        "label": "Osteopathic manipulation medicine",
+        "description": "Osteopathic Medicine"
+    },
+    {
+        "id": "Otolaryngology (ent)",
+        "type": "specialty",
+        "label": "Otolaryngology (ent)",
+        "description": "Otolaryngology"
+    },
+    {
+        "id": "Pt - home exercise program-physical therapy",
+        "type": "specialty",
+        "label": "Pt - home exercise program-physical therapy",
+        "description": "Physical Therapy"
+    },
+    {
+        "id": "Pt - vestibular rehab-physical therapy",
+        "type": "specialty",
+        "label": "Pt - vestibular rehab-physical therapy",
+        "description": "Physical Therapy"
+    },
+    {
+        "id": "Pain management (epidural)",
+        "type": "specialty",
+        "label": "Pain management (epidural)",
+        "description": "Anesthesiology - Pain Medicine"
+    },
+    {
+        "id": "Pain manangment/physical therapy",
+        "type": "specialty",
+        "label": "Pain manangment/physical therapy",
+        "description": "Physical Medicine & Rehabilitation - Pain Medicine"
+    },
+    {
+        "id": "Pediatric hematology-oncology",
+        "type": "specialty",
+        "label": "Pediatric hematology-oncology",
+        "description": "Pediatrics - Hematology & Oncology"
+    },
+    {
+        "id": "Pediatric psychiatry",
+        "type": "specialty",
+        "label": "Pediatric psychiatry",
+        "description": "Psychiatry - Child & Adolescent"
+    },
+    {
+        "id": "Pediatric radiology",
+        "type": "specialty",
+        "label": "Pediatric radiology",
+        "description": "Radiology - Pediatrics"
+    },
+    {
+        "id": "Pediatric sleep clinic",
+        "type": "specialty",
+        "label": "Pediatric sleep clinic",
+        "description": "Pediatrics - Sleep Medicine"
+    },
+    {
+        "id": "Pediatric therapy center",
+        "type": "specialty",
+        "label": "Pediatric therapy center",
+        "description": "Physical Therapy - Pediatrics"
+    },
+    {
+        "id": "Pediatric urologist",
+        "type": "specialty",
+        "label": "Pediatric urologist",
+        "description": "Urology - Pediatrics"
+    },
+    {
+        "id": "Perinatology",
+        "type": "specialty",
+        "label": "Perinatology",
+        "description": "Pediatrics - Neonatology-Perinatology"
+    },
+    {
+        "id": "Pre-diabetes self-managment program (ndpp)",
+        "type": "specialty",
+        "label": "Pre-diabetes self-managment program (ndpp)",
+        "description": "Nurse Practitioner - Diabetes Educator"
+    },
+    {
+        "id": "Psychiatric hospital",
+        "type": "specialty",
+        "label": "Psychiatric hospital",
+        "description": "Psychiatric Hospital"
+    },
+    {
+        "id": "Psychiatric services",
+        "type": "specialty",
+        "label": "Psychiatric services",
+        "description": "Psychiatric Unit"
+    },
+    {
+        "id": "Pulmonary/allergy,asthma/sleep study",
+        "type": "specialty",
+        "label": "Pulmonary/allergy,asthma/sleep study",
+        "description": "Allergy & Immunology"
+    },
+    {
+        "id": "Reproductive endocrinologist",
+        "type": "specialty",
+        "label": "Reproductive endocrinologist",
+        "description": "Obstetrics & Gynecology - Reproductive Endocrinology and Infertility"
+    },
+    {
+        "id": "Specialist",
+        "type": "specialty",
+        "label": "Specialist",
+        "description": "Specialist"
+    },
+    {
+        "id": "Spine specialties",
+        "type": "specialty",
+        "label": "Spine specialties",
+        "description": "Orthopedic Surgery - Spine"
+    },
+    {
+        "id": "Sleep center/medicine",
+        "type": "specialty",
+        "label": "Sleep center/medicine",
+        "description": "Internal Medicine - Sleep Medicine"
+    },
+    {
+        "id": "Specialist  unk",
+        "type": "specialty",
+        "label": "Specialist  unk",
+        "description": "Specialist"
+    },
+    {
+        "id": "Speech language pathology",
+        "type": "specialty",
+        "label": "Speech language pathology",
+        "description": "Speech-Language Pathology"
+    },
+    {
+        "id": "Surgery- breast",
+        "type": "specialty",
+        "label": "Surgery- breast",
+        "description": "Plastic Surgery - Reconstructive Surgery"
+    },
+    {
+        "id": "Therapeutic phlebotomy",
+        "type": "specialty",
+        "label": "Therapeutic phlebotomy",
+        "description": "Technician, Pathology - Phlebotomy"
+    },
+    {
+        "id": "Vein and vascular",
+        "type": "specialty",
+        "label": "Vein and vascular",
+        "description": "General Surgery - Vascular Surgery"
+    },
+    {
+        "id": "Gastroenterology (female)",
+        "type": "specialty",
+        "label": "Gastroenterology (female)",
+        "description": "Gastroenterology"
+    },
+    {
+        "id": "Ortho hand/shoulder/elbow",
+        "type": "specialty",
+        "label": "Ortho hand/shoulder/elbow",
+        "description": "Orthopedic Surgery - Hand"
+    },
+    {
+        "id": "Orthopedics knees/shoulders",
+        "type": "specialty",
+        "label": "Orthopedics knees/shoulders",
+        "description": "Orthopedic Surgery"
+    },
+    {
+        "id": "Pain mgt and spine",
+        "type": "specialty",
+        "label": "Pain mgt and spine",
+        "description": "Pain Medicine"
+    },
+    {
+        "id": "Physical evaluations",
+        "type": "specialty",
+        "label": "Physical evaluations",
+        "description": "Physical Therapy"
+    },
+    {
+        "id": "Physical evaluations2",
+        "type": "specialty",
+        "label": "Physical evaluations2",
+        "description": "Physical therapy"
+    }
+]

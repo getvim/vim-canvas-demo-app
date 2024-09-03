@@ -17,6 +17,7 @@ import { useVimOSEncounter } from "./hooks/useEncounter";
 import { useVimOSOrders } from "./hooks/useOrders";
 import { useVimOSPatient } from "./hooks/usePatient";
 import { useVimOSReferral } from "./hooks/useReferral";
+import { ReferralContent } from "./components/referral-content";
 
 function App() {
   const { setJsonMode } = useAppConfig();
@@ -53,7 +54,9 @@ function App() {
       )}
       {referral && (
         <CollapsibleEntity entityTitle="Referral" entityIconUrl={referralSvg}>
-          <CollapsibleEntityContent>Hello</CollapsibleEntityContent>
+          <CollapsibleEntityContent>
+            <ReferralContent />
+          </CollapsibleEntityContent>
         </CollapsibleEntity>
       )}
       {orders && (

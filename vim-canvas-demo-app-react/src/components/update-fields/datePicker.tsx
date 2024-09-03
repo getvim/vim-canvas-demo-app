@@ -10,14 +10,20 @@ import {
 } from "@/components/ui/popover";
 import { cn } from "@/lib/utils";
 import { UpdateField } from "./types";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export function DatePicker({
   value,
   onChange,
   disabled,
 }: UpdateField<Date | undefined>) {
+  const [innerValue, setInnerValue] = useState(value);
   const [open, setIsOpen] = useState(false);
+
+  useEffect(() => {
+    setInnerValue(value);
+  }, [value]);
+
   return (
     <Popover open={open} onOpenChange={setIsOpen}>
       <PopoverTrigger asChild>
@@ -26,20 +32,21 @@ export function DatePicker({
           variant={"outline"}
           className={cn(
             "w-[240px] h-7 justify-start text-left font-normal",
-            !value && "text-muted-foreground"
+            !innerValue && "text-muted-foreground"
           )}
         >
           <CalendarIcon className="mr-2 h-4 w-4" />
-          {value ? format(value, "PPP") : <span>Pick a date</span>}
+          {innerValue ? format(innerValue, "PPP") : <span>Pick a date</span>}
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-auto p-0" align="start">
         <Calendar
           mode="single"
-          selected={value}
+          selected={innerValue}
           onSelect={(day) => {
             setIsOpen(false);
             onChange(day);
+            setInnerValue(day);
           }}
           initialFocus
         />

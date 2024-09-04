@@ -82,3 +82,10 @@ pnpm dev
 
 7. Follow up on [Testing Your Application](https://docs.getvim.com/platform/testing.html#testing-your-application) in the official docs
 
+## Authentication Flow
+
+The `functions` folder is a cloudflare pages function that handles the authentication flow for the app.
+
+When running locally the api server starts at `http://localhost:8788` & exposes the following endpoints:
+* `/api/launch` - This endpoint is used to initiate the authentication flow.
+* `/api/token` - This endpoint is used to handle the callback from the Vim Canvas platform to create a token.

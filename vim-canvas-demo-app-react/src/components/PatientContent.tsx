@@ -4,6 +4,14 @@ import { useEffect, useState } from "react";
 import { EHR } from "vim-os-js-browser/types";
 import { JSONView } from "./ui/jsonView";
 import { Separator } from "./ui/separator";
+import {
+  EntityFieldContent,
+  EntityFieldReadonlyList,
+  EntityFieldReadonlyText,
+  EntityFieldTitle,
+  EntitySectionContent,
+  EntitySectionTitle,
+} from "./ui/entityContent";
 
 export const PatientContent = () => {
   const { jsonMode } = useAppConfig();
@@ -24,149 +32,128 @@ export const PatientContent = () => {
         <JSONView value={patient} />
       ) : (
         <>
-          <h2 className="my-3 text-sm font-bold">Identifier</h2>
-          <div className="mb-2">
-            <div className="mb-4">
-              <h3 className="text-xs mt-2 font-semibold">EHR patient ID</h3>
-              <p className="font-thin text-xs">
-                {patient?.identifiers.ehrPatientId ?? '--'}
-              </p>
-            </div>
-            <div className="mb-4">
-              <h3 className="text-xs mt-2 font-semibold">Vim patient ID</h3>
-              <p className="font-thin text-xs">
-                {patient?.identifiers.vimPatientId ?? '--'}
-              </p>
-            </div>
-            <div className="mb-4">
-              <h3 className="text-xs mt-2 font-semibold">MRN ID</h3>
-              <p className="font-thin text-xs">{patient?.identifiers.mrn ?? '--'}</p>
-            </div>
-          </div>
+          <EntitySectionTitle title="Identifier" />
+          <EntitySectionContent>
+            <EntityFieldContent>
+              <EntityFieldTitle title="EHR patient ID" />
+              <EntityFieldReadonlyText
+                text={patient?.identifiers.ehrPatientId}
+              />
+            </EntityFieldContent>
+            <EntityFieldContent>
+              <EntityFieldTitle title="Vim patient ID" />
+              <EntityFieldReadonlyText
+                text={patient?.identifiers.vimPatientId}
+              />
+            </EntityFieldContent>
+            <EntityFieldContent>
+              <EntityFieldTitle title="MRN ID" />
+              <EntityFieldReadonlyText text={patient?.identifiers.mrn} />
+            </EntityFieldContent>
+          </EntitySectionContent>
           <Separator className="mb-1" />
-          <h2 className="my-3 text-sm font-bold">Demographics</h2>
-          <div className="mb-2">
-            <div className="mb-4">
-              <h3 className="text-xs mt-2 font-semibold">First name</h3>
-              <p className="font-thin text-xs">
-                {patient?.demographics?.firstName ?? '--'}
-              </p>
-            </div>
-            <div className="mb-4">
-              <h3 className="text-xs mt-2 font-semibold">Middle name</h3>
-              <p className="font-thin text-xs">
-                {patient?.demographics?.middleName ?? '--'}
-              </p>
-            </div>
-            <div className="mb-4">
-              <h3 className="text-xs mt-2 font-semibold">Last name</h3>
-              <p className="font-thin text-xs">
-                {patient?.demographics?.lastName ?? '--'}
-              </p>
-            </div>
-            <div className="mb-4">
-              <h3 className="text-xs mt-2 font-semibold">Date of birth</h3>
-              <p className="font-thin text-xs">
-                {patient?.demographics?.dateOfBirth ?? '--'}
-              </p>
-            </div>
-            <div className="mb-4">
-              <h3 className="text-xs mt-2 font-semibold">Gender</h3>
-              <p className="font-thin text-xs">
-                {patient?.demographics?.gender ?? '--'}
-              </p>
-            </div>
-          </div>
+          <EntitySectionTitle title="Demographics" />
+          <EntitySectionContent>
+            <EntityFieldContent>
+              <EntityFieldTitle title="First name" />
+              <EntityFieldReadonlyText
+                text={patient?.demographics?.firstName}
+              />
+            </EntityFieldContent>
+            <EntityFieldContent>
+              <EntityFieldTitle title="Middle name" />
+              <EntityFieldReadonlyText
+                text={patient?.demographics?.middleName}
+              />
+            </EntityFieldContent>
+            <EntityFieldContent>
+              <EntityFieldTitle title="Last name" />
+              <EntityFieldReadonlyText text={patient?.demographics?.lastName} />
+            </EntityFieldContent>
+            <EntityFieldContent>
+              <EntityFieldTitle title="Date of birth" />
+              <EntityFieldReadonlyText
+                text={patient?.demographics?.dateOfBirth}
+              />
+            </EntityFieldContent>
+            <EntityFieldContent>
+              <EntityFieldTitle title="Gender" />
+              <EntityFieldReadonlyText text={patient?.demographics?.gender} />
+            </EntityFieldContent>
+          </EntitySectionContent>
           <Separator className="mb-1" />
-          <h2 className="my-3 text-sm font-bold">Address</h2>
-          <div className="mb-2">
-            <div className="mb-4">
-              <h3 className="text-xs mt-2 font-semibold">Address line 1</h3>
-              <p className="font-thin text-xs">{patient?.address?.address1 ?? '--'}</p>
-            </div>
-            <div className="mb-4">
-              <h3 className="text-xs mt-2 font-semibold">Address line 2</h3>
-              <p className="font-thin text-xs">{patient?.address?.address2 ?? '--'}</p>
-            </div>
-            <div className="mb-4">
-              <h3 className="text-xs mt-2 font-semibold">City</h3>
-              <p className="font-thin text-xs">{patient?.address?.city ?? '--'}</p>
-            </div>
-            <div className="mb-4">
-              <h3 className="text-xs mt-2 font-semibold">State</h3>
-              <p className="font-thin text-xs">{patient?.address?.state ?? '--'}</p>
-            </div>
-            <div className="mb-4">
-              <h3 className="text-xs mt-2 font-semibold">Zip</h3>
-              <p className="font-thin text-xs">{patient?.address?.zipCode ?? '--'}</p>
-            </div>
-            <div className="mb-4">
-              <h3 className="text-xs mt-2 font-semibold">Full address</h3>
-              <p className="font-thin text-xs">
-                {patient?.address?.fullAddress ?? '--'}
-              </p>
-            </div>
-          </div>
+          <EntitySectionTitle title="Address" />
+          <EntitySectionContent>
+            <EntityFieldContent>
+              <EntityFieldTitle title="Address line 1" />
+              <EntityFieldReadonlyText text={patient?.address?.address1} />
+            </EntityFieldContent>
+            <EntityFieldContent>
+              <EntityFieldTitle title="Address line 2" />
+              <EntityFieldReadonlyText text={patient?.address?.address2} />
+            </EntityFieldContent>
+            <EntityFieldContent>
+              <EntityFieldTitle title="City" />
+              <EntityFieldReadonlyText text={patient?.address?.city} />
+            </EntityFieldContent>
+            <EntityFieldContent>
+              <EntityFieldTitle title="State" />
+              <EntityFieldReadonlyText text={patient?.address?.state} />
+            </EntityFieldContent>
+            <EntityFieldContent>
+              <EntityFieldTitle title="Zip" />
+              <EntityFieldReadonlyText text={patient?.address?.zipCode} />
+            </EntityFieldContent>
+            <EntityFieldContent>
+              <EntityFieldTitle title="Full address" />
+              <EntityFieldReadonlyText text={patient?.address?.fullAddress} />
+            </EntityFieldContent>
+          </EntitySectionContent>
           <Separator className="mb-1" />
-          <h2 className="my-3 text-sm font-bold">Contact Information</h2>
-          <div className="mb-2">
-            <div className="mb-4">
-              <h3 className="text-xs mt-2 font-semibold">Home phone number</h3>
-              <p className="font-thin text-xs">
-                {patient?.contact_info?.homePhoneNumber ?? '--'}
-              </p>
-            </div>
-            <div className="mb-4">
-              <h3 className="text-xs mt-2 font-semibold">
-                Mobile phone number
-              </h3>
-              <p className="font-thin text-xs">
-                {patient?.contact_info?.mobilePhoneNumber ?? '--'}
-              </p>
-            </div>
-            <div className="mb-4">
-              <h3 className="text-xs mt-2 font-semibold">
-                Email
-              </h3>
-              <p className="font-thin text-xs">
-                {patient?.contact_info?.email ?? '--'}
-              </p>
-            </div>
-          </div>
+          <EntitySectionTitle title="Contact" />
+          <EntitySectionContent>
+            <EntityFieldContent>
+              <EntityFieldTitle title="Home phone number" />
+              <EntityFieldReadonlyText
+                text={patient?.contact_info?.homePhoneNumber}
+              />
+            </EntityFieldContent>
+            <EntityFieldContent>
+              <EntityFieldTitle title="Mobile phone number" />
+              <EntityFieldReadonlyText
+                text={patient?.contact_info?.mobilePhoneNumber}
+              />
+            </EntityFieldContent>
+            <EntityFieldContent>
+              <EntityFieldTitle title="Email" />
+              <EntityFieldReadonlyText text={patient?.contact_info?.email} />
+            </EntityFieldContent>
+          </EntitySectionContent>
           <Separator className="mb-1" />
-          <h2 className="my-3 text-sm font-bold">Insurance</h2>
-          <div className="mb-2">
-            <div className="mb-4">
-              <h3 className="text-xs mt-2 font-semibold">EHR Insurer name</h3>
-              <p className="font-thin text-xs">
-                {patient?.insurance?.ehrInsurance ?? '--'}
-              </p>
-            </div>
-            <div className="mb-4">
-              <h3 className="text-xs mt-2 font-semibold">Group ID</h3>
-              <p className="font-thin text-xs">{patient?.insurance?.groupId ?? '--'}</p>
-            </div>
-            <div className="mb-4">
-              <h3 className="text-xs mt-2 font-semibold">Payer ID</h3>
-              <p className="font-thin text-xs">{patient?.insurance?.payerId ?? '--'}</p>
-            </div>
-            <div className="mb-4">
-              <h3 className="text-xs mt-2 font-semibold">Member ID</h3>
-              <p className="font-thin text-xs">
-                {patient?.insurance?.memberId ?? '--'}
-              </p>
-            </div>
-          </div>
+          <EntitySectionTitle title="Insurance" />
+          <EntitySectionContent>
+            <EntityFieldContent>
+              <EntityFieldTitle title="EHR Insurer name" />
+              <EntityFieldReadonlyText
+                text={patient?.insurance?.ehrInsurance}
+              />
+            </EntityFieldContent>
+            <EntityFieldContent>
+              <EntityFieldTitle title="Group ID" />
+              <EntityFieldReadonlyText text={patient?.insurance?.groupId} />
+            </EntityFieldContent>
+            <EntityFieldContent>
+              <EntityFieldTitle title="Payer ID" />
+              <EntityFieldReadonlyText text={patient?.insurance?.payerId} />
+            </EntityFieldContent>
+            <EntityFieldContent>
+              <EntityFieldTitle title="Member ID" />
+              <EntityFieldReadonlyText text={patient?.insurance?.memberId} />
+            </EntityFieldContent>
+          </EntitySectionContent>
           <Separator className="mb-1" />
-          <h2 className="my-3 text-sm font-bold">Problem List</h2>
-          <ul>
-            {problemList?.map((problem, index) => (
-              <li key={index} className="flex">
-                <p className="font-semibold w-12 text-xs">{problem.code ?? '--'}</p>
-                <p className="font-thin text-xs">- {problem.description ?? '--'}</p>
-              </li>
-            ))}
-          </ul>
+          <EntitySectionTitle title="Problem" />
+          <EntityFieldReadonlyList list={problemList} />
         </>
       )}
     </div>

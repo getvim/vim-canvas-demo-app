@@ -20,6 +20,7 @@ interface SelectFieldProps<T> extends UpdateField<T> {
   valueId?: string;
   placeholder: string;
   includeOptionsFields?: boolean;
+  formatOption?: (option: T) => string;
 }
 
 export function SelectField<T = unknown>({
@@ -29,6 +30,7 @@ export function SelectField<T = unknown>({
   disabled,
   options,
   includeOptionsFields,
+  formatOption,
 }: SelectFieldProps<T>) {
   const [innerValue, setInnerValue] = useState<string | undefined>(
     options.find((o) => o.id === valueId)?.id
@@ -54,7 +56,7 @@ export function SelectField<T = unknown>({
           <SelectGroup>
             {options.map((option, index) => (
               <SelectItem key={index} value={option.id}>
-                {option.label}
+                {formatOption ? formatOption(option) : option.label}
               </SelectItem>
             ))}
           </SelectGroup>

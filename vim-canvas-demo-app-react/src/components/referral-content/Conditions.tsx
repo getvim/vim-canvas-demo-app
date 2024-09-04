@@ -1,27 +1,22 @@
 import { useVimOSReferral } from "@/hooks/useReferral";
 import { SelectField } from "../update-fields/selectField";
 import { ReferralUpdateField } from "../update-fields/updateFieldWrapper";
+import {
+  EntityFieldContent,
+  EntityFieldReadonlyList,
+  EntitySectionContent,
+  EntitySectionTitle,
+} from "../ui/entityContent";
 
 export const ReferralConditions = () => {
   const { referral } = useVimOSReferral();
 
   return (
     <>
-      <h2 className="my-3 text-sm font-bold">Conditions</h2>
-      <div className="mb-2 px-2">
-        <div className="mb-4">
-          <ul className="mb-2">
-            {referral?.conditions?.diagnosis?.map((diagnosis, index) => (
-              <li key={index} className="flex">
-                <p className="font-semibold w-12 text-xs">
-                  {diagnosis.code ?? "--"}
-                </p>
-                <p className="font-thin text-xs">
-                  - {diagnosis.description ?? "--"}
-                </p>
-              </li>
-            ))}
-          </ul>
+      <EntitySectionTitle title="Conditions" />
+      <EntitySectionContent>
+        <EntityFieldContent>
+          <EntityFieldReadonlyList list={referral?.conditions?.diagnosis} />
           <ReferralUpdateField<{ id: string; label: string } | undefined>
             value={undefined}
             canUpdateParam={{
@@ -43,8 +38,9 @@ export const ReferralConditions = () => {
             })}
             render={({ field }) => (
               <SelectField
-                placeholder="Add condition"
+                placeholder="Add code"
                 includeOptionsFields
+                formatOption={(option) => `${option.id} - ${option.label}`}
                 options={[
                   { id: "E11.21", label: "DM with nephropathy" },
                   {
@@ -74,8 +70,8 @@ export const ReferralConditions = () => {
               />
             )}
           />
-        </div>
-      </div>
+        </EntityFieldContent>
+      </EntitySectionContent>
     </>
   );
 };

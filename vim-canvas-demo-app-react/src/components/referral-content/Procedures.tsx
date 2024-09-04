@@ -1,24 +1,22 @@
 import { useVimOSReferral } from "@/hooks/useReferral";
 import { SelectField } from "../update-fields/selectField";
 import { ReferralUpdateField } from "../update-fields/updateFieldWrapper";
+import {
+  EntityFieldContent,
+  EntityFieldReadonlyList,
+  EntitySectionContent,
+  EntitySectionTitle,
+} from "../ui/entityContent";
 
 export const ReferralProcedures = () => {
   const { referral } = useVimOSReferral();
 
   return (
     <>
-      <h2 className="my-3 text-sm font-bold">Procedure Codes</h2>
-      <div className="mb-2 px-2">
-        <div className="mb-4">
-          <ul>
-            {referral?.procedureCodes?.cpts?.map((cpt, index) => (
-              <li key={index} className="flex">
-                <p className="font-semibold w-12 text-xs">{cpt.code ?? "--"}</p>
-                <p className="font-thin text-xs">- {cpt.description ?? "--"}</p>
-                <p className="font-thin ml-2 text-xs">| {cpt.system ?? "--"}</p>
-              </li>
-            ))}
-          </ul>
+      <EntitySectionTitle title="Procedure Codes" />
+      <EntitySectionContent>
+        <EntityFieldContent>
+          <EntityFieldReadonlyList list={referral?.procedureCodes?.cpts} />
           <ReferralUpdateField<{ id: string; label: string } | undefined>
             value={undefined}
             canUpdateParam={{
@@ -40,8 +38,9 @@ export const ReferralProcedures = () => {
             })}
             render={({ field }) => (
               <SelectField
-                placeholder="Add condition"
+                placeholder="Add code"
                 includeOptionsFields
+                formatOption={(option) => `${option.id} - ${option.label}`}
                 options={[
                   {
                     id: "99203",
@@ -71,8 +70,8 @@ export const ReferralProcedures = () => {
               />
             )}
           />
-        </div>
-      </div>
+        </EntityFieldContent>
+      </EntitySectionContent>
     </>
   );
 };

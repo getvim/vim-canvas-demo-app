@@ -5,16 +5,23 @@ import { useVimOSReferral } from "@/hooks/useReferral";
 import { format, parseISO } from "date-fns";
 import { InputField } from "../update-fields/inputField";
 import { SelectField } from "../update-fields/selectField";
+import {
+  EntityFieldContent,
+  EntityFieldReadonlyText,
+  EntityFieldTitle,
+  EntitySectionContent,
+  EntitySectionTitle,
+} from "../ui/entityContent";
 
 export const ReferralBasicInformation = () => {
   const { referral } = useVimOSReferral();
 
   return (
     <>
-      <h2 className="my-3 text-sm font-bold">Basic Information</h2>
-      <div className="mb-2 px-2">
-        <div className="mb-4">
-          <h3 className="text-xs mt-2 font-semibold">Start date</h3>
+      <EntitySectionTitle title="Basic Information" />
+      <EntitySectionContent>
+        <EntityFieldContent>
+          <EntityFieldTitle title="Start date" />
           <div className="flex justify-center mt-2">
             <ReferralUpdateField<string | undefined>
               value={referral?.basicInformation?.startDate}
@@ -39,9 +46,9 @@ export const ReferralBasicInformation = () => {
               )}
             />
           </div>
-        </div>
-        <div className="mb-4">
-          <h3 className="text-xs mt-2 font-semibold">End date</h3>
+        </EntityFieldContent>
+        <EntityFieldContent>
+          <EntityFieldTitle title="End date" />
           <div className="flex justify-center mt-2">
             <ReferralUpdateField<string | undefined>
               value={referral?.basicInformation?.endDate}
@@ -66,17 +73,15 @@ export const ReferralBasicInformation = () => {
               )}
             />
           </div>
-        </div>
-        <div className="mb-4">
-          <h3 className="text-xs mt-2 font-semibold">Created at</h3>
-          <div className="mt-2">
-            <p className="font-thin text-xs">
-              {referral?.basicInformation?.createdDate ?? "--"}
-            </p>
-          </div>
-        </div>
-        <div className="mb-4">
-          <h3 className="text-xs mt-2 font-semibold">Priority</h3>
+        </EntityFieldContent>
+        <EntityFieldContent>
+          <EntityFieldTitle title="Created at" />
+          <EntityFieldReadonlyText
+            text={referral?.basicInformation?.createdDate}
+          />
+        </EntityFieldContent>
+        <EntityFieldContent>
+          <EntityFieldTitle title="Priority" />
           <div className="flex justify-center mt-2">
             <ReferralUpdateField<{ id?: string }>
               value={{ id: referral?.basicInformation?.priority }}
@@ -92,7 +97,7 @@ export const ReferralBasicInformation = () => {
               })}
               render={({ field }) => (
                 <SelectField
-                  valueId={field.value.id?.toUpperCase()}
+                  valueId={field.value?.id?.toUpperCase()}
                   includeOptionsFields
                   placeholder="Select priority"
                   options={[
@@ -105,43 +110,44 @@ export const ReferralBasicInformation = () => {
               )}
             />
           </div>
-        </div>
-        <div className="mb-4">
-          <h3 className="text-xs mt-2 font-semibold">Status</h3>
-          <div className="mt-2">
-            <p className="font-thin text-xs">
-              {referral?.basicInformation?.status ?? "--"}
-            </p>
+        </EntityFieldContent>
+        <EntityFieldContent>
+          <EntityFieldTitle title="Status" />
+          <EntityFieldReadonlyText text={referral?.basicInformation?.status} />
+        </EntityFieldContent>
+        <EntityFieldContent>
+          <EntityFieldTitle title="Speciality" />
+          <EntityFieldReadonlyText
+            text={referral?.basicInformation?.specialty}
+          />
+        </EntityFieldContent>
+        <EntityFieldContent>
+          <EntityFieldTitle title="Auth code" />
+          <div className="flex justify-center mt-2">
+            <ReferralUpdateField<string | undefined>
+              value={referral?.basicInformation?.authCode}
+              canUpdateParam={{
+                basicInformation: {
+                  authCode: true,
+                },
+              }}
+              valueToUpdatePayload={(value) => ({
+                basicInformation: {
+                  authCode: value,
+                },
+              })}
+              render={({ field }) => <InputField {...field} />}
+            />
           </div>
-        </div>
-        <div className="mb-4">
-          <h3 className="text-xs mt-2 font-semibold">Speciality</h3>
-          <div className="mt-2">
-            <p className="font-thin text-xs">
-              {referral?.basicInformation?.specialty ?? "--"}
-            </p>
-          </div>
-        </div>
-        <div className="mb-4">
-          <h3 className="text-xs mt-2 font-semibold">Auth code</h3>
-          <div className="mt-2">
-            <p className="font-thin text-xs">
-              {referral?.basicInformation?.authCode ?? "--"}
-            </p>
-          </div>
-        </div>
-        <div className="mb-4">
-          <h3 className="text-xs mt-2 font-semibold">Facility name</h3>
-          <div className="mt-2">
-            <p className="font-thin text-xs">
-              <p className="font-thin text-xs">
-                {referral?.basicInformation?.facilityName ?? "--"}
-              </p>
-            </p>
-          </div>
-        </div>
-        <div className="mb-4">
-          <h3 className="text-xs mt-2 font-semibold">Number of visits</h3>
+        </EntityFieldContent>
+        <EntityFieldContent>
+          <EntityFieldTitle title="Facility name" />
+          <EntityFieldReadonlyText
+            text={referral?.basicInformation?.facilityName}
+          />
+        </EntityFieldContent>
+        <EntityFieldContent>
+          <EntityFieldTitle title="Number of visits" />
           <div className="flex justify-center mt-2">
             <ReferralUpdateField<string | undefined>
               value={referral?.basicInformation?.numberOfVisits}
@@ -158,9 +164,9 @@ export const ReferralBasicInformation = () => {
               render={({ field }) => <InputField {...field} />}
             />
           </div>
-        </div>
-        <div className="mb-4">
-          <h3 className="text-xs mt-2 font-semibold">Reasons</h3>
+        </EntityFieldContent>
+        <EntityFieldContent>
+          <EntityFieldTitle title="Reasons" />
           <div className="flex justify-center mt-2">
             <ReferralUpdateField<string | undefined>
               value={referral?.basicInformation?.reasons?.[0]}
@@ -177,9 +183,9 @@ export const ReferralBasicInformation = () => {
               render={({ field }) => <InputField {...field} />}
             />
           </div>
-        </div>
-        <div className="mb-4">
-          <h3 className="text-xs mt-2 font-semibold">Notes</h3>
+        </EntityFieldContent>
+        <EntityFieldContent>
+          <EntityFieldTitle title="Notes" />
           <div className="flex justify-center mt-2">
             <ReferralUpdateField<string | undefined>
               value={referral?.basicInformation?.notes}
@@ -196,8 +202,8 @@ export const ReferralBasicInformation = () => {
               render={({ field }) => <InputField {...field} />}
             />
           </div>
-        </div>
-      </div>
+        </EntityFieldContent>
+      </EntitySectionContent>
     </>
   );
 };

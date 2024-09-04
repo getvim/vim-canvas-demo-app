@@ -18,6 +18,13 @@ import targetProvidersJson from "./targetProviders.json";
 import targetSpecialtiesJson from "./targetSpecialties.json";
 import { SelectField } from "../update-fields/selectField";
 import { ReferralProcedures } from "./Procedures";
+import {
+  EntityFieldContent,
+  EntityFieldReadonlyText,
+  EntityFieldTitle,
+  EntitySectionContent,
+  EntitySectionTitle,
+} from "../ui/entityContent";
 
 export const ReferralContent = () => {
   const { jsonMode } = useAppConfig();
@@ -29,21 +36,21 @@ export const ReferralContent = () => {
         <JSONView value={referral} />
       ) : (
         <>
-          <h2 className="my-3 text-sm font-bold">Identifiers</h2>
-          <div className="mb-2 px-2">
-            <div className="mb-4">
-              <h3 className="text-xs mt-2 font-semibold">EHR referral ID</h3>
-              <p className="font-thin text-xs">
-                {referral?.identifiers?.ehrReferralId ?? "--"}
-              </p>
-            </div>
-            <div className="mb-4">
-              <h3 className="text-xs mt-2 font-semibold">Vim referral ID</h3>
-              <p className="font-thin text-xs">
-                {referral?.identifiers?.vimReferralId ?? "--"}
-              </p>
-            </div>
-          </div>
+          <EntitySectionTitle title="Identifiers" />
+          <EntitySectionContent>
+            <EntityFieldContent>
+              <EntityFieldTitle title="EHR referral ID" />
+              <EntityFieldReadonlyText
+                text={referral?.identifiers?.ehrReferralId}
+              />
+            </EntityFieldContent>
+            <EntityFieldContent>
+              <EntityFieldTitle title="Vim referral ID" />
+              <EntityFieldReadonlyText
+                text={referral?.identifiers?.vimReferralId}
+              />
+            </EntityFieldContent>
+          </EntitySectionContent>
           <Separator className="mb-1" />
           <ReferralBasicInformation />
           <Separator className="mb-1" />
@@ -53,7 +60,7 @@ export const ReferralContent = () => {
           <Separator className="mb-1" />
           <Collapsible>
             <div className="flex w-full justify-between items-center">
-              <h2 className="my-3 text-sm font-bold">Referring Provider</h2>
+              <EntitySectionTitle title="Referring Provider" />
               <CollapsibleTrigger asChild>
                 <Button variant="ghost" size="sm">
                   <CaretSortIcon className="h-4 w-4" />
@@ -67,7 +74,7 @@ export const ReferralContent = () => {
           <Separator className="mb-1" />
           <Collapsible>
             <div className="flex w-full justify-between items-center">
-              <h2 className="my-3 text-sm font-bold">Target Provider</h2>
+              <EntitySectionTitle title="Target Provider" />
               <CollapsibleTrigger asChild>
                 <Button variant="ghost" size="sm">
                   <CaretSortIcon className="h-4 w-4" />
@@ -117,7 +124,7 @@ export const ReferralContent = () => {
             })}
             render={({ field }) => (
               <SelectField
-                valueId={field.value.id}
+                valueId={field.value?.id}
                 includeOptionsFields
                 placeholder="Select speciality"
                 options={targetSpecialtiesJson}

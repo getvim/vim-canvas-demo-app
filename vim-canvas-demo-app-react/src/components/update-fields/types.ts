@@ -1,5 +1,5 @@
 export interface UpdateField<T = unknown> {
-  value: T;
+  value?: T;
   disabled: boolean;
   onChange: (value: T) => void;
 }

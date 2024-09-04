@@ -41,7 +41,7 @@ export const EntityFieldReadonlyText = ({
   text,
   className,
 }: {
-  text?: string;
+  text?: string | number;
   className?: string;
 }) => {
   return (

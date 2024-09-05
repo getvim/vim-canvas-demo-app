@@ -2,15 +2,8 @@ import { JSONView } from "@/components/ui/jsonView";
 import { Separator } from "@/components/ui/separator";
 import { useAppConfig } from "@/hooks/useAppConfig";
 import { useVimOSReferral } from "@/hooks/useReferral";
-import { CaretSortIcon } from "@radix-ui/react-icons";
 import { EHR } from "vim-os-js-browser/types";
 import { ProviderSection } from "../Provider";
-import { Button } from "../ui/button";
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "../ui/collapsible";
 import {
   EntityFieldContent,
   EntityFieldReadonlyText,

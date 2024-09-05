@@ -1,19 +1,18 @@
+import { CaretSortIcon } from "@radix-ui/react-icons";
 import { EHR } from "vim-os-js-browser/types";
-import {
-  EntityFieldContent,
-  EntityFieldReadonlyList,
-  EntityFieldReadonlyText,
-  EntityFieldTitle,
-  EntitySectionContent,
-  EntitySectionTitle,
-} from "./ui/entityContent";
+import { Button } from "./ui/button";
 import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
 } from "./ui/collapsible";
-import { Button } from "./ui/button";
-import { CaretSortIcon } from "@radix-ui/react-icons";
+import {
+  EntityFieldContent,
+  EntityFieldReadonlyText,
+  EntityFieldTitle,
+  EntitySectionContent,
+  EntitySectionTitle,
+} from "./ui/entityContent";
 
 export const ProviderSection = ({
   provider,

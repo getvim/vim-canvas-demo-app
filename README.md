@@ -42,7 +42,14 @@ The app is built with `vite` and `react` and uses `shadcn`, `radix-ui`,`tailwind
 * `src/components/ui` - Contains UI components generated with [Shadcn](https://ui.shadcn.com/).
 * `src/hooks` - Contains custom hooks for the application, including hooks that wrap the VimOS.js Canvas SDK - [following the docs examples](https://docs.getvim.com/vim-os-js/reactjs.html#react-integration-guide-for-vimos.js).
 
-## Installation
+## Running the example code
+
+### Prerequisites
+In order to see the demo code in action, you must first configure an application in the [Vim Canvas Developer Platform](https://console.getvim.com/organization-admin/).
+
+If you don’t have a Vim Canvas developer account yet, register [here](https://getvim.com/vim-canvas-developer-platform/) to gain access.
+
+### Installation
 
 To install and run the app locally, follow these steps:
 

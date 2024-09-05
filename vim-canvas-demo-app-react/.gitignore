@@ -26,5 +26,3 @@ functions/**/*.js
 *.njsproj
 *.sln
 *.sw?
-
-.dev.vars

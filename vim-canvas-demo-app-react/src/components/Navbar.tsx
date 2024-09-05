@@ -31,109 +31,152 @@ export const Navbar = () => {
     vimOs.hub.setDynamicAppSize(size);
   };
 
+  const smallMode = appSize === "CLASSIC";
+
   return (
     <div className="px-2 pl-4 py-2 bg-accent flex justify-between items-center space-x-2">
       <div>
         <h2 className="text-sm">Vim Canvas</h2>
         <h2 className="text-sm font-bold">Demo</h2>
       </div>
-      <div className="flex items-center h-full">
+      <div
+        className={cn("flex items-center h-full", {
+          "space-x-1": smallMode,
+        })}
+      >
         <div className="flex items-center space-x-1">
           <Label className="text-xs" htmlFor="json-mode">
             JSON
           </Label>
           <Switch id="json-mode" onCheckedChange={setJsonMode} />
         </div>
-        <Separator
-          orientation={"vertical"}
-          className="mx-1 min-h-[20px] bg-foreground"
-        />
-        <Button
-          size="sm"
-          variant="ghost"
-          className="p-1 h-fit hover:bg-green-100/60 group"
-          onClick={() => handleAppSizeChange("EXTRA_LARGE")}
-        >
-          <img
-            src={layoutFullSvg}
-            alt="Layout full"
-            className={cn("group-hover:mix-blend-normal", {
-              "mix-blend-color": appSize !== "EXTRA_LARGE",
-            })}
+        {!smallMode && (
+          <Separator
+            orientation={"vertical"}
+            className="mx-1 min-h-[20px] bg-foreground"
           />
-        </Button>
-        <Button
-          size="sm"
-          variant="ghost"
-          className="p-1 h-fit hover:bg-green-100/60 group"
-          onClick={() => handleAppSizeChange("LARGE")}
-        >
-          <img
-            src={layoutNoramlSvg}
-            alt="Layout normal"
-            className={cn("group-hover:mix-blend-normal", {
-              "mix-blend-color": appSize !== "LARGE",
-            })}
-          />
-        </Button>
-        <Button
-          size="sm"
-          variant="ghost"
-          className="p-1 h-fit hover:bg-green-100/60 group"
-          onClick={() => handleAppSizeChange("CLASSIC")}
-        >
-          <img
-            src={layoutSmallSvg}
-            alt="Layout small"
-            className={cn("group-hover:mix-blend-normal", {
-              "mix-blend-color": appSize !== "CLASSIC",
-            })}
-          />
-        </Button>
+        )}
+        <div className="flex items-center">
+          <Button
+            size="sm"
+            variant="ghost"
+            className="p-1 h-fit hover:bg-green-100/60 group"
+            onClick={() => handleAppSizeChange("EXTRA_LARGE")}
+          >
+            <img
+              src={layoutFullSvg}
+              alt="Layout full"
+              className={cn("group-hover:mix-blend-normal", {
+                "mix-blend-color": appSize !== "EXTRA_LARGE",
+              })}
+            />
+          </Button>
+          <Button
+            size="sm"
+            variant="ghost"
+            className="p-1 h-fit hover:bg-green-100/60 group"
+            onClick={() => handleAppSizeChange("LARGE")}
+          >
+            <img
+              src={layoutNoramlSvg}
+              alt="Layout normal"
+              className={cn("group-hover:mix-blend-normal", {
+                "mix-blend-color": appSize !== "LARGE",
+              })}
+            />
+          </Button>
+          <Button
+            size="sm"
+            variant="ghost"
+            className="p-1 h-fit hover:bg-green-100/60 group"
+            onClick={() => handleAppSizeChange("CLASSIC")}
+          >
+            <img
+              src={layoutSmallSvg}
+              alt="Layout small"
+              className={cn("group-hover:mix-blend-normal", {
+                "mix-blend-color": appSize !== "CLASSIC",
+              })}
+            />
+          </Button>
+        </div>
 
-        <Separator
-          orientation={"vertical"}
-          className="mx-1 min-h-[20px] bg-foreground"
-        />
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button
-              size="sm"
-              variant="ghost"
-              className="p-1 h-fit hover:bg-green-100/60"
-            >
-              <DotsVerticalIcon />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent className="w-56">
-            <DropdownMenuItem className="p-0 w-full">
+        {!smallMode && (
+          <>
+            <Separator
+              orientation={"vertical"}
+              className="mx-1 min-h-[20px] bg-foreground"
+            />
+            <div className="flex items-center">
               <a
                 href="https://github.com/getvim/vim-canvas-demo-app"
-                className="w-full"
                 target="_blank"
               >
                 <Button
-                  className="w-full flex justify-start space-x-2 hover:bg-[rgb(242,255,253)]"
-                  variant={"link"}
+                  className="w-full p-1 h-fit flex justify-start hover:bg-green-100/60"
+                  variant={"ghost"}
+                  size={"icon"}
                 >
                   <img src={downloadSvg} />
-                  <span>Download code</span>
                 </Button>
               </a>
-            </DropdownMenuItem>
-            <DropdownMenuItem className="p-0 w-full">
-              <a href="https://docs.getvim.com/" target="_blank" className="w-full">
+              <a href="https://docs.getvim.com/" target="_blank">
                 <Button
-                  className="w-full flex justify-start space-x-2 hover:bg-[rgb(242,255,253)]"
-                  variant={"link"}
+                  className="w-full p-1 h-fit flex justify-start hover:bg-green-100/60"
+                  variant={"ghost"}
+                  size={"icon"}
                 >
                   <img src={sdkSvg} />
-                  <span>SDK Documentation</span>
                 </Button>
               </a>
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+            </div>
+          </>
+        )}
+        {smallMode && (
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button
+                size="sm"
+                variant="ghost"
+                className="p-1 h-fit hover:bg-green-100/60"
+              >
+                <DotsVerticalIcon />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className="w-56">
+              <DropdownMenuItem className="p-0 w-full">
+                <a
+                  href="https://github.com/getvim/vim-canvas-demo-app"
+                  className="w-full"
+                  target="_blank"
+                >
+                  <Button
+                    className="w-full flex justify-start space-x-2 hover:bg-[rgb(242,255,253)]"
+                    variant={"link"}
+                  >
+                    <img src={downloadSvg} />
+                    <span>Download code</span>
+                  </Button>
+                </a>
+              </DropdownMenuItem>
+              <DropdownMenuItem className="p-0 w-full">
+                <a
+                  href="https://docs.getvim.com/"
+                  target="_blank"
+                  className="w-full"
+                >
+                  <Button
+                    className="w-full flex justify-start space-x-2 hover:bg-[rgb(242,255,253)]"
+                    variant={"link"}
+                  >
+                    <img src={sdkSvg} />
+                    <span>SDK Documentation</span>
+                  </Button>
+                </a>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        )}
       </div>
     </div>
   );

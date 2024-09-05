@@ -25,14 +25,22 @@ export const TextareaField = ({
 
   return (
     <div className="flex w-full relative justify-between">
-      <Textarea
-        key={key}
-        className="disabled:bg-secondary"
-        placeholder={placeholder}
-        value={innerValue}
-        onChange={(e) => setInnerValue(e.target.value)}
-        disabled={disabled || !editMode}
-      />
+      <div className="relative w-full">
+        <Textarea
+          key={key}
+          className="disabled:bg-secondary"
+          placeholder={placeholder}
+          value={innerValue}
+          onChange={(e) => setInnerValue(e.target.value)}
+          disabled={disabled || !editMode}
+        />
+        {!editMode && (
+          <div
+            onClick={() => setEditMode(true)}
+            className="absolute top-0 left-0 w-full h-full"
+          ></div>
+        )}
+      </div>
       {!editMode ? (
         <Button
           size={"sm"}

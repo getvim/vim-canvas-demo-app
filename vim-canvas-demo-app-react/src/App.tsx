@@ -30,11 +30,18 @@ function App() {
 
   return (
     <div className="w-full h-full absolute top-0 left-0">
-      <div className="p-5 flex items-center space-x-2 justify-end">
-        <Label htmlFor="json-mode">JSON Mode</Label>
-        <Switch id="json-mode" onCheckedChange={setJsonMode} />
+      <div className="p-5 py-2 bg-accent flex justify-between items-center space-x-2">
+        <div>
+          <h2 className="text-sm">Vim Canvas</h2>
+          <h2 className="text-sm font-bold">Demo</h2>
+        </div>
+        <div className="flex items-center space-x-1">
+          <Label className="text-xs" htmlFor="json-mode">
+            JSON
+          </Label>
+          <Switch id="json-mode" onCheckedChange={setJsonMode} />
+        </div>
       </div>
-      <Separator className="w-[calc(100%-20px)] ml-[10px] bg-gray-300" />
 
       <CollapsibleEntity entityTitle="User" entityIconUrl={userSvg}>
         <CollapsibleEntityContent>

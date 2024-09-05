@@ -27,7 +27,7 @@ export function CollapsibleEntity({
         <Button
           variant="ghost"
           className={cn(
-            "w-[calc(100%-16px)] h-fit flex items-center bg-white justify-between rounded-lg p-4 m-4 mb-0 mx-2",
+            "w-[calc(100%-16px)] h-fit flex items-center hover:bg-[rgb(242,255,253)] bg-white justify-between rounded-lg p-4 m-4 mb-0 mx-2",
             {
               "rounded-b-none": isOpen,
             }

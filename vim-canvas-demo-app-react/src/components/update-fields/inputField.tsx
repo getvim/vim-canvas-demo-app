@@ -19,12 +19,20 @@ export const InputField = ({
 
   return (
     <div className="flex w-full justify-between">
-      <Input
-        className="h-7 rounded-r-none"
-        value={innerValue}
-        onChange={(e) => setInnerValue(e.target.value)}
-        disabled={disabled || !editMode}
-      />
+      <div className="relative w-full">
+        <Input
+          className="h-7 rounded-r-none"
+          value={innerValue}
+          onChange={(e) => setInnerValue(e.target.value)}
+          disabled={disabled || !editMode}
+        />
+        {!editMode && (
+          <div
+            onClick={() => setEditMode(true)}
+            className="absolute top-0 left-0 w-full h-full"
+          ></div>
+        )}
+      </div>
       {!editMode ? (
         <Button
           size={"sm"}

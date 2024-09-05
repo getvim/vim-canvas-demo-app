@@ -33,6 +33,14 @@ export const SessionContextContent = () => {
         <JSONView value={sessionContext} />
       ) : (
         <>
+          <EntitySectionTitle title="Session Context" />
+          <EntitySectionContent>
+            <EntityFieldTitle title="ID Token" />
+            <EntityFieldReadonlyText text={idToken} />
+            <EntityFieldTitle title="Session ID" />
+            <EntityFieldReadonlyText text={sessionContext?.sessionId} />
+          </EntitySectionContent>
+          <Separator className="mb-1" />
           <EntitySectionTitle title="Identifiers" />
           <EntitySectionContent>
             <EntityFieldTitle title="EHR username" />

@@ -6,6 +6,7 @@ import {
   EntitySectionContent,
   EntitySectionTitle,
 } from "../ui/entityContent";
+import { capitalize } from "@/lib/utils";
 
 export const EncounterBasicInformation = () => {
   const { encounter } = useVimOSEncounter();
@@ -21,8 +22,14 @@ export const EncounterBasicInformation = () => {
           />
         </EntityFieldContent>
         <EntityFieldContent>
-          <EntityFieldTitle title="Encounter date" />
-          <EntityFieldReadonlyText text={encounter?.basicInformation?.status} />
+          <EntityFieldTitle title="Status" />
+          <EntityFieldReadonlyText
+            text={
+              encounter?.basicInformation?.status
+                ? capitalize(encounter?.basicInformation?.status)
+                : undefined
+            }
+          />
         </EntityFieldContent>
       </EntitySectionContent>
     </>

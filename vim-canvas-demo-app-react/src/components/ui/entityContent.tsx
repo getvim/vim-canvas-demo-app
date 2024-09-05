@@ -33,7 +33,7 @@ export const EntityFieldTitle = ({
   className?: string;
 }) => {
   return (
-    <h3 className={cn("text-xs mt-2 font-semibold", className)}>{title}</h3>
+    <h3 className={cn("text-xs mt-2 font-bold", className)}>{title}</h3>
   );
 };
 
@@ -46,7 +46,7 @@ export const EntityFieldReadonlyText = ({
 }) => {
   return (
     <div className="mt-2">
-      <p className={cn("font-thin text-xs", className)}>
+      <p className={cn("font-normal text-xs", className)}>
         {(text ?? "") === "" ? "--" : text}
       </p>
     </div>
@@ -64,8 +64,8 @@ export const EntityFieldReadonlyList = ({
     <ul className={cn("mb-2", className)}>
       {list?.map(({ code, description }, index) => (
         <li key={index} className="flex">
-          <p className="font-semibold w-12 text-xs">{code ?? "--"}</p>
-          <p className="font-thin text-xs">- {description ?? "--"}</p>
+          <p className="font-bold w-12 text-xs">{code ?? "--"}</p>
+          <p className="font-normal text-xs">- {description ?? "--"}</p>
         </li>
       ))}
     </ul>

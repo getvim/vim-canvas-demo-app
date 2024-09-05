@@ -12,6 +12,7 @@ import {
   EntitySectionContent,
   EntitySectionTitle,
 } from "./ui/entityContent";
+import { ProviderSection } from "./Provider";
 
 export const PatientContent = () => {
   const { jsonMode } = useAppConfig();
@@ -110,26 +111,6 @@ export const PatientContent = () => {
             </EntityFieldContent>
           </EntitySectionContent>
           <Separator className="mb-1" />
-          <EntitySectionTitle title="Contact" />
-          <EntitySectionContent>
-            <EntityFieldContent>
-              <EntityFieldTitle title="Home phone number" />
-              <EntityFieldReadonlyText
-                text={patient?.contact_info?.homePhoneNumber}
-              />
-            </EntityFieldContent>
-            <EntityFieldContent>
-              <EntityFieldTitle title="Mobile phone number" />
-              <EntityFieldReadonlyText
-                text={patient?.contact_info?.mobilePhoneNumber}
-              />
-            </EntityFieldContent>
-            <EntityFieldContent>
-              <EntityFieldTitle title="Email" />
-              <EntityFieldReadonlyText text={patient?.contact_info?.email} />
-            </EntityFieldContent>
-          </EntitySectionContent>
-          <Separator className="mb-1" />
           <EntitySectionTitle title="Insurance" />
           <EntitySectionContent>
             <EntityFieldContent>
@@ -152,8 +133,30 @@ export const PatientContent = () => {
             </EntityFieldContent>
           </EntitySectionContent>
           <Separator className="mb-1" />
+          <EntitySectionTitle title="Contact" />
+          <EntitySectionContent>
+            <EntityFieldContent>
+              <EntityFieldTitle title="Home phone number" />
+              <EntityFieldReadonlyText
+                text={patient?.contact_info?.homePhoneNumber}
+              />
+            </EntityFieldContent>
+            <EntityFieldContent>
+              <EntityFieldTitle title="Mobile phone number" />
+              <EntityFieldReadonlyText
+                text={patient?.contact_info?.mobilePhoneNumber}
+              />
+            </EntityFieldContent>
+            <EntityFieldContent>
+              <EntityFieldTitle title="Email" />
+              <EntityFieldReadonlyText text={patient?.contact_info?.email} />
+            </EntityFieldContent>
+          </EntitySectionContent>
+          <Separator className="mb-1" />
           <EntitySectionTitle title="Problem" />
           <EntityFieldReadonlyList list={problemList} />
+          <Separator className="mb-1" />
+          <ProviderSection provider={patient?.pcp} title="Provider" />
         </>
       )}
     </div>

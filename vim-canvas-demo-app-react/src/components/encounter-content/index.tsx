@@ -14,6 +14,7 @@ import {
   EntityFieldTitle,
   EntitySectionTitle,
 } from "../ui/entityContent";
+import { ProviderSection } from "../Provider";
 
 export const EncounterContent = () => {
   const { jsonMode } = useAppConfig();
@@ -45,49 +46,7 @@ export const EncounterContent = () => {
           <Separator className="mb-1" />
           <EncounterPI />
           <Separator className="mb-1" />
-          <EntitySectionTitle title="Provider Identifiers" />
-          <EntityFieldContent>
-            <EntityFieldTitle title="EHR ID" />
-            <EntityFieldReadonlyText
-              text={encounter?.provider?.ehrProviderId}
-            />
-          </EntityFieldContent>
-          <EntityFieldContent>
-            <EntityFieldTitle title="NPI" />
-            <EntityFieldReadonlyText text={encounter?.provider?.npi} />
-          </EntityFieldContent>
-          <Separator className="mb-1" />
-          <EntitySectionTitle title="Provider Demographics" />
-          <EntityFieldContent>
-            <EntityFieldTitle title="First name" />
-            <EntityFieldReadonlyText
-              text={encounter?.provider?.demographics?.firstName}
-            />
-          </EntityFieldContent>
-          <EntityFieldContent>
-            <EntityFieldTitle title="Middle name" />
-            <EntityFieldReadonlyText
-              text={encounter?.provider?.demographics?.middleName}
-            />
-          </EntityFieldContent>
-          <EntityFieldContent>
-            <EntityFieldTitle title="Last name" />
-            <EntityFieldReadonlyText
-              text={encounter?.provider?.demographics?.lastName}
-            />
-          </EntityFieldContent>
-          <EntityFieldContent>
-            <EntityFieldTitle title="Degree" />
-            <EntityFieldReadonlyText
-              text={encounter?.provider?.providerDegree}
-            />
-          </EntityFieldContent>
-          <EntityFieldContent>
-            <EntityFieldTitle title="Organization name" />
-            <EntityFieldReadonlyText
-              text={encounter?.provider?.facility?.name}
-            />
-          </EntityFieldContent>
+          <ProviderSection provider={encounter?.provider} title="Provider" />
         </>
       )}
     </div>

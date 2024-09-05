@@ -61,7 +61,7 @@ cd vim-canvas-demo-app-react
 3. Install the dependencies:
 
 ```bash
-pnpm install
+npm install
 ```
 
 4. Create a `.dev.vars` file with the following content:
@@ -76,7 +76,7 @@ CLIENT_SECRET=<<YOUR ACCOUNT CLIENT SECRET>>
 6. Start the development server:
 
 ```bash
-pnpm dev
+npm run dev
 ```
 
 7. Follow up on [Testing Your Application](https://docs.getvim.com/platform/testing.html#testing-your-application) in the official docs

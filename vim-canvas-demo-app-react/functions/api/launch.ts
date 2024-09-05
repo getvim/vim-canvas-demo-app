@@ -1,7 +1,5 @@
 import { Env } from "../context-env";
 
-const appUrl = "https://vim-canvas-demo-app.pages.dev";
-
 export const onRequestGet: PagesFunction<Env> = async (context) => {
   const url = new URL(context.request.url);
   const queryParams = url.searchParams;
@@ -12,7 +10,10 @@ export const onRequestGet: PagesFunction<Env> = async (context) => {
   );
   redirectUrl.searchParams.append("launch_id", launchId);
   redirectUrl.searchParams.append("client_id", context.env.CLIENT_ID);
-  redirectUrl.searchParams.append("redirect_uri", appUrl);
+  redirectUrl.searchParams.append(
+    "redirect_uri",
+    context.env.REDIRECT_URL ?? "http://localhost:8788"
+  );
 
   return Response.redirect(redirectUrl.toString(), 302);
 };

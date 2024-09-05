@@ -3,6 +3,7 @@ on: [push]
 jobs:
   publish:
     runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
     permissions:
       contents: read
       deployments: write
@@ -10,11 +11,27 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+      - uses: pnpm/action-setup@v4
+        name: Install pnpm
+        with:
+          version: 8.6.2
+          run_install: false
+
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: "pnpm"
+
+      - name: Install dependencies
+        run: cd vim-canvas-demo-app-react && pnpm install
+      - name: Build react app
+        run: cd vim-canvas-demo-app-react && pnpm run build
       - name: Publish to Cloudflare Pages
         uses: cloudflare/pages-action@v1
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          accountId: 59bdb4e22f71d50cd67b45aa7bd53dff
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           projectName: vim-canvas-demo-app-demo
           directory: dist
           workingDirectory: vim-canvas-demo-app-react

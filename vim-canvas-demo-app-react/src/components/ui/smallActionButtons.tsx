@@ -1,6 +1,12 @@
 import { CheckIcon, Cross2Icon } from "@radix-ui/react-icons";
 import { Button } from "./button";
 import { cn } from "@/lib/utils";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "./tooltip";
 
 interface SmallActionButtonsProps {
   onCrossClick: () => void;
@@ -8,6 +14,8 @@ interface SmallActionButtonsProps {
   className?: string;
   crossClassName?: string;
   checkClassName?: string;
+  tooltipContent?: string;
+  disabled?: boolean;
 }
 
 export const SmallActionButtons = ({
@@ -16,6 +24,8 @@ export const SmallActionButtons = ({
   className,
   crossClassName,
   checkClassName,
+  tooltipContent,
+  disabled,
 }: SmallActionButtonsProps) => {
   return (
     <div className={cn("w-[73px]", className)}>
@@ -27,16 +37,27 @@ export const SmallActionButtons = ({
         )}
         variant={"ghost"}
         onClick={onCrossClick}
+        disabled={disabled}
       >
         <Cross2Icon />
       </Button>
-      <Button
-        size={"sm"}
-        className={cn("rounded-l-none h-7 w-7 p-0", checkClassName)}
-        onClick={onCheckClick}
-      >
-        <CheckIcon />
-      </Button>
+      <TooltipProvider>
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <Button
+              size={"sm"}
+              className={cn("rounded-l-none h-7 w-7 p-0", checkClassName)}
+              onClick={onCheckClick}
+              disabled={disabled}
+            >
+              <CheckIcon />
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent className="bg-primary text-primary-foreground">
+            <p>{tooltipContent ?? "Push to EHR"}</p>
+          </TooltipContent>
+        </Tooltip>
+      </TooltipProvider>
     </div>
   );
 };

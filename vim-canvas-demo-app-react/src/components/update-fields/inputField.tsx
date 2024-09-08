@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { Button } from "../ui/button";
 import { SmallActionButtons } from "../ui/smallActionButtons";
 import { UpdateField } from "../update-fields/types";
+import { useVimOsContext } from "@/hooks/useVimOsContext";
 
 export const InputField = ({
   value,
@@ -12,6 +13,7 @@ export const InputField = ({
 }: UpdateField<string | undefined>) => {
   const [innerValue, setInnerValue] = useState(value);
   const [editMode, setEditMode] = useState(false);
+  const vimOs = useVimOsContext();
 
   useEffect(() => {
     setInnerValue(value);
@@ -24,7 +26,7 @@ export const InputField = ({
           className="h-7 rounded-r-none"
           value={innerValue}
           onChange={(e) => setInnerValue(e.target.value)}
-          disabled={disabled || !editMode}
+          disabled={!editMode}
         />
         {!editMode && (
           <div
@@ -44,13 +46,18 @@ export const InputField = ({
         </Button>
       ) : (
         <SmallActionButtons
+          tooltipContent={disabled ? "Copy to clipboard" : undefined}
           onCrossClick={() => {
             setEditMode(false);
             setInnerValue(value);
           }}
           onCheckClick={() => {
             setEditMode(false);
-            onChange(innerValue);
+            if (disabled) {
+              vimOs.utils.copyToClipboard(innerValue ?? "");
+            } else {
+              onChange(innerValue);
+            }
           }}
         />
       )}

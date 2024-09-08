@@ -35,8 +35,6 @@ export const SessionContextContent = () => {
         <>
           <EntitySectionTitle title="Session Context" />
           <EntitySectionContent>
-            <EntityFieldTitle title="ID Token" />
-            <EntityFieldReadonlyText text={idToken} />
             <EntityFieldTitle title="Session ID" />
             <EntityFieldReadonlyText text={sessionContext?.sessionId} />
           </EntitySectionContent>
@@ -55,10 +53,6 @@ export const SessionContextContent = () => {
             <EntityFieldReadonlyText
               text={sessionContext?.user?.identifiers?.vimUserID}
             />
-            <EntityFieldTitle title="Session ID" />
-            <EntityFieldReadonlyText text={sessionContext?.sessionId} />
-            <EntityFieldTitle title="ID Token" />
-            <EntityFieldReadonlyText text={idToken} />
           </EntitySectionContent>
           <Separator className="mb-1" />
           <EntitySectionTitle title="Demographics" />
@@ -101,6 +95,11 @@ export const SessionContextContent = () => {
             <EntityFieldReadonlyText
               text={sessionContext?.organization?.identifiers?.tin}
             />
+          </EntitySectionContent>
+          <EntitySectionTitle title="Get ID token" />
+          <EntitySectionContent>
+            <EntityFieldTitle title="ID Token" />
+            <EntityFieldReadonlyText text={idToken} />
           </EntitySectionContent>
         </>
       )}

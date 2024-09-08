@@ -64,6 +64,7 @@ export function SelectField<T = unknown>({
       </Select>
 
       <SmallActionButtons
+        disabled={disabled}
         onCrossClick={() => {
           setInnerValue(undefined);
           setKey(+new Date());

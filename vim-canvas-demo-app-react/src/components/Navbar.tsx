@@ -1,6 +1,3 @@
-import layoutFullSvg from "@/assets/layout-full.svg";
-import layoutNoramlSvg from "@/assets/layout-normal.svg";
-import layoutSmallSvg from "@/assets/layout-sm.svg";
 import downloadSvg from "@/assets/download.svg";
 import sdkSvg from "@/assets/sdk.svg";
 import { useVimOsContext } from "@/hooks/useVimOsContext";
@@ -19,6 +16,9 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
+import { LayoutFull } from "@/assets/layoutFull";
+import { LayoutLarge } from "@/assets/layoutLarge";
+import { LayoutSmall } from "@/assets/layoutSmall";
 
 export const Navbar = () => {
   const { setJsonMode } = useAppConfig();
@@ -63,12 +63,9 @@ export const Navbar = () => {
             className="p-1 h-fit hover:bg-green-100/60 group"
             onClick={() => handleAppSizeChange("EXTRA_LARGE")}
           >
-            <img
-              src={layoutFullSvg}
-              alt="Layout full"
-              className={cn("group-hover:mix-blend-normal", {
-                "mix-blend-color": appSize !== "EXTRA_LARGE",
-              })}
+            <LayoutFull
+              fill={appSize !== "EXTRA_LARGE" ? "#099484" : undefined}
+              className="group-hover:mix-blend-normal"
             />
           </Button>
           <Button
@@ -77,12 +74,9 @@ export const Navbar = () => {
             className="p-1 h-fit hover:bg-green-100/60 group"
             onClick={() => handleAppSizeChange("LARGE")}
           >
-            <img
-              src={layoutNoramlSvg}
-              alt="Layout normal"
-              className={cn("group-hover:mix-blend-normal", {
-                "mix-blend-color": appSize !== "LARGE",
-              })}
+            <LayoutLarge
+              fill={appSize !== "LARGE" ? "#099484" : undefined}
+              className="group-hover:mix-blend-normal"
             />
           </Button>
           <Button
@@ -91,12 +85,9 @@ export const Navbar = () => {
             className="p-1 h-fit hover:bg-green-100/60 group"
             onClick={() => handleAppSizeChange("CLASSIC")}
           >
-            <img
-              src={layoutSmallSvg}
-              alt="Layout small"
-              className={cn("group-hover:mix-blend-normal", {
-                "mix-blend-color": appSize !== "CLASSIC",
-              })}
+            <LayoutSmall
+              fill={appSize !== "CLASSIC" ? "#099484" : undefined}
+              className="group-hover:mix-blend-normal"
             />
           </Button>
         </div>

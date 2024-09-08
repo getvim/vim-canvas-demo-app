@@ -68,9 +68,13 @@ export const ProviderSection = ({
             <ul className="mb-2">
               {provider?.specialty?.map((speciality, index) => (
                 <li key={index} className="flex">
-                  <p className="font-bold w-12 text-xs">{speciality ?? "--"}</p>
+                  {speciality ? (
+                    <p className="font-bold w-12 text-xs">{speciality}</p>
+                  ) : (
+                    <p className="font-thin w-12 text-xs">--</p>
+                  )}
                 </li>
-              )) ?? "--"}
+              )) ?? <span className="font-normal text-xs">--</span>}
             </ul>
           </EntityFieldContent>
         </EntitySectionContent>

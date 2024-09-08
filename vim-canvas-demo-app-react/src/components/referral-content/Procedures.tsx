@@ -30,6 +30,7 @@ export const ReferralProcedures = () => {
                   ? [
                       {
                         code: value.id,
+                        name: value.label,
                         description: value.label,
                       },
                     ]

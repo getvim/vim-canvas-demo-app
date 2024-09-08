@@ -4,8 +4,10 @@ import { useEffect, useState } from "react";
 import { Button } from "../ui/button";
 import { SmallActionButtons } from "../ui/smallActionButtons";
 import { UpdateField } from "../update-fields/types";
+import { useVimOsContext } from "@/hooks/useVimOsContext";
 
 export const TextareaField = ({
+  id,
   value,
   onChange,
   disabled,
@@ -17,6 +19,7 @@ export const TextareaField = ({
 }) => {
   const [innerValue, setInnerValue] = useState(value);
   const [editMode, setEditMode] = useState(false);
+  const vimOs = useVimOsContext();
   const [key, setKey] = useState<number>(+new Date());
 
   useEffect(() => {
@@ -27,12 +30,13 @@ export const TextareaField = ({
     <div className="flex w-full relative justify-between">
       <div className="relative w-full">
         <Textarea
+          id={id}
           key={key}
           className="disabled:bg-secondary"
           placeholder={placeholder}
           value={innerValue}
           onChange={(e) => setInnerValue(e.target.value)}
-          disabled={disabled || !editMode}
+          disabled={!editMode}
         />
         {!editMode && (
           <div
@@ -56,6 +60,7 @@ export const TextareaField = ({
           className="absolute -right-[16px] bottom-0"
           crossClassName="rounded-l-md rounded-es-none border-l-1"
           checkClassName="rounded-se-none"
+          tooltipContent={disabled ? "Copy to clipboard" : undefined}
           onCrossClick={() => {
             setEditMode(false);
             setKey(+new Date());
@@ -63,7 +68,11 @@ export const TextareaField = ({
           }}
           onCheckClick={() => {
             setEditMode(false);
-            onChange(innerValue);
+            if (disabled) {
+              vimOs.utils.copyToClipboard(innerValue ?? "");
+            } else {
+              onChange(innerValue);
+            }
             if (clearAfterChange) {
               setKey(+new Date());
               setInnerValue(undefined);

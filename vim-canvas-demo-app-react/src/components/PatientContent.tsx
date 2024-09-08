@@ -13,6 +13,7 @@ import {
   EntitySectionTitle,
 } from "./ui/entityContent";
 import { ProviderSection } from "./Provider";
+import { capitalize } from "@/lib/utils";
 
 export const PatientContent = () => {
   const { jsonMode } = useAppConfig();
@@ -33,7 +34,7 @@ export const PatientContent = () => {
         <JSONView value={patient} />
       ) : (
         <>
-          <EntitySectionTitle title="Identifier" />
+          <EntitySectionTitle title="Identifiers" />
           <EntitySectionContent>
             <EntityFieldContent>
               <EntityFieldTitle title="EHR patient ID" />
@@ -79,7 +80,13 @@ export const PatientContent = () => {
             </EntityFieldContent>
             <EntityFieldContent>
               <EntityFieldTitle title="Gender" />
-              <EntityFieldReadonlyText text={patient?.demographics?.gender} />
+              <EntityFieldReadonlyText
+                text={
+                  patient?.demographics?.gender
+                    ? capitalize(patient?.demographics?.gender)
+                    : undefined
+                }
+              />
             </EntityFieldContent>
           </EntitySectionContent>
           <Separator className="mb-1" />

@@ -1,27 +1,26 @@
 import { JSONView } from "@/components/ui/jsonView";
 import { Separator } from "@/components/ui/separator";
+import { useToast } from "@/hooks/use-toast";
 import { useAppConfig } from "@/hooks/useAppConfig";
 import { useVimOSEncounter } from "@/hooks/useEncounter";
-import { EncounterBasicInformation } from "./BasicInformation";
-import { EncounterSubjective } from "./Subjective";
-import { EncounterObjective } from "./Objective";
-import { EncounterAssessment } from "./Assessment";
-import { EncounterPlan } from "./Plan";
-import { EncounterPI } from "./PatientInstructions";
+import { useVimOsContext } from "@/hooks/useVimOsContext";
+import { CheckIcon } from "@radix-ui/react-icons";
+import { FormProvider } from "react-hook-form";
+import { ProviderSection } from "../Provider";
+import { Button } from "../ui/button";
 import {
   EntityFieldContent,
   EntityFieldReadonlyText,
   EntityFieldTitle,
   EntitySectionTitle,
 } from "../ui/entityContent";
-import { ProviderSection } from "../Provider";
-import { Button } from "../ui/button";
-import { CheckIcon } from "@radix-ui/react-icons";
-import { useVimOsContext } from "@/hooks/useVimOsContext";
-import { useNotesForm, FormInputs } from "./form";
-import { FormProvider } from "react-hook-form";
-import { useToast } from "@/hooks/use-toast";
-import { useEffect } from "react";
+import { EncounterAssessment } from "./Assessment";
+import { EncounterBasicInformation } from "./BasicInformation";
+import { FormInputs, useNotesForm } from "./form";
+import { EncounterObjective } from "./Objective";
+import { EncounterPI } from "./PatientInstructions";
+import { EncounterPlan } from "./Plan";
+import { EncounterSubjective } from "./Subjective";
 
 export const EncounterContent = () => {
   const { toast } = useToast();

@@ -6,8 +6,10 @@ import {
 } from "../ui/entityContent";
 import { TextareaField } from "../update-fields/textAreaField";
 import { EncounterUpdateField } from "../update-fields/updateFieldWrapper";
+import { FormInputs, useNoteFormContext } from "./form";
 
 export const EncounterPI = () => {
+  const { control } = useNoteFormContext();
   return (
     <>
       <EntitySectionTitle title="Patient Instructions" />
@@ -26,9 +28,12 @@ export const EncounterPI = () => {
               },
             })}
             render={({ field }) => (
-              <TextareaField
+              <TextareaField<FormInputs>
                 placeholder="Add notes here"
-                {...field}
+                control={control}
+                name={"patientInstructionsGeneralNotes"}
+                onTextareaSubmit={field.onChange}
+                disabled={field.disabled}
                 clearAfterChange
               />
             )}

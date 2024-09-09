@@ -17,6 +17,7 @@ export interface UpdateFieldProps<
   value?: T;
   canUpdate: CAN_UPDATE;
   updateOnNewValue: VAL_TO_UPDATE;
+  toastSuccessTitle?: string;
 
   render: (props: { field: UpdateField<T> }) => JSX.Element;
 }
@@ -31,6 +32,7 @@ function EntityUpdateField<
   updateOnNewValue,
   render,
   canUpdate,
+  toastSuccessTitle,
 }: UpdateFieldProps<T, CAN_UPDATE, VAL_TO_UPDATE>) {
   const { toast } = useToast();
   const [canUpdateField, setCanUpdateField] = useState(false);
@@ -47,7 +49,7 @@ function EntityUpdateField<
         .then(() => {
           toast({
             variant: "default",
-            title: "Referral updated!",
+            title: toastSuccessTitle,
           });
         })
         .catch((error) => {
@@ -58,7 +60,7 @@ function EntityUpdateField<
           });
         });
     },
-    [toast, updateOnNewValue]
+    [toast, toastSuccessTitle, updateOnNewValue]
   );
 
   const renderData = useMemo(
@@ -103,6 +105,7 @@ export function ReferralUpdateField<T = unknown>({
       entity={referral}
       render={render}
       value={value}
+      toastSuccessTitle="Referral updated!"
     />
   );
 }
@@ -134,6 +137,7 @@ export function EncounterUpdateField<T = unknown>({
           valueToUpdatePayload(newValue)
         )
       }
+      toastSuccessTitle="Encounter updated!"
       entity={encounter}
       render={render}
       value={value}

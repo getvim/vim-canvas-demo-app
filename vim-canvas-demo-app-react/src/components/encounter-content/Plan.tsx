@@ -2,13 +2,15 @@ import {
   EntityFieldContent,
   EntityFieldTitle,
   EntitySectionContent,
-  EntitySectionTitle
+  EntitySectionTitle,
 } from "../ui/entityContent";
 import { SelectField } from "../update-fields/selectField";
 import { TextareaField } from "../update-fields/textAreaField";
 import { EncounterUpdateField } from "../update-fields/updateFieldWrapper";
+import { FormInputs, useNoteFormContext } from "./form";
 
 export const EncounterPlan = () => {
+  const { control } = useNoteFormContext();
   return (
     <>
       <EntitySectionTitle title="Plan" />
@@ -85,9 +87,12 @@ export const EncounterPlan = () => {
               },
             })}
             render={({ field }) => (
-              <TextareaField
+              <TextareaField<FormInputs>
                 placeholder="Add notes here"
-                {...field}
+                control={control}
+                name={"planGeneralNotes"}
+                onTextareaSubmit={field.onChange}
+                disabled={field.disabled}
                 clearAfterChange
               />
             )}

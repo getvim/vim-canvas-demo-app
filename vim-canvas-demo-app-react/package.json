@@ -13,7 +13,9 @@
   },
   "dependencies": {
     "@cfworker/jwt": "^5.2.1",
+    "@hookform/resolvers": "^3.9.0",
     "@radix-ui/react-collapsible": "^1.1.0",
+    "@radix-ui/react-dialog": "^1.1.1",
     "@radix-ui/react-dropdown-menu": "^2.1.1",
     "@radix-ui/react-label": "^2.1.0",
     "@radix-ui/react-popover": "^1.1.1",
@@ -30,6 +32,7 @@
     "react": "^18.3.1",
     "react-day-picker": "8.10.1",
     "react-dom": "^18.3.1",
+    "react-hook-form": "^7.53.0",
     "tailwind-merge": "^2.5.2",
     "tailwindcss-animate": "^1.0.7",
     "vim-os-js-browser": "^1.0.2"

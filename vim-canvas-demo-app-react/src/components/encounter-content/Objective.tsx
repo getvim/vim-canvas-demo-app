@@ -2,12 +2,14 @@ import {
   EntityFieldContent,
   EntityFieldTitle,
   EntitySectionContent,
-  EntitySectionTitle
+  EntitySectionTitle,
 } from "../ui/entityContent";
 import { TextareaField } from "../update-fields/textAreaField";
 import { EncounterUpdateField } from "../update-fields/updateFieldWrapper";
+import { FormInputs, useNoteFormContext } from "./form";
 
 export const EncounterObjective = () => {
+  const { control } = useNoteFormContext();
   return (
     <>
       <EntitySectionTitle title="Objective" />
@@ -26,9 +28,12 @@ export const EncounterObjective = () => {
               },
             })}
             render={({ field }) => (
-              <TextareaField
+              <TextareaField<FormInputs>
                 placeholder="Add notes here"
-                {...field}
+                control={control}
+                name={"objectiveGeneralNotes"}
+                onTextareaSubmit={field.onChange}
+                disabled={field.disabled}
                 clearAfterChange
               />
             )}
@@ -48,9 +53,12 @@ export const EncounterObjective = () => {
               },
             })}
             render={({ field }) => (
-              <TextareaField
+              <TextareaField<FormInputs>
                 placeholder="Add notes here"
-                {...field}
+                control={control}
+                name={"objectivePhysicalExamNotes"}
+                onTextareaSubmit={field.onChange}
+                disabled={field.disabled}
                 clearAfterChange
               />
             )}

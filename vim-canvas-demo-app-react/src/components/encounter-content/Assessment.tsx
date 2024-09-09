@@ -6,11 +6,13 @@ import {
   EntitySectionContent,
   EntitySectionTitle,
 } from "../ui/entityContent";
+import { SelectField } from "../update-fields/selectField";
 import { TextareaField } from "../update-fields/textAreaField";
 import { EncounterUpdateField } from "../update-fields/updateFieldWrapper";
-import { SelectField } from "../update-fields/selectField";
+import { FormInputs, useNoteFormContext } from "./form";
 
 export const EncounterAssessment = () => {
+  const { control } = useNoteFormContext();
   const { encounter } = useVimOSEncounter();
 
   return (
@@ -89,9 +91,12 @@ export const EncounterAssessment = () => {
               },
             })}
             render={({ field }) => (
-              <TextareaField
+              <TextareaField<FormInputs>
                 placeholder="Add notes here"
-                {...field}
+                control={control}
+                name={"assessmentGeneralNotes"}
+                onTextareaSubmit={field.onChange}
+                disabled={field.disabled}
                 clearAfterChange
               />
             )}

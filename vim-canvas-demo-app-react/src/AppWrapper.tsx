@@ -17,7 +17,6 @@ export const AppWrapper: React.FC<React.PropsWithChildren> = ({ children }) => {
     (async () => {
       const vimOsSdk = await loadSdk();
       setVimOS(vimOsSdk);
-      vimOsSdk.hub.setActivationStatus("ENABLED");
     })();
   }, []);
 
@@ -25,9 +24,8 @@ export const AppWrapper: React.FC<React.PropsWithChildren> = ({ children }) => {
     return <div>Loading VimSDK...</div>;
   }
   return (
-    <AppConfigProvider>
-      <Toaster />
-      <VimOSContext.Provider value={vimOS}>
+    <VimOSContext.Provider value={vimOS}>
+      <AppConfigProvider>
         <VimOSPatientProvider>
           <VimOSReferralProvider>
             <VimOSOrdersProvider>
@@ -35,7 +33,8 @@ export const AppWrapper: React.FC<React.PropsWithChildren> = ({ children }) => {
             </VimOSOrdersProvider>
           </VimOSReferralProvider>
         </VimOSPatientProvider>
-      </VimOSContext.Provider>
-    </AppConfigProvider>
+      </AppConfigProvider>
+      <Toaster />
+    </VimOSContext.Provider>
   );
 };

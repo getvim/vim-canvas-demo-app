@@ -6,8 +6,10 @@ import {
 } from "../ui/entityContent";
 import { TextareaField } from "../update-fields/textAreaField";
 import { EncounterUpdateField } from "../update-fields/updateFieldWrapper";
+import { FormInputs, useNoteFormContext } from "./form";
 
 export const EncounterSubjective = () => {
+  const { control } = useNoteFormContext();
   return (
     <>
       <EntitySectionTitle title="Subjective" />
@@ -26,9 +28,12 @@ export const EncounterSubjective = () => {
               },
             })}
             render={({ field }) => (
-              <TextareaField
+              <TextareaField<FormInputs>
                 placeholder="Add notes here"
-                {...field}
+                control={control}
+                name={"subjectiveGeneralNotes"}
+                onTextareaSubmit={field.onChange}
+                disabled={field.disabled}
                 clearAfterChange
               />
             )}
@@ -48,9 +53,12 @@ export const EncounterSubjective = () => {
               },
             })}
             render={({ field }) => (
-              <TextareaField
+              <TextareaField<FormInputs>
                 placeholder="Add notes here"
-                {...field}
+                control={control}
+                name={"subjectiveChiefComplaint"}
+                onTextareaSubmit={field.onChange}
+                disabled={field.disabled}
                 clearAfterChange
               />
             )}
@@ -70,9 +78,12 @@ export const EncounterSubjective = () => {
               },
             })}
             render={({ field }) => (
-              <TextareaField
+              <TextareaField<FormInputs>
                 placeholder="Add notes here"
-                {...field}
+                control={control}
+                name={"subjectiveHistoryOfPresentIllness"}
+                onTextareaSubmit={field.onChange}
+                disabled={field.disabled}
                 clearAfterChange
               />
             )}
@@ -92,9 +103,12 @@ export const EncounterSubjective = () => {
               },
             })}
             render={({ field }) => (
-              <TextareaField
+              <TextareaField<FormInputs>
                 placeholder="Add notes here"
-                {...field}
+                control={control}
+                name={"subjectiveReviewOfSystems"}
+                onTextareaSubmit={field.onChange}
+                disabled={field.disabled}
                 clearAfterChange
               />
             )}

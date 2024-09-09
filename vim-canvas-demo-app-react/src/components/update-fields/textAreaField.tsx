@@ -3,39 +3,46 @@ import { Pencil1Icon } from "@radix-ui/react-icons";
 import { useEffect, useState } from "react";
 import { Button } from "../ui/button";
 import { SmallActionButtons } from "../ui/smallActionButtons";
-import { UpdateField } from "../update-fields/types";
 import { useVimOsContext } from "@/hooks/useVimOsContext";
+import {
+  FieldValues,
+  useController,
+  UseControllerProps,
+  useFormContext,
+} from "react-hook-form";
 
-export const TextareaField = ({
-  id,
-  value,
-  onChange,
-  disabled,
+export function TextareaField<T extends FieldValues = FieldValues>({
   clearAfterChange,
+  onTextareaSubmit,
   placeholder,
-}: UpdateField<string | undefined> & {
-  clearAfterChange?: boolean;
+  ...props
+}: UseControllerProps<T> & {
   placeholder?: string;
-}) => {
-  const [innerValue, setInnerValue] = useState(value);
+  clearAfterChange?: boolean;
+  onTextareaSubmit?: (value: string) => void;
+}) {
+  const { field } = useController(props);
+  const { resetField } = useFormContext();
   const [editMode, setEditMode] = useState(false);
   const vimOs = useVimOsContext();
   const [key, setKey] = useState<number>(+new Date());
 
   useEffect(() => {
-    setInnerValue(value);
-  }, [value]);
+    if (field.value === null) {
+      setEditMode(false);
+      setKey(+new Date());
+      resetField(field.name);
+    }
+  }, [field.name, field.value, resetField]);
 
   return (
     <div className="flex w-full relative justify-between">
       <div className="relative w-full">
         <Textarea
-          id={id}
           key={key}
           className="disabled:bg-secondary"
           placeholder={placeholder}
-          value={innerValue}
-          onChange={(e) => setInnerValue(e.target.value)}
+          {...field}
           disabled={!editMode}
         />
         {!editMode && (
@@ -50,7 +57,7 @@ export const TextareaField = ({
           size={"sm"}
           variant={"ghost"}
           className="absolute right-2 top-2 h-7 w-7 p-0"
-          disabled={disabled}
+          disabled={field.disabled}
           onClick={() => setEditMode(true)}
         >
           <Pencil1Icon />
@@ -60,26 +67,26 @@ export const TextareaField = ({
           className="absolute -right-[16px] bottom-0"
           crossClassName="rounded-l-md rounded-es-none border-l-1"
           checkClassName="rounded-se-none"
-          tooltipContent={disabled ? "Copy to clipboard" : undefined}
+          tooltipContent={field.disabled ? "Copy to clipboard" : undefined}
           onCrossClick={() => {
             setEditMode(false);
             setKey(+new Date());
-            setInnerValue(value);
+            resetField(field.name);
           }}
           onCheckClick={() => {
             setEditMode(false);
-            if (disabled) {
-              vimOs.utils.copyToClipboard(innerValue ?? "");
+            if (field.disabled) {
+              vimOs.utils.copyToClipboard(field.value ?? "");
             } else {
-              onChange(innerValue);
+              onTextareaSubmit?.(field.value);
             }
             if (clearAfterChange) {
               setKey(+new Date());
-              setInnerValue(undefined);
+              resetField(field.name);
             }
           }}
         />
       )}
     </div>
   );
-};
+}

@@ -146,7 +146,7 @@ export const Navbar = () => {
                     variant={"link"}
                   >
                     <img src={downloadSvg} />
-                    <span>Download code</span>
+                    <span>View code</span>
                   </Button>
                 </a>
               </DropdownMenuItem>

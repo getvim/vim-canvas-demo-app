@@ -8,11 +8,12 @@
 
 ## Quick Links
 
+* [Vim Canvas Developer Platform](https://getvim.com/vim-canvas-developer-platform/)
 * [Vim Canvas Docs](https://docs.getvim.com/)
 * [VimOS.js Canvas SDK](https://www.npmjs.com/package/vim-os-js-browser)
 
 ## What is Vim Canvas?
-Vim is the middleware platform for healthcare. Vim Canvas is a self-service platform that empowers application developers to embed their application into Electronic Health Record (EHR) workflows, resulting in a streamlined and low-friction experience for end users. With Vim, you can deploy your applications on top of Vim Connect - Vim's in-EHR connectivity layer - accelerating time to market at reduced cost and improved flexibility. You can leverage Vim's platform to engage with a growing network of 2,000+ provider organizations and 8M+ patients.
+Vim is the middleware platform for healthcare. Vim Canvas is a self-service platform that empowers application developers to embed their application into Electronic Health Record (EHR) workflows, resulting in a streamlined and low-friction experience for end users. With Vim, you can deploy your applications on top of Vim Connect - Vim's in-EHR connectivity layer - accelerating time to market at reduced cost and improved flexibility.
 
 # Repo Overview 😎
 
@@ -95,3 +96,18 @@ The `functions` folder is a cloudflare pages function that handles the authentic
 When running locally the api server starts at `http://localhost:8788` & exposes the following endpoints:
 * `/api/launch` - This endpoint is used to initiate the authentication flow.
 * `/api/token` - This endpoint is used to handle the callback from the Vim Canvas platform to create a token.
+
+# Vim Canvas Pricing
+
+| Starter Access | Patient-Based | User-Based |
+| --- | --- | --- |
+| **Design and test your application before choosing a plan.** | **Active Member Pricing (AMP) Billed Based on Per Member Per Month (PMPM)** | **Per User Per Month (PUPM)** |
+| *Who is this right for?* | *Who is this right for?* | *Who is this right for?* |
+| - Access to developer platform<br>- Ability to build application using Vim workflows<br>- Design and testing only. Activation and distribution of application requires a package | - Patient-based pricing model in use or applicable to workflow<br>- Application is enabled based on patient in context in the EHR<br>- Allows for unlimited clinic-level users | - User-based pricing model in use or applicable to application<br>- Application is always available and is not specific to patients<br>- Based on number of users/year for which the application is enabled |
+| | Example:<br>A mental health referral solution | Example:<br>An efficiency solution such as a medical documentation tool |
+
+# Contributing
+* How can I submit an app with a different tech stack?
+    * Apps submissions are always welcomed! 🥳 Open a pr with a proper description and we'll review it as soon as possible
+* Spot a bug 🕷 ?
+    * We welcome code changes that improve the apps or fix a problem. Please make sure to follow all best practices.

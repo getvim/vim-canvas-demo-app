@@ -1,6 +1,6 @@
 import { Textarea } from "@/components/ui/textarea";
 import { Pencil1Icon } from "@radix-ui/react-icons";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Button } from "../ui/button";
 import { SmallActionButtons } from "../ui/smallActionButtons";
 import { useVimOsContext } from "@/hooks/useVimOsContext";
@@ -26,6 +26,7 @@ export function TextareaField<T extends FieldValues = FieldValues>({
   const [editMode, setEditMode] = useState(false);
   const vimOs = useVimOsContext();
   const [key, setKey] = useState<number>(+new Date());
+  const textAreaRef = useRef<HTMLTextAreaElement>(null);
 
   useEffect(() => {
     if (field.value === null) {
@@ -34,6 +35,14 @@ export function TextareaField<T extends FieldValues = FieldValues>({
       resetField(field.name);
     }
   }, [field.name, field.value, resetField]);
+
+  const turnOnEditMode = () => {
+    setEditMode(true);
+    setTimeout(() => {
+      console.log("focus", textAreaRef.current);
+      textAreaRef.current?.focus();
+    }, 0);
+  };
 
   return (
     <div className="flex w-full relative justify-between">
@@ -44,10 +53,11 @@ export function TextareaField<T extends FieldValues = FieldValues>({
           placeholder={placeholder}
           {...field}
           disabled={!editMode}
+          ref={textAreaRef}
         />
         {!editMode && (
           <div
-            onClick={() => setEditMode(true)}
+            onClick={turnOnEditMode}
             className="absolute top-0 left-0 w-full h-full"
           ></div>
         )}
@@ -58,7 +68,7 @@ export function TextareaField<T extends FieldValues = FieldValues>({
           variant={"ghost"}
           className="absolute right-2 top-2 h-7 w-7 p-0"
           disabled={field.disabled}
-          onClick={() => setEditMode(true)}
+          onClick={turnOnEditMode}
         >
           <Pencil1Icon />
         </Button>

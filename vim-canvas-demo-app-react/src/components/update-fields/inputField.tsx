@@ -1,6 +1,6 @@
 import { Input } from "@/components/ui/input";
 import { Pencil1Icon } from "@radix-ui/react-icons";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Button } from "../ui/button";
 import { SmallActionButtons } from "../ui/smallActionButtons";
 import { UpdateField } from "../update-fields/types";
@@ -14,10 +14,19 @@ export const InputField = ({
   const [innerValue, setInnerValue] = useState(value);
   const [editMode, setEditMode] = useState(false);
   const vimOs = useVimOsContext();
+  const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     setInnerValue(value);
   }, [value]);
+
+  const turnOnEditMode = () => {
+    setEditMode(true);
+    setTimeout(() => {
+      console.log("focus", inputRef.current);
+      inputRef.current?.focus();
+    }, 0);
+  };
 
   return (
     <div className="flex w-full justify-between">
@@ -27,10 +36,11 @@ export const InputField = ({
           value={innerValue}
           onChange={(e) => setInnerValue(e.target.value)}
           disabled={!editMode}
+          ref={inputRef}
         />
         {!editMode && (
           <div
-            onClick={() => setEditMode(true)}
+            onClick={turnOnEditMode}
             className="absolute top-0 left-0 w-full h-full"
           ></div>
         )}
@@ -40,7 +50,7 @@ export const InputField = ({
           size={"sm"}
           className="h-7 w-7 p-0 rounded-l-none"
           disabled={disabled}
-          onClick={() => setEditMode(true)}
+          onClick={turnOnEditMode}
         >
           <Pencil1Icon />
         </Button>

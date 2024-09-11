@@ -18,7 +18,13 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
   );
 
   const tokenData = await vimResponse.json();
-  if (!(await isAuthorized(tokenData, context.env.CLIENT_ID))) {
+  if (
+    !(await isAuthorized(
+      tokenData,
+      context.env.CLIENT_ID,
+      context.env.VIM_ISSUER
+    ))
+  ) {
     return new Response("", {
       status: 403,
       statusText: "Forbidden: You do not have access to this resource.",
@@ -28,11 +34,15 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
   return Response.json(tokenData);
 };
 
-async function isAuthorized(vimTokenData, clientId: string) {
+async function isAuthorized(
+  vimTokenData,
+  clientId: string,
+  vimIssuer = "https://auth.getvim.com/"
+) {
   try {
     const decodedIdToken = await parseJwt({
       jwt: vimTokenData.idToken,
-      issuer: "https://auth.getvim.com/",
+      issuer: vimIssuer,
       audience: clientId,
     });
     if (decodedIdToken.valid) {

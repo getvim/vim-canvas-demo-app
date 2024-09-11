@@ -5,6 +5,7 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
   const { code } = await context.request.json<{ code: string }>();
 
   const vimResponse = await fetch(
+    context.env.VIM_TOKEN_ENDPOINT ??
     "https://connect.getvim.com/os-api/v1/oauth/token",
     {
       method: "POST",
@@ -53,7 +54,12 @@ async function isAuthorized(
       });
     } else if (decodedIdToken.valid === false) {
       console.error(
-        `Failed to parse jwt ${decodedIdToken.reason} [${decodedIdToken.reasonCode}]`
+        `Failed to parse jwt ${decodedIdToken.reason} [${decodedIdToken.reasonCode}]`,
+        {
+          vimTokenData,
+          vimIssuer,
+          clientId,
+        }
       );
       return false;
     }

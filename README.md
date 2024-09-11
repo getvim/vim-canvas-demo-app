@@ -43,14 +43,14 @@ The app is built with `vite` and `react` and uses `shadcn`, `radix-ui`,`tailwind
 * `src/components/ui` - Contains UI components generated with [Shadcn](https://ui.shadcn.com/).
 * `src/hooks` - Contains custom hooks for the application, including hooks that wrap the VimOS.js Canvas SDK - [following the docs examples](https://docs.getvim.com/vim-os-js/reactjs.html#react-integration-guide-for-vimos.js).
 
-## Running the example code
+### Running the example code
 
-### Prerequisites
+#### Prerequisites
 In order to see the demo code in action, you must first configure an application in the [Vim Canvas Developer Platform](https://console.getvim.com/organization-admin/).
 
 If you don’t have a Vim Canvas developer account yet, register [here](https://getvim.com/vim-canvas-developer-platform/) to gain access.
 
-### Installation
+#### Installation
 
 To install and run the app locally, follow these steps:
 
@@ -89,7 +89,7 @@ npm run dev
 
 7. Follow up on [Testing Your Application](https://docs.getvim.com/platform/testing.html#testing-your-application) in the official docs
 
-## Authentication Flow
+### Authentication Flow
 
 The `functions` folder is a cloudflare pages function that handles the authentication flow for the app.
 
@@ -107,7 +107,7 @@ When running locally the api server starts at `http://localhost:8788` & exposes 
 | | Example:<br>A mental health referral solution | Example:<br>An efficiency solution such as a medical documentation tool |
 
 # Contributing
-* How can I submit an app with a different tech stack?
-    * Apps submissions are always welcomed! 🥳 Open a pr with a proper description and we'll review it as soon as possible
+* How can I submit an improvement?
+    * Improvements are always welcomed! 🥳 Open a PR with a proper description and we'll review it as soon as possible
 * Spot a bug 🕷 ?
-    * We welcome code changes that improve the apps or fix a problem. Please make sure to follow all best practices.
+    * We welcome code changes that improve the apps or fix a problem. Please make sure to follow all best practices and open an "Issue" and we'll review it as soon as possible.

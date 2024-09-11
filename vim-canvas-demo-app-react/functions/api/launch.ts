@@ -6,7 +6,8 @@ export const onRequestGet: PagesFunction<Env> = async (context) => {
   const launchId = queryParams.get("launch_id");
 
   const redirectUrl = new URL(
-    "https://connect.getvim.com/os-api/v1/oauth/authorize"
+    context.env.VIM_AUTHORIZE_ENDPOINT ??
+      "https://connect.getvim.com/os-api/v1/oauth/authorize"
   );
   redirectUrl.searchParams.append("launch_id", launchId);
   redirectUrl.searchParams.append("client_id", context.env.CLIENT_ID);

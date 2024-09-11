@@ -7,7 +7,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "./tooltip";
-import { MouseEventHandler } from "react";
+import { MouseEventHandler, ReactElement } from "react";
 
 interface SmallActionButtonsProps {
   onCrossClick: MouseEventHandler;
@@ -17,6 +17,7 @@ interface SmallActionButtonsProps {
   checkClassName?: string;
   tooltipContent?: string;
   disabled?: boolean;
+  checkIcon?: ReactElement;
 }
 
 export const SmallActionButtons = ({
@@ -26,6 +27,7 @@ export const SmallActionButtons = ({
   crossClassName,
   checkClassName,
   tooltipContent,
+  checkIcon,
   disabled,
 }: SmallActionButtonsProps) => {
   return (
@@ -51,7 +53,7 @@ export const SmallActionButtons = ({
               onClick={onCheckClick}
               disabled={disabled}
             >
-              <CheckIcon />
+              {checkIcon ?? <CheckIcon />}
             </Button>
           </TooltipTrigger>
           <TooltipContent className="bg-primary text-primary-foreground">

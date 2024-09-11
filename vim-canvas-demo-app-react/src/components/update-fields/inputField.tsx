@@ -1,16 +1,18 @@
 import { Input } from "@/components/ui/input";
-import { Pencil1Icon } from "@radix-ui/react-icons";
+import { CopyIcon, Pencil1Icon } from "@radix-ui/react-icons";
 import { useEffect, useRef, useState } from "react";
 import { Button } from "../ui/button";
 import { SmallActionButtons } from "../ui/smallActionButtons";
 import { UpdateField } from "../update-fields/types";
 import { useVimOsContext } from "@/hooks/useVimOsContext";
+import { useToast } from "@/hooks/use-toast";
 
 export const InputField = ({
   value,
   onChange,
   disabled,
 }: UpdateField<string | undefined>) => {
+  const { toast } = useToast();
   const [innerValue, setInnerValue] = useState(value);
   const [editMode, setEditMode] = useState(false);
   const vimOs = useVimOsContext();
@@ -56,6 +58,7 @@ export const InputField = ({
       ) : (
         <SmallActionButtons
           tooltipContent={disabled ? "Copy to clipboard" : undefined}
+          checkIcon={disabled ? <CopyIcon /> : undefined}
           onCrossClick={() => {
             setEditMode(false);
             setInnerValue(value);
@@ -64,6 +67,10 @@ export const InputField = ({
             setEditMode(false);
             if (disabled) {
               vimOs.utils.copyToClipboard(innerValue ?? "");
+              toast({
+                variant: "default",
+                title: "Copied to clipboard",
+              });
             } else {
               onChange(innerValue);
             }

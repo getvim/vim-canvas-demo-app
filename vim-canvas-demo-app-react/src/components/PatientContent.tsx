@@ -160,7 +160,7 @@ export const PatientContent = () => {
             </EntityFieldContent>
           </EntitySectionContent>
           <Separator className="mb-1" />
-          <EntitySectionTitle title="Problem" />
+          <EntitySectionTitle title="Problem list" />
           <EntityFieldReadonlyList list={problemList} />
           <Separator className="mb-1" />
           <ProviderSection provider={patient?.pcp} title="Provider" />

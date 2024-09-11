@@ -1,5 +1,5 @@
 import { Textarea } from "@/components/ui/textarea";
-import { Pencil1Icon } from "@radix-ui/react-icons";
+import { CopyIcon, Pencil1Icon } from "@radix-ui/react-icons";
 import { useEffect, useRef, useState } from "react";
 import { Button } from "../ui/button";
 import { SmallActionButtons } from "../ui/smallActionButtons";
@@ -10,6 +10,7 @@ import {
   UseControllerProps,
   useFormContext,
 } from "react-hook-form";
+import { useToast } from "@/hooks/use-toast";
 
 export function TextareaField<T extends FieldValues = FieldValues>({
   clearAfterChange,
@@ -21,6 +22,7 @@ export function TextareaField<T extends FieldValues = FieldValues>({
   clearAfterChange?: boolean;
   onTextareaSubmit?: (value: string) => void;
 }) {
+  const { toast } = useToast();
   const { field } = useController(props);
   const { resetField } = useFormContext();
   const [editMode, setEditMode] = useState(false);
@@ -77,6 +79,7 @@ export function TextareaField<T extends FieldValues = FieldValues>({
           crossClassName="rounded-l-md rounded-es-none border-l-1"
           checkClassName="rounded-se-none"
           tooltipContent={field.disabled ? "Copy to clipboard" : undefined}
+          checkIcon={field.disabled ? <CopyIcon /> : undefined}
           onCrossClick={() => {
             setEditMode(false);
             setKey(+new Date());
@@ -86,6 +89,10 @@ export function TextareaField<T extends FieldValues = FieldValues>({
             setEditMode(false);
             if (field.disabled) {
               vimOs.utils.copyToClipboard(field.value ?? "");
+              toast({
+                variant: "default",
+                title: "Copied to clipboard",
+              });
             } else {
               onTextareaSubmit?.(field.value);
             }

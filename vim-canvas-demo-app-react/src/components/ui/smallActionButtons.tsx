@@ -7,10 +7,11 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "./tooltip";
+import { MouseEventHandler } from "react";
 
 interface SmallActionButtonsProps {
-  onCrossClick: () => void;
-  onCheckClick: () => void;
+  onCrossClick: MouseEventHandler;
+  onCheckClick: MouseEventHandler;
   className?: string;
   crossClassName?: string;
   checkClassName?: string;

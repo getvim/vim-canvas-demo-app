@@ -65,11 +65,13 @@ export function SelectField<T = unknown>({
 
       <SmallActionButtons
         disabled={disabled}
-        onCrossClick={() => {
+        onCrossClick={(e) => {
+          e.preventDefault();
           setInnerValue(undefined);
           setKey(+new Date());
         }}
-        onCheckClick={() => {
+        onCheckClick={(e) => {
+          e.preventDefault();
           const { id, label, ...newValue } = options.find(
             (o) => o.id === innerValue
           )!;

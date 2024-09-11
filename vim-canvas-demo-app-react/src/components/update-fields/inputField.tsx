@@ -49,7 +49,6 @@ export const InputField = ({
         <Button
           size={"sm"}
           className="h-7 w-7 p-0 rounded-l-none"
-          disabled={disabled}
           onClick={turnOnEditMode}
         >
           <Pencil1Icon />

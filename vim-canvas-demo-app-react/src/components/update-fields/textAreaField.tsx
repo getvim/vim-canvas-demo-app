@@ -67,7 +67,6 @@ export function TextareaField<T extends FieldValues = FieldValues>({
           size={"sm"}
           variant={"ghost"}
           className="absolute right-2 top-2 h-7 w-7 p-0"
-          disabled={field.disabled}
           onClick={turnOnEditMode}
         >
           <Pencil1Icon />

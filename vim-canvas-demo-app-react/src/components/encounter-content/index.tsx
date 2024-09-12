@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { JSONView } from "@/components/ui/jsonView";
 import { Separator } from "@/components/ui/separator";
 import { useToast } from "@/hooks/use-toast";
@@ -6,6 +7,7 @@ import { useVimOSEncounter } from "@/hooks/useEncounter";
 import { useVimOsContext } from "@/hooks/useVimOsContext";
 import { CheckIcon } from "@radix-ui/react-icons";
 import { FormProvider } from "react-hook-form";
+import { EHR } from "vim-os-js-browser/types";
 import { ProviderSection } from "../Provider";
 import { Button } from "../ui/button";
 import {
@@ -30,30 +32,106 @@ export const EncounterContent = () => {
 
   const methods = useNotesForm();
 
+  /**
+   * Because input fields are never disabled (because when they can't be updated we show copy to clipboard UX),
+   * We can't use react-hook-form to determine which inputs are for copy to clipboard and which are for updating.
+   *
+   * So we have to manually check if the input fields are dirty and if they can be updated.
+   */
+  const canUpdateObj: EHR.CanUpdateEncounterParams = {
+    assessment: {},
+    objective: {},
+    patientInstructions: {},
+    plan: {},
+    subjective: {},
+  };
+
+  for (const key in methods.formState.dirtyFields) {
+    const fieldName = key as keyof FormInputs;
+    switch (fieldName) {
+      case "subjectiveGeneralNotes":
+        canUpdateObj.subjective!.generalNotes = true;
+        break;
+      case "subjectiveChiefComplaint":
+        canUpdateObj.subjective!.chiefComplaintNotes = true;
+        break;
+      case "subjectiveHistoryOfPresentIllness":
+        canUpdateObj.subjective!.historyOfPresentIllnessNotes = true;
+        break;
+      case "subjectiveReviewOfSystems":
+        canUpdateObj.subjective!.reviewOfSystemsNotes = true;
+        break;
+      case "objectiveGeneralNotes":
+        canUpdateObj.objective!.generalNotes = true;
+        break;
+      case "objectivePhysicalExamNotes":
+        canUpdateObj.objective!.physicalExamNotes = true;
+        break;
+      case "assessmentGeneralNotes":
+        canUpdateObj.assessment!.generalNotes = true;
+        break;
+      case "planGeneralNotes":
+        canUpdateObj.plan!.generalNotes = true;
+        break;
+      case "patientInstructionsGeneralNotes":
+        canUpdateObj.patientInstructions!.generalNotes = true;
+        break;
+    }
+  }
+
+  const canUpdateResult =
+    vimOs.ehr.resourceUpdater.canUpdateEncounter(canUpdateObj);
   const areNotesDirty = Object.keys(methods.formState.dirtyFields).length > 0;
+
+  const canUpdateNotes = {
+    ...canUpdateResult,
+    canUpdate: areNotesDirty && canUpdateResult.canUpdate,
+  };
 
   const onNotesSubmit = async (data: FormInputs) => {
     vimOs.ehr.resourceUpdater
       .updateEncounter({
         subjective: {
-          generalNotes: data.subjectiveGeneralNotes ?? undefined,
-          chiefComplaintNotes: data.subjectiveChiefComplaint ?? undefined,
-          historyOfPresentIllnessNotes:
-            data.subjectiveHistoryOfPresentIllness ?? undefined,
-          reviewOfSystemsNotes: data.subjectiveReviewOfSystems ?? undefined,
+          generalNotes: canUpdateNotes?.details.subjective?.generalNotes
+            ? data.subjectiveGeneralNotes ?? undefined
+            : undefined,
+          chiefComplaintNotes: canUpdateNotes?.details.subjective
+            ?.chiefComplaintNotes
+            ? data.subjectiveChiefComplaint ?? undefined
+            : undefined,
+          historyOfPresentIllnessNotes: canUpdateNotes?.details.subjective
+            ?.historyOfPresentIllnessNotes
+            ? data.subjectiveHistoryOfPresentIllness ?? undefined
+            : undefined,
+          reviewOfSystemsNotes: canUpdateNotes?.details.subjective
+            ?.reviewOfSystemsNotes
+            ? data.subjectiveReviewOfSystems ?? undefined
+            : undefined,
         },
         objective: {
-          generalNotes: data.objectiveGeneralNotes ?? undefined,
-          physicalExamNotes: data.objectivePhysicalExamNotes ?? undefined,
+          generalNotes: canUpdateNotes?.details.objective?.generalNotes
+            ? data.objectiveGeneralNotes ?? undefined
+            : undefined,
+          physicalExamNotes: canUpdateNotes?.details.objective
+            ?.physicalExamNotes
+            ? data.objectivePhysicalExamNotes ?? undefined
+            : undefined,
         },
         assessment: {
-          generalNotes: data.assessmentGeneralNotes ?? undefined,
+          generalNotes: canUpdateNotes?.details.assessment?.generalNotes
+            ? data.assessmentGeneralNotes ?? undefined
+            : undefined,
         },
         plan: {
-          generalNotes: data.planGeneralNotes ?? undefined,
+          generalNotes: canUpdateNotes?.details.plan?.generalNotes
+            ? data.planGeneralNotes ?? undefined
+            : undefined,
         },
         patientInstructions: {
-          generalNotes: data.patientInstructionsGeneralNotes ?? undefined,
+          generalNotes: canUpdateNotes?.details.patientInstructions
+            ?.generalNotes
+            ? data.patientInstructionsGeneralNotes ?? undefined
+            : undefined,
         },
       })
       .then(() => {
@@ -70,15 +148,38 @@ export const EncounterContent = () => {
         });
       });
     methods.reset({
-      subjectiveGeneralNotes: null,
-      subjectiveChiefComplaint: null,
-      subjectiveHistoryOfPresentIllness: null,
-      subjectiveReviewOfSystems: null,
-      objectiveGeneralNotes: null,
-      objectivePhysicalExamNotes: null,
-      assessmentGeneralNotes: null,
-      planGeneralNotes: null,
-      patientInstructionsGeneralNotes: null,
+      subjectiveGeneralNotes: canUpdateNotes?.details.subjective?.generalNotes
+        ? null
+        : undefined,
+      subjectiveChiefComplaint: canUpdateNotes?.details.subjective
+        ?.chiefComplaintNotes
+        ? null
+        : undefined,
+      subjectiveHistoryOfPresentIllness: canUpdateNotes?.details.subjective
+        ?.historyOfPresentIllnessNotes
+        ? null
+        : undefined,
+      subjectiveReviewOfSystems: canUpdateNotes?.details.subjective
+        ?.reviewOfSystemsNotes
+        ? null
+        : undefined,
+      objectiveGeneralNotes: canUpdateNotes?.details.objective?.generalNotes
+        ? null
+        : undefined,
+      objectivePhysicalExamNotes: canUpdateNotes?.details.objective
+        ?.physicalExamNotes
+        ? null
+        : undefined,
+      assessmentGeneralNotes: canUpdateNotes?.details.assessment?.generalNotes
+        ? null
+        : undefined,
+      planGeneralNotes: canUpdateNotes?.details.plan?.generalNotes
+        ? null
+        : undefined,
+      patientInstructionsGeneralNotes: canUpdateNotes?.details
+        .patientInstructions?.generalNotes
+        ? null
+        : undefined,
     });
   };
 
@@ -109,7 +210,7 @@ export const EncounterContent = () => {
                   size="sm"
                   variant="default"
                   className="pl-2 pr-3 h-8"
-                  disabled={!areNotesDirty}
+                  disabled={!canUpdateNotes?.canUpdate}
                   onClick={() => {}}
                 >
                   <CheckIcon className="mr-2" />

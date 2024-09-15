@@ -99,7 +99,7 @@ export const SessionContextContent = () => {
           <EntitySectionTitle title="Get ID token" />
           <EntitySectionContent>
             <EntityFieldTitle title="ID Token" />
-            <EntityFieldReadonlyText className="truncate text-ellipsis overflow-hidden" text={idToken} />
+            <EntityFieldReadonlyText className="line-clamp-3" text={idToken} />
           </EntitySectionContent>
         </>
       )}

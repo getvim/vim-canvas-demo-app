@@ -50,6 +50,8 @@ In order to see the demo code in action, you must first configure an application
 
 If you don’t have a Vim Canvas developer account yet, register [here](https://getvim.com/vim-canvas-developer-platform/) to gain access.
 
+> ❕ **You don't need a cloudflare user / account** to run the app locally.
+
 #### Installation
 
 To install and run the app locally, follow these steps:
@@ -77,17 +79,19 @@ npm install
 ```.env
 CLIENT_ID=<<YOU ACCOUNT CLIENT ID>>
 CLIENT_SECRET=<<YOUR ACCOUNT CLIENT SECRET>>
+REDIRECT_URL=http://localhost:8788
 ```
 
-5. Change the `appUrl` in `functions/api/launch.ts` to `"http://localhost:8788"` (the local app url).
-
-6. Start the development server:
+5. Start the development server:
 
 ```bash
 npm run dev
 ```
 
-7. Follow up on [Testing Your Application](https://docs.getvim.com/platform/testing.html#testing-your-application) in the official docs
+> This will start both the backend at `http://localhost:8788` and the frontend at `http://localhost:3000`. <br>
+The backend will proxy the frontend - **making both API & frontend available at `http://localhost:8788`**.
+
+6. Follow up on [Testing Your Application](https://docs.getvim.com/platform/testing.html#testing-your-application) in the official docs
 
 ### Authentication Flow
 

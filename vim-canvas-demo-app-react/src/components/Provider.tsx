@@ -71,7 +71,7 @@ export const ProviderSection = ({
                   {speciality && speciality.trim() !== "" ? (
                     <p className="font-thin w-12 text-xs">{speciality}</p>
                   ) : (
-                    <p className="font-thin w-12 text-xs">--</p>
+                    <p className="font-normal w-12 text-xs">--</p>
                   )}
                 </li>
               )) ?? <span className="font-normal text-xs">--</span>}

@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import { JSONView } from "@/components/ui/jsonView";
 import { Separator } from "@/components/ui/separator";
 import { useToast } from "@/hooks/use-toast";
@@ -89,51 +88,72 @@ export const EncounterContent = () => {
   };
 
   const onNotesSubmit = async (data: FormInputs) => {
+    function removeUndefinedProperties(obj: unknown) {
+      if (typeof obj !== "object" || obj === null) {
+        return obj;
+      }
+
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const result: any = {};
+
+      for (const [key, value] of Object.entries(obj)) {
+        if (typeof value === "object" && value !== null) {
+          const nestedResult = removeUndefinedProperties(value);
+          if (Object.keys(nestedResult).length > 0) {
+            result[key] = nestedResult;
+          }
+        } else if (value !== undefined) {
+          result[key] = value;
+        }
+      }
+
+      return result;
+    }
+    const encounterPayload: EHR.UpdateEncounterParams = {
+      subjective: {
+        generalNotes: canUpdateNotes?.details.subjective?.generalNotes
+          ? data.subjectiveGeneralNotes ?? undefined
+          : undefined,
+        chiefComplaintNotes: canUpdateNotes?.details.subjective
+          ?.chiefComplaintNotes
+          ? data.subjectiveChiefComplaint ?? undefined
+          : undefined,
+        historyOfPresentIllnessNotes: canUpdateNotes?.details.subjective
+          ?.historyOfPresentIllnessNotes
+          ? data.subjectiveHistoryOfPresentIllness ?? undefined
+          : undefined,
+        reviewOfSystemsNotes: canUpdateNotes?.details.subjective
+          ?.reviewOfSystemsNotes
+          ? data.subjectiveReviewOfSystems ?? undefined
+          : undefined,
+      },
+      objective: {
+        generalNotes: canUpdateNotes?.details.objective?.generalNotes
+          ? data.objectiveGeneralNotes ?? undefined
+          : undefined,
+        physicalExamNotes: canUpdateNotes?.details.objective?.physicalExamNotes
+          ? data.objectivePhysicalExamNotes ?? undefined
+          : undefined,
+      },
+      assessment: {
+        generalNotes: canUpdateNotes?.details.assessment?.generalNotes
+          ? data.assessmentGeneralNotes ?? undefined
+          : undefined,
+      },
+      plan: {
+        generalNotes: canUpdateNotes?.details.plan?.generalNotes
+          ? data.planGeneralNotes ?? undefined
+          : undefined,
+      },
+      patientInstructions: {
+        generalNotes: canUpdateNotes?.details.patientInstructions?.generalNotes
+          ? data.patientInstructionsGeneralNotes ?? undefined
+          : undefined,
+      },
+    };
+
     vimOs.ehr.resourceUpdater
-      .updateEncounter({
-        subjective: {
-          generalNotes: canUpdateNotes?.details.subjective?.generalNotes
-            ? data.subjectiveGeneralNotes ?? undefined
-            : undefined,
-          chiefComplaintNotes: canUpdateNotes?.details.subjective
-            ?.chiefComplaintNotes
-            ? data.subjectiveChiefComplaint ?? undefined
-            : undefined,
-          historyOfPresentIllnessNotes: canUpdateNotes?.details.subjective
-            ?.historyOfPresentIllnessNotes
-            ? data.subjectiveHistoryOfPresentIllness ?? undefined
-            : undefined,
-          reviewOfSystemsNotes: canUpdateNotes?.details.subjective
-            ?.reviewOfSystemsNotes
-            ? data.subjectiveReviewOfSystems ?? undefined
-            : undefined,
-        },
-        objective: {
-          generalNotes: canUpdateNotes?.details.objective?.generalNotes
-            ? data.objectiveGeneralNotes ?? undefined
-            : undefined,
-          physicalExamNotes: canUpdateNotes?.details.objective
-            ?.physicalExamNotes
-            ? data.objectivePhysicalExamNotes ?? undefined
-            : undefined,
-        },
-        assessment: {
-          generalNotes: canUpdateNotes?.details.assessment?.generalNotes
-            ? data.assessmentGeneralNotes ?? undefined
-            : undefined,
-        },
-        plan: {
-          generalNotes: canUpdateNotes?.details.plan?.generalNotes
-            ? data.planGeneralNotes ?? undefined
-            : undefined,
-        },
-        patientInstructions: {
-          generalNotes: canUpdateNotes?.details.patientInstructions
-            ?.generalNotes
-            ? data.patientInstructionsGeneralNotes ?? undefined
-            : undefined,
-        },
-      })
+      .updateEncounter(removeUndefinedProperties(encounterPayload))
       .then(() => {
         toast({
           variant: "default",

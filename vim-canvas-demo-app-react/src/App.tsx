@@ -41,7 +41,7 @@ function App() {
   useEffect(() => {
     vimOs.hub.setActivationStatus("ENABLED");
     vimOs.hub.pushNotification.show({
-      text: `Explore the <b>Vim Canvas Demo</b> app to view SDK capabilities, grab app code, and unlock opportunities`,
+      text: `Explore the <b>Vim Canvas™️ Demo</b> app to view SDK capabilities, grab app code, and unlock opportunities`,
       notificationId: crypto.randomUUID(),
       actionButtons: {
         leftButton: {

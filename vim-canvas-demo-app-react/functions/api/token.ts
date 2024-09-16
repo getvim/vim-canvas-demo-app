@@ -50,7 +50,7 @@ async function isAuthorized(
       // If identification data on token is not sufficient userinfo endpoint can be used...
       return await isUserEligibleToMyApp({
         email: decodedIdToken.payload["email"],
-        vimUserId: decodedIdToken.payload["https://getvim.com/vimUserId"],
+        vimUserId: decodedIdToken.payload["sub"],
       });
     } else if (decodedIdToken.valid === false) {
       console.error(

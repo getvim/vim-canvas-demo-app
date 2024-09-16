@@ -130,9 +130,6 @@ export function EncounterUpdateField<T = unknown>({
   return (
     <EntityUpdateField
       canUpdate={() => {
-        if (canUpdateParam.subjective?.generalNotes) {
-          return false;
-        }
         return vimOS.ehr.resourceUpdater.canUpdateEncounter(canUpdateParam).canUpdate;
       }}
       updateOnNewValue={(newValue) =>

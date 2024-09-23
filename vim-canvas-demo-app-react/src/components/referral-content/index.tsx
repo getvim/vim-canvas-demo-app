@@ -65,9 +65,7 @@ export const ReferralContent = () => {
           <ReferralUpdateField<EHR.UpdatableProvider | undefined>
             value={referral?.targetProvider}
             canUpdateParam={{
-              targetProvider: {
-                npi: true,
-              },
+              targetProvider: true,
             }}
             valueToUpdatePayload={(value) => ({
               targetProvider: value,

@@ -75,8 +75,8 @@ dependencies:
     specifier: ^1.0.7
     version: 1.0.7(tailwindcss@3.4.10)
   vim-os-js-browser:
-    specifier: ^1.0.2
-    version: 1.0.2
+    specifier: ^1.0.3
+    version: 1.0.3
 
 devDependencies:
   '@cloudflare/workers-types':
@@ -3831,8 +3831,8 @@ packages:
   /util-deprecate@1.0.2:
     resolution: {integrity: sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw==}
 
-  /vim-os-js-browser@1.0.2:
-    resolution: {integrity: sha512-k9295iWdjkTBmefBynuoxqpArxxd8ek441q9lhYfq2IujroxmaBZNMkg/28gRKXaMbvfVFtT5NA+XUb4jVd7rA==}
+  /vim-os-js-browser@1.0.3:
+    resolution: {integrity: sha512-sTdN+WicIYNQjeOxtiyZq8PHJemgwJidJ8Cf3mXn0kfSnAGi87EAgX5OBaQRCcW8MZls6GoZ7qD6Fm5Bq0qf8g==}
     dependencies:
       zod: 3.23.8
     dev: false

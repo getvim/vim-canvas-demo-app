@@ -1,21 +1,18 @@
-import { useVimOsContext } from "@/hooks/useVimOsContext";
-import { UpdateField } from "./types";
-import { EHR } from "vim-os-js-browser/types";
-import { useCallback, useEffect, useMemo, useState } from "react";
-import { useVimOSReferral } from "@/hooks/useReferral";
 import { useToast } from "@/hooks/use-toast";
-import { useVimOSEncounter } from "@/hooks/useEncounter";
+import { useUpdateEncounter } from "@/hooks/useUpdateEncounter";
+import { useUpdateReferral } from "@/hooks/useUpdateReferral";
+import { useCallback, useMemo } from "react";
+import { EHR } from "vim-os-js-browser/types";
+import { UpdateField } from "./types";
 
-export interface UpdateFieldProps<
+interface UpdateFieldProps<
   T = unknown,
-  CAN_UPDATE extends () => boolean = () => boolean,
   VAL_TO_UPDATE extends (value: T) => Promise<unknown> = (
     value: T
   ) => Promise<unknown>
 > {
-  entity: unknown;
   value?: T;
-  canUpdate: CAN_UPDATE;
+  canUpdate: boolean;
   updateOnNewValue: VAL_TO_UPDATE;
   toastSuccessTitle?: string;
 
@@ -24,24 +21,15 @@ export interface UpdateFieldProps<
 
 function EntityUpdateField<
   T,
-  CAN_UPDATE extends () => boolean,
   VAL_TO_UPDATE extends (value: T) => Promise<unknown>
 >({
-  entity,
   value,
   updateOnNewValue,
   render,
   canUpdate,
   toastSuccessTitle,
-}: UpdateFieldProps<T, CAN_UPDATE, VAL_TO_UPDATE>) {
+}: UpdateFieldProps<T, VAL_TO_UPDATE>) {
   const { toast } = useToast();
-  const [canUpdateField, setCanUpdateField] = useState(false);
-
-  useEffect(() => {
-    if (entity) {
-      setCanUpdateField(canUpdate());
-    }
-  }, [canUpdate, entity]);
 
   const onChange = useCallback(
     (newValue: T) => {
@@ -67,11 +55,11 @@ function EntityUpdateField<
     () => ({
       field: {
         value,
-        disabled: !canUpdateField,
+        disabled: !canUpdate,
         onChange,
       },
     }),
-    [value, canUpdateField, onChange]
+    [value, canUpdate, onChange]
   );
 
   return render(renderData);
@@ -91,18 +79,14 @@ export function ReferralUpdateField<T = unknown>({
   render,
   canUpdateParam,
 }: ReferralUpdateFieldProps<T>) {
-  const vimOS = useVimOsContext();
-  const referral = useVimOSReferral();
+  const { canUpdateParams, updateReferral } = useUpdateReferral(canUpdateParam);
 
   return (
     <EntityUpdateField
-      canUpdate={() =>
-        vimOS.ehr.resourceUpdater.canUpdateReferral(canUpdateParam).canUpdate
-      }
+      canUpdate={canUpdateParams}
       updateOnNewValue={(newValue) =>
-        vimOS.ehr.resourceUpdater.updateReferral(valueToUpdatePayload(newValue))
+        updateReferral(valueToUpdatePayload(newValue))
       }
-      entity={referral}
       render={render}
       value={value}
       toastSuccessTitle="Referral updated!"
@@ -124,21 +108,16 @@ export function EncounterUpdateField<T = unknown>({
   render,
   canUpdateParam,
 }: EncounterUpdateFieldProps<T>) {
-  const vimOS = useVimOsContext();
-  const encounter = useVimOSEncounter();
+  const { canUpdateParams, updateEncounter } =
+    useUpdateEncounter(canUpdateParam);
 
   return (
     <EntityUpdateField
-      canUpdate={() => {
-        return vimOS.ehr.resourceUpdater.canUpdateEncounter(canUpdateParam).canUpdate;
-      }}
+      canUpdate={canUpdateParams}
       updateOnNewValue={(newValue) =>
-        vimOS.ehr.resourceUpdater.updateEncounter(
-          valueToUpdatePayload(newValue)
-        )
+        updateEncounter(valueToUpdatePayload(newValue))
       }
       toastSuccessTitle="Encounter updated!"
-      entity={encounter}
       render={render}
       value={value}
     />

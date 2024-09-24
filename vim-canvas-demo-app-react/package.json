@@ -35,7 +35,7 @@
     "react-hook-form": "^7.53.0",
     "tailwind-merge": "^2.5.2",
     "tailwindcss-animate": "^1.0.7",
-    "vim-os-js-browser": "^1.0.2"
+    "vim-os-js-browser": "^1.0.3"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20240821.1",

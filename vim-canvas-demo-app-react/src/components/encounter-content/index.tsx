@@ -3,7 +3,7 @@ import { Separator } from "@/components/ui/separator";
 import { useToast } from "@/hooks/use-toast";
 import { useAppConfig } from "@/hooks/useAppConfig";
 import { useVimOSEncounter } from "@/hooks/useEncounter";
-import { useVimOsContext } from "@/hooks/useVimOsContext";
+import { useUpdateEncounter } from "@/hooks/useUpdateEncounter";
 import { CheckIcon } from "@radix-ui/react-icons";
 import { FormProvider } from "react-hook-form";
 import { EHR } from "vim-os-js-browser/types";
@@ -26,8 +26,8 @@ import { EncounterSubjective } from "./Subjective";
 export const EncounterContent = () => {
   const { toast } = useToast();
   const { jsonMode } = useAppConfig();
-  const vimOs = useVimOsContext();
   const { encounter } = useVimOSEncounter();
+  const { canUpdate, updateEncounter } = useUpdateEncounter();
 
   const methods = useNotesForm();
 
@@ -78,8 +78,7 @@ export const EncounterContent = () => {
     }
   }
 
-  const canUpdateResult =
-    vimOs.ehr.resourceUpdater.canUpdateEncounter(canUpdateObj);
+  const canUpdateResult = canUpdate(canUpdateObj);
   const areNotesDirty = Object.keys(methods.formState.dirtyFields).length > 0;
 
   const canUpdateNotes = {
@@ -152,8 +151,7 @@ export const EncounterContent = () => {
       },
     };
 
-    vimOs.ehr.resourceUpdater
-      .updateEncounter(removeUndefinedProperties(encounterPayload))
+    updateEncounter(removeUndefinedProperties(encounterPayload))
       .then(() => {
         toast({
           variant: "default",

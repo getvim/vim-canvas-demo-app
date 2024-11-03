@@ -28,12 +28,8 @@ export const useUpdateEncounter = (
   return useMemo(
     () => ({
       canUpdateParams,
-      canUpdate: vimOS.ehr.resourceUpdater.canUpdateEncounter.bind(
-        vimOS.ehr.resourceUpdater
-      ),
-      updateEncounter: vimOS.ehr.resourceUpdater.updateEncounter.bind(
-        vimOS.ehr.resourceUpdater
-      ),
+      canUpdate: vimOS.ehr.resourceUpdater.canUpdateEncounter,
+      updateEncounter: vimOS.ehr.resourceUpdater.updateEncounter,
     }),
     [vimOS.ehr.resourceUpdater, canUpdateParams]
   );

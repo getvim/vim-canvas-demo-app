@@ -1,10 +1,8 @@
 import { parseJwt } from "@cfworker/jwt";
 import { Env } from "../context-env";
 
-export const onRequestPost: PagesFunction<Env> = async (context) => {
-  const { code } = await context.request.json<{ code: string }>();
-
-  const vimResponse = await fetch(
+async function getToken(context, code: string, secret:string) {
+  return fetch(
     context.env.VIM_TOKEN_ENDPOINT ??
     "https://connect.getvim.com/os-api/v1/oauth/token",
     {
@@ -13,12 +11,21 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
       body: JSON.stringify({
         client_id: context.env.CLIENT_ID,
         code,
-        secret: context.env.CLIENT_SECRET,
+        secret,
       }),
     }
   );
+}
 
+export const onRequestPost: PagesFunction<Env> = async (context) => {
+  const { code } = await context.request.json<{ code: string }>();
+
+  let vimResponse = await getToken(context, code, context.env.CLIENT_SECRET);
+  if (vimResponse.status >= 400 && vimResponse.status < 500 && context.env.CLIENT_SECRET_FALLBACK) {
+    vimResponse = await getToken(context, code, context.env.CLIENT_SECRET_FALLBACK);
+  }
   const tokenData = await vimResponse.json();
+
   if (
     !(await isAuthorized(
       tokenData,

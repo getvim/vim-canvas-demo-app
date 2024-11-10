@@ -1,17 +1,18 @@
 import { parseJwt } from "@cfworker/jwt";
 import { Env } from "../context-env";
 
-async function getToken(context, code: string, secret:string) {
+async function getToken(context, code: string, client_secret:string) {
   return fetch(
     context.env.VIM_TOKEN_ENDPOINT ??
-    "https://connect.getvim.com/os-api/v1/oauth/token",
+    "https://connect.getvim.com/os-api/v2/oauth/token",
     {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         client_id: context.env.CLIENT_ID,
         code,
-        secret,
+        client_secret,
+        grant_type: "authorization_code"
       }),
     }
   );
@@ -19,13 +20,11 @@ async function getToken(context, code: string, secret:string) {
 
 export const onRequestPost: PagesFunction<Env> = async (context) => {
   const { code } = await context.request.json<{ code: string }>();
-
   let vimResponse = await getToken(context, code, context.env.CLIENT_SECRET);
   if (vimResponse.status >= 400 && vimResponse.status < 500 && context.env.CLIENT_SECRET_FALLBACK) {
     vimResponse = await getToken(context, code, context.env.CLIENT_SECRET_FALLBACK);
   }
   const tokenData = await vimResponse.json();
-
   if (
     !(await isAuthorized(
       tokenData,
@@ -49,7 +48,7 @@ async function isAuthorized(
 ) {
   try {
     const decodedIdToken = await parseJwt({
-      jwt: vimTokenData.idToken,
+      jwt: vimTokenData.id_token,
       issuer: vimIssuer,
       audience: clientId,
     });

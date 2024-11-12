@@ -21,7 +21,7 @@ export const useUpdateReferral = (
           : false
       );
     vimOS.ehr.resourceUpdater.subscribe("referral", cb);
-    return vimOS.ehr.resourceUpdater.unsubscribe("referral", cb);
+    return () => vimOS.ehr.resourceUpdater.unsubscribe("referral", cb);
   }, [vimOS.ehr, paramsToCheck]);
 
   return useMemo(

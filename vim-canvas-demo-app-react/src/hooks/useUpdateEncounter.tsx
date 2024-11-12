@@ -22,7 +22,7 @@ export const useUpdateEncounter = (
           : false
       );
     vimOS.ehr.resourceUpdater.subscribe("encounter", cb);
-    return vimOS.ehr.resourceUpdater.unsubscribe("encounter", cb);
+    return () => vimOS.ehr.resourceUpdater.unsubscribe("encounter", cb);
   }, [vimOS.ehr, paramsToCheck]);
 
   return useMemo(

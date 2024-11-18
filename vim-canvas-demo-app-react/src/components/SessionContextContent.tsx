@@ -53,6 +53,11 @@ export const SessionContextContent = () => {
             <EntityFieldReadonlyText
               text={sessionContext?.user?.identifiers?.vimUserID}
             />
+            <EntityFieldTitle title="Role(s)" />
+            <EntityFieldReadonlyText
+              className="whitespace-pre-line"
+              text={sessionContext?.user?.identifiers?.roles?.join('\n')}
+            />
           </EntitySectionContent>
           <Separator className="mb-1" />
           <EntitySectionTitle title="Demographics" />

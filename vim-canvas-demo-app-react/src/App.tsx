@@ -28,6 +28,7 @@ import {
   DialogTitle,
 } from "./components/ui/dialog";
 import { Button } from "./components/ui/button";
+import { Footer } from "./components/Footer";
 
 function App() {
   const vimOs = useVimOsContext();
@@ -130,6 +131,8 @@ function App() {
           </DialogFooter>
         </DialogContent>
       </Dialog>
+
+      <Footer />
     </div>
   );
 }

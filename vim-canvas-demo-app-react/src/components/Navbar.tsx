@@ -1,24 +1,17 @@
-import downloadSvg from "@/assets/download.svg";
-import sdkSvg from "@/assets/sdk.svg";
 import { useVimOsContext } from "@/hooks/useVimOsContext";
-import { DotsVerticalIcon } from "@radix-ui/react-icons";
+import { Cross2Icon } from "@radix-ui/react-icons";
 import { Button } from "./ui/button";
 import { Label } from "./ui/label";
 import { Separator } from "./ui/separator";
 import { Switch } from "./ui/switch";
 import { useAppConfig } from "../hooks/useAppConfig";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { Hub } from "vim-os-js-browser/types";
 import { cn } from "@/lib/utils";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "./ui/dropdown-menu";
 import { LayoutFull } from "@/assets/layoutFull";
 import { LayoutLarge } from "@/assets/layoutLarge";
 import { LayoutSmall } from "@/assets/layoutSmall";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "./ui/tooltip";
 
 export const Navbar = () => {
   const { setJsonMode } = useAppConfig();
@@ -30,6 +23,10 @@ export const Navbar = () => {
     setAppSize(size);
     vimOs.hub.setDynamicAppSize(size);
   };
+
+  const handleAppClose = useCallback(() => {
+    vimOs.hub.closeApp();
+  }, [vimOs.hub]);
 
   const smallMode = appSize === "CLASSIC";
 
@@ -91,83 +88,22 @@ export const Navbar = () => {
             />
           </Button>
         </div>
-
-        {!smallMode && (
-          <>
-            <Separator
-              orientation={"vertical"}
-              className="mx-1 min-h-[20px] bg-foreground"
-            />
-            <div className="flex items-center">
-              <a
-                href="https://github.com/getvim/vim-canvas-demo-app"
-                target="_blank"
-              >
-                <Button
-                  className="w-full p-1 h-fit flex justify-start hover:bg-green-100/60"
-                  variant={"ghost"}
-                  size={"icon"}
-                >
-                  <img src={downloadSvg} />
-                </Button>
-              </a>
-              <a href="https://docs.getvim.com/" target="_blank">
-                <Button
-                  className="w-full p-1 h-fit flex justify-start hover:bg-green-100/60"
-                  variant={"ghost"}
-                  size={"icon"}
-                >
-                  <img src={sdkSvg} />
-                </Button>
-              </a>
-            </div>
-          </>
-        )}
-        {smallMode && (
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger asChild>
               <Button
-                size="sm"
-                variant="ghost"
-                className="p-1 h-fit hover:bg-green-100/60"
+              size="sm"
+              variant="ghost"
+              className="p-1 h-fit hover:bg-green-100/60"
               >
-                <DotsVerticalIcon />
+                <Cross2Icon onClick={handleAppClose}/>
               </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent className="w-56">
-              <DropdownMenuItem className="p-0 w-full">
-                <a
-                  href="https://github.com/getvim/vim-canvas-demo-app"
-                  className="w-full"
-                  target="_blank"
-                >
-                  <Button
-                    className="w-full flex justify-start space-x-2 hover:bg-[rgb(242,255,253)]"
-                    variant={"link"}
-                  >
-                    <img src={downloadSvg} />
-                    <span>View code</span>
-                  </Button>
-                </a>
-              </DropdownMenuItem>
-              <DropdownMenuItem className="p-0 w-full">
-                <a
-                  href="https://docs.getvim.com/"
-                  target="_blank"
-                  className="w-full"
-                >
-                  <Button
-                    className="w-full flex justify-start space-x-2 hover:bg-[rgb(242,255,253)]"
-                    variant={"link"}
-                  >
-                    <img src={sdkSvg} />
-                    <span>SDK Documentation</span>
-                  </Button>
-                </a>
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-        )}
+            </TooltipTrigger>
+            <TooltipContent className="bg-primary text-primary-foreground">
+              <p>Close app</p>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
       </div>
     </div>
   );

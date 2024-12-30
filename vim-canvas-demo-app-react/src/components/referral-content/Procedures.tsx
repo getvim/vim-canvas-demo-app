@@ -65,6 +65,10 @@ export const ReferralProcedures = () => {
                     id: "39545",
                     label: "Under Repair Procedures on the Diaphragm",
                   },
+                  {
+                    id: "9999",
+                    label: "Invalid CPT",
+                  },
                 ]}
                 {...field}
               />

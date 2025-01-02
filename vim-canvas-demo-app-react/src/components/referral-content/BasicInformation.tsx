@@ -17,8 +17,6 @@ import targetSpecialtiesJson from "./targetSpecialties.json";
 export const ReferralBasicInformation = () => {
   const { referral } = useVimOSReferral();
 
-  console.log(referral?.basicInformation);
-
   return (
     <>
       <EntitySectionTitle title="Basic Information" />

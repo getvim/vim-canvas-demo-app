@@ -43,7 +43,7 @@ export const EntityFieldReadonlyText = ({
   className?: string;
 }) => {
   return (
-    <div className="mt-2">
+    <div className="mt-2 min-w-0">
       <p className={cn("font-normal text-xs", className)}>
         {(text ?? "") === "" ? "--" : text}
       </p>

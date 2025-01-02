@@ -14,6 +14,8 @@ import { InputField } from "../update-fields/inputField";
 import { SelectField } from "../update-fields/selectField";
 import targetSpecialtiesJson from "./targetSpecialties.json";
 
+targetSpecialtiesJson.sort((a, b) => a.label.localeCompare(b.label));
+
 export const ReferralBasicInformation = () => {
   const { referral } = useVimOSReferral();
 

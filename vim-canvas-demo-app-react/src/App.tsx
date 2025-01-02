@@ -72,7 +72,7 @@ function App() {
   };
 
   return (
-    <div className="w-full h-full absolute top-0 left-0">
+    <div className="w-full top-0 left-0 pb-6">
       <Navbar />
 
       <CollapsibleEntity entityTitle="User" entityIconUrl={userSvg}>

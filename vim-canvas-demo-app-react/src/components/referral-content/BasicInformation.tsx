@@ -197,7 +197,7 @@ export const ReferralBasicInformation = () => {
           <EntityFieldTitle title="Notes" />
           <div className="flex justify-center mt-2">
             <ReferralUpdateField<string | undefined>
-              value={referral?.basicInformation?.notes}
+              value={referral?.basicInformation?.notes || ""}
               canUpdateParam={{
                 basicInformation: {
                   notes: true,

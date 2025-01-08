@@ -71,6 +71,7 @@ export const EncounterAssessment = () => {
                       "Degenerative disease of nervous system, unspecified",
                   },
                   { id: "F20.9", label: "Schizophrenia, unspecified" },
+                  { id: "A00000", label: "Invalid ICD" },
                 ]}
                 {...field}
               />

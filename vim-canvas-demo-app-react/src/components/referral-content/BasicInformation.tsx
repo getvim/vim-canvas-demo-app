@@ -26,7 +26,7 @@ export const ReferralBasicInformation = () => {
         <EntityFieldContent>
           <EntityFieldTitle title="Speciality" />
           <div className="flex justify-center mt-2">
-            <ReferralUpdateField<{ id?: string }>
+            <ReferralUpdateField<{ id?: string, label?: string }>
               value={{ id: referral?.basicInformation?.specialty }}
               canUpdateParam={{
                 basicInformation: {
@@ -35,7 +35,7 @@ export const ReferralBasicInformation = () => {
               }}
               valueToUpdatePayload={(value) => ({
                 basicInformation: {
-                  specialty: value?.id,
+                  specialty: value?.label,
                 },
               })}
               render={({ field }) => (

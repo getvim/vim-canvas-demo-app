@@ -1,4 +1,10 @@
 [
+      {
+        "id": "0",
+        "type": "specialty",
+        "label": "Invalid description text",
+        "description": "Invalid description text"
+    },
     {
       "id": "1",
       "type": "specialty",

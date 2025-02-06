@@ -16,5 +16,6 @@ export const onRequestGet: PagesFunction<Env> = async (context) => {
     context.env.REDIRECT_URL ?? "http://localhost:8788"
   );
   redirectUrl.searchParams.append("response_type", "code");
+
   return Response.redirect(redirectUrl.toString(), 302);
 };

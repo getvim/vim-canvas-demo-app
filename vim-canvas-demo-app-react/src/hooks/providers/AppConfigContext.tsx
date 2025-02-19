@@ -33,23 +33,27 @@ export const AppConfigProvider: React.FC<React.PropsWithChildren> = ({
 
   useEffect(() => {
     const syncNotifications = () => {
-      if (vimOs.hub.appState.isAppOpen) {
-        vimOs.hub.notificationBadge.hide();
-
-        if (Object.keys(notifications).length > 0) {
-          setNotifications({});
-        }
-      } else {
-        const sumNotifications = Object.values(notifications).reduce(
-          (acc, val) => acc + val,
-          0
-        );
-
-        if (sumNotifications > 0) {
-          vimOs.hub.notificationBadge.set(sumNotifications);
-        } else {
+      try {
+        if (vimOs.hub.appState.isAppOpen) {
           vimOs.hub.notificationBadge.hide();
+
+          if (Object.keys(notifications).length > 0) {
+            setNotifications({});
+          }
+        } else {
+          const sumNotifications = Object.values(notifications).reduce(
+            (acc, val) => acc + val,
+            0
+          );
+
+          if (sumNotifications > 0) {
+            vimOs.hub.notificationBadge.set(sumNotifications);
+          } else {
+            vimOs.hub.notificationBadge.hide();
+          }
         }
+      } catch (e) {
+        console.error("Failed to sync notifications", e);
       }
     };
     syncNotifications();

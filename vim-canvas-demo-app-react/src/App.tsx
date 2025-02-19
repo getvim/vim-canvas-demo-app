@@ -41,27 +41,31 @@ function App() {
 
   useEffect(() => {
     vimOs.hub.setActivationStatus("ENABLED");
-    vimOs.hub.pushNotification.show({
-      text: `Explore the <b>Vim Canvas™️ Demo</b> app to view SDK capabilities, grab app code, and unlock opportunities`,
-      notificationId: crypto.randomUUID(),
-      actionButtons: {
-        leftButton: {
-          text: "View code",
-          buttonStyle: "LINK",
-          callback: () => {
-            setRedirectUrl("https://github.com/getvim/vim-canvas-demo-app");
-            setRedirectModal(true);
+    try {
+      vimOs.hub.pushNotification.show({
+        text: `Explore the <b>Vim Canvas™️ Demo</b> app to view SDK capabilities, grab app code, and unlock opportunities`,
+        notificationId: crypto.randomUUID(),
+        actionButtons: {
+          leftButton: {
+            text: "View code",
+            buttonStyle: "LINK",
+            callback: () => {
+              setRedirectUrl("https://github.com/getvim/vim-canvas-demo-app");
+              setRedirectModal(true);
+            },
+            openAppButton: true,
           },
-          openAppButton: true,
+          rightButton: {
+            text: "Explore app",
+            buttonStyle: "PRIMARY",
+            openAppButton: true,
+            callback: () => {},
+          },
         },
-        rightButton: {
-          text: "Explore app",
-          buttonStyle: "PRIMARY",
-          openAppButton: true,
-          callback: () => {},
-        },
-      },
-    });
+      });
+    } catch (e) {
+      console.error("failed to show push notification", e);
+    }
   }, [vimOs, setRedirectUrl]);
 
   const onRedirectModalChange = (open: boolean) => {

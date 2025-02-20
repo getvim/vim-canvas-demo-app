@@ -1,16 +1,37 @@
+import { Button } from "@/components/ui/button";
 import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
-import { CaretDownIcon } from "@radix-ui/react-icons";
-import React, { PropsWithChildren, useState } from "react";
-import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { CaretDownIcon } from "@radix-ui/react-icons";
+import cssFilterConverter from "css-filter-converter";
+import React, { PropsWithChildren, useState } from "react";
+import { EHR } from "vim-os-js-browser/types";
 import { Separator } from "./separator";
 
+export const hexToFilter = (hex: string) => {
+  const base = hex.slice(0, 7);
+  const opacity = hex.slice(7);
+  const filter = cssFilterConverter.hexToFilter(base);
+  if (filter.error || !filter.color) {
+    return "";
+  }
+  if (opacity) {
+    return filter.color?.concat(` opacity(${opacity}%)`);
+  }
+  return filter.color;
+};
+
 interface CollapsibleEntityProps {
-  entityTitle: "User" | "Patient" | "Encounter" | "Referral" | "Order";
+  entityTitle:
+    | "User"
+    | "Patient"
+    | "Encounter"
+    | "Referral"
+    | "Order"
+    | `Order - ${EHR.OrderType}`;
   entityIconUrl: string;
 }
 
@@ -34,7 +55,11 @@ export function CollapsibleEntity({
           )}
         >
           <div className="flex gap-2">
-            <img src={entityIconUrl} className="w-[20px] h-[20px]" />
+            <img
+              src={entityIconUrl}
+              className="w-[20px] h-[20px]"
+              style={{ filter: hexToFilter("#04B39F") }}
+            />
             <h4 className="text-sm font-semibold">{entityTitle}</h4>
           </div>
 

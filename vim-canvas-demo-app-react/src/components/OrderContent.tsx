@@ -1,5 +1,6 @@
 import { useAppConfig } from "@/hooks/useAppConfig";
-import { useVimOSOrders } from "@/hooks/useOrders";
+import { Fragment } from "react";
+import { EHR } from "vim-os-js-browser/types";
 import {
   EntityFieldContent,
   EntityFieldReadonlyList,
@@ -11,16 +12,17 @@ import {
 import { JSONView } from "./ui/jsonView";
 import { Separator } from "./ui/separator";
 
-export const OrderContent = () => {
-  const { jsonMode } = useAppConfig();
-  const { orders } = useVimOSOrders();
+interface OrderContentProps {
+  order: EHR.Order;
+}
 
-  const order = orders?.[0];
+export const OrderContent: React.FC<OrderContentProps> = ({ order }) => {
+  const { jsonMode } = useAppConfig();
 
   return (
     <div className="w-full">
       {jsonMode ? (
-        <JSONView value={orders} />
+        <JSONView value={order} />
       ) : (
         <>
           <EntitySectionTitle title="Identifier" />
@@ -66,6 +68,51 @@ export const OrderContent = () => {
               />
             </EntityFieldContent>
           </EntitySectionContent>
+          <Separator className="mb-1" />
+          {order?.medications?.map((medication) => (
+            <Fragment key={medication.basicInformation?.ndcCode}>
+              <EntitySectionTitle title="Medication" />
+              <EntitySectionContent>
+                <EntityFieldContent>
+                  <EntityFieldTitle title="Medication Name" />
+                  <EntityFieldReadonlyText
+                    text={medication.basicInformation?.medicationName ?? "--"}
+                  />
+                </EntityFieldContent>
+                <EntityFieldContent>
+                  <EntityFieldTitle title="NCD code" />
+                  <EntityFieldReadonlyText
+                    text={medication.basicInformation?.ndcCode ?? "--"}
+                  />
+                </EntityFieldContent>
+                <EntityFieldContent>
+                  <EntityFieldTitle title="Strength value" />
+                  <EntityFieldReadonlyText
+                    text={medication.dosage?.strength?.value ?? "--"}
+                  />
+                </EntityFieldContent>
+                <EntityFieldContent>
+                  <EntityFieldTitle title="Strength unit" />
+                  <EntityFieldReadonlyText
+                    text={medication.dosage?.strength?.unit ?? "--"}
+                  />
+                </EntityFieldContent>
+                <EntityFieldContent>
+                  <EntityFieldTitle title="Quantity value" />
+                  <EntityFieldReadonlyText
+                    text={medication.dosage?.quantity?.value ?? "--"}
+                  />
+                </EntityFieldContent>
+                <EntityFieldContent>
+                  <EntityFieldTitle title="Quantity unit" />
+                  <EntityFieldReadonlyText
+                    text={medication.dosage?.quantity?.unit ?? "--"}
+                  />
+                </EntityFieldContent>
+              </EntitySectionContent>
+              <Separator className="mb-1" />
+            </Fragment>
+          ))}
         </>
       )}
     </div>

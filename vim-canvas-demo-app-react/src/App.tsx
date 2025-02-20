@@ -1,5 +1,9 @@
 import encounterSvg from "@/assets/encounter.svg";
 import orderSvg from "@/assets/order.svg";
+import orderRxSvg from "@/assets/order-rx.svg";
+import orderLabSvg from "@/assets/order-lab.svg";
+import orderDiSvg from "@/assets/order-di.svg";
+import orderProcedureSvg from "@/assets/order-procedure.svg";
 import patientSvg from "@/assets/patient.svg";
 import referralSvg from "@/assets/referral.svg";
 import userSvg from "@/assets/user.svg";
@@ -29,6 +33,14 @@ import {
 } from "./components/ui/dialog";
 import { Button } from "./components/ui/button";
 import { Footer } from "./components/Footer";
+import { EHR } from "vim-os-js-browser/types";
+
+const orderIcons: Record<EHR.OrderType, string> = {
+  DI: orderDiSvg,
+  LAB: orderLabSvg,
+  RX: orderRxSvg,
+  PROCEDURE: orderProcedureSvg,
+};
 
 function App() {
   const vimOs = useVimOsContext();
@@ -106,13 +118,20 @@ function App() {
           </CollapsibleEntityContent>
         </CollapsibleEntity>
       )}
-      {orders && (
-        <CollapsibleEntity entityTitle="Order" entityIconUrl={orderSvg}>
-          <CollapsibleEntityContent>
-            <OrderContent />
-          </CollapsibleEntityContent>
-        </CollapsibleEntity>
-      )}
+      {orders?.map((order, index) => {
+        const orderType = order.basicInformation?.type;
+        return (
+          <CollapsibleEntity
+            entityTitle={orderType ? `Order - ${orderType}` : "Order"}
+            entityIconUrl={orderType ? orderIcons[orderType] : orderSvg}
+            key={index}
+          >
+            <CollapsibleEntityContent>
+              <OrderContent order={order} />
+            </CollapsibleEntityContent>
+          </CollapsibleEntity>
+        );
+      })}
       <Dialog open={redirectModalOpen} onOpenChange={onRedirectModalChange}>
         <DialogContent className="max-w-[calc(100%-100px)] sm:max-w-[425px]">
           <DialogHeader>

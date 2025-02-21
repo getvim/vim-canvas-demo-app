@@ -1,0 +1,87 @@
+ScribeAI Production API Usage Guide
+====================================
+
+Overview:
+---------
+The ScribeAI API is a fully hosted production service that offers real-time audio transcription and clinical note generation powered by Deepgram and OpenAI's GPT‑4. This service enables you to integrate advanced audio-to-text conversion with automated clinical note assembly into your systems seamlessly.
+
+All API requests must be directed to the production domain:
+   https://api-unique-stg-1048c00a084a.herokuapp.com
+
+Authentication:
+---------------
+Every request requires a valid JSON Web Token (JWT) in the Authorization header. Please obtain your token through your customer dashboard or by contacting our support team.
+
+Example HTTP Header:
+   Authorization: Bearer <YOUR_JWT_TOKEN>
+
+API Endpoints:
+--------------
+1. REST Endpoints for Clinical Note Generation:
+   Use these endpoints to generate clinical notes from your transcribed audio.
+
+   • SOAP Note Endpoint:
+     URL: https://api-unique-stg-1048c00a084a.herokuapp.com/api/notes/soap
+
+   • Progress Note Endpoint:
+     URL: https://api-unique-stg-1048c00a084a.herokuapp.com/api/notes/progress
+
+   • Diagnostic Note Endpoint:
+     URL: https://api-unique-stg-1048c00a084a.herokuapp.com/api/notes/diagnostic
+
+   • Psychological Note Endpoint:
+     URL: https://api-unique-stg-1048c00a084a.herokuapp.com/api/notes/psych
+
+   Sample CURL Request for SOAP Note:
+   curl -X POST https://api-unique-stg-1048c00a084a.herokuapp.com/api/notes/soap \
+     -H "Content-Type: application/json" \
+     -H "Authorization: Bearer <YOUR_JWT_TOKEN>" \
+     -d '{
+           "transcriptText": "Patient reports a headache...",
+           "patientInfo": {
+             "name": "John Doe",
+             "dob": "1980-01-01",
+             "chiefComplaint": "Headache",
+             "visitDate": "2024-04-30",
+             "weight": 180
+           },
+           "customNotes": "No allergies.",
+           "selectedICDCodes": [],
+           "selectedCPTCodes": [],
+           "suggestedICDCodes": [],
+           "suggestedCPTCodes": []
+         }'
+
+2. Transcription of Pre-recorded Audio Files:
+   Use this endpoint to transcribe an audio file that has been previously recorded.
+
+   • File Transcription Endpoint:
+     URL: https://api-unique-stg-1048c00a084a.herokuapp.com/api/transcribe-file
+
+   Sample CURL Request:
+   curl -X POST https://api-unique-stg-1048c00a084a.herokuapp.com/api/transcribe-file \
+     -H "Authorization: Bearer <YOUR_JWT_TOKEN>" \
+     -F "audioFile=@/path/to/your/audio_file.wav"
+
+3. WebSocket Endpoint for Live Audio Transcription:
+   This endpoint provides real-time audio streaming and transcription.
+
+   • Live Transcription WebSocket URL:
+     wss://api-unique-stg-1048c00a084a.herokuapp.com/api/live
+
+   Example using wscat:
+     wscat -c wss://api-unique-stg-1048c00a084a.herokuapp.com/api/live
+
+Usage Notes:
+-------------
+• Always use HTTPS (or WSS for WebSocket connections) to ensure secure communication.
+• Include your JWT token in the Authorization header with every request.
+• Detailed API documentation (parameters, response formats, and error codes) is available upon request.
+• This guide is intended for production usage only.
+
+Support:
+---------
+For further assistance or technical inquiries, please contact our support team at:
+   support@scribeai.com
+
+Thank you for choosing ScribeAI. We look forward to helping you integrate state‑of‑the‑art transcription and clinical note generation into your services. 

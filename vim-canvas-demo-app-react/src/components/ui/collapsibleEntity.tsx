@@ -10,7 +10,7 @@ import { cn } from "@/lib/utils";
 import { Separator } from "./separator";
 
 interface CollapsibleEntityProps {
-  entityTitle: "User" | "Patient" | "Encounter" | "Referral" | "Order";
+  entityTitle: "User" | "Patient" | "Encounter" | "Referral" | "Order" | "ScribeAI Note Generator";
   entityIconUrl: string;
 }
 

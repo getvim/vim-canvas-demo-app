@@ -1,28 +1,21 @@
 import encounterSvg from "@/assets/encounter.svg";
-import orderSvg from "@/assets/order.svg";
-import orderRxSvg from "@/assets/order-rx.svg";
-import orderLabSvg from "@/assets/order-lab.svg";
-import orderDiSvg from "@/assets/order-di.svg";
-import orderProcedureSvg from "@/assets/order-procedure.svg";
+
 import patientSvg from "@/assets/patient.svg";
 import referralSvg from "@/assets/referral.svg";
 import userSvg from "@/assets/user.svg";
+import { useEffect, useState } from "react";
 import { EncounterContent } from "./components/encounter-content";
+import { Footer } from "./components/Footer";
 import { Navbar } from "./components/Navbar";
-import { OrderContent } from "./components/OrderContent";
+import { OrdersWrapper } from "./components/orders/OrdersWrapper";
 import { PatientContent } from "./components/PatientContent";
 import { ReferralContent } from "./components/referral-content";
 import { SessionContextContent } from "./components/SessionContextContent";
+import { Button } from "./components/ui/button";
 import {
   CollapsibleEntity,
   CollapsibleEntityContent,
 } from "./components/ui/collapsibleEntity";
-import { useVimOSEncounter } from "./hooks/useEncounter";
-import { useVimOSOrders } from "./hooks/useOrders";
-import { useVimOSPatient } from "./hooks/usePatient";
-import { useVimOSReferral } from "./hooks/useReferral";
-import { useVimOsContext } from "./hooks/useVimOsContext";
-import { useEffect, useState } from "react";
 import {
   Dialog,
   DialogContent,
@@ -31,16 +24,11 @@ import {
   DialogHeader,
   DialogTitle,
 } from "./components/ui/dialog";
-import { Button } from "./components/ui/button";
-import { Footer } from "./components/Footer";
-import { EHR } from "vim-os-js-browser/types";
-
-const orderIcons: Record<EHR.OrderType, string> = {
-  DI: orderDiSvg,
-  LAB: orderLabSvg,
-  RX: orderRxSvg,
-  PROCEDURE: orderProcedureSvg,
-};
+import { useVimOSEncounter } from "./hooks/useEncounter";
+import { useVimOSOrders } from "./hooks/useOrders";
+import { useVimOSPatient } from "./hooks/usePatient";
+import { useVimOSReferral } from "./hooks/useReferral";
+import { useVimOsContext } from "./hooks/useVimOsContext";
 
 function App() {
   const vimOs = useVimOsContext();
@@ -118,20 +106,7 @@ function App() {
           </CollapsibleEntityContent>
         </CollapsibleEntity>
       )}
-      {orders?.map((order, index) => {
-        const orderType = order.basicInformation?.type;
-        return (
-          <CollapsibleEntity
-            entityTitle={orderType ? `Order - ${orderType}` : "Order"}
-            entityIconUrl={orderType ? orderIcons[orderType] : orderSvg}
-            key={index}
-          >
-            <CollapsibleEntityContent>
-              <OrderContent order={order} />
-            </CollapsibleEntityContent>
-          </CollapsibleEntity>
-        );
-      })}
+      {orders && <OrdersWrapper orders={orders} />}
       <Dialog open={redirectModalOpen} onOpenChange={onRedirectModalChange}>
         <DialogContent className="max-w-[calc(100%-100px)] sm:max-w-[425px]">
           <DialogHeader>

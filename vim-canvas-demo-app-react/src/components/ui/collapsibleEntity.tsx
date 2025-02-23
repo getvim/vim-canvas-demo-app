@@ -11,7 +11,7 @@ import React, { PropsWithChildren, useState } from "react";
 import { EHR } from "vim-os-js-browser/types";
 import { Separator } from "./separator";
 
-export const hexToFilter = (hex: string) => {
+const hexToFilter = (hex: string) => {
   const base = hex.slice(0, 7);
   const opacity = hex.slice(7);
   const filter = cssFilterConverter.hexToFilter(base);

@@ -8,9 +8,9 @@ import {
   EntityFieldTitle,
   EntitySectionContent,
   EntitySectionTitle,
-} from "./ui/entityContent";
-import { JSONView } from "./ui/jsonView";
-import { Separator } from "./ui/separator";
+} from "../ui/entityContent";
+import { JSONView } from "../ui/jsonView";
+import { Separator } from "../ui/separator";
 
 interface OrderContentProps {
   order: EHR.Order;

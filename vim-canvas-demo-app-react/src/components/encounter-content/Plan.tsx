@@ -19,12 +19,12 @@ export const EncounterPlan = () => {
           <EncounterUpdateField<{ id: string; label: string } | undefined>
             value={undefined}
             canUpdateParam={{
-              plan: {
+              billingInformation: {
                 procedureCodes: true,
               },
             }}
             valueToUpdatePayload={(value) => ({
-              plan: {
+              billingInformation: {
                 procedureCodes: value
                   ? [
                       {

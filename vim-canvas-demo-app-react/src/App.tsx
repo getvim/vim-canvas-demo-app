@@ -1,24 +1,21 @@
 import encounterSvg from "@/assets/encounter.svg";
-import orderSvg from "@/assets/order.svg";
+
 import patientSvg from "@/assets/patient.svg";
 import referralSvg from "@/assets/referral.svg";
 import userSvg from "@/assets/user.svg";
+import { useEffect, useState } from "react";
 import { EncounterContent } from "./components/encounter-content";
+import { Footer } from "./components/Footer";
 import { Navbar } from "./components/Navbar";
-import { OrderContent } from "./components/OrderContent";
+import { OrdersWrapper } from "./components/orders/OrdersWrapper";
 import { PatientContent } from "./components/PatientContent";
 import { ReferralContent } from "./components/referral-content";
 import { SessionContextContent } from "./components/SessionContextContent";
+import { Button } from "./components/ui/button";
 import {
   CollapsibleEntity,
   CollapsibleEntityContent,
 } from "./components/ui/collapsibleEntity";
-import { useVimOSEncounter } from "./hooks/useEncounter";
-import { useVimOSOrders } from "./hooks/useOrders";
-import { useVimOSPatient } from "./hooks/usePatient";
-import { useVimOSReferral } from "./hooks/useReferral";
-import { useVimOsContext } from "./hooks/useVimOsContext";
-import { useEffect, useState } from "react";
 import {
   Dialog,
   DialogContent,
@@ -27,8 +24,11 @@ import {
   DialogHeader,
   DialogTitle,
 } from "./components/ui/dialog";
-import { Button } from "./components/ui/button";
-import { Footer } from "./components/Footer";
+import { useVimOSEncounter } from "./hooks/useEncounter";
+import { useVimOSOrders } from "./hooks/useOrders";
+import { useVimOSPatient } from "./hooks/usePatient";
+import { useVimOSReferral } from "./hooks/useReferral";
+import { useVimOsContext } from "./hooks/useVimOsContext";
 
 function App() {
   const vimOs = useVimOsContext();
@@ -41,27 +41,31 @@ function App() {
 
   useEffect(() => {
     vimOs.hub.setActivationStatus("ENABLED");
-    vimOs.hub.pushNotification.show({
-      text: `Explore the <b>Vim Canvas™️ Demo</b> app to view SDK capabilities, grab app code, and unlock opportunities`,
-      notificationId: crypto.randomUUID(),
-      actionButtons: {
-        leftButton: {
-          text: "View code",
-          buttonStyle: "LINK",
-          callback: () => {
-            setRedirectUrl("https://github.com/getvim/vim-canvas-demo-app");
-            setRedirectModal(true);
+    try {
+      vimOs.hub.pushNotification.show({
+        text: `Explore the <b>Vim Canvas™️ Demo</b> app to view SDK capabilities, grab app code, and unlock opportunities`,
+        notificationId: crypto.randomUUID(),
+        actionButtons: {
+          leftButton: {
+            text: "View code",
+            buttonStyle: "LINK",
+            callback: () => {
+              setRedirectUrl("https://github.com/getvim/vim-canvas-demo-app");
+              setRedirectModal(true);
+            },
+            openAppButton: true,
           },
-          openAppButton: true,
+          rightButton: {
+            text: "Explore app",
+            buttonStyle: "PRIMARY",
+            openAppButton: true,
+            callback: () => {},
+          },
         },
-        rightButton: {
-          text: "Explore app",
-          buttonStyle: "PRIMARY",
-          openAppButton: true,
-          callback: () => {},
-        },
-      },
-    });
+      });
+    } catch (e) {
+      console.error("failed to show push notification", e);
+    }
   }, [vimOs, setRedirectUrl]);
 
   const onRedirectModalChange = (open: boolean) => {
@@ -102,13 +106,7 @@ function App() {
           </CollapsibleEntityContent>
         </CollapsibleEntity>
       )}
-      {orders && (
-        <CollapsibleEntity entityTitle="Order" entityIconUrl={orderSvg}>
-          <CollapsibleEntityContent>
-            <OrderContent />
-          </CollapsibleEntityContent>
-        </CollapsibleEntity>
-      )}
+      {orders && <OrdersWrapper orders={orders} />}
       <Dialog open={redirectModalOpen} onOpenChange={onRedirectModalChange}>
         <DialogContent className="max-w-[calc(100%-100px)] sm:max-w-[425px]">
           <DialogHeader>

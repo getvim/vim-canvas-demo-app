@@ -66,7 +66,7 @@ export const EntityFieldReadonlyList = ({
     <ul className={cn("mb-2", className)}>
       {list?.map(({ code, description }, index) => (
         <li key={index} className="flex">
-          <p className="font-bold w-12 text-xs">{code ?? "--"}</p>
+          <p className="font-bold w-20 text-xs">{code ?? "--"}</p>
           <p className="font-normal text-xs">- {description ?? "--"}</p>
         </li>
       ))}

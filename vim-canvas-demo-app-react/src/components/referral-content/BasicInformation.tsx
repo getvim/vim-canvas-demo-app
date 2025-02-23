@@ -26,7 +26,7 @@ export const ReferralBasicInformation = () => {
         <EntityFieldContent>
           <EntityFieldTitle title="Speciality" />
           <div className="flex justify-center mt-2">
-            <ReferralUpdateField<{ id?: string, label?: string }>
+            <ReferralUpdateField<{ id?: string; label?: string }>
               value={{ id: referral?.basicInformation?.specialty }}
               canUpdateParam={{
                 basicInformation: {
@@ -223,7 +223,7 @@ export const ReferralBasicInformation = () => {
         <EntityFieldContent>
           <EntityFieldTitle title="Number of visits" />
           <div className="flex justify-center mt-2">
-            <ReferralUpdateField<string | undefined>
+            <ReferralUpdateField<number | undefined>
               value={referral?.basicInformation?.numberOfVisits}
               canUpdateParam={{
                 basicInformation: {
@@ -235,7 +235,19 @@ export const ReferralBasicInformation = () => {
                   numberOfVisits: value,
                 },
               })}
-              render={({ field }) => <InputField {...field} />}
+              render={({ field: { onChange, value, ...field } }) => (
+                <InputField
+                  {...field}
+                  value={value?.toString()}
+                  onChange={(numberOfVisitsString) => {
+                    onChange(
+                      numberOfVisitsString
+                        ? parseInt(numberOfVisitsString)
+                        : undefined
+                    );
+                  }}
+                />
+              )}
             />
           </div>
         </EntityFieldContent>

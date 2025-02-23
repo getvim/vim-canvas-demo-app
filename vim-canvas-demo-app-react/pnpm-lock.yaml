@@ -50,6 +50,9 @@ dependencies:
   clsx:
     specifier: ^2.1.1
     version: 2.1.1
+  css-filter-converter:
+    specifier: ^1.0.110
+    version: 1.0.110
   date-fns:
     specifier: ^3.6.0
     version: 3.6.0
@@ -75,8 +78,8 @@ dependencies:
     specifier: ^1.0.7
     version: 1.0.7(tailwindcss@3.4.10)
   vim-os-js-browser:
-    specifier: ^1.0.6
-    version: 1.0.6
+    specifier: ^2.0.1
+    version: 2.0.1
 
 devDependencies:
   '@cloudflare/workers-types':
@@ -2405,6 +2408,13 @@ packages:
       shebang-command: 2.0.0
       which: 2.0.2
 
+  /css-filter-converter@1.0.110:
+    resolution: {integrity: sha512-C5ByBQubCmJXh+kBzx3CESEtCbOTMUliyzBSJF0hsnqsbpCdqPrJYvsPMnFBCZNlxR+YNJFoYO+Fj/rvNZv5CA==}
+    dependencies:
+      color-convert: 2.0.1
+      dom-to-image: 2.6.0
+    dev: false
+
   /cssesc@3.0.0:
     resolution: {integrity: sha512-/Tb/JcjK111nNScGob5MNtsntNM1aCNUDipB/TkwZFhyDrrE47SOx/18wF2bbjgc3ZzCSKW1T5nt5EbFoAz/Vg==}
     engines: {node: '>=4'}
@@ -2456,6 +2466,10 @@ packages:
 
   /dlv@1.1.3:
     resolution: {integrity: sha512-+HlytyjlPKnIG8XuRG8WvmBP8xs8P71y+SKKS6ZXWoEgLuePxtDoUEiH7WkdePWrQ5JBpE6aoVqfZfJUQkjXwA==}
+
+  /dom-to-image@2.6.0:
+    resolution: {integrity: sha512-Dt0QdaHmLpjURjU7Tnu3AgYSF2LuOmksSGsUcE6ItvJoCWTBEmiMXcqBdNSAm9+QbbwD7JMoVsuuKX6ZVQv1qA==}
+    dev: false
 
   /eastasianwidth@0.2.0:
     resolution: {integrity: sha512-I88TYZWc9XiYHRQ4/3c5rjjfgkjhLyW2luGIheGERbNQ6OY7yTybanSpDXZa8y7VUP9YmDcYa+eyq4ca7iLqWA==}
@@ -3831,8 +3845,8 @@ packages:
   /util-deprecate@1.0.2:
     resolution: {integrity: sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw==}
 
-  /vim-os-js-browser@1.0.6:
-    resolution: {integrity: sha512-sQ6CGKF60OMnJpOw1H5TA1V5IrFMeNKt32LNzG9QMFLr6Yx8hu8Jjr6wMDDep9cg68XZJovq5aNTw9LHcgNJug==}
+  /vim-os-js-browser@2.0.1:
+    resolution: {integrity: sha512-IQui7jnisiOb9I0/osfUOY2AozwnT22DpHCdyBGwx9OBjTWTxfbdcx8NPT/X2BN0/bOAT9jjMi6nMaFECiKjOg==}
     dependencies:
       zod: 3.23.8
     dev: false

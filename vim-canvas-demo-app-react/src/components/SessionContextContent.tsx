@@ -114,7 +114,7 @@ export const SessionContextContent = () => {
             />
             <EntityFieldTitle title="TIN" />
             <EntityFieldReadonlyText
-              text={sessionContext?.organization?.identifiers?.tin}
+              text={sessionContext?.organization?.identifiers?.tin.join(", ")}
             />
           </EntitySectionContent>
           <EntitySectionTitle title="Get ID token" />

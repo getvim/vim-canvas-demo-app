@@ -26,4 +26,3 @@ functions/**/*.js
 *.njsproj
 *.sln
 *.sw?
-pnpm-lock.yaml

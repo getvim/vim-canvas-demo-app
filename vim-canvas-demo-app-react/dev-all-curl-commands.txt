@@ -1,0 +1,100 @@
+# cURL Commands to Test the Deployed ScribeAI API
+# The app URL is now: https://api-devs-8a32c93f7e2d.herokuapp.com
+# The JWT token used is:
+# eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiaW5mb0Btb2RlbGlzdGEub3JnIiwidHlwZSI6ImFwaS1rZXkiLCJpYXQiOjE3NDAxNzU0NjQsImV4cCI6MjA1NTc1MTQ2NH0.lVFb30_y-0hNg2m1RImAdvHJEuc3-9G5UCvKVcvSsOo
+
+###################################################################
+# 1. Test SOAP Note Generation Endpoint (Complex Scenario)
+###################################################################
+curl -X POST https://api-devs-8a32c93f7e2d.herokuapp.com/api/notes/soap \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiaW5mb0Btb2RlbGlzdGEub3JnIiwidHlwZSI6ImFwaS1rZXkiLCJpYXQiOjE3NDAxNzU0NjQsImV4cCI6MjA1NTc1MTQ2NH0.lVFb30_y-0hNg2m1RImAdvHJEuc3-9G5UCvKVcvSsOo" \
+  -d '{
+        "transcriptText": "Patient arrives with a severe headache, blurred vision, and nausea. Detailed discussion of migraine history provided along with recent stress factors at work. Vitals are stable, but the patient expressed concern over recurring symptoms.",
+        "patientInfo": {
+           
+        },
+        "customNotes": "Reviewed prior episodes and adjusted medication dosage. Follow-up recommended in 2 weeks."
+      }'
+
+###################################################################
+# 2. Test Progress Note Generation Endpoint (Complex Scenario)
+###################################################################
+curl -X POST https://api-devs-8a32c93f7e2d.herokuapp.com/api/notes/progress \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoidGVzdFVzZXIiLCJpYXQiOjE3NDAwMDgwNzEsImV4cCI6MTc0MDE4MDg3MX0.ho9byWv7MJbHFSF9LecPinbLhUA81EkoCRUYYzKbrg8" \
+  -d '{
+        "transcriptText": "Patient presents for a follow-up visit. Significant improvement has been observed with reduced pain levels and increased mobility. Patient details include updates about physical therapy sessions and lifestyle modifications implemented since the last visit.",
+        "patientInfo": {
+    
+        },
+        "customNotes": "Minor improvement noted. Continue current exercise regimen and consider further physical therapy adjustments."
+      }'
+
+###################################################################
+# 3. Test Diagnostic Note Generation Endpoint (Complex Scenario)
+###################################################################
+curl -X POST https://api-devs-8a32c93f7e2d.herokuapp.com/api/notes/diagnostic \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoidGVzdFVzZXIiLCJpYXQiOjE3NDAwMDgwNzEsImV4cCI6MTc0MDE4MDg3MX0.ho9byWv7MJbHFSF9LecPinbLhUA81EkoCRUYYzKbrg8" \
+  -d '{
+        "transcriptText": "A comprehensive evaluation was conducted due to elevated blood pressure and intermittent chest discomfort. The patient provided a detailed account of the symptoms, including duration and frequency, along with other pertinent health concerns.",
+        "patientInfo": {
+     
+        },
+        "customNotes": "Recommend further cardiovascular monitoring and additional diagnostic testing to rule out stress-related hypertension."
+      }'
+
+###################################################################
+# 4. Test Psychological Note Generation Endpoint (Complex Scenario)
+###################################################################
+curl -X POST https://api-devs-8a32c93f7e2d.herokuapp.com/api/notes/psych \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoidGVzdFVzZXIiLCJpYXQiOjE3NDAwMDgwNzEsImV4cCI6MTc0MDE4MDg3MX0.ho9byWv7MJbHFSF9LecPinbLhUA81EkoCRUYYzKbrg8" \
+  -d '{
+        "transcriptText": "Patient discussed ongoing anxiety, recent sleep disturbances, and episodic panic attacks. A detailed reflection on emotional triggers and external stressors was provided.",
+        "patientInfo": {
+       
+        },
+        "customNotes": "Advised to consider both pharmacological and psychotherapeutic interventions. Suggest further evaluation of sleep patterns."
+      }'
+
+###################################################################
+# 5. Test File Transcription Endpoint (Complex Scenario)
+###################################################################
+curl -X POST https://api-devs-8a32c93f7e2d.herokuapp.com/api/transcribe-file \
+  -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiaW5mb0Btb2RlbGlzdGEub3JnIiwidHlwZSI6ImFwaS1rZXkiLCJpYXQiOjE3NDAxNzU0NjQsImV4cCI6MjA1NTc1MTQ2NH0.lVFb30_y-0hNg2m1RImAdvHJEuc3-9G5UCvKVcvSsOo" \
+  -F "audioFile=@/Users/ez/Downloads/audio/Medical apt.m4a"
+
+# Notes for Audio File Upload:
+# - The sample command currently uses the file located at '/Users/ez/Downloads/audio/Medical apt.m4a'.
+# - Replace the file path below (if necessary) with the actual path to your audio file.
+# - Ensure the audio file format is supported by the API.
+
+###################################################################
+### How to Use Live Transcription
+###################################################################
+
+The live transcription feature works over a WebSocket connection rather than via HTTP like the note-generation endpoints. This connection streams real-time audio data for transcription. Once the live transcription session is complete, the final transcript is displayed on the page. You can then choose the clinical note to generate by selecting the desired note type (e.g., SOAP, Progress, Diagnostic, Psychological) from the interface and clicking the corresponding "Generate Note" button. This process triggers an HTTP POST request with the transcript and additional patient information to create the note.
+
+1. **Using the Provided Client:**  
+  Open your web browser and navigate to the live transcription client at:
+  http://localhost:3001/liveAudioClient.html (for local testing) or the equivalent production URL.
+  The page will prompt for microphone access and provide "Start Live Transcription" and "Stop Live Transcription" buttons. When you click "Start," it opens a WebSocket connection to the `/api/live` endpoint to stream audio for transcription, and the real-time transcription results are displayed on the page.
+
+2. **Using wscat for WebSocket Testing:**  
+  Since cURL does not support WebSocket connections, you can test live transcription using [wscat](https://www.npmjs.com/package/wscat):
+  
+  - Install wscat globally (if not already installed):
+    ```
+    npm install -g wscat
+    ```
+
+  - Connect to the live transcription endpoint:
+    ```
+    wscat -c ws://api-devs-8a32c93f7e2d.herokuapp.com/api/live
+    ```
+
+  With wscat, you will see raw transcription messages streamed directly from Deepgram. However, wscat does not offer an interface for note generation; to generate notes, use the provided client web interface where you can select the note type after transcription is complete.
+
+**Note:** The live transcription service streams audio transcription data only. Note creation endpoints (e.g., SOAP, Progress, etc.) continue to be triggered via separate HTTP POST requests. 

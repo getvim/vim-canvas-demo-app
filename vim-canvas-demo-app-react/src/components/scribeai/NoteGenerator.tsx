@@ -1,9 +1,12 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { Button } from "@/components/ui/button";
 
 // Import your provided ScribeAI API key from the environment
 const SCRIBEAI_API_KEY = import.meta.env.VITE_SCRIBEAI_API_KEY as string;
+
+// Import the production API base URL so that all endpoints are absolute
+const API_BASE_URL = "https://api-devs-8a32c93f7e2d.herokuapp.com";
 
 const NOTE_TYPES = [
   { value: "soap", label: "SOAP Note" },
@@ -20,32 +23,36 @@ export const NoteGenerator = () => {
   const [uploading, setUploading] = useState(false);
   const wsRef = useRef<WebSocket | null>(null);
 
+  // <-- Removed state variables for patient info that are provided in the Vim dashboard -->
+  // const [patientName, setPatientName] = useState("");
+  // const [patientDOB, setPatientDOB] = useState("");
+  // const [chiefComplaint, setChiefComplaint] = useState("");
+  // const [visitDate, setVisitDate] = useState("");
+  // const [weight, setWeight] = useState("");
+  const [customNotes, setCustomNotes] = useState("");
+
   // Handle audio file upload transcription
   const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
     setUploading(true);
     try {
-      // Instead of fetching the token from the VimOS context,
-      // use your provided ScribeAI API key.
       const jwtToken = SCRIBEAI_API_KEY;
       
       const formData = new FormData();
       formData.append("audioFile", file);
 
-      const response = await fetch(
-        "https://api-unique-stg-1048c00a084a.herokuapp.com/api/transcribe-file", {
-          method: "POST",
-          headers: {
-            "Authorization": `Bearer ${jwtToken}`
-          },
-          body: formData,
+      const response = await fetch(`${API_BASE_URL}/api/transcribe-file`, {
+        method: "POST",
+        headers: {
+          "Authorization": `Bearer ${jwtToken}`
+        },
+        body: formData,
       });
       if (!response.ok) {
         throw new Error("File transcription failed");
       }
       const data = await response.json();
-      // Assuming the API returns a field "transcriptText"
       setTranscript(data.transcriptText || "");
       toast({ variant: "default", title: "File transcription successful!" });
     } catch (error: any) {
@@ -61,7 +68,7 @@ export const NoteGenerator = () => {
       const jwtToken = SCRIBEAI_API_KEY;
       
       // Since you cannot set custom headers, we pass the token as a query parameter.
-      const ws = new WebSocket(`wss://api-unique-stg-1048c00a084a.herokuapp.com/api/live?token=${jwtToken}`);
+      const ws = new WebSocket(`wss://api-devs-8a32c93f7e2d.herokuapp.com/api/live?token=${jwtToken}`);
       wsRef.current = ws;
       ws.onopen = () => {
         toast({ variant: "default", title: "Live transcription started!" });
@@ -100,37 +107,41 @@ export const NoteGenerator = () => {
       let endpoint = "";
       switch (selectedNoteType) {
         case "soap":
-          endpoint = "https://api-unique-stg-1048c00a084a.herokuapp.com/api/notes/soap";
+          endpoint = `${API_BASE_URL}/api/notes/soap`;
           break;
         case "progress":
-          endpoint = "https://api-unique-stg-1048c00a084a.herokuapp.com/api/notes/progress";
+          endpoint = `${API_BASE_URL}/api/notes/progress`;
           break;
         case "diagnostic":
-          endpoint = "https://api-unique-stg-1048c00a084a.herokuapp.com/api/notes/diagnostic";
+          endpoint = `${API_BASE_URL}/api/notes/diagnostic`;
           break;
         case "psych":
-          endpoint = "https://api-unique-stg-1048c00a084a.herokuapp.com/api/notes/psych";
+          endpoint = `${API_BASE_URL}/api/notes/psych`;
           break;
         default:
           throw new Error("Invalid note type");
       }
-      // Payload with transcript and placeholder patientInfo (replace with real data as needed)
+      
+      console.log("Posting note to:", endpoint);
+      
       const payload = {
         transcriptText: transcript,
+        // If you have patient info from another source or context, include it.
+        // For now, we include empty/default values to match expected schema.
         patientInfo: {
-          name: "Patient Name",
-          dob: "1970-01-01",
-          chiefComplaint: "Chief Complaint",
-          visitDate: new Date().toISOString().split("T")[0],
-          weight: 0,
+          name: "",
+          dob: "",
+          chiefComplaint: "",
+          visitDate: "",
+          weight: 0
         },
-        customNotes: "",
+        customNotes: customNotes,
         selectedICDCodes: [],
         selectedCPTCodes: [],
         suggestedICDCodes: [],
         suggestedCPTCodes: []
       };
-
+       
       const response = await fetch(endpoint, {
         method: "POST",
         headers: {
@@ -140,10 +151,11 @@ export const NoteGenerator = () => {
         body: JSON.stringify(payload),
       });
       if (!response.ok) {
-        throw new Error("ScribeAI note generation failed");
+        // Try to extract error details from the server response
+        const errorDetail = await response.text();
+        throw new Error(`ScribeAI note generation failed: ${errorDetail}`);
       }
       const data = await response.json();
-      // Assume the API returns the generated note in "generatedNote"
       toast({
         variant: "default",
         title: "Generated note",
@@ -196,6 +208,18 @@ export const NoteGenerator = () => {
             </Button>
           )}
         </div>
+      </div>
+      
+      {/* Removed input fields for Patient Name, Date of Birth, Chief Complaint, Visit Date, and Weight */}
+
+      <div className="mb-2">
+        <label className="block mb-1">Custom Notes</label>
+        <textarea
+          className="w-full border p-2 rounded"
+          rows={3}
+          value={customNotes}
+          onChange={(e) => setCustomNotes(e.target.value)}
+        />
       </div>
       
       <div className="mb-2">

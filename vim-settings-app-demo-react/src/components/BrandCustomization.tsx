@@ -65,6 +65,8 @@ const BrandCustomization: React.FC = () => {
           onSave={handleSave}
         />
 
+        <div className="w-px bg-[#828282] self-stretch"></div>
+
         <div className="w-full md:w-1/2 flex justify-center">
           <VimConnectPreview appColor={appColor} />
         </div>

@@ -1,6 +1,7 @@
 import React, { ReactNode } from "react";
 import vimLogo from "../assets/vim-logo.svg";
 import settingsLogo from "../assets/cog.svg";
+import demoCanvasLogo from "../assets/demo-canvas-logo.svg";
 
 // SidebarItem Component
 interface SidebarItemProps {
@@ -66,10 +67,7 @@ export const VimConnectPreview: React.FC<VimConnectPreviewProps> = ({
             </SidebarItem>
 
             <SidebarItem isActive={true}>
-              <div>
-                <div>DE</div>
-                <div>MO</div>
-              </div>
+              <img src={demoCanvasLogo} className="w-[25px] h-[25px]" />
             </SidebarItem>
 
             <SidebarItem>

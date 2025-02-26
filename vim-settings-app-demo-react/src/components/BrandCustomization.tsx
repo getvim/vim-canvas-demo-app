@@ -34,16 +34,9 @@ const BrandCustomizationForm: React.FC<BrandCustomizationFormProps> = ({
   );
 };
 
-const BrandCustomization: React.FC = () => {
+export const BrandCustomization: React.FC = () => {
   const [appColor, setAppColor] = useState<string>("#00FFE1");
   const organizationId = useOrganizationContext();
-
-  const handleColorChange = useCallback(
-    (color: string) => {
-      setAppColor(color);
-    },
-    [setAppColor]
-  );
 
   const handleSave = useCallback(() => {
     saveSettings({ [organizationId]: { appColor } });
@@ -61,7 +54,7 @@ const BrandCustomization: React.FC = () => {
       <div className="flex flex-col md:flex-row gap-8">
         <BrandCustomizationForm
           appColor={appColor}
-          onColorChange={handleColorChange}
+          onColorChange={setAppColor}
           onSave={handleSave}
         />
 
@@ -74,5 +67,3 @@ const BrandCustomization: React.FC = () => {
     </div>
   );
 };
-
-export default BrandCustomization;

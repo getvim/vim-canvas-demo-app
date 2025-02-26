@@ -2,7 +2,7 @@ import React, { useCallback, useState } from "react";
 import { ColorPicker } from "./ColorPicker";
 import { VimConnectPreview } from "./VimConnectPreview";
 import { useOrganizationContext } from "../hooks/useOrganizationContext";
-import { loadSettings, saveSettings } from "../utils/storage";
+import { saveSettings } from "../utils/storage";
 
 interface BrandCustomizationFormProps {
   appColor: string;
@@ -40,9 +40,6 @@ export const BrandCustomization: React.FC = () => {
 
   const handleSave = useCallback(() => {
     saveSettings({ [organizationId]: { appColor } });
-    console.log("Saving brand color:", appColor);
-    const settings = loadSettings();
-    console.log("Loaded settings:", settings);
   }, [organizationId, appColor]);
 
   return (

@@ -101,62 +101,6 @@ When running locally the api server starts at `http://localhost:8788` & exposes 
 * `/api/launch` - This endpoint is used to initiate the authentication flow.
 * `/api/token` - This endpoint is used to handle the callback from the Vim Canvas™️ platform to create a token.
 
-## Vim Settings Demo App (React)
-On top of using VimOS.js to integrate your application's iframe within Vim Connect and display it in the Vim Hub on EHRs, you can also inject an additional optional iframe into the Vim Console. This allows you to create a dedicated Settings Application where organization administrators can customize and configure your main application.
-
-Under the `vim-settings-app-demo-react` we have a project that uses cloudflare pages to host the Vim Settings Demo App built with React & also the serverless service needed for saving the user's configuration.
-
-The app is built with `vite` and `react` and uses `tailwindcss` for the UI components.
-
-### Folder Structure
-
-* `functions` - Contains [cloudflare pages functions](https://developers.cloudflare.com/pages/functions/) for saving the user's configuration.
-* `src/components` - Contains UI components.
-* `src/hooks` - Contains custom hooks for the application, including hooks that wrap the VimAppSettings SDK.
-
-### Running the example code
-
-#### Prerequisites
-In order to see the application settings demo code in action, you must first configure an application in the [Vim Canvas™️ Developer Platform](https://console.getvim.com/organization-admin/).
-
-After Having an application and submitting it you can preview the settings application in the [preview page](https://docs.getvim.com/testing/submitting-application.html#preview-store-page)
-
-If you don’t have a Vim Canvas™️ developer account yet, register [here](https://getvim.com/vim-canvas-developer-platform/) to gain access.
-
-> ❕ **You don't need a cloudflare user / account** to run the app locally.
-
-#### Installation
-
-To install and run the app locally, follow these steps:
-
-1. Clone the repository:
-
-```bash
-git clone https://github.com/getvim/vim-canvas-demo-app.git
-```
-
-2. Navigate to the project directory:
-
-```bash
-cd vim-settings-app-demo-react
-```
-
-3. Install the dependencies:
-
-```bash
-npm install
-```
-
-4. Start the development server:
-
-```bash
-npm run dev
-```
-
-
-1. Follow up on [Testing Your Settings Application](https://docs.getvim.com/platform/platform.html#app-settings) in the official docs
-
-
 # Vim Canvas™️ Pricing
 
 | Starter Access | Patient-Based | User-Based |

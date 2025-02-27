@@ -101,6 +101,14 @@ When running locally the api server starts at `http://localhost:8788` & exposes 
 * `/api/launch` - This endpoint is used to initiate the authentication flow.
 * `/api/token` - This endpoint is used to handle the callback from the Vim Canvas™️ platform to create a token.
 
+## Settings Application Demo
+
+On top of using VimOS.js to integrate your application's iframe within Vim Connect and display it in the Vim Hub on EHRs, you can also inject an additional optional iframe into the Vim Console. This allows you to create a dedicated Settings Application where organization administrators can customize and configure your main application.
+
+This settings application is implemented under `/settings` route.
+
+[For further information](https://docs.getvim.com/platform/platform.html#app-settings)
+
 # Vim Canvas™️ Pricing
 
 | Starter Access | Patient-Based | User-Based |

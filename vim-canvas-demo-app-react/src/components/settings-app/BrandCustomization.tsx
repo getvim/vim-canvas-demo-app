@@ -1,8 +1,8 @@
 import React, { useCallback, useState } from "react";
 import { ColorPicker } from "./ColorPicker";
 import { VimConnectPreview } from "./VimConnectPreview";
-import { useOrganizationContext } from "../hooks/useOrganizationContext";
-import { saveSettings } from "../utils/storage";
+import { useOrganizationContext } from "@/hooks/useOrganizationContext";
+import { saveSettings } from "../../utils/storage";
 
 interface BrandCustomizationFormProps {
   appColor: string;
@@ -16,7 +16,7 @@ const BrandCustomizationForm: React.FC<BrandCustomizationFormProps> = ({
   onSave,
 }) => {
   return (
-    <div className="w-full md:w-1/2">
+    <div className="w-full a">
       <div className="mb-8">
         <label className="block text-lg font-medium mb-4">
           Select your app color:
@@ -43,21 +43,21 @@ export const BrandCustomization: React.FC = () => {
   }, [organizationId, appColor]);
 
   return (
-    <div className="w-full max-w-6xl mx-auto p-6 font-sans">
+    <div className="w-full max-w-6xl mx-auto p-[20px] font-proxima bg-white rounded-[10px]">
       <div className="text-sm font-bold mb-8">
         Customize Demo Canvas in-app experience to your organization branding
       </div>
 
-      <div className="flex flex-col md:flex-row gap-8">
+      <div className="flex flex-row gap-8">
         <BrandCustomizationForm
           appColor={appColor}
           onColorChange={setAppColor}
           onSave={handleSave}
         />
 
-        <div className="w-px bg-[#828282] self-stretch"></div>
+        <div className="border-l-2 border-[#828282] self-stretch"></div>
 
-        <div className="w-full md:w-1/2 flex justify-center">
+        <div className="w-1/2 flex justify-center">
           <VimConnectPreview appColor={appColor} />
         </div>
       </div>

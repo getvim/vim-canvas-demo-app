@@ -29,13 +29,17 @@
     "clsx": "^2.1.1",
     "css-filter-converter": "^1.0.110",
     "date-fns": "^3.6.0",
+    "jwt-decode": "^4.0.0",
     "lucide-react": "^0.436.0",
     "react": "^18.3.1",
+    "react-color": "^2.19.3",
     "react-day-picker": "8.10.1",
     "react-dom": "^18.3.1",
     "react-hook-form": "^7.53.0",
+    "react-router-dom": "^7.2.0",
     "tailwind-merge": "^2.5.2",
     "tailwindcss-animate": "^1.0.7",
+    "vim-app-settings": "^1.0.0",
     "vim-os-js-browser": "^2.0.1"
   },
   "devDependencies": {

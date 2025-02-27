@@ -21,14 +21,8 @@ export const NoteGenerator = () => {
   const [selectedNoteType, setSelectedNoteType] = useState("soap");
   const [isLive, setIsLive] = useState(false);
   const [uploading, setUploading] = useState(false);
+  const [generatedNote, setGeneratedNote] = useState("");
   const wsRef = useRef<WebSocket | null>(null);
-
-  // <-- Removed state variables for patient info that are provided in the Vim dashboard -->
-  // const [patientName, setPatientName] = useState("");
-  // const [patientDOB, setPatientDOB] = useState("");
-  // const [chiefComplaint, setChiefComplaint] = useState("");
-  // const [visitDate, setVisitDate] = useState("");
-  // const [weight, setWeight] = useState("");
   const [customNotes, setCustomNotes] = useState("");
 
   // Handle audio file upload transcription
@@ -50,10 +44,12 @@ export const NoteGenerator = () => {
         body: formData,
       });
       if (!response.ok) {
-        throw new Error("File transcription failed");
+        const errorDetail = await response.text();
+        throw new Error(`File transcription failed: ${errorDetail}`);
       }
       const data = await response.json();
-      setTranscript(data.transcriptText || "");
+      // From the HAR file, we can see the response has a "transcript" field
+      setTranscript(data.transcript || "");
       toast({ variant: "default", title: "File transcription successful!" });
     } catch (error: any) {
       toast({ variant: "destructive", title: "Error with file transcription", description: error.message });
@@ -68,7 +64,7 @@ export const NoteGenerator = () => {
       const jwtToken = SCRIBEAI_API_KEY;
       
       // Since you cannot set custom headers, we pass the token as a query parameter.
-      const ws = new WebSocket(`wss://api-devs-8a32c93f7e2d.herokuapp.com/api/live?token=${jwtToken}`);
+      const ws = new WebSocket(`${API_BASE_URL.replace('https://', 'wss://')}/api/live?token=${jwtToken}`);
       wsRef.current = ws;
       ws.onopen = () => {
         toast({ variant: "default", title: "Live transcription started!" });
@@ -78,11 +74,17 @@ export const NoteGenerator = () => {
         // Append partial transcript received via the WebSocket
         setTranscript(prev => prev + " " + event.data);
       };
-      ws.onerror = () => {
+      ws.onerror = (error) => {
+        console.error("WebSocket error:", error);
         toast({ variant: "destructive", title: "Live transcription error" });
       };
-      ws.onclose = () => {
-        toast({ variant: "default", title: "Live transcription ended" });
+      ws.onclose = (event) => {
+        console.log("WebSocket closed:", event.code, event.reason);
+        toast({ 
+          variant: "default", 
+          title: "Live transcription ended",
+          description: event.reason ? `Reason: ${event.reason}` : undefined
+        });
         setIsLive(false);
       };
     } catch (error: any) {
@@ -124,16 +126,15 @@ export const NoteGenerator = () => {
       
       console.log("Posting note to:", endpoint);
       
+      // Based on the HAR file, the API expects this structure
       const payload = {
         transcriptText: transcript,
-        // If you have patient info from another source or context, include it.
-        // For now, we include empty/default values to match expected schema.
         patientInfo: {
-          name: "",
+          name: "", // These can be populated from VIM if available
           dob: "",
           chiefComplaint: "",
-          visitDate: "",
-          weight: 0
+          visitDate: new Date().toISOString().split('T')[0], // Today's date
+          weight: null
         },
         customNotes: customNotes,
         selectedICDCodes: [],
@@ -156,10 +157,12 @@ export const NoteGenerator = () => {
         throw new Error(`ScribeAI note generation failed: ${errorDetail}`);
       }
       const data = await response.json();
+      // From the HAR file, we can see the response has a "content" field
+      setGeneratedNote(data.content || "");
       toast({
         variant: "default",
         title: "Generated note",
-        description: data.generatedNote || "Note generated successfully",
+        description: "Note generated successfully",
       });
     } catch (error: any) {
       toast({ variant: "destructive", title: "Error generating note", description: error.message });
@@ -194,6 +197,7 @@ export const NoteGenerator = () => {
           disabled={uploading}
           className="p-2 border rounded w-full"
         />
+        {uploading && <p className="text-sm text-gray-500">Uploading and transcribing...</p>}
       </div>
       
       <div className="mb-2">
@@ -210,8 +214,6 @@ export const NoteGenerator = () => {
         </div>
       </div>
       
-      {/* Removed input fields for Patient Name, Date of Birth, Chief Complaint, Visit Date, and Weight */}
-
       <div className="mb-2">
         <label className="block mb-1">Custom Notes</label>
         <textarea
@@ -219,6 +221,7 @@ export const NoteGenerator = () => {
           rows={3}
           value={customNotes}
           onChange={(e) => setCustomNotes(e.target.value)}
+          placeholder="Enter any additional notes or context..."
         />
       </div>
       
@@ -229,14 +232,23 @@ export const NoteGenerator = () => {
           rows={6}
           value={transcript}
           onChange={(e) => setTranscript(e.target.value)}
+          placeholder="Transcript will appear here or type notes manually..."
         />
       </div>
       
-      <div>
+      <div className="mb-4">
         <Button variant="default" onClick={generateNote}>
           Generate Note
         </Button>
       </div>
+      
+      {/* Display the generated note */}
+      {generatedNote && (
+        <div className="p-4 border rounded-md mt-4 bg-gray-50">
+          <h4 className="mb-2 font-medium">Generated Note:</h4>
+          <pre className="whitespace-pre-wrap">{generatedNote}</pre>
+        </div>
+      )}
     </div>
   );
 }; 

@@ -1,0 +1,80 @@
+Git Rebase & Conflict Resolution Guide
+========================================
+
+This guide explains how to update your fork with upstream changes using Git rebase,
+as well as how to resolve conflicts during the rebase process.
+
+1. Add the Upstream Remote (if you haven't already)
+---------------------------------------------------
+Tell your local Git where the original repository is:
+  git remote add upstream https://github.com/getvim/vim-canvas-demo-app.git
+
+You can verify with:
+  git remote -v
+
+2. Fetch Changes from Upstream
+------------------------------
+Download the latest changes without modifying your local work:
+  git fetch upstream
+
+3. Rebase Your Local Branch
+---------------------------
+Assuming you are on your local branch (e.g., "test") and want to rebase from
+upstream's main branch, run:
+  git checkout test           # Ensure you are on your branch
+  git rebase upstream/main
+
+4. Resolving Conflicts
+----------------------
+During the rebase, conflicts might occur. Git will pause and indicate which
+files have conflicts. For each conflicted file, do the following:
+
+a. Keeping Your Local Changes (Using "ours")
+   For example, if you want to keep your local version of "src/App.tsx":
+     git checkout --ours src/App.tsx
+     git add src/App.tsx
+
+b. Accepting Upstream Changes (Using "theirs")
+   If you want to use the upstream version for a file (e.g., .gitignore):
+     git checkout --theirs .gitignore
+     git add .gitignore
+
+   Alternatively, you can manually edit the file in your editor, resolve the conflict,
+   then save and add the file:
+     git add <file>
+
+5. Continue the Rebase
+-----------------------
+Once conflicts are resolved and added:
+  git rebase --continue
+
+If additional conflicts appear, repeat step 4 until the rebase finishes successfully.
+
+6. Handling the Commit Message Editor (Typically Vim)
+-------------------------------------------------------
+During rebase, Git may open an editor to modify the commit message.
+
+In Vim:
+  - Press "i" to enter Insert Mode.
+  - Edit the commit message if needed (or leave it as provided by default).
+  - Press "ESC" to exit Insert Mode.
+  - Type ":wq" and press "Enter" to save and exit.
+
+7. Finalize and Push Your Changes
+----------------------------------
+After a successful rebase, if you've already pushed your branch earlier, you'll need
+to force push the updated branch:
+  git push origin <branch> --force
+
+Other Useful Tips:
+------------------
+- Abort the rebase if things go wrong:
+      git rebase --abort
+
+- Remember: In conflict context,
+    "ours" refers to your local branch's changes,
+    "theirs" refers to the changes from the branch you're rebasing onto.
+
+- Test your application after the rebase to ensure everything works as expected.
+
+Keep this guide handy for future updates. Happy coding! 

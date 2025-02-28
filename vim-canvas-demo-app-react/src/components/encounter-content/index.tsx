@@ -22,6 +22,7 @@ import { EncounterObjective } from "./Objective";
 import { EncounterPI } from "./PatientInstructions";
 import { EncounterPlan } from "./Plan";
 import { EncounterSubjective } from "./Subjective";
+import { EncounterBillingInformation } from "./BillingInformation";
 
 export const EncounterContent = () => {
   const { toast } = useToast();
@@ -244,6 +245,8 @@ export const EncounterContent = () => {
               <EncounterPlan />
               <Separator className="mb-1" />
               <EncounterPI />
+              <Separator className="mb-1" />
+              <EncounterBillingInformation />
             </form>
           </FormProvider>
           <Separator className="mb-1" />

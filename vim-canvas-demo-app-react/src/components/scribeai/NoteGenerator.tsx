@@ -23,8 +23,8 @@ export const NoteGenerator = () => {
   const [generatedNote, setGeneratedNote] = useState("");
   const [customNotes, setCustomNotes] = useState("");
   const [isRecording, setIsRecording] = useState(false);
-  const [recordedChunks, setRecordedChunks] = useState<Blob[]>([]);
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
+  const recordedChunksRef = useRef<Blob[]>([]);
 
   // Handle audio file upload transcription
   const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -63,15 +63,29 @@ export const NoteGenerator = () => {
   const handleRecording = async () => {
     if (isRecording) {
       // Stop recording
+      setIsRecording(false); // Set this first to prevent multiple clicks
+      toast({ variant: "default", title: "Stopping recording..." });
+      
       if (mediaRecorderRef.current) {
-        mediaRecorderRef.current.stop();
-        setIsRecording(false);
-        toast({ variant: "default", title: "Recording stopped" });
+        try {
+          // Stop the media recorder
+          mediaRecorderRef.current.stop();
+          // We'll let the onstop handler handle the rest
+        } catch (error) {
+          console.error("Error stopping recording:", error);
+          toast({ 
+            variant: "destructive", 
+            title: "Error stopping recording", 
+            description: error instanceof Error ? error.message : "Unknown error" 
+          });
+        }
       }
     } else {
       try {
+        // Clear previous recording data
+        recordedChunksRef.current = []; // Clear the ref
+        
         // Start a new recording
-        setRecordedChunks([]);
         const stream = await navigator.mediaDevices.getUserMedia({ 
           audio: {
             echoCancellation: true,
@@ -96,25 +110,50 @@ export const NoteGenerator = () => {
         
         mediaRecorderRef.current = mediaRecorder;
         
-        // Collect audio chunks
+        // Collect audio chunks - store in ref directly
         mediaRecorder.ondataavailable = (e) => {
           if (e.data.size > 0) {
-            setRecordedChunks(prev => [...prev, e.data]);
+            console.log("Received audio chunk of size:", e.data.size);
+            recordedChunksRef.current.push(e.data);
           }
         };
         
         // When recording stops, upload the audio
         mediaRecorder.onstop = async () => {
+          console.log("MediaRecorder stopped, processing chunks...");
+          
           // Stop all audio tracks
           stream.getTracks().forEach(track => track.stop());
           
+          // Use the ref instead of state
+          const currentChunks = [...recordedChunksRef.current];
+          console.log(`Processing ${currentChunks.length} audio chunks`);
+          
+          if (currentChunks.length === 0) {
+            toast({ 
+              variant: "destructive", 
+              title: "Recording error", 
+              description: "No audio data was captured. Please try again." 
+            });
+            return;
+          }
+          
           try {
             // Combine chunks into a single blob
-            const audioBlob = new Blob(recordedChunks, { 
+            const audioBlob = new Blob(currentChunks, { 
               type: mediaRecorder.mimeType || 'audio/webm' 
             });
             
             console.log("Recording completed, blob size:", audioBlob.size, "type:", audioBlob.type);
+            
+            if (audioBlob.size < 100) {
+              toast({ 
+                variant: "destructive", 
+                title: "Recording too short", 
+                description: "The recording was too short to process. Please try again." 
+              });
+              return;
+            }
             
             // Try to use a more compatible format if possible
             let fileType = 'webm';
@@ -145,8 +184,8 @@ export const NoteGenerator = () => {
           }
         };
         
-        // Start recording
-        mediaRecorder.start(100); // Collect data every 100ms
+        // Start recording with smaller chunks for more frequent updates
+        mediaRecorder.start(500);
         setIsRecording(true);
         toast({ variant: "default", title: "Recording started" });
       } catch (error: any) {

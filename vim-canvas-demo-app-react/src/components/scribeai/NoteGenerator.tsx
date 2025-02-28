@@ -49,8 +49,16 @@ export const NoteGenerator = () => {
         throw new Error(`File transcription failed: ${errorDetail}`);
       }
       const data = await response.json();
-      // From the HAR file, we can see the response has a "transcript" field
-      setTranscript(data.transcript || "");
+      
+      // Extract the new transcript text
+      let newTranscript = data.transcript || data.transcriptText || "";
+      
+      // Append the new transcript to the existing one with proper formatting
+      setTranscript(prevTranscript => {
+        if (!prevTranscript) return newTranscript;
+        return `${prevTranscript}\n\n--- New Transcription ---\n${newTranscript}`;
+      });
+      
       toast({ variant: "default", title: "File transcription successful!" });
     } catch (error: any) {
       toast({ variant: "destructive", title: "Error with file transcription", description: error.message });
@@ -230,15 +238,22 @@ export const NoteGenerator = () => {
       const data = await response.json();
       console.log("Transcription response:", data);
       
-      // Check both possible response formats based on the API
+      // Extract the new transcript text
+      let newTranscript = "";
       if (data.transcript) {
-        setTranscript(data.transcript);
+        newTranscript = data.transcript;
       } else if (data.transcriptText) {
-        setTranscript(data.transcriptText);
+        newTranscript = data.transcriptText;
       } else {
         console.warn("No transcript found in response:", data);
-        setTranscript("Transcription completed but no text was returned.");
+        newTranscript = "Transcription completed but no text was returned.";
       }
+      
+      // Append the new transcript to the existing one with proper formatting
+      setTranscript(prevTranscript => {
+        if (!prevTranscript) return newTranscript;
+        return `${prevTranscript}\n\n--- New Transcription ---\n${newTranscript}`;
+      });
       
       toast({ variant: "default", title: "Recording transcribed successfully!" });
     } catch (error: any) {
@@ -374,7 +389,7 @@ export const NoteGenerator = () => {
       </div>
       
       <div className="mb-2">
-        <label className="block mb-1">Transcript / Typed Notes</label>
+        <label className="block mb-1">Transcript</label>
         <textarea
           className="w-full border p-2 rounded"
           rows={6}

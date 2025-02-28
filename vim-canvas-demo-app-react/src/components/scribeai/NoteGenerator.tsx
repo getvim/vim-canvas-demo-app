@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 // Import your provided ScribeAI API key from the environment
 const SCRIBEAI_API_KEY = import.meta.env.VITE_SCRIBEAI_API_KEY as string;
 
-// Import the production API base URL so that all endpoints are absolute
+// Update to the correct API base URL from the documentation
 const API_BASE_URL = "https://api-devs-8a32c93f7e2d.herokuapp.com";
 
 const NOTE_TYPES = [
@@ -19,11 +19,12 @@ export const NoteGenerator = () => {
   const { toast } = useToast();
   const [transcript, setTranscript] = useState("");
   const [selectedNoteType, setSelectedNoteType] = useState("soap");
-  const [isLive, setIsLive] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [generatedNote, setGeneratedNote] = useState("");
-  const wsRef = useRef<WebSocket | null>(null);
   const [customNotes, setCustomNotes] = useState("");
+  const [isRecording, setIsRecording] = useState(false);
+  const [recordedChunks, setRecordedChunks] = useState<Blob[]>([]);
+  const mediaRecorderRef = useRef<MediaRecorder | null>(null);
 
   // Handle audio file upload transcription
   const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -58,46 +59,158 @@ export const NoteGenerator = () => {
     }
   };
 
-  // Start live transcription using WebSocket
-  const startLiveTranscription = async () => {
-    try {
-      const jwtToken = SCRIBEAI_API_KEY;
-      
-      // Since you cannot set custom headers, we pass the token as a query parameter.
-      const ws = new WebSocket(`${API_BASE_URL.replace('https://', 'wss://')}/api/live?token=${jwtToken}`);
-      wsRef.current = ws;
-      ws.onopen = () => {
-        toast({ variant: "default", title: "Live transcription started!" });
-        setIsLive(true);
-      };
-      ws.onmessage = (event) => {
-        // Append partial transcript received via the WebSocket
-        setTranscript(prev => prev + " " + event.data);
-      };
-      ws.onerror = (error) => {
-        console.error("WebSocket error:", error);
-        toast({ variant: "destructive", title: "Live transcription error" });
-      };
-      ws.onclose = (event) => {
-        console.log("WebSocket closed:", event.code, event.reason);
-        toast({ 
-          variant: "default", 
-          title: "Live transcription ended",
-          description: event.reason ? `Reason: ${event.reason}` : undefined
+  // Handle recording and automatic upload
+  const handleRecording = async () => {
+    if (isRecording) {
+      // Stop recording
+      if (mediaRecorderRef.current) {
+        mediaRecorderRef.current.stop();
+        setIsRecording(false);
+        toast({ variant: "default", title: "Recording stopped" });
+      }
+    } else {
+      try {
+        // Start a new recording
+        setRecordedChunks([]);
+        const stream = await navigator.mediaDevices.getUserMedia({ 
+          audio: {
+            echoCancellation: true,
+            noiseSuppression: true,
+            autoGainControl: true
+          } 
         });
-        setIsLive(false);
-      };
-    } catch (error: any) {
-      toast({ variant: "destructive", title: "Error starting live transcription", description: error.message });
+        
+        // Choose the best available format
+        let recorderOptions: MediaRecorderOptions | undefined;
+        if (MediaRecorder.isTypeSupported('audio/webm;codecs=opus')) {
+          recorderOptions = { mimeType: 'audio/webm;codecs=opus' };
+        } else if (MediaRecorder.isTypeSupported('audio/webm')) {
+          recorderOptions = { mimeType: 'audio/webm' };
+        } else if (MediaRecorder.isTypeSupported('audio/ogg')) {
+          recorderOptions = { mimeType: 'audio/ogg' };
+        }
+        
+        const mediaRecorder = recorderOptions 
+          ? new MediaRecorder(stream, recorderOptions)
+          : new MediaRecorder(stream);
+        
+        mediaRecorderRef.current = mediaRecorder;
+        
+        // Collect audio chunks
+        mediaRecorder.ondataavailable = (e) => {
+          if (e.data.size > 0) {
+            setRecordedChunks(prev => [...prev, e.data]);
+          }
+        };
+        
+        // When recording stops, upload the audio
+        mediaRecorder.onstop = async () => {
+          // Stop all audio tracks
+          stream.getTracks().forEach(track => track.stop());
+          
+          try {
+            // Combine chunks into a single blob
+            const audioBlob = new Blob(recordedChunks, { 
+              type: mediaRecorder.mimeType || 'audio/webm' 
+            });
+            
+            console.log("Recording completed, blob size:", audioBlob.size, "type:", audioBlob.type);
+            
+            // Try to use a more compatible format if possible
+            let fileType = 'webm';
+            let mimeType = mediaRecorder.mimeType || 'audio/webm';
+            
+            if (mimeType.includes('ogg')) {
+              fileType = 'ogg';
+            } else if (mimeType.includes('mp4') || mimeType.includes('mp4a')) {
+              fileType = 'mp4';
+            }
+            
+            // Create a File object from the Blob with a more descriptive name
+            const audioFile = new File(
+              [audioBlob], 
+              `recording-${new Date().toISOString().replace(/[:.]/g, '-')}.${fileType}`, 
+              { type: mimeType }
+            );
+            
+            // Upload the file using the existing upload function
+            await uploadAudioFile(audioFile);
+          } catch (error) {
+            console.error("Error processing recording:", error);
+            toast({
+              variant: "destructive",
+              title: "Error processing recording",
+              description: error instanceof Error ? error.message : "Unknown error"
+            });
+          }
+        };
+        
+        // Start recording
+        mediaRecorder.start(100); // Collect data every 100ms
+        setIsRecording(true);
+        toast({ variant: "default", title: "Recording started" });
+      } catch (error: any) {
+        console.error("Error starting recording:", error);
+        toast({ 
+          variant: "destructive", 
+          title: "Error starting recording", 
+          description: error.message 
+        });
+      }
     }
   };
 
-  // Stop live transcription
-  const stopLiveTranscription = () => {
-    if (wsRef.current) {
-      wsRef.current.close();
-      wsRef.current = null;
-      setIsLive(false);
+  // Helper function to upload the audio file
+  const uploadAudioFile = async (file: File) => {
+    setUploading(true);
+    try {
+      const jwtToken = SCRIBEAI_API_KEY;
+      
+      const formData = new FormData();
+      formData.append("audioFile", file);
+
+      toast({ variant: "default", title: "Uploading and transcribing recording..." });
+      
+      // Log the file details for debugging
+      console.log("Uploading file:", file.name, file.type, file.size);
+      
+      const response = await fetch(`${API_BASE_URL}/api/transcribe-file`, {
+        method: "POST",
+        headers: {
+          "Authorization": `Bearer ${jwtToken}`
+        },
+        body: formData,
+      });
+      
+      if (!response.ok) {
+        const errorDetail = await response.text();
+        console.error("Transcription error response:", errorDetail);
+        throw new Error(`File transcription failed: ${errorDetail}`);
+      }
+      
+      const data = await response.json();
+      console.log("Transcription response:", data);
+      
+      // Check both possible response formats based on the API
+      if (data.transcript) {
+        setTranscript(data.transcript);
+      } else if (data.transcriptText) {
+        setTranscript(data.transcriptText);
+      } else {
+        console.warn("No transcript found in response:", data);
+        setTranscript("Transcription completed but no text was returned.");
+      }
+      
+      toast({ variant: "default", title: "Recording transcribed successfully!" });
+    } catch (error: any) {
+      console.error("Transcription error:", error);
+      toast({ 
+        variant: "destructive", 
+        title: "Error transcribing recording", 
+        description: error.message 
+      });
+    } finally {
+      setUploading(false);
     }
   };
 
@@ -133,37 +246,33 @@ export const NoteGenerator = () => {
           name: "", // These can be populated from VIM if available
           dob: "",
           chiefComplaint: "",
-          visitDate: new Date().toISOString().split('T')[0], // Today's date
+          visitDate: new Date().toISOString().split('T')[0],
           weight: null
         },
-        customNotes: customNotes,
+        customNotes,
         selectedICDCodes: [],
         selectedCPTCodes: [],
         suggestedICDCodes: [],
         suggestedCPTCodes: []
       };
-       
+      
       const response = await fetch(endpoint, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "Authorization": `Bearer ${jwtToken}`,
+          "Authorization": `Bearer ${jwtToken}`
         },
         body: JSON.stringify(payload),
       });
+      
       if (!response.ok) {
-        // Try to extract error details from the server response
         const errorDetail = await response.text();
-        throw new Error(`ScribeAI note generation failed: ${errorDetail}`);
+        throw new Error(`Note generation failed: ${errorDetail}`);
       }
+      
       const data = await response.json();
-      // From the HAR file, we can see the response has a "content" field
-      setGeneratedNote(data.content || "");
-      toast({
-        variant: "default",
-        title: "Generated note",
-        description: "Note generated successfully",
-      });
+      setGeneratedNote(data.note || JSON.stringify(data, null, 2));
+      toast({ variant: "default", title: "Note generated successfully!" });
     } catch (error: any) {
       toast({ variant: "destructive", title: "Error generating note", description: error.message });
     }
@@ -194,7 +303,7 @@ export const NoteGenerator = () => {
           type="file"
           accept="audio/*"
           onChange={handleFileUpload}
-          disabled={uploading}
+          disabled={uploading || isRecording}
           className="p-2 border rounded w-full"
         />
         {uploading && <p className="text-sm text-gray-500">Uploading and transcribing...</p>}
@@ -202,16 +311,16 @@ export const NoteGenerator = () => {
       
       <div className="mb-2">
         <div className="flex space-x-2">
-          {!isLive ? (
-            <Button size="sm" onClick={startLiveTranscription}>
-              Start Live Transcription
-            </Button>
-          ) : (
-            <Button size="sm" onClick={stopLiveTranscription}>
-              Stop Live Transcription
-            </Button>
-          )}
+          <Button 
+            size="sm" 
+            onClick={handleRecording}
+            variant={isRecording ? "destructive" : "default"}
+            disabled={uploading}
+          >
+            {isRecording ? "Stop Recording" : "Start Recording"}
+          </Button>
         </div>
+        {isRecording && <p className="text-sm text-red-500 mt-1">Recording in progress...</p>}
       </div>
       
       <div className="mb-2">

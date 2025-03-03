@@ -6,11 +6,13 @@ interface ColorPickerProps {
   onChange: (color: string) => void;
 }
 
-export const ColorPicker: React.FC<ColorPickerProps> = ({
-  color,
+const useColorPickerModal = ({
   onChange,
+}: {
+  onChange: (color: string) => void;
 }) => {
-  const [showColorPicker, setShowColorPicker] = useState<boolean>(false);
+  const [showColorPickerModal, setShowColorPickerModal] =
+    useState<boolean>(false);
   const colorPickerRef = useRef<HTMLDivElement | null>(null);
 
   // Handle clicking outside of the color picker to close it
@@ -20,7 +22,7 @@ export const ColorPicker: React.FC<ColorPickerProps> = ({
         colorPickerRef.current &&
         !colorPickerRef.current.contains(event.target as Node)
       ) {
-        setShowColorPicker(false);
+        setShowColorPickerModal(false);
       }
     }
 
@@ -37,7 +39,26 @@ export const ColorPicker: React.FC<ColorPickerProps> = ({
     [onChange]
   );
 
-  const handleInputChange = useCallback(
+  return {
+    colorPickerRef,
+    showColorPickerModal,
+    setShowColorPickerModal,
+    handleColorChange,
+  };
+};
+
+export const ColorPicker: React.FC<ColorPickerProps> = ({
+  color,
+  onChange,
+}) => {
+  const {
+    colorPickerRef,
+    showColorPickerModal,
+    setShowColorPickerModal,
+    handleColorChange,
+  } = useColorPickerModal({ onChange });
+
+  const handleTextInputChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       onChange(e.target.value);
     },
@@ -45,20 +66,35 @@ export const ColorPicker: React.FC<ColorPickerProps> = ({
   );
 
   return (
-    <div className="flex items-center relative">
-      <div
-        className="w-16 h-16 mr-2 rounded border border-gray-300 cursor-pointer"
-        style={{ backgroundColor: color }}
-        onClick={() => setShowColorPicker(!showColorPicker)}
-      ></div>
-      <input
-        type="text"
-        value={color}
-        onChange={handleInputChange}
-        className="border border-gray-300 rounded px-4 py-2 w-40"
-      />
+    <div className="flex items-center relative mt-2">
+      <div className="flex gap-8 rounded border border-solid border-[#00142a] ">
+        <svg
+          className="cursor-pointer"
+          onClick={() => setShowColorPickerModal(!showColorPickerModal)}
+          xmlns="http://www.w3.org/2000/svg"
+          width="130"
+          height="30"
+          fill="none"
+        >
+          <rect
+            fill={color}
+            width="30"
+            height="32"
+            x="-0.5"
+            y="-1"
+            stroke="#00142A"
+            rx="4"
+          />
+        </svg>
+        <input
+          type="text"
+          value={color}
+          onChange={handleTextInputChange}
+          className="bg-transparent w-20 text-center text-sm font-normal underline decoration-1 absolute left-[40px] top-[7px]"
+        />
+      </div>
 
-      {showColorPicker && (
+      {showColorPickerModal && (
         <div ref={colorPickerRef} className="absolute top-20 left-0 z-10">
           <ChromePicker
             color={color}

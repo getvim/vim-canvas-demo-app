@@ -1,0 +1,52 @@
+{
+  "name": "vim--base-app--template",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev:vite": "vite",
+    "dev:functions": "wrangler pages dev --proxy=5173",
+    "dev": "concurrently --raw -i \"npm:dev:functions\" \"npm:dev:vite\" ",
+    "build": "tsc -b && vite build",
+    "lint": "eslint .",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@cfworker/jwt": "^5.2.1",
+    "class-variance-authority": "^0.7.0",
+    "clsx": "^2.1.1",
+    "css-filter-converter": "^1.0.110",
+    "date-fns": "^3.6.0",
+    "jwt-decode": "^4.0.0",
+    "lucide-react": "^0.436.0",
+    "react": "^18.3.1",
+    "react-color": "^2.19.3",
+    "react-day-picker": "8.10.1",
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^7.2.0",
+    "tailwind-merge": "^2.5.2",
+    "tailwindcss-animate": "^1.0.7",
+    "vim-app-settings": "^1.0.0",
+    "vim-os-js-browser": "^2.0.1"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20240821.1",
+    "@eslint/js": "^9.9.0",
+    "@tailwindcss/typography": "^0.5.15",
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
+    "@vitejs/plugin-react": "^4.3.1",
+    "autoprefixer": "^10.4.20",
+    "concurrently": "^8.2.2",
+    "eslint": "^9.9.0",
+    "eslint-plugin-react-hooks": "^5.1.0-rc.0",
+    "eslint-plugin-react-refresh": "^0.4.9",
+    "globals": "^15.9.0",
+    "postcss": "^8.4.41",
+    "tailwindcss": "^3.4.10",
+    "typescript": "^5.5.3",
+    "typescript-eslint": "^8.0.1",
+    "vite": "^5.4.1",
+    "wrangler": "^3.72.3"
+  }
+}

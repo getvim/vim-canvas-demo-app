@@ -11,7 +11,7 @@ export const onRequestGet: PagesFunction<Env> = async (context) => {
   const launchType = queryParams.get("launch_type");
 
   // Redirect to the settings application page if the launch type is APP_SETTINGS
-  let redirect_uri = "http://localhost:8788";
+  let redirect_uri = context.env.REDIRECT_URL ?? "http://localhost:8788";
   redirect_uri =
     launchType === SETTINGS_LAUNCH_TYPE
       ? `${redirect_uri}/settings`

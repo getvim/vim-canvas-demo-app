@@ -1,4 +1,2 @@
-# # Make sure that this is explicitly set to group-leads
-/CODEOWNERS @bookmd/group-leads @bookmd/vim-os
-
-/ @bookmd/vim-os
+/CODEOWNERS @getvim/vim-os
+* @getvim/vim-os

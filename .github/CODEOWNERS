@@ -1,7 +1,3 @@
-
-# # Don't ask for client Dockerfile changes
-/client/**/Dockerfile
-
 # # Make sure that this is explicitly set to group-leads
 /CODEOWNERS @bookmd/group-leads @bookmd/vim-os
 

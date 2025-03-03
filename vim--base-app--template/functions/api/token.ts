@@ -1,6 +1,7 @@
 import { parseJwt } from "@cfworker/jwt";
 import { Env } from "../context-env";
 
+/** NOTE: Route is `/api/token` */
 async function getToken(context, code: string, client_secret: string) {
   return fetch(
     context.env.VIM_TOKEN_ENDPOINT ?? "https://api.getvim.com/v1/oauth/token",

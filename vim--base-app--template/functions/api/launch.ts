@@ -2,10 +2,9 @@ import { Env } from "../context-env";
 
 const SETTINGS_LAUNCH_TYPE = "APP_SETTINGS";
 
+/** NOTE: Route is `/api/launch` */
 export const onRequestGet: PagesFunction<Env> = async (context) => {
 
-  console.log(context)
-  
   const url = new URL(context.request.url);
   const queryParams = url.searchParams;
   const launchId = queryParams.get("launch_id");

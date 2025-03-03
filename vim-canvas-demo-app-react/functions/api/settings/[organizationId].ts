@@ -6,16 +6,13 @@ export const onRequestGet: PagesFunction<Env> = async (context) => {
   const url = new URL(context.request.url);
   const organizationId = url.pathname.split("/").pop();
   try {
-    const { results } = await DB.prepare(
+    const result = await DB.prepare(
       "SELECT * FROM settings WHERE organization_id = ?"
     )
       .bind(organizationId)
-      .all();
+      .first();
 
-    return Response.json({
-      organizationId: results[0].organization_id,
-      themeColor: results[0].theme_color,
-    });
+    return Response.json(result);
   } catch (error) {
     return Response.json({ error: (error as Error).message }, { status: 500 });
   }

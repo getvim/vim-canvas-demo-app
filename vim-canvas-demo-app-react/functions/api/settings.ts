@@ -10,7 +10,11 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
     const { organization_id, theme_color } = data;
 
     const result = await DB.prepare(
-      "INSERT INTO settings (organization_id, theme_color, created_at) VALUES (?, ?, ?)"
+      "INSERT INTO settings (organization_id, theme_color, created_at) VALUES (?, ?, ?) \
+       ON CONFLICT (organization_id) \
+       DO UPDATE SET \
+       theme_color = excluded.theme_color,\
+       updated_at = excluded.updated_at"
     )
       .bind(organization_id, theme_color, new Date().toISOString())
       .run();

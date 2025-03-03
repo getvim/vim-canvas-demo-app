@@ -1,6 +1,6 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useOrganizationContext } from "@/hooks/useOrganizationContext";
-import { saveSettings } from "../../utils/settings-api";
+import { saveSettings, loadSettings } from "../../utils/settings-api";
 import { VimConnectPreview } from "./VimConnectPreview";
 import { ColorPicker } from "./ColorPicker";
 
@@ -14,6 +14,16 @@ export const BrandCustomization: React.FC = () => {
       theme_color: appColor,
     });
   }, [organizationId, appColor]);
+
+  useEffect(() => {
+    const fetchSettings = async () => {
+      const settings = await loadSettings(organizationId);
+      setAppColor((prev) =>
+        settings?.theme_color ? settings.theme_color : prev
+      );
+    };
+    fetchSettings();
+  }, [organizationId]);
 
   return (
     <div className="w-full p-5 font-proxima rounded-xl bg-white">

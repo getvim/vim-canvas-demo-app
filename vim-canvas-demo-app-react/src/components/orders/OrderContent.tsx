@@ -80,7 +80,7 @@ export const OrderContent: React.FC<OrderContentProps> = ({ order }) => {
                   />
                 </EntityFieldContent>
                 <EntityFieldContent>
-                  <EntityFieldTitle title="NCD code" />
+                  <EntityFieldTitle title="NDC code" />
                   <EntityFieldReadonlyText
                     text={medication.basicInformation?.ndcCode ?? "--"}
                   />

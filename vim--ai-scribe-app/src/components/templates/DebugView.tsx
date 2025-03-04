@@ -1,6 +1,6 @@
 import { TranscriptionPanel } from "../organisms/TranscriptionPanel";
 import { NotePanel } from "../organisms/NotePanel";
-import type { TranscriptionSegment } from "../ai-scribe/transcription.mock";
+import type { TranscriptionSegment } from "../organisms/ai-scribe-demo/transcription.mock";
 
 interface DebugViewProps {
   transcriptionSegments: TranscriptionSegment[];

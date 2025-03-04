@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useVimOsContext } from "./providers/VimOSContext";
-import { AiScribeDemo } from "./components/ai-scribe/AiScribeDemo";
+import { AiScribeDemo } from "./components/organisms/ai-scribe-demo/AiScribeDemo";
 import "globals";
 
 export const App = () => {

@@ -1,8 +1,8 @@
+import { SoapSection } from "../molecules/SoapSection";
 import type {
   SectionTypes,
   TranscriptionSegment,
-} from "../ai-scribe/transcription.mock";
-import { SoapSection } from "../molecules/SoapSection";
+} from "./ai-scribe-demo/transcription.mock";
 
 interface NotePanelProps {
   note: {
@@ -17,13 +17,13 @@ interface NotePanelProps {
   renderHighlightedText: (text: string) => JSX.Element;
 }
 
-export function NotePanel({
+export const NotePanel = ({
   note,
   hoveredSegment,
   transcriptionSegments,
   onPushToEHR,
   renderHighlightedText,
-}: NotePanelProps) {
+}: NotePanelProps) => {
   const isHighlighted = (section: SectionTypes) => {
     if (hoveredSegment === null) return false;
     return transcriptionSegments[hoveredSegment].affectedSections.includes(
@@ -63,4 +63,4 @@ export function NotePanel({
       />
     </div>
   );
-}
+};

@@ -8,12 +8,15 @@ export const BrandCustomization: React.FC = () => {
   const [appColor, setAppColor] = useState<string>("#00FFE1");
   const organizationId = useOrganizationContext();
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [isSaveButtonDisabled, setIsSaveButtonDisabled] =
+    useState<boolean>(true);
 
   const handleSave = useCallback(() => {
     saveSettings({
       organization_id: organizationId,
       theme_color: appColor,
     });
+    setIsSaveButtonDisabled(true);
   }, [organizationId, appColor]);
 
   useEffect(() => {
@@ -33,6 +36,11 @@ export const BrandCustomization: React.FC = () => {
     return <div>Loading...</div>;
   }
 
+  const handleColorChange = (color: string) => {
+    setAppColor(color);
+    setIsSaveButtonDisabled(false);
+  };
+
   return (
     <div className="w-full p-5 font-proxima rounded-xl bg-white">
       <div className="font-proxima text-sm leading-4 font-bold text-left mb-1">
@@ -46,12 +54,17 @@ export const BrandCustomization: React.FC = () => {
               Select your app color:
             </label>
 
-            <ColorPicker color={appColor} onChange={setAppColor} />
+            <ColorPicker color={appColor} onChange={handleColorChange} />
           </div>
 
           <button
-            className="mt-5 bg-gray-300 hover:bg-gray-400 text-white text-center text-sm font-medium rounded-sm w-[100px] h-[34px]"
+            className="mt-5 hover:bg-gray-400 text-white text-center text-sm font-medium rounded-sm w-[100px] h-[34px]"
             onClick={handleSave}
+            disabled={isSaveButtonDisabled}
+            style={{
+              cursor: isSaveButtonDisabled ? "not-allowed" : "pointer",
+              backgroundColor: isSaveButtonDisabled ? "#D1D5DB" : "#001C36",
+            }}
           >
             Save
           </button>

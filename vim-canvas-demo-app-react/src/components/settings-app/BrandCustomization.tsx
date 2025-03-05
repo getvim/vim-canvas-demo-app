@@ -1,17 +1,45 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useOrganizationContext } from "@/hooks/useOrganizationContext";
-import { saveSettings } from "../../utils/storage";
+import { saveSettings, loadSettings } from "../../utils/settings-api";
 import { VimConnectPreview } from "./VimConnectPreview";
 import { ColorPicker } from "./ColorPicker";
 
 export const BrandCustomization: React.FC = () => {
   const [appColor, setAppColor] = useState<string>("#00FFE1");
   const organizationId = useOrganizationContext();
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [isSaveButtonDisabled, setIsSaveButtonDisabled] =
+    useState<boolean>(true);
 
   const handleSave = useCallback(() => {
-    saveSettings({ [organizationId]: { appColor } });
+    saveSettings({
+      organization_id: organizationId,
+      theme_color: appColor,
+    });
+    setIsSaveButtonDisabled(true);
   }, [organizationId, appColor]);
 
+  useEffect(() => {
+    const fetchSettings = async () => {
+      setIsLoading(true);
+      const settings = await loadSettings(organizationId);
+      setAppColor((prev) =>
+        settings?.theme_color ? settings.theme_color : prev
+      );
+      setIsLoading(false);
+    };
+
+    fetchSettings();
+  }, [organizationId]);
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  const handleColorChange = (color: string) => {
+    setAppColor(color);
+    setIsSaveButtonDisabled(false);
+  };
 
   return (
     <div className="w-full p-5 font-proxima rounded-xl bg-white">
@@ -26,12 +54,17 @@ export const BrandCustomization: React.FC = () => {
               Select your app color:
             </label>
 
-            <ColorPicker color={appColor} onChange={setAppColor} />
+            <ColorPicker color={appColor} onChange={handleColorChange} />
           </div>
 
           <button
-            className="mt-5 bg-gray-300 hover:bg-gray-400 text-white text-center text-sm font-medium rounded-sm w-[100px] h-[34px]"
+            className="mt-5 hover:bg-gray-400 text-white text-center text-sm font-medium rounded-sm w-[100px] h-[34px]"
             onClick={handleSave}
+            disabled={isSaveButtonDisabled}
+            style={{
+              cursor: isSaveButtonDisabled ? "not-allowed" : "pointer",
+              backgroundColor: isSaveButtonDisabled ? "#D1D5DB" : "#001C36",
+            }}
           >
             Save
           </button>

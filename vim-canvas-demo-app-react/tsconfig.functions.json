@@ -6,5 +6,5 @@
     "lib": ["esnext"],
     "types": ["@cloudflare/workers-types"]
   },
-  "include": ["functions"]
+  "include": ["functions", "types"]
 }

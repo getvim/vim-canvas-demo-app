@@ -7,6 +7,7 @@ import { ColorPicker } from "./ColorPicker";
 export const BrandCustomization: React.FC = () => {
   const [appColor, setAppColor] = useState<string>("#00FFE1");
   const organizationId = useOrganizationContext();
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const handleSave = useCallback(() => {
     saveSettings({
@@ -17,13 +18,20 @@ export const BrandCustomization: React.FC = () => {
 
   useEffect(() => {
     const fetchSettings = async () => {
+      setIsLoading(true);
       const settings = await loadSettings(organizationId);
       setAppColor((prev) =>
         settings?.theme_color ? settings.theme_color : prev
       );
+      setIsLoading(false);
     };
+
     fetchSettings();
   }, [organizationId]);
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div className="w-full p-5 font-proxima rounded-xl bg-white">

@@ -18,9 +18,10 @@ const orderIcons: Record<EHR.OrderType, string> = {
   PROCEDURE: orderProcedureSvg,
 };
 
-export const OrdersWrapper: React.FC<{ orders: EHR.Order[] }> = ({
-  orders,
-}) => {
+export const OrdersWrapper: React.FC<{
+  orders: EHR.Order[];
+  themeColor?: string;
+}> = ({ orders, themeColor }) => {
   return (
     <>
       {orders?.map((order, index) => {
@@ -29,6 +30,7 @@ export const OrdersWrapper: React.FC<{ orders: EHR.Order[] }> = ({
           <CollapsibleEntity
             entityTitle={orderType ? `Order - ${orderType}` : "Order"}
             entityIconUrl={(orderType && orderIcons[orderType]) ?? orderSvg}
+            themeColor={themeColor}
             key={index}
           >
             <CollapsibleEntityContent>

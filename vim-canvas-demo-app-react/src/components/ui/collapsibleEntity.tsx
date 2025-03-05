@@ -33,14 +33,19 @@ interface CollapsibleEntityProps {
     | "Order"
     | `Order - ${EHR.OrderType}`;
   entityIconUrl: string;
+  themeColor?: string;
 }
+
+const DEFAULT_ICON_COLOR = "#04B39F";
 
 export function CollapsibleEntity({
   entityTitle,
   entityIconUrl,
   children,
+  themeColor,
 }: React.PropsWithChildren<CollapsibleEntityProps>) {
   const [isOpen, setIsOpen] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
 
   return (
     <Collapsible open={isOpen} onOpenChange={setIsOpen} className="w-full mb-4">
@@ -53,12 +58,21 @@ export function CollapsibleEntity({
               "rounded-b-none": isOpen,
             }
           )}
+          style={{
+            backgroundColor: isHovered
+              ? themeColor
+                ? `${themeColor}20`
+                : "rgb(242, 255, 253)"
+              : "white",
+          }}
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
         >
           <div className="flex gap-2">
             <img
               src={entityIconUrl}
               className="w-[20px] h-[20px]"
-              style={{ filter: hexToFilter("#04B39F") }}
+              style={{ filter: hexToFilter(themeColor ?? DEFAULT_ICON_COLOR) }}
             />
             <h4 className="text-sm font-semibold">{entityTitle}</h4>
           </div>

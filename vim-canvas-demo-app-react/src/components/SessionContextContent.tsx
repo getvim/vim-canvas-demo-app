@@ -3,8 +3,6 @@ import { CopyIcon } from "@radix-ui/react-icons";
 import { Separator } from "./ui/separator";
 import { useAppConfig } from "@/hooks/useAppConfig";
 import { JSONView } from "./ui/jsonView";
-import { useEffect, useState } from "react";
-import { SessionContext } from "vim-os-js-browser/types";
 import {
   EntityFieldReadonlyText,
   EntityFieldTitle,
@@ -12,22 +10,13 @@ import {
   EntitySectionTitle,
 } from "./ui/entityContent";
 import { Button } from "./ui/button";
+import { useIdToken } from "@/hooks/useIdToken";
+import { useState } from "react";
 
 export const SessionContextContent = () => {
   const { jsonMode } = useAppConfig();
   const { sessionContext } = useVimOsContext();
-
-  const [idToken, setIdToken] = useState<
-    SessionContext.GetIdTokenResponse["idToken"] | undefined
-  >();
-
-  useEffect(() => {
-    if (sessionContext) {
-      (async () => {
-        setIdToken((await sessionContext.getIdToken())?.idToken);
-      })();
-    }
-  }, [sessionContext, setIdToken]);
+  const { idToken } = useIdToken();
 
   const [copyMessage, setCopyMessage] = useState<string | null>(null);
 

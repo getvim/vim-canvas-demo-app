@@ -11,9 +11,18 @@ import { cn } from "@/lib/utils";
 import { LayoutFull } from "@/assets/layoutFull";
 import { LayoutLarge } from "@/assets/layoutLarge";
 import { LayoutSmall } from "@/assets/layoutSmall";
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "./ui/tooltip";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "./ui/tooltip";
 
-export const Navbar = () => {
+interface NavBarProps {
+  themeColor?: string;
+}
+
+export const Navbar: React.FC<NavBarProps> = ({ themeColor }) => {
   const { setJsonMode } = useAppConfig();
   const vimOs = useVimOsContext();
 
@@ -31,7 +40,10 @@ export const Navbar = () => {
   const smallMode = appSize === "CLASSIC";
 
   return (
-    <div className="px-2 pl-4 py-2 bg-accent flex justify-between items-center space-x-2">
+    <div
+      className="px-2 pl-4 py-2 bg-accent flex justify-between items-center space-x-2"
+      style={{ backgroundColor: themeColor }}
+    >
       <div>
         <h2 className="text-sm">Vim Canvas</h2>
         <h2 className="text-sm font-bold">Demo</h2>
@@ -92,11 +104,11 @@ export const Navbar = () => {
           <Tooltip>
             <TooltipTrigger asChild>
               <Button
-              size="sm"
-              variant="ghost"
-              className="p-1 h-fit hover:bg-green-100/60"
+                size="sm"
+                variant="ghost"
+                className="p-1 h-fit hover:bg-green-100/60"
               >
-                <Cross2Icon onClick={handleAppClose}/>
+                <Cross2Icon onClick={handleAppClose} />
               </Button>
             </TooltipTrigger>
             <TooltipContent className="bg-primary text-primary-foreground">

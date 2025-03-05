@@ -6,7 +6,7 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
   const { DB } = env;
 
   try {
-    const data = (await request.json()) as Settings;
+    const data = await request.json<Settings>();
     const { organization_id, theme_color } = data;
 
     const result = await DB.prepare(

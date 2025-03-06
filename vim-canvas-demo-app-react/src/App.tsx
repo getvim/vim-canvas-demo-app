@@ -29,6 +29,8 @@ import { useVimOSOrders } from "./hooks/useOrders";
 import { useVimOSPatient } from "./hooks/usePatient";
 import { useVimOSReferral } from "./hooks/useReferral";
 import { useVimOsContext } from "./hooks/useVimOsContext";
+import { loadSettings } from "./utils/settings-api";
+import { useIdToken } from "./hooks/useIdToken";
 
 function App() {
   const vimOs = useVimOsContext();
@@ -38,6 +40,8 @@ function App() {
   const { orders } = useVimOSOrders();
   const [redirectUrl, setRedirectUrl] = useState<string | undefined>(undefined);
   const [redirectModalOpen, setRedirectModal] = useState(false);
+  const [themeColor, setThemeColor] = useState<string>("#00FFE1");
+  const { idToken } = useIdToken();
 
   useEffect(() => {
     vimOs.hub.setActivationStatus("ENABLED");
@@ -75,38 +79,66 @@ function App() {
     setRedirectModal(open);
   };
 
+  useEffect(() => {
+    const fetchSettings = async () => {
+      const settings = await loadSettings(idToken!);
+      setThemeColor((prev) =>
+        settings?.theme_color ? settings.theme_color : prev
+      );
+    };
+    if (idToken) {
+      fetchSettings();
+    }
+  }, [idToken]);
+
   return (
     <div className="w-full top-0 left-0 pb-6">
-      <Navbar />
+      <Navbar themeColor={themeColor} />
 
-      <CollapsibleEntity entityTitle="User" entityIconUrl={userSvg}>
+      <CollapsibleEntity
+        entityTitle="User"
+        entityIconUrl={userSvg}
+        themeColor={themeColor}
+      >
         <CollapsibleEntityContent>
           <SessionContextContent />
         </CollapsibleEntityContent>
       </CollapsibleEntity>
 
       {patient && (
-        <CollapsibleEntity entityTitle="Patient" entityIconUrl={patientSvg}>
+        <CollapsibleEntity
+          entityTitle="Patient"
+          entityIconUrl={patientSvg}
+          themeColor={themeColor}
+        >
           <CollapsibleEntityContent>
             <PatientContent />
           </CollapsibleEntityContent>
         </CollapsibleEntity>
       )}
       {encounter && (
-        <CollapsibleEntity entityTitle="Encounter" entityIconUrl={encounterSvg}>
+        <CollapsibleEntity
+          entityTitle="Encounter"
+          entityIconUrl={encounterSvg}
+          themeColor={themeColor}
+        >
           <CollapsibleEntityContent>
             <EncounterContent />
           </CollapsibleEntityContent>
         </CollapsibleEntity>
       )}
       {referral && (
-        <CollapsibleEntity entityTitle="Referral" entityIconUrl={referralSvg}>
+        <CollapsibleEntity
+          entityTitle="Referral"
+          entityIconUrl={referralSvg}
+          themeColor={themeColor}
+        >
           <CollapsibleEntityContent>
             <ReferralContent />
           </CollapsibleEntityContent>
         </CollapsibleEntity>
       )}
-      {orders && <OrdersWrapper orders={orders} />}
+      {orders && <OrdersWrapper orders={orders} themeColor={themeColor} />}
       <Dialog open={redirectModalOpen} onOpenChange={onRedirectModalChange}>
         <DialogContent className="max-w-[calc(100%-100px)] sm:max-w-[425px]">
           <DialogHeader>
@@ -130,7 +162,7 @@ function App() {
         </DialogContent>
       </Dialog>
 
-      <Footer />
+      <Footer themeColor={themeColor} />
     </div>
   );
 }

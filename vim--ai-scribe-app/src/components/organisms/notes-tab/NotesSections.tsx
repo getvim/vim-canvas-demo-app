@@ -119,7 +119,7 @@ const useUpdatePlan = () => {
   return { updatePlanNote };
 };
 
-export const NotePanel = ({
+export const NotesSections = ({
   note,
   hoveredSegment,
   transcriptionSegments,

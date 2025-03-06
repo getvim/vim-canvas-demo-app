@@ -1,12 +1,7 @@
 import { useState } from "react";
-import { Bug } from "lucide-react";
 import { useUpdateEncounter } from "@/vimOs/useUpdateEncounter";
 import { NavigationBar } from "@/components/molecules/NavigationBar";
-import { Button } from "../../atoms/Button";
 import { RecordingPanel } from "../recording-panel/RecordingPanel";
-import { NotePanel } from "../note-panel/NotePanel";
-import { DebugView } from "../../templates/DebugView";
-import { MOCK_TRANSCRIPTION } from "./transcription.mock";
 import { MEDICAL_KEYWORDS } from "./keywords.mock";
 import { useRecorder } from "./useRecorder";
 import { formatTime } from "../../../utils/formatTime.util";
@@ -19,6 +14,15 @@ import {
 import type { Note } from "./Note.interface";
 import { UserTab } from "./UserTab";
 import { AppHeader } from "./AppHeader";
+import { useVimOsContext } from "@/providers/VimOSContext";
+import { NotesTab } from "../notes-tab/NotesTab";
+
+const EMPTY_STATE = {
+  subjective: "",
+  objective: "",
+  assessment: "",
+  plan: "",
+};
 
 type TabType = "record" | "notes" | "user";
 
@@ -58,9 +62,15 @@ const useUpdateIcdCodes = () => {
 };
 
 export const AiScribeDemo = () => {
+  const vimOS = useVimOsContext();
   const [activeTab, setActiveTab] = useState<TabType>("record");
   const [notes, setNotes] = useState<Note[]>([]);
-  const [patientName, setPatientName] = useState("");
+  const [patientName, setPatientName] = useState(
+    () => vimOS.sessionContext.user.identifiers?.ehrUsername || ""
+  );
+  const [isProcessing, setIsProcessing] = useState(false);
+  const [selectedKeyword, setSelectedKeyword] = useState<string | null>(null);
+  const [currentNote, setCurrentNote] = useState(EMPTY_STATE);
   const {
     isPaused,
     setIsPaused,
@@ -69,17 +79,6 @@ export const AiScribeDemo = () => {
     simulateRecording,
     stopRecording,
   } = useRecorder();
-  const [isProcessing, setIsProcessing] = useState(false);
-  const [selectedKeyword, setSelectedKeyword] = useState<string | null>(null);
-  const [isDebugMode, setIsDebugMode] = useState(false);
-  const [hoveredSegment, setHoveredSegment] = useState<number | null>(null);
-  const [currentNote, setCurrentNote] = useState({
-    subjective: "",
-    objective: "",
-    assessment: "",
-    plan: "",
-  });
-  // const { updateEncounter, checkCanUpdate: canUpdate } = useUpdateEncounter();
   const { updateEncounter } = useUpdateEncounter();
   const { updateIcdCodes } = useUpdateIcdCodes();
 
@@ -134,7 +133,7 @@ export const AiScribeDemo = () => {
     setSelectedKeyword(keyword);
   };
 
-  const renderHighlightedText = (text: string) => {
+  const renderHighlightedText = (text: string): JSX.Element => {
     return (
       <div
         dangerouslySetInnerHTML={{ __html: highlightKeywords(text) }}
@@ -213,49 +212,12 @@ export const AiScribeDemo = () => {
           )}
 
           {activeTab === "notes" && (
-            <>
-              <div className="flex flex-col justify-between items-center">
-                <h2 className="text-3xl font-bold text-gray-800">
-                  {patientName || "Patient Name"}
-                </h2>
-                <div className="flex items-center space-x-4">
-                  <Button
-                    onClick={() => setIsDebugMode(!isDebugMode)}
-                    variant={isDebugMode ? "primary" : "ghost"}
-                    className={
-                      isDebugMode ? "bg-purple-500 hover:bg-purple-600" : ""
-                    }
-                  >
-                    <Bug className="h-4 w-4 mr-2" />
-                    Debug Mode
-                  </Button>
-                  <div className="text-sm text-gray-500">
-                    Note saved automatically
-                  </div>
-                  <Button onClick={() => handleFullEhrUpdate()}>
-                    {/* TODO */}
-                    Push all to EHR
-                  </Button>
-                </div>
-              </div>
-
-              {isDebugMode ? (
-                <DebugView
-                  transcriptionSegments={MOCK_TRANSCRIPTION}
-                  hoveredSegment={hoveredSegment}
-                  onHoverSegment={setHoveredSegment}
-                  currentNote={currentNote}
-                  renderHighlightedText={renderHighlightedText}
-                />
-              ) : (
-                <NotePanel
-                  note={currentNote}
-                  hoveredSegment={hoveredSegment}
-                  transcriptionSegments={MOCK_TRANSCRIPTION}
-                  renderHighlightedText={renderHighlightedText}
-                />
-              )}
-            </>
+            <NotesTab
+              patientName={patientName}
+              handleFullEhrUpdate={handleFullEhrUpdate}
+              currentNote={currentNote}
+              renderHighlightedText={renderHighlightedText}
+            />
           )}
 
           {activeTab === "user" && (

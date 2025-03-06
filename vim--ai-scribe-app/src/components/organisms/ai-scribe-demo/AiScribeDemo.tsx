@@ -12,7 +12,10 @@ import { useRecorder } from "./useRecorder";
 import { formatTime } from "../../../utils/formatTime.util";
 import { RecordingTab } from "../RecordingTab/RecordingTab";
 import { ProcessingTab } from "./ProcessingTab";
-import { SelectIcdCodeModal } from "./SelectIcdCodeModal";
+import {
+  DiagnosisCodesModal,
+  type DiagnosisCodesList,
+} from "./DiagnosisCodesModal";
 import type { Note } from "./Note.interface";
 import { UserTab } from "./UserTab";
 
@@ -295,7 +298,7 @@ export const AiScribeDemo = () => {
       </div>
 
       {selectedKeyword && (
-        <SelectIcdCodeModal
+        <DiagnosisCodesModal
           selectedKeyword={selectedKeyword}
           closeModal={handleCloseModal}
           handleSubmit={handleSubmitIcdCodes}

@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { Bug } from "lucide-react";
 import { useUpdateEncounter } from "@/vimOs/useUpdateEncounter";
+import { NavigationBar } from "@/components/molecules/NavigationBar";
 import { Button } from "../../atoms/Button";
 import { RecordingPanel } from "../recording-panel/RecordingPanel";
 import { NotePanel } from "../note-panel/NotePanel";
-import { MainLayout } from "../../templates/MainLayout";
 import { DebugView } from "../../templates/DebugView";
 import { MOCK_TRANSCRIPTION } from "./transcription.mock";
 import { MEDICAL_KEYWORDS } from "./keywords.mock";
@@ -18,6 +18,7 @@ import {
 } from "./DiagnosisCodesModal";
 import type { Note } from "./Note.interface";
 import { UserTab } from "./UserTab";
+import { AppHeader } from "./AppHeader";
 
 type TabType = "record" | "notes" | "user";
 
@@ -186,93 +187,99 @@ export const AiScribeDemo = () => {
   };
 
   return (
-    <MainLayout
-      activeTab={activeTab}
-      onTabChange={handleTabChange}
-      hasCurrentNote={hasCurrentNote}
-    >
-      <div className="space-y-6">
-        {activeTab === "record" && !isRecording && !isProcessing && (
-          <RecordingTab
-            patientName={patientName}
-            setPatientName={setPatientName}
-            simulateRecording={simulateRecording}
-          />
-        )}
+    <div className="min-h-screen bg-gradient-to-b from-green-50 to-white">
+      <AppHeader />
 
-        {activeTab === "record" && isProcessing && <ProcessingTab />}
+      <main className="max-w-3xl mx-auto px-4 py-6 sm:px-6 lg:px-8 mb-24">
+        <div className="space-y-6">
+          {activeTab === "record" && !isRecording && !isProcessing && (
+            <RecordingTab
+              patientName={patientName}
+              setPatientName={setPatientName}
+              simulateRecording={simulateRecording}
+            />
+          )}
 
-        {activeTab === "record" && isRecording && !isProcessing && (
-          <RecordingPanel
-            isPaused={isPaused}
-            recordingTime={recordingTime}
-            onPausePlay={handlePausePlay}
-            onEndVisit={handleEndVisit}
-            formatTime={formatTime}
-          />
-        )}
+          {activeTab === "record" && isProcessing && <ProcessingTab />}
 
-        {activeTab === "notes" && (
-          <>
-            <div className="flex flex-col justify-between items-center">
-              <h2 className="text-3xl font-bold text-gray-800">
-                {patientName || "Patient Name"}
-              </h2>
-              <div className="flex items-center space-x-4">
-                <Button
-                  onClick={() => setIsDebugMode(!isDebugMode)}
-                  variant={isDebugMode ? "primary" : "ghost"}
-                  className={
-                    isDebugMode ? "bg-purple-500 hover:bg-purple-600" : ""
-                  }
-                >
-                  <Bug className="h-4 w-4 mr-2" />
-                  Debug Mode
-                </Button>
-                <div className="text-sm text-gray-500">
-                  Note saved automatically
+          {activeTab === "record" && isRecording && !isProcessing && (
+            <RecordingPanel
+              isPaused={isPaused}
+              recordingTime={recordingTime}
+              onPausePlay={handlePausePlay}
+              onEndVisit={handleEndVisit}
+              formatTime={formatTime}
+            />
+          )}
+
+          {activeTab === "notes" && (
+            <>
+              <div className="flex flex-col justify-between items-center">
+                <h2 className="text-3xl font-bold text-gray-800">
+                  {patientName || "Patient Name"}
+                </h2>
+                <div className="flex items-center space-x-4">
+                  <Button
+                    onClick={() => setIsDebugMode(!isDebugMode)}
+                    variant={isDebugMode ? "primary" : "ghost"}
+                    className={
+                      isDebugMode ? "bg-purple-500 hover:bg-purple-600" : ""
+                    }
+                  >
+                    <Bug className="h-4 w-4 mr-2" />
+                    Debug Mode
+                  </Button>
+                  <div className="text-sm text-gray-500">
+                    Note saved automatically
+                  </div>
+                  <Button onClick={() => handleFullEhrUpdate()}>
+                    {/* TODO */}
+                    Push all to EHR
+                  </Button>
                 </div>
-                <Button onClick={() => handleFullEhrUpdate()}>
-                  {/* TODO */}
-                  Push all to EHR
-                </Button>
               </div>
-            </div>
 
-            {isDebugMode ? (
-              <DebugView
-                transcriptionSegments={MOCK_TRANSCRIPTION}
-                hoveredSegment={hoveredSegment}
-                onHoverSegment={setHoveredSegment}
-                currentNote={currentNote}
-                renderHighlightedText={renderHighlightedText}
-              />
-            ) : (
-              <NotePanel
-                note={currentNote}
-                hoveredSegment={hoveredSegment}
-                transcriptionSegments={MOCK_TRANSCRIPTION}
-                renderHighlightedText={renderHighlightedText}
-              />
-            )}
-          </>
-        )}
+              {isDebugMode ? (
+                <DebugView
+                  transcriptionSegments={MOCK_TRANSCRIPTION}
+                  hoveredSegment={hoveredSegment}
+                  onHoverSegment={setHoveredSegment}
+                  currentNote={currentNote}
+                  renderHighlightedText={renderHighlightedText}
+                />
+              ) : (
+                <NotePanel
+                  note={currentNote}
+                  hoveredSegment={hoveredSegment}
+                  transcriptionSegments={MOCK_TRANSCRIPTION}
+                  renderHighlightedText={renderHighlightedText}
+                />
+              )}
+            </>
+          )}
 
-        {activeTab === "user" && (
-          <UserTab
-            notes={notes}
-            renderHighlightedText={renderHighlightedText}
+          {activeTab === "user" && (
+            <UserTab
+              notes={notes}
+              renderHighlightedText={renderHighlightedText}
+            />
+          )}
+        </div>
+
+        {selectedKeyword && (
+          <DiagnosisCodesModal
+            selectedKeyword={selectedKeyword}
+            closeModal={handleCloseModal}
+            handleSubmit={handleSubmitIcdCodes}
           />
         )}
-      </div>
+      </main>
 
-      {selectedKeyword && (
-        <DiagnosisCodesModal
-          selectedKeyword={selectedKeyword}
-          closeModal={handleCloseModal}
-          handleSubmit={handleSubmitIcdCodes}
-        />
-      )}
-    </MainLayout>
+      <NavigationBar
+        activeTab={activeTab}
+        onTabChange={handleTabChange}
+        hasCurrentNote={hasCurrentNote}
+      />
+    </div>
   );
 };

@@ -133,61 +133,6 @@ export const AiScribeDemo = () => {
     setSelectedKeyword(keyword);
   };
 
-  // const updateEncounterField = (content: string, title: string) => {
-  //   console.log("Pushing to EHR - to be implemented");
-  //   console.log(content, title);
-  //   const encounterPayload = {
-  //     assessment: {},
-  //     objective: {},
-  //     patientInstructions: {},
-  //     plan: {},
-  //     subjective: {},
-  //   };
-
-  //   const canUpdateResult = canUpdate({
-  //     subjective: { chiefComplaintNotes: true },
-  //   });
-
-  //   console.log(canUpdateResult);
-
-  //   function removeUndefinedProperties(obj: unknown) {
-  //     if (typeof obj !== "object" || obj === null) {
-  //       return obj;
-  //     }
-
-  //     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  //     const result: any = {};
-
-  //     for (const [key, value] of Object.entries(obj)) {
-  //       if (typeof value === "object" && value !== null) {
-  //         const nestedResult = removeUndefinedProperties(value);
-  //         if (Object.keys(nestedResult).length > 0) {
-  //           result[key] = nestedResult;
-  //         }
-  //       } else if (value !== undefined) {
-  //         result[key] = value;
-  //       }
-  //     }
-
-  //     return result;
-  //   }
-
-  //   updateEncounter(removeUndefinedProperties(encounterPayload))
-  //     .then(() => {
-  //       console.log({
-  //         variant: "default",
-  //         title: "Encounter notes updated!",
-  //       });
-  //     })
-  //     .catch((error) => {
-  //       console.log({
-  //         variant: "destructive",
-  //         title: "Uh oh! Something went wrong.",
-  //         description: error ? JSON.stringify(error) : "An error occurred.",
-  //       });
-  //     });
-  // };
-
   const renderHighlightedText = (text: string) => {
     return (
       <div
@@ -213,6 +158,30 @@ export const AiScribeDemo = () => {
 
     if (selectedIcdCodes?.length > 0) {
       updateIcdCodes(selectedIcdCodes);
+    }
+  };
+
+  const handleFullEhrUpdate = async () => {
+    const encounterPayload = {
+      subjective: {
+        generalNotes: currentNote.subjective,
+      },
+      objective: {
+        generalNotes: currentNote.objective,
+      },
+      assessment: {
+        generalNotes: currentNote.assessment,
+      },
+      plan: {
+        generalNotes: currentNote.plan,
+      },
+    };
+
+    try {
+      await updateEncounter(encounterPayload);
+      console.log("Successfully updated full encounter notes");
+    } catch (error) {
+      console.error("Failed to update encounter:", error);
     }
   };
 
@@ -263,7 +232,7 @@ export const AiScribeDemo = () => {
                 <div className="text-sm text-gray-500">
                   Note saved automatically
                 </div>
-                <Button onClick={() => updateEncounter({})}>
+                <Button onClick={() => handleFullEhrUpdate()}>
                   {/* TODO */}
                   Push all to EHR
                 </Button>

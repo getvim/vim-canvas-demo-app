@@ -31,9 +31,6 @@ import { useVimOSReferral } from "./hooks/useReferral";
 import { useVimOsContext } from "./hooks/useVimOsContext";
 import { loadSettings } from "./utils/settings-api";
 import { useIdToken } from "./hooks/useIdToken";
-import { jwtDecode } from "jwt-decode";
-
-const ORGANIZATION_ID_CLAIM = "https://getvim.com/organizationId";
 
 function App() {
   const vimOs = useVimOsContext();
@@ -45,7 +42,6 @@ function App() {
   const [redirectModalOpen, setRedirectModal] = useState(false);
   const [themeColor, setThemeColor] = useState<string>("#00FFE1");
   const { idToken } = useIdToken();
-  const [organizationId, setOrganizationId] = useState<string>("");
 
   useEffect(() => {
     vimOs.hub.setActivationStatus("ENABLED");
@@ -84,24 +80,16 @@ function App() {
   };
 
   useEffect(() => {
-    if (idToken) {
-      const decodedToken = jwtDecode<{ [key: string]: string }>(idToken);
-      const organizationId = decodedToken?.[ORGANIZATION_ID_CLAIM];
-      setOrganizationId(organizationId);
-    }
-  }, [idToken]);
-
-  useEffect(() => {
     const fetchSettings = async () => {
-      const settings = await loadSettings(organizationId);
+      const settings = await loadSettings(idToken!);
       setThemeColor((prev) =>
         settings?.theme_color ? settings.theme_color : prev
       );
     };
-    if (organizationId) {
+    if (idToken) {
       fetchSettings();
     }
-  }, [organizationId]);
+  }, [idToken]);
 
   return (
     <div className="w-full top-0 left-0 pb-6">

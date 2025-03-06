@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev:vite": "vite",
-    "dev:functions": "wrangler pages dev --proxy=5173",
+    "dev:functions": "wrangler pages dev --proxy=5173 --d1=DB:canvas-demo-db",
     "dev": "concurrently --raw -i \"npm:dev:functions\" \"npm:dev:vite\" ",
     "build": "tsc -b && vite build",
     "lint": "eslint .",

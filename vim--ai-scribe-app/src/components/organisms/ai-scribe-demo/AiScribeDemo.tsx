@@ -1,15 +1,16 @@
 import { useState } from "react";
 import { Bug } from "lucide-react";
+import { useUpdateEncounter } from "@/vimOs/useUpdateEncounter";
 import { Button } from "../../atoms/Button";
-import { RecordingPanel } from "../RecordingPanel";
-import { NotePanel } from "../NotePanel";
+import { RecordingPanel } from "../recording-panel/RecordingPanel";
+import { NotePanel } from "../note-panel/NotePanel";
 import { MainLayout } from "../../templates/MainLayout";
 import { DebugView } from "../../templates/DebugView";
 import { MOCK_TRANSCRIPTION } from "./transcription.mock";
 import { MEDICAL_KEYWORDS } from "./keywords.mock";
 import { useRecorder } from "./useRecorder";
-import { formatTime } from "./formatTime.util";
-import { RecordingTab } from "./RecordingTab";
+import { formatTime } from "../../../utils/formatTime.util";
+import { RecordingTab } from "../RecordingTab/RecordingTab";
 import { ProcessingTab } from "./ProcessingTab";
 import { SelectIcdCodeModal } from "./SelectIcdCodeModal";
 import type { Note } from "./Note.interface";
@@ -29,6 +30,27 @@ const highlightKeywords = (text: string) => {
   });
 
   return highlightedText;
+};
+
+const useUpdateIcdCodes = () => {
+  const { updateEncounter, checkCanUpdate } = useUpdateEncounter();
+
+  const updateIcdCodes = (diagnosisCodes: DiagnosisCodesList) => {
+    const updateOptions = checkCanUpdate({
+      assessment: { diagnosisCodes: true },
+    });
+    const { canUpdate } = updateOptions;
+
+    if (canUpdate) {
+      updateEncounter({
+        assessment: {
+          diagnosisCodes,
+        },
+      });
+    }
+  };
+
+  return { updateIcdCodes };
 };
 
 export const AiScribeDemo = () => {
@@ -53,6 +75,9 @@ export const AiScribeDemo = () => {
     assessment: "",
     plan: "",
   });
+  // const { updateEncounter, checkCanUpdate: canUpdate } = useUpdateEncounter();
+  const { updateEncounter } = useUpdateEncounter();
+  const { updateIcdCodes } = useUpdateIcdCodes();
 
   const hasCurrentNote = Boolean(
     currentNote.subjective ||
@@ -81,7 +106,7 @@ export const AiScribeDemo = () => {
         subjective:
           "Patient reports experiencing colic pain on both sides of the lower abdomen for the past two days. The pain is described as intermittent, sharp, and cramping in nature. The patient rates the pain as 6/10 in intensity.",
         objective:
-          "Vital signs stable. BP 120/80, HR 72, RR 16, Temp 98.6°F. Abdomen tender to palpation bilaterally in lower quadrants. No rebound tenderness or guarding. Bowel sounds normal.",
+          "Vital signs stable. BP 120/80, HR 72, RR 16, Temp 98.6F. Abdomen tender to palpation bilaterally in lower quadrants. No rebound tenderness or guarding. Bowel sounds normal.",
         assessment:
           "Acute abdominal pain, likely due to gastroenteritis or menstrual cramps. No signs of acute surgical abdomen.",
         plan: "1. Prescribed antispasmodics for pain relief\n2. Recommended clear liquid diet for 24 hours\n3. Return if pain worsens or new symptoms develop\n4. Follow up in 3 days if symptoms persist",
@@ -105,9 +130,60 @@ export const AiScribeDemo = () => {
     setSelectedKeyword(keyword);
   };
 
-  const handlePushToEHR = () => {
-    console.log("Pushing to EHR - to be implemented");
-  };
+  // const updateEncounterField = (content: string, title: string) => {
+  //   console.log("Pushing to EHR - to be implemented");
+  //   console.log(content, title);
+  //   const encounterPayload = {
+  //     assessment: {},
+  //     objective: {},
+  //     patientInstructions: {},
+  //     plan: {},
+  //     subjective: {},
+  //   };
+
+  //   const canUpdateResult = canUpdate({
+  //     subjective: { chiefComplaintNotes: true },
+  //   });
+
+  //   console.log(canUpdateResult);
+
+  //   function removeUndefinedProperties(obj: unknown) {
+  //     if (typeof obj !== "object" || obj === null) {
+  //       return obj;
+  //     }
+
+  //     // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  //     const result: any = {};
+
+  //     for (const [key, value] of Object.entries(obj)) {
+  //       if (typeof value === "object" && value !== null) {
+  //         const nestedResult = removeUndefinedProperties(value);
+  //         if (Object.keys(nestedResult).length > 0) {
+  //           result[key] = nestedResult;
+  //         }
+  //       } else if (value !== undefined) {
+  //         result[key] = value;
+  //       }
+  //     }
+
+  //     return result;
+  //   }
+
+  //   updateEncounter(removeUndefinedProperties(encounterPayload))
+  //     .then(() => {
+  //       console.log({
+  //         variant: "default",
+  //         title: "Encounter notes updated!",
+  //       });
+  //     })
+  //     .catch((error) => {
+  //       console.log({
+  //         variant: "destructive",
+  //         title: "Uh oh! Something went wrong.",
+  //         description: error ? JSON.stringify(error) : "An error occurred.",
+  //       });
+  //     });
+  // };
 
   const renderHighlightedText = (text: string) => {
     return (
@@ -128,9 +204,13 @@ export const AiScribeDemo = () => {
     setSelectedKeyword(null);
   };
 
-  const handleSubmitIcdCodes = (selectedIcdCodes: string[]) => {
+  const handleSubmitIcdCodes = (selectedIcdCodes: DiagnosisCodesList) => {
     console.log("Submitted ICD codes:", selectedIcdCodes);
     setSelectedKeyword(null);
+
+    if (selectedIcdCodes?.length > 0) {
+      updateIcdCodes(selectedIcdCodes);
+    }
   };
 
   return (
@@ -162,7 +242,7 @@ export const AiScribeDemo = () => {
 
         {activeTab === "notes" && (
           <>
-            <div className="flex justify-between items-center">
+            <div className="flex flex-col justify-between items-center">
               <h2 className="text-3xl font-bold text-gray-800">
                 {patientName || "Patient Name"}
               </h2>
@@ -180,7 +260,10 @@ export const AiScribeDemo = () => {
                 <div className="text-sm text-gray-500">
                   Note saved automatically
                 </div>
-                <Button onClick={handlePushToEHR}>Push all to EHR</Button>
+                <Button onClick={() => updateEncounter({})}>
+                  {/* TODO */}
+                  Push all to EHR
+                </Button>
               </div>
             </div>
 
@@ -190,7 +273,6 @@ export const AiScribeDemo = () => {
                 hoveredSegment={hoveredSegment}
                 onHoverSegment={setHoveredSegment}
                 currentNote={currentNote}
-                onPushToEHR={handlePushToEHR}
                 renderHighlightedText={renderHighlightedText}
               />
             ) : (
@@ -198,7 +280,6 @@ export const AiScribeDemo = () => {
                 note={currentNote}
                 hoveredSegment={hoveredSegment}
                 transcriptionSegments={MOCK_TRANSCRIPTION}
-                onPushToEHR={handlePushToEHR}
                 renderHighlightedText={renderHighlightedText}
               />
             )}

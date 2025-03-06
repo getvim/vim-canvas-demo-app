@@ -1,4 +1,11 @@
-import { createContext, useContext, useEffect, useState, type FC } from "react";
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+  type FC,
+  type ReactNode,
+} from "react";
 import { loadSettingsSdk } from "vim-app-settings";
 import { SETTINGS_SDK } from "vim-app-settings/types";
 
@@ -10,7 +17,9 @@ export const useVimOsSettingsContext = () => {
   return useContext(VimOSSettingsContext);
 };
 
-export const VimOSContextProvider: FC<{ children: any }> = ({ children }) => {
+export const VimOSContextProvider: FC<{ children: ReactNode }> = ({
+  children,
+}) => {
   const [vimSettingsSDK, setVimSettingsSDK] = useState<
     SETTINGS_SDK | undefined
   >(undefined);

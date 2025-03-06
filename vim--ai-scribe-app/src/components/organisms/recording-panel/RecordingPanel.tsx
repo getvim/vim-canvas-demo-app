@@ -1,5 +1,5 @@
 import { Play, Pause } from 'lucide-react';
-import { Button } from '../atoms/Button';
+import { Button } from '../../atoms/Button';
 
 interface RecordingPanelProps {
   isPaused: boolean;

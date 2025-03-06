@@ -1,4 +1,11 @@
-import { createContext, useContext, useEffect, useState, type FC } from "react";
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+  type FC,
+  type ReactNode,
+} from "react";
 import { SDK } from "vim-os-js-browser/types";
 import { loadSdk } from "vim-os-js-browser";
 
@@ -8,7 +15,9 @@ export const useVimOsContext = () => {
   return useContext(VimOSContext);
 };
 
-export const VimOSContextProvider: FC<{ children: any }> = ({ children }) => {
+export const VimOSContextProvider: FC<{ children: ReactNode }> = ({
+  children,
+}) => {
   const [vimOS, setVimOS] = useState<SDK | undefined>(undefined);
   useEffect(() => {
     (async () => {

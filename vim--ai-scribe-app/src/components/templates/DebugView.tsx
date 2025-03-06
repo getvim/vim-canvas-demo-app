@@ -1,5 +1,5 @@
-import { TranscriptionPanel } from "../organisms/TranscriptionPanel";
-import { NotePanel } from "../organisms/NotePanel";
+import { TranscriptionPanel } from "../organisms/transcription-panel/TranscriptionPanel";
+import { NotePanel } from "../organisms/note-panel/NotePanel";
 import type { TranscriptionSegment } from "../organisms/ai-scribe-demo/transcription.mock";
 
 interface DebugViewProps {
@@ -12,7 +12,6 @@ interface DebugViewProps {
     assessment: string;
     plan: string;
   };
-  onPushToEHR: () => void;
   renderHighlightedText: (text: string) => JSX.Element;
 }
 
@@ -21,7 +20,6 @@ export function DebugView({
   hoveredSegment,
   onHoverSegment,
   currentNote,
-  onPushToEHR,
   renderHighlightedText,
 }: DebugViewProps) {
   return (
@@ -35,7 +33,6 @@ export function DebugView({
         note={currentNote}
         hoveredSegment={hoveredSegment}
         transcriptionSegments={transcriptionSegments}
-        onPushToEHR={onPushToEHR}
         renderHighlightedText={renderHighlightedText}
       />
     </div>

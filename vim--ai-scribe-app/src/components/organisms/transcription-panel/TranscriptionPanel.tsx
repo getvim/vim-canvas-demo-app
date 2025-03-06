@@ -17,7 +17,7 @@ export function TranscriptionPanel({
 }: TranscriptionPanelProps) {
   return (
     <div className="bg-white rounded-lg shadow-md p-6">
-      <div className="flex items-center justify-between mb-4">
+      <div className="flex flex-col items-center justify-between mb-4">
         <h3 className="text-xl font-bold text-gray-800">Raw Transcription</h3>
         <div className="text-sm text-gray-500">Timeline</div>
       </div>
@@ -33,7 +33,7 @@ export function TranscriptionPanel({
             onMouseEnter={() => onHoverSegment(index)}
             onMouseLeave={() => onHoverSegment(null)}
           >
-            <div className="flex items-start space-x-3">
+            <div className="flex flex-col items-start space-x-3">
               <div className="text-sm font-medium text-gray-500 w-16 flex-shrink-0">
                 {segment.timestamp}
               </div>

@@ -138,7 +138,7 @@ function App() {
           </CollapsibleEntityContent>
         </CollapsibleEntity>
       )}
-      {orders && <OrdersWrapper orders={orders} />}
+      {orders && <OrdersWrapper orders={orders} themeColor={themeColor} />}
       <Dialog open={redirectModalOpen} onOpenChange={onRedirectModalChange}>
         <DialogContent className="max-w-[calc(100%-100px)] sm:max-w-[425px]">
           <DialogHeader>

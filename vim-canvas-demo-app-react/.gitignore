@@ -28,3 +28,7 @@ functions/**/*.js
 *.sw?
 .env
 .dev.vars
+
+# Add documentation files with sensitive information
+SCRIBEAI_DEVELOPER_GUIDE.md
+SCRIBEAI_QUICKSTART.md

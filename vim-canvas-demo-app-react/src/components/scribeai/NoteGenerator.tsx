@@ -1,6 +1,8 @@
 import React, { useState, useRef } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { Button } from "@/components/ui/button";
+import { FormInputs } from "../encounter-content/form";
+import { useFormContext } from "react-hook-form";
 
 // Import your provided ScribeAI API key from the environment
 const SCRIBEAI_API_KEY = import.meta.env.VITE_SCRIBEAI_API_KEY as string;
@@ -15,16 +17,191 @@ const NOTE_TYPES = [
   { value: "psych", label: "Psychological Note" },
 ];
 
+// Interface for parsed note sections
+interface ParsedNote {
+  subjective: {
+    generalNotes?: string;
+    chiefComplaint?: string;
+    historyOfPresentIllness?: string;
+    reviewOfSystems?: string;
+  };
+  objective: {
+    generalNotes?: string;
+    physicalExam?: string;
+  };
+  assessment: {
+    generalNotes?: string;
+    diagnoses?: string[];
+  };
+  plan: {
+    generalNotes?: string;
+    procedures?: string[];
+  };
+  patientInstructions: {
+    generalNotes?: string;
+  };
+}
+
 export const NoteGenerator = () => {
   const { toast } = useToast();
   const [transcript, setTranscript] = useState("");
   const [selectedNoteType, setSelectedNoteType] = useState("soap");
   const [uploading, setUploading] = useState(false);
   const [generatedNote, setGeneratedNote] = useState("");
+  const [parsedNote, setParsedNote] = useState<ParsedNote | null>(null);
   const [customNotes, setCustomNotes] = useState("");
   const [isRecording, setIsRecording] = useState(false);
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const recordedChunksRef = useRef<Blob[]>([]);
+  
+  // Try to get form context - will be available if component is used within the encounter form
+  let formContext: ReturnType<typeof useFormContext<FormInputs>> | null = null;
+  try {
+    formContext = useFormContext<FormInputs>();
+  } catch (e) {
+    // Form context not available, component is being used standalone
+  }
+
+  // Parse the generated note into sections
+  const parseGeneratedNote = (note: string): ParsedNote => {
+    const parsed: ParsedNote = {
+      subjective: {},
+      objective: {},
+      assessment: {},
+      plan: {},
+      patientInstructions: {}
+    };
+    
+    // Simple parsing based on section headers
+    const sections = note.split(/\n(?=[A-Z]+:)/);
+    
+    for (const section of sections) {
+      if (section.startsWith("SUBJECTIVE:") || section.includes("\nSUBJECTIVE:")) {
+        const content = section.replace(/.*SUBJECTIVE:\s*/s, "").trim();
+        
+        // Try to extract chief complaint
+        const ccMatch = content.match(/Chief Complaint:([^\n]+)/i);
+        if (ccMatch) {
+          parsed.subjective.chiefComplaint = ccMatch[1].trim();
+        }
+        
+        // Try to extract HPI
+        const hpiMatch = content.match(/History of Present Illness:([^]*?)(?=\n[A-Z][a-z]+:|$)/i);
+        if (hpiMatch) {
+          parsed.subjective.historyOfPresentIllness = hpiMatch[1].trim();
+        }
+        
+        // Try to extract ROS
+        const rosMatch = content.match(/Review of Systems:([^]*?)(?=\n[A-Z][a-z]+:|$)/i);
+        if (rosMatch) {
+          parsed.subjective.reviewOfSystems = rosMatch[1].trim();
+        }
+        
+        // Set general notes if specific sections weren't found
+        if (!parsed.subjective.chiefComplaint && !parsed.subjective.historyOfPresentIllness && !parsed.subjective.reviewOfSystems) {
+          parsed.subjective.generalNotes = content;
+        }
+      } 
+      else if (section.startsWith("OBJECTIVE:") || section.includes("\nOBJECTIVE:")) {
+        const content = section.replace(/.*OBJECTIVE:\s*/s, "").trim();
+        
+        // Try to extract physical exam
+        const peMatch = content.match(/Physical Examination:([^]*?)(?=\n[A-Z][a-z]+:|$)/i);
+        if (peMatch) {
+          parsed.objective.physicalExam = peMatch[1].trim();
+        }
+        
+        // Set general notes
+        parsed.objective.generalNotes = peMatch ? content.replace(/Physical Examination:([^]*?)(?=\n[A-Z][a-z]+:|$)/i, "").trim() : content;
+      } 
+      else if (section.startsWith("ASSESSMENT:") || section.includes("\nASSESSMENT:")) {
+        const content = section.replace(/.*ASSESSMENT:\s*/s, "").trim();
+        
+        // Try to extract diagnoses
+        const diagnosesMatch = content.match(/Diagnoses:([^]*?)(?=\n[A-Z][a-z]+:|$)/i);
+        if (diagnosesMatch) {
+          const diagnosesText = diagnosesMatch[1].trim();
+          parsed.assessment.diagnoses = diagnosesText.split(/\n/).map(d => d.trim()).filter(d => d);
+        }
+        
+        parsed.assessment.generalNotes = content;
+      } 
+      else if (section.startsWith("PLAN:") || section.includes("\nPLAN:")) {
+        const content = section.replace(/.*PLAN:\s*/s, "").trim();
+        
+        // Try to extract procedures
+        const proceduresMatch = content.match(/Procedures:([^]*?)(?=\n[A-Z][a-z]+:|$)/i);
+        if (proceduresMatch) {
+          const proceduresText = proceduresMatch[1].trim();
+          parsed.plan.procedures = proceduresText.split(/\n/).map(p => p.trim()).filter(p => p);
+        }
+        
+        parsed.plan.generalNotes = content;
+      } 
+      else if (section.startsWith("PATIENT INSTRUCTIONS:") || section.includes("\nPATIENT INSTRUCTIONS:")) {
+        parsed.patientInstructions.generalNotes = section.replace(/.*PATIENT INSTRUCTIONS:\s*/s, "").trim();
+      }
+    }
+    
+    return parsed;
+  };
+
+  // Apply the parsed note to the form
+  const applyParsedNote = () => {
+    if (!parsedNote || !formContext) {
+      toast({ 
+        variant: "destructive", 
+        title: "Cannot apply note", 
+        description: "Either no note is generated or the form context is not available." 
+      });
+      return;
+    }
+    
+    const { setValue } = formContext;
+    
+    // Set values in the form
+    if (parsedNote.subjective.generalNotes) {
+      setValue("subjectiveGeneralNotes", parsedNote.subjective.generalNotes, { shouldDirty: true });
+    }
+    
+    if (parsedNote.subjective.chiefComplaint) {
+      setValue("subjectiveChiefComplaint", parsedNote.subjective.chiefComplaint, { shouldDirty: true });
+    }
+    
+    if (parsedNote.subjective.historyOfPresentIllness) {
+      setValue("subjectiveHistoryOfPresentIllness", parsedNote.subjective.historyOfPresentIllness, { shouldDirty: true });
+    }
+    
+    if (parsedNote.subjective.reviewOfSystems) {
+      setValue("subjectiveReviewOfSystems", parsedNote.subjective.reviewOfSystems, { shouldDirty: true });
+    }
+    
+    if (parsedNote.objective.generalNotes) {
+      setValue("objectiveGeneralNotes", parsedNote.objective.generalNotes, { shouldDirty: true });
+    }
+    
+    if (parsedNote.objective.physicalExam) {
+      setValue("objectivePhysicalExamNotes", parsedNote.objective.physicalExam, { shouldDirty: true });
+    }
+    
+    if (parsedNote.assessment.generalNotes) {
+      setValue("assessmentGeneralNotes", parsedNote.assessment.generalNotes, { shouldDirty: true });
+    }
+    
+    if (parsedNote.plan.generalNotes) {
+      setValue("planGeneralNotes", parsedNote.plan.generalNotes, { shouldDirty: true });
+    }
+    
+    if (parsedNote.patientInstructions.generalNotes) {
+      setValue("patientInstructionsGeneralNotes", parsedNote.patientInstructions.generalNotes, { shouldDirty: true });
+    }
+    
+    toast({ 
+      variant: "default", 
+      title: "Note applied", 
+      description: "The generated note has been applied to the form fields." 
+    });
+  };
 
   // Handle audio file upload transcription
   const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -325,7 +502,13 @@ export const NoteGenerator = () => {
       }
       
       const data = await response.json();
-      setGeneratedNote(data.note || JSON.stringify(data, null, 2));
+      const noteText = data.note || JSON.stringify(data, null, 2);
+      setGeneratedNote(noteText);
+      
+      // Parse the generated note
+      const parsed = parseGeneratedNote(noteText);
+      setParsedNote(parsed);
+      
       toast({ variant: "default", title: "Note generated successfully!" });
     } catch (error: any) {
       toast({ variant: "destructive", title: "Error generating note", description: error.message });
@@ -399,10 +582,16 @@ export const NoteGenerator = () => {
         />
       </div>
       
-      <div className="mb-4">
+      <div className="mb-4 flex space-x-2">
         <Button variant="default" onClick={generateNote}>
           Generate Note
         </Button>
+        
+        {formContext && parsedNote && (
+          <Button variant="outline" onClick={applyParsedNote}>
+            Apply to Encounter Form
+          </Button>
+        )}
       </div>
       
       {/* Display the generated note */}
@@ -410,6 +599,51 @@ export const NoteGenerator = () => {
         <div className="p-4 border rounded-md mt-4 bg-gray-50">
           <h4 className="mb-2 font-medium">Generated Note:</h4>
           <pre className="whitespace-pre-wrap">{generatedNote}</pre>
+        </div>
+      )}
+      
+      {/* Display parsed sections preview */}
+      {parsedNote && (
+        <div className="p-4 border rounded-md mt-4 bg-blue-50">
+          <h4 className="mb-2 font-medium">Parsed Sections (Preview):</h4>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <h5 className="font-medium">Subjective</h5>
+              {parsedNote.subjective.chiefComplaint && (
+                <div className="mb-2">
+                  <span className="font-medium">Chief Complaint:</span> 
+                  <p className="text-sm">{parsedNote.subjective.chiefComplaint}</p>
+                </div>
+              )}
+              {parsedNote.subjective.historyOfPresentIllness && (
+                <div className="mb-2">
+                  <span className="font-medium">HPI:</span>
+                  <p className="text-sm">{parsedNote.subjective.historyOfPresentIllness.substring(0, 100)}...</p>
+                </div>
+              )}
+            </div>
+            <div>
+              <h5 className="font-medium">Objective</h5>
+              {parsedNote.objective.physicalExam && (
+                <div className="mb-2">
+                  <span className="font-medium">Physical Exam:</span>
+                  <p className="text-sm">{parsedNote.objective.physicalExam.substring(0, 100)}...</p>
+                </div>
+              )}
+            </div>
+            <div>
+              <h5 className="font-medium">Assessment</h5>
+              {parsedNote.assessment.generalNotes && (
+                <p className="text-sm">{parsedNote.assessment.generalNotes.substring(0, 100)}...</p>
+              )}
+            </div>
+            <div>
+              <h5 className="font-medium">Plan</h5>
+              {parsedNote.plan.generalNotes && (
+                <p className="text-sm">{parsedNote.plan.generalNotes.substring(0, 100)}...</p>
+              )}
+            </div>
+          </div>
         </div>
       )}
     </div>

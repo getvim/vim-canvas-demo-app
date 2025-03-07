@@ -22,6 +22,7 @@ import { EncounterObjective } from "./Objective";
 import { EncounterPI } from "./PatientInstructions";
 import { EncounterPlan } from "./Plan";
 import { EncounterSubjective } from "./Subjective";
+import { ScribeAIIntegration } from "../scribeai/ScribeAIIntegration";
 
 export const EncounterContent = () => {
   const { toast } = useToast();
@@ -229,12 +230,15 @@ export const EncounterContent = () => {
                   variant="default"
                   className="pl-2 pr-3 h-8"
                   disabled={!canUpdateNotes?.canUpdate}
-                  onClick={() => {}}
+                  onClick={methods.handleSubmit(onNotesSubmit)}
                 >
                   <CheckIcon className="mr-2" />
                   Push all notes
                 </Button>
               </div>
+              
+              <ScribeAIIntegration />
+              
               <EncounterSubjective />
               <Separator className="mb-1" />
               <EncounterObjective />

@@ -33,7 +33,7 @@ interface ParsedNote {
   };
   objective: {
     generalNotes?: string;
-    physicalExam?: string;
+    physicalExamNotes?: string;
   };
   assessment: {
     generalNotes?: string;
@@ -184,7 +184,7 @@ export const ScribeAIIntegration = () => {
       // Extract physical exam - note the VIM API uses physicalExamNotes
       const peMatch = sections.OBJECTIVE.match(/(?:^|\n)(?:Physical\s+Exam(?:ination)?|PE):?\s*([^]*?)(?=\n[A-Z][a-z]+:|\n\n|$)/i);
         if (peMatch) {
-          parsed.objective.physicalExam = peMatch[1].trim();
+          parsed.objective.physicalExamNotes = peMatch[1].trim();
       }
     }
     
@@ -353,7 +353,7 @@ export const ScribeAIIntegration = () => {
           },
           objective: {
             generalNotes: structuredData.objective?.generalNotes || "",
-            physicalExam: structuredData.objective?.physicalExamNotes || ""
+            physicalExamNotes: structuredData.objective?.physicalExamNotes || ""
           },
           assessment: {
             generalNotes: structuredData.assessment?.generalNotes || ""
@@ -442,90 +442,23 @@ export const ScribeAIIntegration = () => {
         return;
       }
       
-      // Simple approach: update only one field at a time
-      // Start with Subjective General Notes as it's most likely to exist
-      if ('subjectiveGeneralNotes' in currentValues && parsedNote.subjective.generalNotes) {
-        try {
-          // Update the field
-          setValue('subjectiveGeneralNotes', parsedNote.subjective.generalNotes, { 
-            shouldDirty: true, 
-            shouldValidate: true, 
-            shouldTouch: true 
-          });
-          
-          // Show success message
-          toast({ 
-            variant: "default", 
-            title: "Note applied to form successfully!",
-            description: "Updated Subjective General Notes"
-          });
-          
-          return; // Exit after successful update
-        } catch (error) {
-          console.error("Error updating Subjective General Notes:", error);
-          // Continue to next field
-        }
-      }
-      
-      // If Subjective General Notes failed, try Chief Complaint
-      if ('subjectiveChiefComplaint' in currentValues && parsedNote.subjective.chiefComplaint) {
-        try {
-          // Update the field
-          setValue('subjectiveChiefComplaint', parsedNote.subjective.chiefComplaint, { 
-            shouldDirty: true, 
-            shouldValidate: true, 
-            shouldTouch: true 
-          });
-          
-          // Show success message
-          toast({ 
-            variant: "default", 
-            title: "Note applied to form successfully!",
-            description: "Updated Chief Complaint"
-          });
-          
-          return; // Exit after successful update
-        } catch (error) {
-          console.error("Error updating Chief Complaint:", error);
-          // Continue to next field
-        }
-      }
-      
-      // If Chief Complaint failed, try Assessment
-      if ('assessmentGeneralNotes' in currentValues && parsedNote.assessment.generalNotes) {
-        try {
-          // Update the field
-          setValue('assessmentGeneralNotes', parsedNote.assessment.generalNotes, { 
-            shouldDirty: true, 
-            shouldValidate: true, 
-            shouldTouch: true 
-          });
-          
-          // Show success message
-          toast({ 
-            variant: "default", 
-            title: "Note applied to form successfully!",
-            description: "Updated Assessment"
-          });
-          
-          return; // Exit after successful update
-        } catch (error) {
-          console.error("Error updating Assessment:", error);
-          // Continue to next field
-        }
-      }
-      
-      // If all else fails, try to update any field that exists
+      // Define all field mappings between parsedNote and form fields
       const fieldMappings = [
-        { field: 'objectiveGeneralNotes', content: parsedNote.objective.generalNotes, label: 'Objective General Notes' },
-        { field: 'objectivePhysicalExamNotes', content: parsedNote.objective.physicalExam, label: 'Physical Exam Notes' },
-        { field: 'planGeneralNotes', content: parsedNote.plan.generalNotes, label: 'Plan' },
-        { field: 'patientInstructionsGeneralNotes', content: parsedNote.patientInstructions.generalNotes, label: 'Patient Instructions' },
+        { field: 'subjectiveGeneralNotes', content: parsedNote.subjective.generalNotes, label: 'Subjective General Notes' },
+        { field: 'subjectiveChiefComplaint', content: parsedNote.subjective.chiefComplaint, label: 'Chief Complaint' },
         { field: 'subjectiveHistoryOfPresentIllness', content: parsedNote.subjective.historyOfPresentIllness, label: 'History of Present Illness' },
-        { field: 'subjectiveReviewOfSystems', content: parsedNote.subjective.reviewOfSystems, label: 'Review of Systems' }
+        { field: 'subjectiveReviewOfSystems', content: parsedNote.subjective.reviewOfSystems, label: 'Review of Systems' },
+        { field: 'objectiveGeneralNotes', content: parsedNote.objective.generalNotes, label: 'Objective General Notes' },
+        { field: 'objectivePhysicalExamNotes', content: parsedNote.objective.physicalExamNotes, label: 'Physical Exam Notes' },
+        { field: 'assessmentGeneralNotes', content: parsedNote.assessment.generalNotes, label: 'Assessment' },
+        { field: 'planGeneralNotes', content: parsedNote.plan.generalNotes, label: 'Plan' },
+        { field: 'patientInstructionsGeneralNotes', content: parsedNote.patientInstructions.generalNotes, label: 'Patient Instructions' }
       ];
       
-      // Try each field in order
+      // Track which fields were successfully updated
+      const updatedFields: string[] = [];
+      
+      // Try to update all fields
       for (const mapping of fieldMappings) {
         if (mapping.field in currentValues && mapping.content) {
           try {
@@ -536,14 +469,8 @@ export const ScribeAIIntegration = () => {
               shouldTouch: true 
             });
             
-            // Show success message
-            toast({ 
-              variant: "default", 
-              title: "Note applied to form successfully!",
-              description: `Updated ${mapping.label}`
-            });
-            
-            return; // Exit after successful update
+            // Add to list of updated fields
+            updatedFields.push(mapping.label);
           } catch (error) {
             console.error(`Error updating ${mapping.label}:`, error);
             // Continue to next field
@@ -551,12 +478,21 @@ export const ScribeAIIntegration = () => {
         }
       }
       
-      // If we get here, we couldn't update any fields
-      toast({ 
-        variant: "default", // Changed from destructive to default to be less alarming
-        title: "No fields updated",
-        description: "Could not update any form fields. The note is still available in the preview."
-      });
+      // Show success message with all updated fields
+      if (updatedFields.length > 0) {
+        toast({ 
+          variant: "default", 
+          title: "Note applied to form successfully!",
+          description: `Updated: ${updatedFields.join(', ')}`
+        });
+      } else {
+        // If we couldn't update any fields
+        toast({ 
+          variant: "default", 
+          title: "No fields updated",
+          description: "Could not update any form fields. The note is still available in the preview."
+        });
+      }
       
     } catch (error: any) {
       console.error("Error applying note to form:", error);
@@ -569,11 +505,11 @@ export const ScribeAIIntegration = () => {
           description: "The note couldn't be applied to the form but is available in the preview section."
         });
       } else {
-      toast({ 
-        variant: "destructive", 
-        title: "Error applying note to form", 
+        toast({ 
+          variant: "destructive", 
+          title: "Error applying note to form", 
           description: String(error)
-      });
+        });
       }
     }
   };

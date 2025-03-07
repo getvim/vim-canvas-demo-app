@@ -238,6 +238,44 @@ export const ScribeAIIntegration = () => {
     return parsed;
   };
 
+  // Sanitize text to remove or replace non-English characters
+  const sanitizeText = (text: string | undefined): string => {
+    if (!text) return "";
+    
+    // Replace common special characters that might cause validation issues
+    return text
+      // Replace smart quotes with regular quotes
+      .replace(/[\u2018\u2019]/g, "'")
+      .replace(/[\u201C\u201D]/g, '"')
+      // Replace em-dashes and en-dashes with regular hyphens
+      .replace(/[\u2013\u2014]/g, '-')
+      // Replace ellipsis with three periods
+      .replace(/\u2026/g, '...')
+      // Replace bullet points with asterisks
+      .replace(/[\u2022\u2023\u25E6\u2043\u2219]/g, '*')
+      // Replace degree symbol
+      .replace(/\u00B0/g, ' degrees')
+      // Replace fractions
+      .replace(/\u00BC/g, '1/4')
+      .replace(/\u00BD/g, '1/2')
+      .replace(/\u00BE/g, '3/4')
+      // Replace other common medical symbols
+      .replace(/\u00B1/g, '+/-')  // Plus-minus sign
+      .replace(/\u2264/g, '<=')   // Less than or equal to
+      .replace(/\u2265/g, '>=')   // Greater than or equal to
+      // Replace non-ASCII characters with empty string
+      .replace(/[^\x00-\x7F]/g, '')
+      // Replace multiple spaces with a single space
+      .replace(/\s+/g, ' ')
+      .trim();
+  };
+
+  // Check if text contains non-English characters
+  const containsNonEnglishChars = (text: string | undefined): boolean => {
+    if (!text) return false;
+    return /[^\x00-\x7F]/.test(text);
+  };
+
   // Generate VIM note using the ScribeAI API
   const generateNote = async () => {
     if (!transcript) {
@@ -346,23 +384,23 @@ export const ScribeAIIntegration = () => {
         // Create a parsed note object directly from the structured content
         const parsed: ParsedNote = {
           subjective: {
-            generalNotes: structuredData.subjective?.generalNotes || "",
-            chiefComplaint: structuredData.subjective?.chiefComplaint || "",
-            historyOfPresentIllness: structuredData.subjective?.historyOfPresentIllness || "",
-            reviewOfSystems: structuredData.subjective?.reviewOfSystems || ""
+            generalNotes: sanitizeText(structuredData.subjective?.generalNotes),
+            chiefComplaint: sanitizeText(structuredData.subjective?.chiefComplaint),
+            historyOfPresentIllness: sanitizeText(structuredData.subjective?.historyOfPresentIllness),
+            reviewOfSystems: sanitizeText(structuredData.subjective?.reviewOfSystems)
           },
           objective: {
-            generalNotes: structuredData.objective?.generalNotes || "",
-            physicalExamNotes: structuredData.objective?.physicalExamNotes || ""
+            generalNotes: sanitizeText(structuredData.objective?.generalNotes),
+            physicalExamNotes: sanitizeText(structuredData.objective?.physicalExamNotes)
           },
           assessment: {
-            generalNotes: structuredData.assessment?.generalNotes || ""
+            generalNotes: sanitizeText(structuredData.assessment?.generalNotes)
           },
           plan: {
-            generalNotes: structuredData.plan?.generalNotes || ""
+            generalNotes: sanitizeText(structuredData.plan?.generalNotes)
           },
           patientInstructions: {
-            generalNotes: structuredData.patientInstructions?.generalNotes || ""
+            generalNotes: sanitizeText(structuredData.patientInstructions?.generalNotes)
           }
         };
         
@@ -424,9 +462,24 @@ export const ScribeAIIntegration = () => {
       if (debugMode) {
         console.log("Current form values:", currentValues);
         console.log("Parsed note to apply:", parsedNote);
+        
+        // Check for non-English characters in each field
+        const nonEnglishFields: string[] = [];
+        if (containsNonEnglishChars(parsedNote.subjective.generalNotes)) nonEnglishFields.push("Subjective General Notes");
+        if (containsNonEnglishChars(parsedNote.subjective.chiefComplaint)) nonEnglishFields.push("Chief Complaint");
+        if (containsNonEnglishChars(parsedNote.subjective.historyOfPresentIllness)) nonEnglishFields.push("History of Present Illness");
+        if (containsNonEnglishChars(parsedNote.subjective.reviewOfSystems)) nonEnglishFields.push("Review of Systems");
+        if (containsNonEnglishChars(parsedNote.objective.generalNotes)) nonEnglishFields.push("Objective General Notes");
+        if (containsNonEnglishChars(parsedNote.objective.physicalExamNotes)) nonEnglishFields.push("Physical Exam Notes");
+        if (containsNonEnglishChars(parsedNote.assessment.generalNotes)) nonEnglishFields.push("Assessment");
+        if (containsNonEnglishChars(parsedNote.plan.generalNotes)) nonEnglishFields.push("Plan");
+        if (containsNonEnglishChars(parsedNote.patientInstructions.generalNotes)) nonEnglishFields.push("Patient Instructions");
+        
+        if (nonEnglishFields.length > 0) {
+          console.warn("Fields with non-English characters:", nonEnglishFields);
+        }
       }
       
-      // Validate that setValue is a function
       if (typeof setValue !== 'function') {
         throw new Error("setValue is not a function. Form context may not be properly initialized.");
       }
@@ -444,15 +497,15 @@ export const ScribeAIIntegration = () => {
       
       // Define all field mappings between parsedNote and form fields
       const fieldMappings = [
-        { field: 'subjectiveGeneralNotes', content: parsedNote.subjective.generalNotes, label: 'Subjective General Notes' },
-        { field: 'subjectiveChiefComplaint', content: parsedNote.subjective.chiefComplaint, label: 'Chief Complaint' },
-        { field: 'subjectiveHistoryOfPresentIllness', content: parsedNote.subjective.historyOfPresentIllness, label: 'History of Present Illness' },
-        { field: 'subjectiveReviewOfSystems', content: parsedNote.subjective.reviewOfSystems, label: 'Review of Systems' },
-        { field: 'objectiveGeneralNotes', content: parsedNote.objective.generalNotes, label: 'Objective General Notes' },
-        { field: 'objectivePhysicalExamNotes', content: parsedNote.objective.physicalExamNotes, label: 'Physical Exam Notes' },
-        { field: 'assessmentGeneralNotes', content: parsedNote.assessment.generalNotes, label: 'Assessment' },
-        { field: 'planGeneralNotes', content: parsedNote.plan.generalNotes, label: 'Plan' },
-        { field: 'patientInstructionsGeneralNotes', content: parsedNote.patientInstructions.generalNotes, label: 'Patient Instructions' }
+        { field: 'subjectiveGeneralNotes', content: sanitizeText(parsedNote.subjective.generalNotes), label: 'Subjective General Notes' },
+        { field: 'subjectiveChiefComplaint', content: sanitizeText(parsedNote.subjective.chiefComplaint), label: 'Chief Complaint' },
+        { field: 'subjectiveHistoryOfPresentIllness', content: sanitizeText(parsedNote.subjective.historyOfPresentIllness), label: 'History of Present Illness' },
+        { field: 'subjectiveReviewOfSystems', content: sanitizeText(parsedNote.subjective.reviewOfSystems), label: 'Review of Systems' },
+        { field: 'objectiveGeneralNotes', content: sanitizeText(parsedNote.objective.generalNotes), label: 'Objective General Notes' },
+        { field: 'objectivePhysicalExamNotes', content: sanitizeText(parsedNote.objective.physicalExamNotes), label: 'Physical Exam Notes' },
+        { field: 'assessmentGeneralNotes', content: sanitizeText(parsedNote.assessment.generalNotes), label: 'Assessment' },
+        { field: 'planGeneralNotes', content: sanitizeText(parsedNote.plan.generalNotes), label: 'Plan' },
+        { field: 'patientInstructionsGeneralNotes', content: sanitizeText(parsedNote.patientInstructions.generalNotes), label: 'Patient Instructions' }
       ];
       
       // Track which fields were successfully updated
@@ -497,8 +550,27 @@ export const ScribeAIIntegration = () => {
     } catch (error: any) {
       console.error("Error applying note to form:", error);
       
+      // Enhanced error logging for validation errors
+      if (error.message && error.message.includes("validation")) {
+        console.error("Validation error details:", JSON.stringify(error));
+        
+        if (debugMode) {
+          // Show more detailed error in toast for debugging
+          toast({ 
+            variant: "destructive", 
+            title: "Validation Error", 
+            description: `Error details: ${JSON.stringify(error).substring(0, 200)}...`
+          });
+        } else {
+          toast({ 
+            variant: "destructive", 
+            title: "Validation Error", 
+            description: "The note contains characters or formatting that cannot be saved. Try editing the note manually."
+          });
+        }
+      }
       // Check for the specific validation error
-      if (error.message && error.message.includes("No fields were specified in the update request")) {
+      else if (error.message && error.message.includes("No fields were specified in the update request")) {
         toast({ 
           variant: "default", 
           title: "Note available in preview",

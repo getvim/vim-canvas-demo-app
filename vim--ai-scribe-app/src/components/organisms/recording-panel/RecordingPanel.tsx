@@ -1,4 +1,5 @@
 import { Play, Pause } from 'lucide-react';
+import { formatTime } from '@/utils/formatTime.util';
 import { Button } from '../../atoms/Button';
 
 interface RecordingPanelProps {
@@ -6,7 +7,6 @@ interface RecordingPanelProps {
   recordingTime: number;
   onPausePlay: () => void;
   onEndVisit: () => void;
-  formatTime: (seconds: number) => string;
 }
 
 export function RecordingPanel({
@@ -14,10 +14,9 @@ export function RecordingPanel({
   recordingTime,
   onPausePlay,
   onEndVisit,
-  formatTime
 }: RecordingPanelProps) {
   return (
-    <div className="flex flex-col items-center justify-center space-y-8 pt-12">
+    <div className="flex flex-col items-center justify-center space-y-8">
       <div className="flex flex-col items-center space-y-8">
         <button 
           onClick={onPausePlay}

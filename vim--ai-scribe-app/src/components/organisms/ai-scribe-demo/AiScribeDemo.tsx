@@ -1,10 +1,10 @@
 import { useState } from "react";
+import type { SDK } from "vim-os-js-browser/types";
 import { useUpdateEncounter } from "@/vimOs/useUpdateEncounter";
 import { NavigationBar } from "@/components/molecules/NavigationBar";
 import { RecordingPanel } from "../recording-panel/RecordingPanel";
 import { MEDICAL_KEYWORDS } from "./keywords.mock";
 import { useRecorder } from "./useRecorder";
-import { formatTime } from "../../../utils/formatTime.util";
 import { RecordingTab } from "../RecordingTab/RecordingTab";
 import { ProcessingTab } from "./ProcessingTab";
 import {
@@ -65,9 +65,7 @@ export const AiScribeDemo = () => {
   const vimOS = useVimOsContext();
   const [activeTab, setActiveTab] = useState<TabType>("record");
   const [notes, setNotes] = useState<Note[]>([]);
-  const [patientName, setPatientName] = useState(
-    () => vimOS.sessionContext.user.identifiers?.ehrUsername || ""
-  );
+  const [patientName, setPatientName] = useState<string>(() => buildName(vimOS) || "");
   const [isProcessing, setIsProcessing] = useState(false);
   const [selectedKeyword, setSelectedKeyword] = useState<string | null>(null);
   const [currentNote, setCurrentNote] = useState(EMPTY_STATE);
@@ -207,7 +205,6 @@ export const AiScribeDemo = () => {
               recordingTime={recordingTime}
               onPausePlay={handlePausePlay}
               onEndVisit={handleEndVisit}
-              formatTime={formatTime}
             />
           )}
 
@@ -245,3 +242,17 @@ export const AiScribeDemo = () => {
     </div>
   );
 };
+
+function buildName(vimOS: SDK): string | null {
+  console.log("buildName", vimOS.ehr.ehrState?.patient?.demographics);
+
+  const firstName = vimOS.ehr.ehrState?.patient?.demographics?.firstName;
+  const lastName = vimOS.ehr.ehrState?.patient?.demographics?.lastName;
+  if (!firstName && !lastName) {
+    return null;
+  }
+
+  const name = `${lastName} ${firstName}`;
+
+  return name;
+}

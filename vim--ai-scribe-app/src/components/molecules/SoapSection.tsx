@@ -17,9 +17,9 @@ export function SoapSection({
 }: SoapSectionProps) {
   return (
     <div
-      className={`bg-white rounded-lg shadow-md overflow-hidden transition-colors ${
+      className={`flex flex-col bg-white rounded-lg shadow-md overflow-hidden transition-colors ${
         isHighlighted ? "ring-2 ring-green-500" : ""
-      }`}
+      } `}
     >
       <div className="p-6">
         <h3 className="text-2xl font-bold text-gray-800 mb-4">{title}</h3>
@@ -32,7 +32,7 @@ export function SoapSection({
           onPushToEHR();
         }}
         fullWidth
-        className="py-3"
+        className="py-3 w-2/3 m-2 mb-4 self-center"
       >
         Push to EHR
       </Button>

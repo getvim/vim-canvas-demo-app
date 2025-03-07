@@ -9,7 +9,6 @@ import {
   EntityFieldContent, 
   EntityFieldTitle 
 } from "../ui/entityContent";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
@@ -21,12 +20,8 @@ const SCRIBEAI_API_KEY = import.meta.env.VITE_SCRIBEAI_API_KEY as string;
 // Update to the correct API base URL from the documentation
 const API_BASE_URL = "https://api-devs-8a32c93f7e2d.herokuapp.com";
 
-const NOTE_TYPES = [
-  { value: "soap", label: "SOAP Note" },
-  { value: "progress", label: "Progress Note" },
-  { value: "diagnostic", label: "Diagnostic Note" },
-  { value: "psych", label: "Psychological Note" },
-];
+// VIM Note is now the only note type used
+// NOTE_TYPES constant removed as it's no longer needed
 
 // Interface for parsed note sections
 interface ParsedNote {
@@ -54,7 +49,6 @@ interface ParsedNote {
 export const ScribeAIIntegration = () => {
   const { toast } = useToast();
   const [transcript, setTranscript] = useState("");
-  const [selectedNoteType, setSelectedNoteType] = useState("soap");
   const [uploading, setUploading] = useState(false);
   const [generatedNote, setGeneratedNote] = useState("");
   const [parsedNote, setParsedNote] = useState<ParsedNote | null>(null);
@@ -187,7 +181,7 @@ export const ScribeAIIntegration = () => {
     if (sections.OBJECTIVE) {
       parsed.objective.generalNotes = sections.OBJECTIVE;
       
-      // Extract physical exam
+      // Extract physical exam - note the VIM API uses physicalExamNotes
       const peMatch = sections.OBJECTIVE.match(/(?:^|\n)(?:Physical\s+Exam(?:ination)?|PE):?\s*([^]*?)(?=\n[A-Z][a-z]+:|\n\n|$)/i);
         if (peMatch) {
           parsed.objective.physicalExam = peMatch[1].trim();
@@ -237,10 +231,14 @@ export const ScribeAIIntegration = () => {
       parsed.plan.generalNotes = "No plan information available.";
     }
     
+    if (debugMode) {
+      console.log("Parsed note:", parsed);
+    }
+    
     return parsed;
   };
 
-  // Generate note using the selected ScribeAI endpoint
+  // Generate VIM note using the ScribeAI API
   const generateNote = async () => {
     if (!transcript) {
       toast({ 
@@ -254,29 +252,14 @@ export const ScribeAIIntegration = () => {
     try {
       const jwtToken = SCRIBEAI_API_KEY;
       
-      let endpoint = "";
-      switch (selectedNoteType) {
-        case "soap":
-          endpoint = `${API_BASE_URL}/api/notes/soap`;
-          break;
-        case "progress":
-          endpoint = `${API_BASE_URL}/api/notes/progress`;
-          break;
-        case "diagnostic":
-          endpoint = `${API_BASE_URL}/api/notes/diagnostic`;
-          break;
-        case "psych":
-          endpoint = `${API_BASE_URL}/api/notes/psych`;
-          break;
-        default:
-          throw new Error("Invalid note type");
-      }
+      // Use the VIM endpoint
+      const endpoint = `${API_BASE_URL}/api/notes/vim`;
       
       // Try to get patient context from the form if available
       const currentValues = getValues();
       const existingChiefComplaint = currentValues.subjectiveChiefComplaint || "";
       
-      // Based on the API expectations
+      // Based on the API expectations for VIM endpoint
       const payload = {
         transcriptText: transcript,
         patientInfo: {
@@ -286,19 +269,10 @@ export const ScribeAIIntegration = () => {
           visitDate: new Date().toISOString().split('T')[0],
           weight: null
         },
-        customNotes,
-        selectedICDCodes: [],
-        selectedCPTCodes: [],
-        suggestedICDCodes: [],
-        suggestedCPTCodes: [],
-        // Request plain text output instead of structured to avoid JSON issues
-        outputFormat: "text",
-        includeSubsections: true,
-        // Add a specific format request to get a clean SOAP note
-        formatInstructions: "Please format as a standard SOAP note with clear section headers: SUBJECTIVE:, OBJECTIVE:, ASSESSMENT:, PLAN:, and PATIENT INSTRUCTIONS: if applicable. Include clear subsection headers like Chief Complaint:, History of Present Illness:, Review of Systems:, and Physical Examination:."
+        customNotes
       };
       
-      setProcessingStatus("Generating clinical note...");
+      setProcessingStatus("Generating VIM clinical note...");
       
       const response = await fetch(endpoint, {
         method: "POST",
@@ -316,105 +290,111 @@ export const ScribeAIIntegration = () => {
       
       const data = await response.json();
       
-      // Ensure we get plain text output, not JSON
-      let noteText = "";
+      if (debugMode) {
+        console.log("VIM API Response:", data);
+      }
       
-      if (data.note) {
-        noteText = data.note;
-      } else if (data.generatedNote) {
-        noteText = data.generatedNote;
-      } else if (typeof data === 'string') {
-        noteText = data;
-      } else if (data.structuredNote) {
-        // If we still get structured data, convert it to text
-        try {
-          const structuredData = data.structuredNote;
-          noteText = "SUBJECTIVE:\n";
-          
-          if (structuredData.subjective?.chiefComplaint) {
-            noteText += "Chief Complaint: " + structuredData.subjective.chiefComplaint + "\n\n";
+      // Handle the VIM note structure
+      if (data.structuredContent) {
+        // Parse the structured content directly
+        const structuredData = data.structuredContent;
+        
+        // Create a formatted text version for display
+        let noteText = "SUBJECTIVE:\n";
+        
+        if (structuredData.subjective?.chiefComplaint) {
+          noteText += "Chief Complaint: " + structuredData.subjective.chiefComplaint + "\n\n";
+        }
+        
+        if (structuredData.subjective?.historyOfPresentIllness) {
+          noteText += "History of Present Illness: " + structuredData.subjective.historyOfPresentIllness + "\n\n";
+        }
+        
+        if (structuredData.subjective?.reviewOfSystems) {
+          noteText += "Review of Systems: " + structuredData.subjective.reviewOfSystems + "\n\n";
+        }
+        
+        if (structuredData.subjective?.generalNotes) {
+          noteText += structuredData.subjective.generalNotes + "\n\n";
+        }
+        
+        noteText += "OBJECTIVE:\n";
+        if (structuredData.objective?.physicalExamNotes) {
+          noteText += "Physical Examination: " + structuredData.objective.physicalExamNotes + "\n\n";
+        }
+        
+        if (structuredData.objective?.generalNotes) {
+          noteText += structuredData.objective.generalNotes + "\n\n";
+        }
+        
+        noteText += "ASSESSMENT:\n";
+        if (structuredData.assessment?.generalNotes) {
+          noteText += structuredData.assessment.generalNotes + "\n\n";
+        }
+        
+        noteText += "PLAN:\n";
+        if (structuredData.plan?.generalNotes) {
+          noteText += structuredData.plan.generalNotes + "\n\n";
+        }
+        
+        if (structuredData.patientInstructions?.generalNotes) {
+          noteText += "PATIENT INSTRUCTIONS:\n" + structuredData.patientInstructions.generalNotes + "\n\n";
+        }
+        
+        setGeneratedNote(noteText);
+        
+        // Create a parsed note object directly from the structured content
+        const parsed: ParsedNote = {
+          subjective: {
+            generalNotes: structuredData.subjective?.generalNotes || "",
+            chiefComplaint: structuredData.subjective?.chiefComplaint || "",
+            historyOfPresentIllness: structuredData.subjective?.historyOfPresentIllness || "",
+            reviewOfSystems: structuredData.subjective?.reviewOfSystems || ""
+          },
+          objective: {
+            generalNotes: structuredData.objective?.generalNotes || "",
+            physicalExam: structuredData.objective?.physicalExamNotes || ""
+          },
+          assessment: {
+            generalNotes: structuredData.assessment?.generalNotes || ""
+          },
+          plan: {
+            generalNotes: structuredData.plan?.generalNotes || ""
+          },
+          patientInstructions: {
+            generalNotes: structuredData.patientInstructions?.generalNotes || ""
           }
-          
-          if (structuredData.subjective?.historyOfPresentIllness) {
-            noteText += "History of Present Illness: " + structuredData.subjective.historyOfPresentIllness + "\n\n";
-          }
-          
-          if (structuredData.subjective?.reviewOfSystems) {
-            noteText += "Review of Systems: " + structuredData.subjective.reviewOfSystems + "\n\n";
-          }
-          
-          if (structuredData.subjective?.generalNotes) {
-            noteText += structuredData.subjective.generalNotes + "\n\n";
-          }
-          
-          noteText += "OBJECTIVE:\n";
-          if (structuredData.objective?.physicalExam) {
-            noteText += "Physical Examination: " + structuredData.objective.physicalExam + "\n\n";
-          }
-          
-          if (structuredData.objective?.generalNotes) {
-            noteText += structuredData.objective.generalNotes + "\n\n";
-          }
-          
-          noteText += "ASSESSMENT:\n";
-          if (structuredData.assessment?.generalNotes) {
-            noteText += structuredData.assessment.generalNotes + "\n\n";
-          }
-          
-          noteText += "PLAN:\n";
-          if (structuredData.plan?.generalNotes) {
-            noteText += structuredData.plan.generalNotes + "\n\n";
-          }
-          
-          if (structuredData.patientInstructions?.generalNotes) {
-            noteText += "PATIENT INSTRUCTIONS:\n" + structuredData.patientInstructions.generalNotes + "\n\n";
-          }
-        } catch (err) {
-          console.error("Error converting structured data to text:", err);
-          // Create a simple SOAP note from the JSON
-          noteText = "SUBJECTIVE:\nUnable to parse structured data.\n\n" +
+        };
+        
+        setParsedNote(parsed);
+      } else {
+        // Fallback to text parsing if structured content is not available
+        let noteText = "";
+        
+        if (data.note) {
+          noteText = data.note;
+        } else if (data.generatedNote) {
+          noteText = data.generatedNote;
+        } else if (typeof data === 'string') {
+          noteText = data;
+        } else {
+          // If we can't parse the response, create a simple note with the transcript
+          noteText = "SUBJECTIVE:\n" + transcript + "\n\n" +
                     "OBJECTIVE:\nSee transcript for details.\n\n" +
                     "ASSESSMENT:\nAssessment pending.\n\n" +
                     "PLAN:\nPlan pending.";
         }
-      } else {
-        // If we can't parse the response, create a simple note with the transcript
-        noteText = "SUBJECTIVE:\n" + transcript + "\n\n" +
-                  "OBJECTIVE:\nSee transcript for details.\n\n" +
-                  "ASSESSMENT:\nAssessment pending.\n\n" +
-                  "PLAN:\nPlan pending.";
+        
+        setGeneratedNote(noteText);
+        
+        // Parse the note text to extract sections
+        const parsed = parseGeneratedNote(noteText);
+        setParsedNote(parsed);
       }
-      
-      // Ensure the note has proper section headers
-      if (!noteText.includes("SUBJECTIVE:")) {
-        noteText = "SUBJECTIVE:\n" + noteText;
-      }
-      if (!noteText.includes("OBJECTIVE:")) {
-        noteText += "\n\nOBJECTIVE:\nSee transcript for details.";
-      }
-      if (!noteText.includes("ASSESSMENT:")) {
-        noteText += "\n\nASSESSMENT:\nAssessment pending.";
-      }
-      if (!noteText.includes("PLAN:")) {
-        noteText += "\n\nPLAN:\nPlan pending.";
-      }
-      
-      setGeneratedNote(noteText);
-      
-      // Parse the note text to extract sections
-      const parsed = parseGeneratedNote(noteText);
-      
-      // Log the parsed note in debug mode
-      if (debugMode) {
-        console.log("Generated note:", noteText);
-        console.log("Parsed note:", parsed);
-      }
-      
-      setParsedNote(parsed);
       
       toast({ 
         variant: "default", 
-        title: "Note generated successfully!",
+        title: "VIM Note generated successfully!",
         description: autoApply ? "Attempting to apply note to form..." : "Review and apply the note to the form."
       });
       
@@ -422,13 +402,11 @@ export const ScribeAIIntegration = () => {
       setIsNotePreviewOpen(true);
       setProcessingStatus(null);
       
-      // Don't auto-apply here - let the useEffect handle it
-      
     } catch (error: any) {
-      console.error("Error generating note:", error);
+      console.error("Error generating VIM note:", error);
       toast({ 
         variant: "destructive", 
-        title: "Error generating note", 
+        title: "Error generating VIM note", 
         description: error.message 
       });
       setProcessingStatus(null);
@@ -840,50 +818,34 @@ export const ScribeAIIntegration = () => {
         
         <div className="flex-grow"></div>
         
-          <Select
-          value={selectedNoteType}
-            onValueChange={setSelectedNoteType}
-        >
-            <SelectTrigger className="w-[180px]">
-              <SelectValue placeholder="Select note type" />
-            </SelectTrigger>
-            <SelectContent>
-          {NOTE_TYPES.map((nt) => (
-                <SelectItem key={nt.value} value={nt.value}>
-              {nt.label}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-          
-          <div className="flex items-center space-x-2">
-            <Switch
-              id="auto-apply"
-              checked={autoApply}
-              onCheckedChange={setAutoApply}
-            />
-            <Label htmlFor="auto-apply">Auto-apply to form</Label>
-          </div>
-          
-          <div className="flex items-center space-x-2">
-            <Switch
-              id="debug-mode"
-              checked={debugMode}
-              onCheckedChange={setDebugMode}
-            />
-            <Label htmlFor="debug-mode">Debug Mode</Label>
-          </div>
-          
-          {debugMode && (
-            <Button 
-              variant="outline" 
-              onClick={checkFormFields}
-              className="flex items-center"
-            >
-              <BugIcon className="mr-2 h-4 w-4" />
-              Check Form Fields
-            </Button>
-          )}
+        <div className="flex items-center space-x-2">
+          <Switch
+            id="auto-apply"
+            checked={autoApply}
+            onCheckedChange={setAutoApply}
+          />
+          <Label htmlFor="auto-apply">Auto-apply to form</Label>
+        </div>
+        
+        <div className="flex items-center space-x-2">
+          <Switch
+            id="debug-mode"
+            checked={debugMode}
+            onCheckedChange={setDebugMode}
+          />
+          <Label htmlFor="debug-mode">Debug Mode</Label>
+        </div>
+        
+        {debugMode && (
+          <Button 
+            variant="outline" 
+            onClick={checkFormFields}
+            className="flex items-center"
+          >
+            <BugIcon className="mr-2 h-4 w-4" />
+            Check Form Fields
+          </Button>
+        )}
       </div>
       
         {processingStatus && (
@@ -924,10 +886,11 @@ export const ScribeAIIntegration = () => {
       <div className="flex space-x-2 mb-4">
         <Button 
           variant="default" 
+          disabled={!transcript || uploading || isRecording} 
           onClick={generateNote}
-          disabled={!transcript || uploading}
+          className="w-full"
         >
-          Generate Note
+          Generate VIM Note
         </Button>
         
         {parsedNote && (
@@ -959,7 +922,7 @@ export const ScribeAIIntegration = () => {
           >
             <CollapsibleTrigger asChild>
               <Button variant="ghost" className="flex w-full justify-between p-2">
-                <span>Generated Note Preview</span>
+                <span>VIM Note Preview</span>
                 <span>{isNotePreviewOpen ? '▲' : '▼'}</span>
               </Button>
             </CollapsibleTrigger>

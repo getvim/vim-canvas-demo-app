@@ -4,26 +4,22 @@ import { NotesSections } from "./NotesSections";
 import { DebugView } from "../../templates/DebugView";
 import { MOCK_TRANSCRIPTION } from "../ai-scribe-demo/transcription.mock";
 import { useVimOsContext } from "@/providers/VimOSContext";
+import { useNoteFormContext } from "@/providers/NoteFormContext";
 
 export const NotesTab = ({
   patientName,
   handleFullEhrUpdate,
-  currentNote,
   renderHighlightedText,
 }: {
   patientName: string;
   handleFullEhrUpdate: () => Promise<void>;
-  currentNote: {
-    subjective: string;
-    objective: string;
-    assessment: string;
-    plan: string;
-  };
   renderHighlightedText: (text: string) => JSX.Element;
 }) => {
   const vimOS = useVimOsContext();
   const [isDebugMode, setIsDebugMode] = useState(false);
   const [hoveredSegment, setHoveredSegment] = useState<number | null>(null);
+  const { watch } = useNoteFormContext();
+  const currentNote = watch();
 
   const toggleDebugMode = () => {
     setIsDebugMode(!isDebugMode);
@@ -59,7 +55,6 @@ export const NotesTab = ({
         />
       ) : (
         <NotesSections
-          note={currentNote}
           hoveredSegment={hoveredSegment}
           transcriptionSegments={MOCK_TRANSCRIPTION}
           renderHighlightedText={renderHighlightedText}

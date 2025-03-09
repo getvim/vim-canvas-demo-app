@@ -1,13 +1,10 @@
-import { type ReactNode } from "react";
 import { FileText } from "lucide-react";
 import type { Note } from "./Note.interface";
 
 export const UserTab = ({
   notes,
-  renderHighlightedText,
 }: {
   notes: Note[];
-  renderHighlightedText: (text: string) => ReactNode;
 }) => {
   return (
     <div className="space-y-6">
@@ -32,9 +29,7 @@ export const UserTab = ({
                       <h4 className="font-medium text-gray-700 capitalize">
                         {key}
                       </h4>
-                      <div className="text-gray-600 mt-1">
-                        {renderHighlightedText(value)}
-                      </div>
+                      <div className="text-gray-600 mt-1 whitespace-pre-line">{value}</div>
                     </div>
                   ))}
                 </div>

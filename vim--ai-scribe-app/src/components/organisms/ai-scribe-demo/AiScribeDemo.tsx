@@ -104,6 +104,7 @@ export const AiScribeDemo = () => {
       return;
     }
     setActiveTab(tab);
+    vimOS.hub.setDynamicAppSize("CLASSIC");
   };
 
   const handlePausePlay = () => {
@@ -224,7 +225,6 @@ export const AiScribeDemo = () => {
           {activeTab === "user" && (
             <UserTab
               notes={notes}
-              renderHighlightedText={renderHighlightedText}
             />
           )}
         </div>

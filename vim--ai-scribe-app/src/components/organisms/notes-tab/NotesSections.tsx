@@ -4,14 +4,9 @@ import type {
   SectionTypes,
   TranscriptionSegment,
 } from "../ai-scribe-demo/transcription.mock";
+import { useNoteFormContext } from "@/providers/NoteFormContext";
 
 interface NotePanelProps {
-  note: {
-    subjective: string;
-    objective: string;
-    assessment: string;
-    plan: string;
-  };
   hoveredSegment: number | null;
   transcriptionSegments: TranscriptionSegment[];
   renderHighlightedText: (text: string) => JSX.Element;
@@ -120,7 +115,6 @@ const useUpdatePlan = () => {
 };
 
 export const NotesSections = ({
-  note,
   hoveredSegment,
   transcriptionSegments,
   renderHighlightedText,
@@ -129,6 +123,8 @@ export const NotesSections = ({
   const { updateObjectiveNote } = useUpdateObjective();
   const { updateAssessmentNote } = useUpdateAssessment();
   const { updatePlanNote } = useUpdatePlan();
+  const { watch } = useNoteFormContext();
+  const formValues = watch();
 
   const isHighlighted = (section: SectionTypes) => {
     if (hoveredSegment === null) return false;
@@ -141,31 +137,31 @@ export const NotesSections = ({
     <div className="space-y-4">
       <SoapSection
         title="Subjective"
-        content={note.subjective}
+        fieldName="subjective"
         isHighlighted={isHighlighted("subjective")}
         renderHighlightedText={renderHighlightedText}
-        onPushToEHR={() => updateSubjectiveNote(note.subjective)}
+        onPushToEHR={() => updateSubjectiveNote(formValues.subjective)}
       />
       <SoapSection
         title="Objective"
-        content={note.objective}
+        fieldName="objective"
         isHighlighted={isHighlighted("objective")}
         renderHighlightedText={renderHighlightedText}
-        onPushToEHR={() => updateObjectiveNote(note.objective)}
+        onPushToEHR={() => updateObjectiveNote(formValues.objective)}
       />
       <SoapSection
         title="Assessment"
-        content={note.assessment}
+        fieldName="assessment"
         isHighlighted={isHighlighted("assessment")}
         renderHighlightedText={renderHighlightedText}
-        onPushToEHR={() => updateAssessmentNote(note.assessment)}
+        onPushToEHR={() => updateAssessmentNote(formValues.assessment)}
       />
       <SoapSection
         title="Plan"
-        content={note.plan}
+        fieldName="plan"
         isHighlighted={isHighlighted("plan")}
         renderHighlightedText={renderHighlightedText}
-        onPushToEHR={() => updatePlanNote(note.plan)}
+        onPushToEHR={() => updatePlanNote(formValues.plan)}
       />
     </div>
   );

@@ -28,7 +28,6 @@ export const BrandCustomization: React.FC = () => {
         setSaveButtonText("Saved!");
       } catch (error) {
         console.error("Failed to save settings", error);
-        setIsSaveButtonDisabled(true);
       }
     };
     save();

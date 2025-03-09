@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useUpdateEncounter } from "@/vimOs/useUpdateEncounter";
 import { NavigationBar } from "@/components/molecules/NavigationBar";
+import { useNoteFormContext } from "@/providers/NoteFormContext";
 import { RecordingPanel } from "../recording-panel/RecordingPanel";
 import { MEDICAL_KEYWORDS } from "./keywords.mock";
 import { useRecorder } from "./useRecorder";
@@ -16,7 +17,6 @@ import { AppHeader } from "./AppHeader";
 import { useVimOsContext } from "@/providers/VimOSContext";
 import { NotesTab } from "../notes-tab/NotesTab";
 import { buildName } from "./buildName";
-import { useNoteFormContext } from "@/providers/NoteFormContext";
 
 const RECORDING_RESULT = {
   subjective:

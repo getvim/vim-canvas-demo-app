@@ -1,11 +1,11 @@
+import { useState, useEffect } from "react";
+import { useController } from "react-hook-form";
 import { Copy, Edit2, Save } from "lucide-react";
+import { useNoteFormContext } from "@/providers/NoteFormContext";
+import { useVimOsContext } from "@/providers/VimOSContext";
 import { Button } from "../atoms/Button";
 import { IconButton } from "../atoms/IconButton";
-import { useVimOsContext } from "@/providers/VimOSContext";
-import { useNoteFormContext } from "@/providers/NoteFormContext";
-import { useState, useEffect } from "react";
 import { Textarea } from "../atoms/Textarea";
-import { useController } from "react-hook-form";
 
 type FieldName = "subjective" | "objective" | "assessment" | "plan";
 
@@ -76,6 +76,21 @@ export const SoapSection = ({
     }
   };
 
+  const handleTextClick = (e: React.MouseEvent) => {
+    // Don't enter edit mode if user is selecting text
+    if (window.getSelection()?.toString()) {
+      return;
+    }
+    
+    // Don't enter edit mode if clicking on a keyword
+    const target = e.target as HTMLElement;
+    if (target.hasAttribute("data-keyword")) {
+      return;
+    }
+
+    handleEditClick();
+  };
+
   return (
     <div
       className={`flex flex-col bg-white rounded-lg shadow-md overflow-hidden transition-colors ${
@@ -91,7 +106,10 @@ export const SoapSection = ({
             onClick={isEditing ? handleSaveClick : handleEditClick}
           />
         </div>
-        <div className="text-gray-700 text-lg whitespace-pre-line">
+        <div 
+          className="text-gray-700 text-lg whitespace-pre-line"
+          onClick={!isEditing ? handleTextClick : undefined}
+        >
           {isEditing ? (
             <Textarea
               value={editValue}
@@ -102,7 +120,9 @@ export const SoapSection = ({
               autoFocus
             />
           ) : (
-            renderHighlightedText(value)
+            <div className="cursor-text">
+              {renderHighlightedText(value)}
+            </div>
           )}
         </div>
       </div>

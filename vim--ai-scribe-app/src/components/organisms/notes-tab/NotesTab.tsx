@@ -1,10 +1,10 @@
 import { useState } from "react";
+import { useNoteFormContext } from "@/providers/NoteFormContext";
+import { useVimOsContext } from "@/providers/VimOSContext";
 import { Button } from "../../atoms/Button";
-import { NotesSections } from "./NotesSections";
 import { DebugView } from "../../templates/DebugView";
 import { MOCK_TRANSCRIPTION } from "../ai-scribe-demo/transcription.mock";
-import { useVimOsContext } from "@/providers/VimOSContext";
-import { useNoteFormContext } from "@/providers/NoteFormContext";
+import { NotesSections } from "./NotesSections";
 
 export const NotesTab = ({
   patientName,

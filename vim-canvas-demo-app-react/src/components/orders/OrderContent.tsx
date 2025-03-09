@@ -69,54 +69,60 @@ export const OrderContent: React.FC<OrderContentProps> = ({ order }) => {
             </EntityFieldContent>
           </EntitySectionContent>
           <Separator className="mb-1" />
-          <EntitySectionTitle title="Medications" />
-          {!order?.medications || !order.medications?.length ? (
-            <EntityFieldReadonlyList list={[]} />
-          ) : (
-            order.medications.map((medication) => (
-              <Fragment key={medication.basicInformation?.ndcCode}>
-                <EntitySectionTitle title="Medication" />
-                <EntitySectionContent>
-                  <EntityFieldContent>
-                    <EntityFieldTitle title="Medication Name" />
-                    <EntityFieldReadonlyText
-                      text={medication.basicInformation?.medicationName ?? "--"}
-                    />
-                  </EntityFieldContent>
-                  <EntityFieldContent>
-                    <EntityFieldTitle title="NDC code" />
-                    <EntityFieldReadonlyText
-                      text={medication.basicInformation?.ndcCode ?? "--"}
-                    />
-                  </EntityFieldContent>
-                  <EntityFieldContent>
-                    <EntityFieldTitle title="Strength value" />
-                    <EntityFieldReadonlyText
-                      text={medication.dosage?.strength?.value ?? "--"}
-                    />
-                  </EntityFieldContent>
-                  <EntityFieldContent>
-                    <EntityFieldTitle title="Strength unit" />
-                    <EntityFieldReadonlyText
-                      text={medication.dosage?.strength?.unit ?? "--"}
-                    />
-                  </EntityFieldContent>
-                  <EntityFieldContent>
-                    <EntityFieldTitle title="Quantity value" />
-                    <EntityFieldReadonlyText
-                      text={medication.dosage?.quantity?.value ?? "--"}
-                    />
-                  </EntityFieldContent>
-                  <EntityFieldContent>
-                    <EntityFieldTitle title="Quantity unit" />
-                    <EntityFieldReadonlyText
-                      text={medication.dosage?.quantity?.unit ?? "--"}
-                    />
-                  </EntityFieldContent>
-                </EntitySectionContent>
-                <Separator className="mb-1" />
-              </Fragment>
-            ))
+          {order?.basicInformation?.type === "RX" && (
+            <>
+              <EntitySectionTitle title="Medications" />
+              {!order?.medications || !order.medications.length ? (
+                <EntityFieldReadonlyList list={[]} />
+              ) : (
+                order.medications.map((medication) => (
+                  <Fragment key={medication.basicInformation?.ndcCode}>
+                    <EntitySectionTitle title="Medication" />
+                    <EntitySectionContent>
+                      <EntityFieldContent>
+                        <EntityFieldTitle title="Medication Name" />
+                        <EntityFieldReadonlyText
+                          text={
+                            medication.basicInformation?.medicationName ?? "--"
+                          }
+                        />
+                      </EntityFieldContent>
+                      <EntityFieldContent>
+                        <EntityFieldTitle title="NDC code" />
+                        <EntityFieldReadonlyText
+                          text={medication.basicInformation?.ndcCode ?? "--"}
+                        />
+                      </EntityFieldContent>
+                      <EntityFieldContent>
+                        <EntityFieldTitle title="Strength value" />
+                        <EntityFieldReadonlyText
+                          text={medication.dosage?.strength?.value ?? "--"}
+                        />
+                      </EntityFieldContent>
+                      <EntityFieldContent>
+                        <EntityFieldTitle title="Strength unit" />
+                        <EntityFieldReadonlyText
+                          text={medication.dosage?.strength?.unit ?? "--"}
+                        />
+                      </EntityFieldContent>
+                      <EntityFieldContent>
+                        <EntityFieldTitle title="Quantity value" />
+                        <EntityFieldReadonlyText
+                          text={medication.dosage?.quantity?.value ?? "--"}
+                        />
+                      </EntityFieldContent>
+                      <EntityFieldContent>
+                        <EntityFieldTitle title="Quantity unit" />
+                        <EntityFieldReadonlyText
+                          text={medication.dosage?.quantity?.unit ?? "--"}
+                        />
+                      </EntityFieldContent>
+                    </EntitySectionContent>
+                    <Separator className="mb-1" />
+                  </Fragment>
+                ))
+              )}
+            </>
           )}
         </>
       )}

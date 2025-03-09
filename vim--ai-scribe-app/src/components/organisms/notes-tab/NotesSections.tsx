@@ -32,17 +32,20 @@ interface NotePanelProps {
 
 const useUpdateSubjective = () => {
   const { updateEncounter, checkCanUpdate } = useUpdateEncounter();
+  const { watch } = useNoteFormContext();
 
-  const updateSubjectiveNote = (content: string) => {
+  const updateSubjectiveNote = () => {
     const updateOptions = checkCanUpdate({
       subjective: { generalNotes: true },
     });
     const { canUpdate: canUpdateResult } = updateOptions;
 
     if (canUpdateResult) {
+      const formValues = watch();
+
       updateEncounter({
         subjective: {
-          generalNotes: content,
+          generalNotes: formValues.subjective,
         },
       });
     }
@@ -53,17 +56,20 @@ const useUpdateSubjective = () => {
 
 const useUpdateObjective = () => {
   const { updateEncounter, checkCanUpdate } = useUpdateEncounter();
+  const { watch } = useNoteFormContext();
 
-  const updateObjectiveNote = (content: string) => {
+  const updateObjectiveNote = () => {
     const updateOptions = checkCanUpdate({
       objective: { generalNotes: true },
     });
     const { canUpdate } = updateOptions;
 
     if (canUpdate) {
+      const formValues = watch();
+
       updateEncounter({
         objective: {
-          generalNotes: content,
+          generalNotes: formValues.objective,
         },
       });
     }
@@ -74,17 +80,20 @@ const useUpdateObjective = () => {
 
 const useUpdateAssessment = () => {
   const { updateEncounter, checkCanUpdate } = useUpdateEncounter();
+  const { watch } = useNoteFormContext();
 
-  const updateAssessmentNote = (content: string) => {
+  const updateAssessmentNote = () => {
     const updateOptions = checkCanUpdate({
       assessment: { generalNotes: true },
     });
     const { canUpdate: canUpdateResult } = updateOptions;
 
     if (canUpdateResult) {
+      const formValues = watch();
+
       updateEncounter({
         assessment: {
-          generalNotes: content,
+          generalNotes: formValues.assessment,
         },
       });
     }
@@ -95,17 +104,20 @@ const useUpdateAssessment = () => {
 
 const useUpdatePlan = () => {
   const { updateEncounter, checkCanUpdate } = useUpdateEncounter();
+  const { watch } = useNoteFormContext();
 
-  const updatePlanNote = (content: string) => {
+  const updatePlanNote = () => {
     const updateOptions = checkCanUpdate({
       plan: { generalNotes: true },
     });
     const { canUpdate: canUpdateResult } = updateOptions;
 
     if (canUpdateResult) {
+      const formValues = watch();
+
       updateEncounter({
         plan: {
-          generalNotes: content,
+          generalNotes: formValues.plan,
         },
       });
     }
@@ -123,8 +135,6 @@ export const NotesSections = ({
   const { updateObjectiveNote } = useUpdateObjective();
   const { updateAssessmentNote } = useUpdateAssessment();
   const { updatePlanNote } = useUpdatePlan();
-  const { watch } = useNoteFormContext();
-  const formValues = watch();
 
   const isHighlighted = (section: SectionTypes) => {
     if (hoveredSegment === null) return false;
@@ -140,28 +150,30 @@ export const NotesSections = ({
         fieldName="subjective"
         isHighlighted={isHighlighted("subjective")}
         renderHighlightedText={renderHighlightedText}
-        onPushToEHR={() => updateSubjectiveNote(formValues.subjective)}
+        onPushToEHR={() => {
+          updateSubjectiveNote();
+        }}
       />
       <SoapSection
         title="Objective"
         fieldName="objective"
         isHighlighted={isHighlighted("objective")}
         renderHighlightedText={renderHighlightedText}
-        onPushToEHR={() => updateObjectiveNote(formValues.objective)}
+        onPushToEHR={() => updateObjectiveNote()}
       />
       <SoapSection
         title="Assessment"
         fieldName="assessment"
         isHighlighted={isHighlighted("assessment")}
         renderHighlightedText={renderHighlightedText}
-        onPushToEHR={() => updateAssessmentNote(formValues.assessment)}
+        onPushToEHR={() => updateAssessmentNote()}
       />
       <SoapSection
         title="Plan"
         fieldName="plan"
         isHighlighted={isHighlighted("plan")}
         renderHighlightedText={renderHighlightedText}
-        onPushToEHR={() => updatePlanNote(formValues.plan)}
+        onPushToEHR={() => updatePlanNote()}
       />
     </div>
   );

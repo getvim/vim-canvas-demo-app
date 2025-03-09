@@ -11,10 +11,6 @@ export const BrandCustomization: React.FC = () => {
   const [saveButtonText, setSaveButtonText] = useState<string>("Save");
   const [isSaveButtonDisabled, setIsSaveButtonDisabled] =
     useState<boolean>(true);
-  const [
-    saveButtonBackgroundColor,
-    setSaveButtonBackgroundColorBackgroundColor,
-  ] = useState<string>("#D1D5DB");
 
   const handleSave = useCallback(() => {
     const save = async () => {
@@ -27,7 +23,6 @@ export const BrandCustomization: React.FC = () => {
         );
         setTimeout(() => {
           setSaveButtonText("Save");
-          setSaveButtonBackgroundColorBackgroundColor("#D1D5DB");
         }, 2000);
         setIsSaveButtonDisabled(true);
         setSaveButtonText("Saved!");
@@ -60,7 +55,6 @@ export const BrandCustomization: React.FC = () => {
   const handleColorChange = (color: string) => {
     setAppColor(color);
     setIsSaveButtonDisabled(false);
-    setSaveButtonBackgroundColorBackgroundColor("#001C36");
   };
 
   return (
@@ -85,7 +79,7 @@ export const BrandCustomization: React.FC = () => {
             disabled={isSaveButtonDisabled}
             style={{
               cursor: isSaveButtonDisabled ? "not-allowed" : "pointer",
-              backgroundColor: saveButtonBackgroundColor,
+              backgroundColor: isSaveButtonDisabled ? "#D1D5DB" : "#001C36",
             }}
           >
             {saveButtonText}

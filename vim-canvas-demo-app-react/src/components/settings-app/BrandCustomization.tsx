@@ -8,17 +8,30 @@ export const BrandCustomization: React.FC = () => {
   const [appColor, setAppColor] = useState<string>("#00FFE1");
   const { idToken } = useAuthTokenData();
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [saveButtonText, setSaveButtonText] = useState<string>("Save");
   const [isSaveButtonDisabled, setIsSaveButtonDisabled] =
     useState<boolean>(true);
 
   const handleSave = useCallback(() => {
-    saveSettings(
-      {
-        theme_color: appColor,
-      },
-      idToken
-    );
-    setIsSaveButtonDisabled(true);
+    const save = async () => {
+      try {
+        await saveSettings(
+          {
+            theme_color: appColor,
+          },
+          idToken
+        );
+        setTimeout(() => {
+          setSaveButtonText("Save");
+          setIsSaveButtonDisabled(true);
+        }, 2000);
+        setSaveButtonText("Saved!");
+      } catch (error) {
+        console.error("Failed to save settings", error);
+        setIsSaveButtonDisabled(true);
+      }
+    };
+    save();
   }, [appColor, idToken]);
 
   useEffect(() => {
@@ -70,7 +83,7 @@ export const BrandCustomization: React.FC = () => {
               backgroundColor: isSaveButtonDisabled ? "#D1D5DB" : "#001C36",
             }}
           >
-            Save
+            {saveButtonText}
           </button>
         </div>
 

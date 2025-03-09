@@ -19,7 +19,6 @@ export const DebugView = ({
   transcriptionSegments,
   hoveredSegment,
   onHoverSegment,
-  currentNote,
   renderHighlightedText,
 }: DebugViewProps) => {
   return (
@@ -30,7 +29,6 @@ export const DebugView = ({
         onHoverSegment={onHoverSegment}
       />
       <NotesSections
-        note={currentNote}
         hoveredSegment={hoveredSegment}
         transcriptionSegments={transcriptionSegments}
         renderHighlightedText={renderHighlightedText}

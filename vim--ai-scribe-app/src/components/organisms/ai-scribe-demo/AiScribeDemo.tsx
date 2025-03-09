@@ -16,13 +16,7 @@ import { AppHeader } from "./AppHeader";
 import { useVimOsContext } from "@/providers/VimOSContext";
 import { NotesTab } from "../notes-tab/NotesTab";
 import { buildName } from "./buildName";
-
-const EMPTY_STATE = {
-  subjective: "",
-  objective: "",
-  assessment: "",
-  plan: "",
-};
+import { useNoteFormContext } from "@/providers/NoteFormContext";
 
 const RECORDING_RESULT = {
   subjective:
@@ -80,7 +74,7 @@ export const AiScribeDemo = () => {
   );
   const [isProcessing, setIsProcessing] = useState(false);
   const [selectedKeyword, setSelectedKeyword] = useState<string | null>(null);
-  const [currentNote, setCurrentNote] = useState(EMPTY_STATE);
+  const { watch, reset } = useNoteFormContext();
   const {
     isPaused,
     setIsPaused,
@@ -92,6 +86,7 @@ export const AiScribeDemo = () => {
   const { updateEncounter } = useUpdateEncounter();
   const { updateIcdCodes } = useUpdateIcdCodes();
 
+  const currentNote = watch();
   const hasCurrentNote = Boolean(
     currentNote.subjective ||
       currentNote.objective ||
@@ -117,6 +112,7 @@ export const AiScribeDemo = () => {
 
     setTimeout(() => {
       const newNote = RECORDING_RESULT;
+      reset(newNote);
 
       const savedNote: Note = {
         id: Date.now().toString(),
@@ -126,7 +122,6 @@ export const AiScribeDemo = () => {
       };
 
       setNotes((prevNotes) => [savedNote, ...prevNotes]);
-      setCurrentNote(newNote);
       setIsProcessing(false);
       setActiveTab("notes");
     }, 3000);
@@ -217,7 +212,6 @@ export const AiScribeDemo = () => {
             <NotesTab
               patientName={patientName}
               handleFullEhrUpdate={handleFullEhrUpdate}
-              currentNote={currentNote}
               renderHighlightedText={renderHighlightedText}
             />
           )}

@@ -1,5 +1,4 @@
 import { useState } from "react";
-import type { SDK } from "vim-os-js-browser/types";
 import { useUpdateEncounter } from "@/vimOs/useUpdateEncounter";
 import { NavigationBar } from "@/components/molecules/NavigationBar";
 import { RecordingPanel } from "../recording-panel/RecordingPanel";
@@ -16,12 +15,23 @@ import { UserTab } from "./UserTab";
 import { AppHeader } from "./AppHeader";
 import { useVimOsContext } from "@/providers/VimOSContext";
 import { NotesTab } from "../notes-tab/NotesTab";
+import { buildName } from "./buildName";
 
 const EMPTY_STATE = {
   subjective: "",
   objective: "",
   assessment: "",
   plan: "",
+};
+
+const RECORDING_RESULT = {
+  subjective:
+    "Patient reports experiencing colic pain on both sides of the lower abdomen for the past two days. The pain is described as intermittent, sharp, and cramping in nature. The patient rates the pain as 6/10 in intensity.",
+  objective:
+    "Vital signs stable. BP 120/80, HR 72, RR 16, Temp 98.6F. Abdomen tender to palpation bilaterally in lower quadrants. No rebound tenderness or guarding. Bowel sounds normal.",
+  assessment:
+    "Acute abdominal pain, likely due to gastroenteritis or menstrual cramps. No signs of acute surgical abdomen.",
+  plan: "1. Prescribed antispasmodics for pain relief\n2. Recommended clear liquid diet for 24 hours\n3. Return if pain worsens or new symptoms develop\n4. Follow up in 3 days if symptoms persist",
 };
 
 type TabType = "record" | "notes" | "user";
@@ -65,7 +75,9 @@ export const AiScribeDemo = () => {
   const vimOS = useVimOsContext();
   const [activeTab, setActiveTab] = useState<TabType>("record");
   const [notes, setNotes] = useState<Note[]>([]);
-  const [patientName, setPatientName] = useState<string>(() => buildName(vimOS) || "");
+  const [patientName, setPatientName] = useState<string>(
+    () => buildName(vimOS) || ""
+  );
   const [isProcessing, setIsProcessing] = useState(false);
   const [selectedKeyword, setSelectedKeyword] = useState<string | null>(null);
   const [currentNote, setCurrentNote] = useState(EMPTY_STATE);
@@ -103,15 +115,7 @@ export const AiScribeDemo = () => {
     setIsProcessing(true);
 
     setTimeout(() => {
-      const newNote = {
-        subjective:
-          "Patient reports experiencing colic pain on both sides of the lower abdomen for the past two days. The pain is described as intermittent, sharp, and cramping in nature. The patient rates the pain as 6/10 in intensity.",
-        objective:
-          "Vital signs stable. BP 120/80, HR 72, RR 16, Temp 98.6F. Abdomen tender to palpation bilaterally in lower quadrants. No rebound tenderness or guarding. Bowel sounds normal.",
-        assessment:
-          "Acute abdominal pain, likely due to gastroenteritis or menstrual cramps. No signs of acute surgical abdomen.",
-        plan: "1. Prescribed antispasmodics for pain relief\n2. Recommended clear liquid diet for 24 hours\n3. Return if pain worsens or new symptoms develop\n4. Follow up in 3 days if symptoms persist",
-      };
+      const newNote = RECORDING_RESULT;
 
       const savedNote: Note = {
         id: Date.now().toString(),
@@ -242,17 +246,3 @@ export const AiScribeDemo = () => {
     </div>
   );
 };
-
-function buildName(vimOS: SDK): string | null {
-  console.log("buildName", vimOS.ehr.ehrState?.patient?.demographics);
-
-  const firstName = vimOS.ehr.ehrState?.patient?.demographics?.firstName;
-  const lastName = vimOS.ehr.ehrState?.patient?.demographics?.lastName;
-  if (!firstName && !lastName) {
-    return null;
-  }
-
-  const name = `${lastName} ${firstName}`;
-
-  return name;
-}

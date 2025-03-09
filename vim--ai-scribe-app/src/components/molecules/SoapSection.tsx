@@ -1,4 +1,7 @@
+import { ClipboardCopy } from "lucide-react";
 import { Button } from "../atoms/Button";
+import { IconButton } from "../atoms/IconButton";
+import { useVimOsContext } from "@/providers/VimOSContext";
 
 interface SoapSectionProps {
   title: string;
@@ -15,6 +18,22 @@ export function SoapSection({
   isHighlighted = false,
   renderHighlightedText,
 }: SoapSectionProps) {
+  const vimOS = useVimOsContext();
+
+  const handleCopyToClipboard = (): void => {
+    vimOS.utils.copyToClipboard(content);
+    
+    // TODO debug why notification not showing
+    try {
+      vimOS.hub.pushNotification.show({
+        text: `Bla Bla!`,
+        notificationId: crypto.randomUUID(),
+      });
+    } catch (e) {
+      console.error("failed to show push notification", e);
+    }
+  }
+
   return (
     <div
       className={`flex flex-col bg-white rounded-lg shadow-md overflow-hidden transition-colors ${
@@ -27,15 +46,23 @@ export function SoapSection({
           {renderHighlightedText(content)}
         </div>
       </div>
-      <Button
-        onClick={() => {
-          onPushToEHR();
-        }}
-        fullWidth
-        className="py-3 w-2/3 m-2 mb-4 self-center"
-      >
-        Push to EHR
-      </Button>
+      <div className="flex justify-around m-2 mb-4">
+        <Button
+          onClick={() => {
+            onPushToEHR();
+          }}
+          fullWidth
+          className="py-3 w-2/3 self-center"
+        >
+          Push to EHR .
+        </Button>
+        <IconButton
+          className=""
+          Icon={ClipboardCopy}
+          active={true}
+          onClick={handleCopyToClipboard}
+        />
+      </div>
     </div>
   );
 }

@@ -1,4 +1,4 @@
-import { ClipboardCopy } from "lucide-react";
+import { Copy } from "lucide-react";
 import { Button } from "../atoms/Button";
 import { IconButton } from "../atoms/IconButton";
 import { useVimOsContext } from "@/providers/VimOSContext";
@@ -58,7 +58,7 @@ export function SoapSection({
         </Button>
         <IconButton
           className=""
-          Icon={ClipboardCopy}
+          Icon={Copy}
           active={true}
           onClick={handleCopyToClipboard}
         />

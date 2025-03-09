@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { Bug } from "lucide-react";
 import { Button } from "../../atoms/Button";
 import { NotesSections } from "./NotesSections";
 import { DebugView } from "../../templates/DebugView";
@@ -28,7 +27,7 @@ export const NotesTab = ({
 
   const toggleDebugMode = () => {
     setIsDebugMode(!isDebugMode);
-    vimOS.hub.setDynamicAppSize(isDebugMode ?  "CLASSIC" : "LARGE");
+    vimOS.hub.setDynamicAppSize(isDebugMode ? "CLASSIC" : "LARGE");
   };
 
   return (
@@ -43,13 +42,9 @@ export const NotesTab = ({
             variant={isDebugMode ? "primary" : "ghost"}
             className={isDebugMode ? "bg-purple-500 hover:bg-purple-600" : ""}
           >
-            <Bug className="h-4 w-4 mr-2" />
-            Debug Mode
+            Transcription
           </Button>
-          <Button onClick={() => handleFullEhrUpdate()}>
-            {/* TODO */}
-            Push all to EHR
-          </Button>
+          <Button onClick={() => handleFullEhrUpdate()}>Push all to EHR</Button>
         </div>
         <div className="text-sm text-gray-500">Note saved automatically</div>
       </div>

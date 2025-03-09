@@ -54,7 +54,7 @@ export function SoapSection({
           fullWidth
           className="py-3 w-2/3 self-center"
         >
-          Push to EHR .
+          Push to EHR
         </Button>
         <IconButton
           className=""

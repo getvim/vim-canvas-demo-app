@@ -246,7 +246,7 @@ export const EncounterContent = () => {
               
               <ScribeAIIntegration />
               
-              <EncounterSubjective />
+              {/* <EncounterSubjective />
               <Separator className="mb-1" />
               <EncounterObjective />
               <Separator className="mb-1" />
@@ -254,7 +254,7 @@ export const EncounterContent = () => {
               <Separator className="mb-1" />
               <EncounterPlan />
               <Separator className="mb-1" />
-              <EncounterPI />
+              <EncounterPI /> */}
             </form>
           </FormProvider>
           <Separator className="mb-1" />

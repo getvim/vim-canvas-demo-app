@@ -69,10 +69,37 @@ export const ScribeAIIntegration = () => {
   // Effect to auto-apply note when generated if autoApply is enabled
   useEffect(() => {
     if (autoApply && parsedNote) {
+      // Check if parsedNote has any content before attempting to apply
+      const hasContent = 
+        (parsedNote.subjective.generalNotes && parsedNote.subjective.generalNotes.trim() !== "") ||
+        (parsedNote.subjective.chiefComplaint && parsedNote.subjective.chiefComplaint.trim() !== "") ||
+        (parsedNote.subjective.historyOfPresentIllness && parsedNote.subjective.historyOfPresentIllness.trim() !== "") ||
+        (parsedNote.subjective.reviewOfSystems && parsedNote.subjective.reviewOfSystems.trim() !== "") ||
+        (parsedNote.objective.generalNotes && parsedNote.objective.generalNotes.trim() !== "") ||
+        (parsedNote.objective.physicalExamNotes && parsedNote.objective.physicalExamNotes.trim() !== "") ||
+        (parsedNote.assessment.generalNotes && parsedNote.assessment.generalNotes.trim() !== "") ||
+        (parsedNote.plan.generalNotes && parsedNote.plan.generalNotes.trim() !== "") ||
+        (parsedNote.patientInstructions.generalNotes && parsedNote.patientInstructions.generalNotes.trim() !== "");
+      
+      if (!hasContent) {
+        console.warn("Auto-apply skipped: Note has no content");
+        return;
+      }
+      
       // Add a small delay to ensure the form is ready
       const timer = setTimeout(() => {
-        applyParsedNote();
-      }, 500);
+        try {
+          applyParsedNote();
+        } catch (error) {
+          console.error("Error in auto-apply:", error);
+          // Show a toast notification for the error
+          toast({ 
+            variant: "destructive", 
+            title: "Auto-apply failed", 
+            description: "Failed to automatically apply the note to the form. Try applying manually."
+          });
+        }
+      }, 1000); // Increased delay to 1 second
       
       return () => clearTimeout(timer);
     }
@@ -278,11 +305,21 @@ export const ScribeAIIntegration = () => {
 
   // Generate VIM note using the ScribeAI API
   const generateNote = async () => {
-    if (!transcript) {
+    if (!transcript || transcript.trim() === "") {
       toast({ 
         variant: "destructive", 
         title: "No transcript available", 
         description: "Please record or upload audio first to generate a transcript." 
+      });
+      return;
+    }
+    
+    // Check if transcript is too short
+    if (transcript.trim().length < 10) {
+      toast({ 
+        variant: "destructive", 
+        title: "Transcript too short", 
+        description: "The transcript is too short to generate a meaningful note. Please record more audio." 
       });
       return;
     }
@@ -453,7 +490,14 @@ export const ScribeAIIntegration = () => {
 
   // Apply the parsed note to the encounter form
   const applyParsedNote = () => {
-    if (!parsedNote) return;
+    if (!parsedNote) {
+      toast({ 
+        variant: "destructive", 
+        title: "No note to apply", 
+        description: "Please generate a note first before applying to the form." 
+      });
+      return;
+    }
     
     try {
       // Get current values to merge with new values
@@ -480,6 +524,7 @@ export const ScribeAIIntegration = () => {
         }
       }
       
+      // Validate that setValue is a function
       if (typeof setValue !== 'function') {
         throw new Error("setValue is not a function. Form context may not be properly initialized.");
       }
@@ -491,6 +536,27 @@ export const ScribeAIIntegration = () => {
           variant: "destructive", 
           title: "No form fields available",
           description: "The form has no available fields to update."
+        });
+        return;
+      }
+      
+      // Verify that we have at least one field with content to update
+      const hasContent = 
+        (parsedNote.subjective.generalNotes && parsedNote.subjective.generalNotes.trim() !== "") ||
+        (parsedNote.subjective.chiefComplaint && parsedNote.subjective.chiefComplaint.trim() !== "") ||
+        (parsedNote.subjective.historyOfPresentIllness && parsedNote.subjective.historyOfPresentIllness.trim() !== "") ||
+        (parsedNote.subjective.reviewOfSystems && parsedNote.subjective.reviewOfSystems.trim() !== "") ||
+        (parsedNote.objective.generalNotes && parsedNote.objective.generalNotes.trim() !== "") ||
+        (parsedNote.objective.physicalExamNotes && parsedNote.objective.physicalExamNotes.trim() !== "") ||
+        (parsedNote.assessment.generalNotes && parsedNote.assessment.generalNotes.trim() !== "") ||
+        (parsedNote.plan.generalNotes && parsedNote.plan.generalNotes.trim() !== "") ||
+        (parsedNote.patientInstructions.generalNotes && parsedNote.patientInstructions.generalNotes.trim() !== "");
+      
+      if (!hasContent) {
+        toast({ 
+          variant: "destructive", 
+          title: "Empty note",
+          description: "The generated note doesn't contain any content to apply to the form."
         });
         return;
       }
@@ -732,13 +798,17 @@ export const ScribeAIIntegration = () => {
         return `${prevTranscript}\n\n--- New Transcription ---\n${newTranscript}`;
       });
       
-      toast({ variant: "default", title: "Recording transcribed successfully!" });
-      setProcessingStatus("Transcription complete. Generating note...");
+      toast({ 
+        variant: "default", 
+        title: "Recording transcribed successfully!", 
+        description: "Click 'Generate VIM Note' to create a clinical note."
+      });
+      setProcessingStatus(null); // Clear the processing status
       
-      // Auto-generate note if there's a transcript
-      if (newTranscript) {
-        await generateNote();
-      }
+      // Remove automatic note generation
+      // if (newTranscript) {
+      //   await generateNote();
+      // }
     } catch (error: any) {
       console.error("Transcription error:", error);
       toast({ 

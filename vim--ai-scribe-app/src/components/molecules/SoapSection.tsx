@@ -1,12 +1,16 @@
 import { useState, useEffect } from "react";
 import { useController } from "react-hook-form";
-import { Copy, Edit2, Save, AlertTriangle } from "lucide-react";
+import { Copy, Edit2, Save } from "lucide-react";
 import { useNoteFormContext } from "@/providers/NoteFormContext";
 import { useVimOsContext } from "@/providers/VimOSContext";
 import { Button } from "../atoms/Button";
 import { IconButton } from "../atoms/IconButton";
 import { Textarea } from "../atoms/Textarea";
-import { sanitizeEhrText, type TextSanitizationResult } from "@/lib/sanitizeEhrText";
+import {
+  sanitizeEhrText,
+  type TextSanitizationResult,
+} from "@/lib/sanitizeEhrText";
+import { SanitizationWarning } from "./SanitizationWarning";
 
 type FieldName = "subjective" | "objective" | "assessment" | "plan";
 
@@ -36,7 +40,8 @@ export const SoapSection = ({
 
   const [isEditing, setIsEditing] = useState(false);
   const [editValue, setEditValue] = useState(value);
-  const [sanitizeResult, setSanitizeResult] = useState<TextSanitizationResult | null>(null);
+  const [sanitizeResult, setSanitizeResult] =
+    useState<TextSanitizationResult | null>(null);
 
   // Keep editValue in sync with form value
   useEffect(() => {
@@ -84,11 +89,11 @@ export const SoapSection = ({
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     // Save on Ctrl/Cmd + Enter
-    if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+    if ((e.ctrlKey || e.metaKey) && e.key === "Enter") {
       handleSaveClick();
     }
     // Cancel on Escape
-    if (e.key === 'Escape') {
+    if (e.key === "Escape") {
       setEditValue(value);
       setIsEditing(false);
       setSanitizeResult(null);
@@ -100,7 +105,7 @@ export const SoapSection = ({
     if (window.getSelection()?.toString()) {
       return;
     }
-    
+
     // Don't enter edit mode if clicking on a keyword
     const target = e.target as HTMLElement;
     if (target.hasAttribute("data-keyword")) {
@@ -125,7 +130,7 @@ export const SoapSection = ({
             onClick={isEditing ? handleSaveClick : handleEditClick}
           />
         </div>
-        <div 
+        <div
           className="text-gray-700 text-lg whitespace-pre-line"
           onClick={!isEditing ? handleTextClick : undefined}
         >
@@ -142,41 +147,12 @@ export const SoapSection = ({
                 placeholder={`Enter ${title.toLowerCase()} notes here...`}
                 autoFocus
               />
-              {sanitizeResult && (
-                <div className="mt-4 p-4 bg-yellow-50 rounded-md border border-yellow-200">
-                  <div className="flex items-start gap-2 mb-2">
-                    <AlertTriangle className="w-5 h-5 text-yellow-500 mt-0.5" />
-                    <div className="flex-1">
-                      <h4 className="font-medium text-yellow-800">Unsupported Characters Detected</h4>
-                      <p className="text-sm text-yellow-700 mt-1">
-                        The following characters will be replaced for EHR compatibility:
-                      </p>
-                    </div>
-                  </div>
-                  <ul className="mt-2 space-y-1 text-sm text-yellow-700">
-                    {sanitizeResult.explanationList.map((replacement, index) => (
-                      <li key={index}>
-                        "{replacement.original}" will be replaced with "{replacement.replacement}"
-                      </li>
-                    ))}
-                  </ul>
-                  <div className="mt-4 flex gap-2">
-                    <Button
-                      onClick={handleConfirmSanitizedSave}
-                      className="bg-yellow-500 hover:bg-yellow-600 text-white"
-                    >
-                      Accept
-                    </Button>
-                    <Button
-                      onClick={() => setSanitizeResult(null)}
-                      variant="ghost"
-                      className="text-yellow-700 hover:bg-yellow-100"
-                    >
-                      Keep Editing
-                    </Button>
-                  </div>
-                </div>
-              )}
+
+              <SanitizationWarning
+                sanitizeResult={sanitizeResult}
+                handleConfirmSanitizedSave={handleConfirmSanitizedSave}
+                setSanitizeResult={setSanitizeResult}
+              />
             </>
           ) : (
             <div className="cursor-pointer p-3 border border-green-300 rounded-xl">

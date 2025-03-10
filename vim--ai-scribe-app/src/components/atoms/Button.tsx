@@ -1,4 +1,5 @@
 import { ReactNode } from "react";
+import clsx from "clsx";
 
 interface ButtonProps {
   onClick?: () => void;
@@ -7,6 +8,7 @@ interface ButtonProps {
   className?: string;
   children: ReactNode;
   fullWidth?: boolean;
+  tooltip?: string;
 }
 
 export const Button = ({
@@ -16,23 +18,28 @@ export const Button = ({
   className = "",
   children,
   fullWidth = false,
+  tooltip,
 }: ButtonProps) => {
-  const baseStyles =
-    "inline-flex items-center justify-center transition-colors font-medium rounded-lg px-4 py-2";
-  const widthStyles = fullWidth ? "w-full" : "";
-
-  const variants = {
-    primary:
-      "bg-green-500 hover:bg-green-600 text-white disabled:bg-gray-300 disabled:text-gray-500",
-    secondary: "bg-gray-100 hover:bg-gray-200 text-gray-600",
-    ghost: "hover:bg-gray-100 text-gray-500 hover:text-gray-700",
-  };
+  const classnames = clsx(
+    "inline-flex items-center justify-center transition-colors font-medium rounded-lg px-4 py-2",
+    {
+      "w-full": fullWidth,
+      "text-white bg-green-500 hover:bg-green-600 disabled:bg-gray-300 disabled:text-gray-500":
+        variant === "primary",
+      "text-gray-600 bg-gray-100 hover:bg-gray-200": variant === "secondary",
+      "text-gray-500 hover:bg-gray-100 hover:text-gray-700":
+        variant === "ghost",
+      "cursor-not-allowed": disabled,
+    },
+    className
+  );
 
   return (
     <button
       onClick={onClick}
       disabled={disabled}
-      className={`${baseStyles} ${variants[variant]} ${widthStyles} ${className}`}
+      className={classnames}
+      title={tooltip}
     >
       {children}
     </button>

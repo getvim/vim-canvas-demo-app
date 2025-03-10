@@ -801,7 +801,7 @@ export const ScribeAIIntegration = () => {
       toast({ 
         variant: "default", 
         title: "Recording transcribed successfully!", 
-        description: "Click 'Generate VIM Note' to create a clinical note."
+        description: "Click 'Generate Note' to create a clinical note."
       });
       setProcessingStatus(null); // Clear the processing status
       
@@ -968,7 +968,7 @@ export const ScribeAIIntegration = () => {
           onClick={generateNote}
           className="w-full"
         >
-          Generate VIM Note
+          Generate Note
         </Button>
         
         {parsedNote && (

@@ -89,7 +89,8 @@ export const EncounterContent = () => {
 
   const onNotesSubmit = async (data: FormInputs) => {
     function removeUndefinedProperties(obj: unknown) {
-      if (typeof obj !== "object" || obj === null) {
+      // switch obj === null to !obj in case we return undefined
+      if (!obj || typeof obj !== "object") {
         return obj;
       }
 
@@ -99,16 +100,18 @@ export const EncounterContent = () => {
       for (const [key, value] of Object.entries(obj)) {
         if (typeof value === "object" && value !== null) {
           const nestedResult = removeUndefinedProperties(value);
-          if (Object.keys(nestedResult).length > 0) {
+          // make sure nestedResult isn't undefined itself
+          if (nestedResult && Object.keys(nestedResult).length > 0) {
             result[key] = nestedResult;
           }
         } else if (value !== undefined) {
           result[key] = value;
         }
       }
-
-      return result;
+      // return undefined if there are no properties instead of returning empty object
+      return Object.keys(result).length > 0 ? result : undefined;
     }
+
     const encounterPayload: EHR.UpdateEncounterParams = {
       subjective: {
         generalNotes: canUpdateNotes?.details.subjective?.generalNotes
@@ -151,8 +154,11 @@ export const EncounterContent = () => {
           : undefined,
       },
     };
-
-    updateEncounter(removeUndefinedProperties(encounterPayload))
+    // clean the payload and only if payload is NOT undefined, updateEncounter
+    const cleanedPayload = removeUndefinedProperties(encounterPayload);
+    if (cleanedPayload){
+      // console.log('updating encounter with', cleanedPayload)
+      updateEncounter(cleanedPayload)
       .then(() => {
         toast({
           variant: "default",
@@ -166,6 +172,7 @@ export const EncounterContent = () => {
           description: error ? JSON.stringify(error) : "An error occurred.",
         });
       });
+    }
     methods.reset({
       subjectiveGeneralNotes: canUpdateNotes?.details.subjective?.generalNotes
         ? null

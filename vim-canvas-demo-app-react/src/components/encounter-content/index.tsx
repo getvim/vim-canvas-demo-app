@@ -15,13 +15,13 @@ import {
   EntityFieldTitle,
   EntitySectionTitle,
 } from "../ui/entityContent";
-import { EncounterAssessment } from "./Assessment";
+// import { EncounterAssessment } from "./Assessment";
 import { EncounterBasicInformation } from "./BasicInformation";
 import { FormInputs, useNotesForm } from "./form";
-import { EncounterObjective } from "./Objective";
-import { EncounterPI } from "./PatientInstructions";
-import { EncounterPlan } from "./Plan";
-import { EncounterSubjective } from "./Subjective";
+// import { EncounterObjective } from "./Objective";
+// import { EncounterPI } from "./PatientInstructions";
+// import { EncounterPlan } from "./Plan";
+// import { EncounterSubjective } from "./Subjective";
 import { ScribeAIIntegration } from "../scribeai/ScribeAIIntegration";
 
 export const EncounterContent = () => {

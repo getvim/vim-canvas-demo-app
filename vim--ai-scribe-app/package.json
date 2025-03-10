@@ -9,10 +9,14 @@
     "dev": "concurrently --raw -i \"npm:dev:functions\" \"npm:dev:vite\" ",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "test": "vitest",
+    "test:watch": "vitest watch",
+    "test:coverage": "vitest run --coverage"
   },
   "dependencies": {
     "@cfworker/jwt": "^5.2.1",
+    "@hookform/resolvers": "^4.1.3",
     "clsx": "^2.1.1",
     "lucide-react": "^0.436.0",
     "react": "^18.3.1",
@@ -41,6 +45,7 @@
     "typescript": "^5.5.3",
     "typescript-eslint": "^8.3.0",
     "vite": "^5.4.2",
+    "vitest": "^3.0.8",
     "wrangler": "^3.72.3"
   }
 }

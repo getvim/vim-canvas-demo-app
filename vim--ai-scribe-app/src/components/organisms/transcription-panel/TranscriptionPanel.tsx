@@ -1,7 +1,7 @@
 interface TranscriptionSegment {
   text: string;
   timestamp: string;
-  affectedSections: ('subjective' | 'objective' | 'assessment' | 'plan')[];
+  affectedSections: ("subjective" | "objective" | "assessment" | "plan")[];
 }
 
 interface TranscriptionPanelProps {
@@ -10,11 +10,11 @@ interface TranscriptionPanelProps {
   onHoverSegment: (index: number | null) => void;
 }
 
-export function TranscriptionPanel({
+export const TranscriptionPanel = ({
   segments,
   hoveredSegment,
-  onHoverSegment
-}: TranscriptionPanelProps) {
+  onHoverSegment,
+}: TranscriptionPanelProps) => {
   return (
     <div className="bg-white rounded-lg shadow-md p-6">
       <div className="flex flex-col items-center justify-between mb-4">
@@ -27,8 +27,8 @@ export function TranscriptionPanel({
             key={index}
             className={`p-3 rounded-lg transition-colors ${
               hoveredSegment === index
-                ? 'bg-green-50 shadow-sm'
-                : 'hover:bg-gray-50'
+                ? "bg-green-50 shadow-sm"
+                : "hover:bg-gray-50"
             }`}
             onMouseEnter={() => onHoverSegment(index)}
             onMouseLeave={() => onHoverSegment(null)}
@@ -40,7 +40,7 @@ export function TranscriptionPanel({
               <div className="flex-1">
                 <p className="text-gray-800">{segment.text}</p>
                 <div className="flex flex-wrap gap-2 mt-2">
-                  {segment.affectedSections.map(section => (
+                  {segment.affectedSections.map((section) => (
                     <span
                       key={section}
                       className="px-2 py-1 bg-green-100 text-green-800 text-xs font-medium rounded-full"
@@ -56,4 +56,4 @@ export function TranscriptionPanel({
       </div>
     </div>
   );
-}
+};

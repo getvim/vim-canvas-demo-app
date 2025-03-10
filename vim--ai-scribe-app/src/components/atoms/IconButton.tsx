@@ -9,14 +9,14 @@ interface IconButtonProps {
   className?: string;
 }
 
-export function IconButton({
+export const IconButton = ({
   Icon,
   onClick,
   active = false,
   disabled = false,
   label,
   className,
-}: IconButtonProps) {
+}: IconButtonProps) => {
   return (
     <button
       onClick={onClick}
@@ -33,4 +33,4 @@ export function IconButton({
       {label && <span className="text-sm mt-1">{label}</span>}
     </button>
   );
-}
+};

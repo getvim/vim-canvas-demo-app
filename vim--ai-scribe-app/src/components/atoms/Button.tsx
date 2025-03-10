@@ -9,14 +9,14 @@ interface ButtonProps {
   fullWidth?: boolean;
 }
 
-export function Button({
+export const Button = ({
   onClick,
   disabled = false,
   variant = "primary",
   className = "",
   children,
   fullWidth = false,
-}: ButtonProps) {
+}: ButtonProps) => {
   const baseStyles =
     "inline-flex items-center justify-center transition-colors font-medium rounded-lg px-4 py-2";
   const widthStyles = fullWidth ? "w-full" : "";
@@ -37,4 +37,4 @@ export function Button({
       {children}
     </button>
   );
-}
+};

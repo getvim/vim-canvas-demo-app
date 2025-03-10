@@ -146,7 +146,6 @@ export const AiScribeDemo = () => {
   };
 
   const handleCloseModal = () => {
-    console.log("Modal Closed");
     setSelectedKeyword(null);
   };
 

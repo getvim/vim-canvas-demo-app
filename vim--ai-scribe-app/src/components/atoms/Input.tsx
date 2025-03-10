@@ -6,13 +6,13 @@ interface InputProps {
   type?: string;
 }
 
-export function Input({
+export const Input = ({
   value,
   onChange,
   placeholder,
-  className = '',
-  type = 'text'
-}: InputProps) {
+  className = "",
+  type = "text",
+}: InputProps) => {
   return (
     <input
       type={type}
@@ -22,4 +22,4 @@ export function Input({
       className={`w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent ${className}`}
     />
   );
-}
+};

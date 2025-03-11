@@ -29,8 +29,8 @@ import {
 } from "./components/ui/dialog";
 import { Button } from "./components/ui/button";
 import { Footer } from "./components/Footer";
-import { NoteGenerator } from "./components/scribeai/NoteGenerator";
-import noteSvg from "@/assets/note.svg";
+// import { NoteGenerator } from "./components/scribeai/NoteGenerator";
+// import noteSvg from "@/assets/note.svg";
 
 function App() {
   const vimOs = useVimOsContext();
@@ -97,13 +97,13 @@ function App() {
           </CollapsibleEntityContent>
         </CollapsibleEntity>
       )}
-      {encounter && (
+      {/* {encounter && (
         <CollapsibleEntity entityTitle="ScribeAI Note Generator" entityIconUrl={noteSvg}>
           <CollapsibleEntityContent>
             <NoteGenerator />
           </CollapsibleEntityContent>
         </CollapsibleEntity>
-      )}
+      )} */}
       {referral && (
         <CollapsibleEntity entityTitle="Referral" entityIconUrl={referralSvg}>
           <CollapsibleEntityContent>

@@ -23,7 +23,8 @@ app.use(express.static(path.join(__dirname, 'dist')));
 
 // API Routes
 app.get('/api/launch', (req, res) => {
-  const authorizeUrl = `${VIM_AUTHORIZE_ENDPOINT}?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URL}&response_type=code&scope=openid%20profile%20email`;
+  const launchId = req.query.launch_id;
+  const authorizeUrl = `${VIM_AUTHORIZE_ENDPOINT}?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URL}&response_type=code&scope=openid%20profile%20email${launchId ? `&launch_id=${launchId}` : ''}`;
   res.redirect(authorizeUrl);
 });
 

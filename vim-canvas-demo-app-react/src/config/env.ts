@@ -10,8 +10,8 @@ export const CLIENT_SECRET = import.meta.env.CLIENT_SECRET || process.env.CLIENT
 export const REDIRECT_URL = import.meta.env.REDIRECT_URL || process.env.REDIRECT_URL || 
   (typeof window !== 'undefined' ? `${window.location.origin}` : 'http://localhost:8788');
 
-// API Base URL
-export const API_BASE_URL = "https://api-devs-8a32c93f7e2d.herokuapp.com";
+// API Base URL - Production endpoint
+export const API_BASE_URL = "https://api-unique-stg-1048c00a084a.herokuapp.com";
 
 // Log environment setup in development only
 if (import.meta.env.DEV) {

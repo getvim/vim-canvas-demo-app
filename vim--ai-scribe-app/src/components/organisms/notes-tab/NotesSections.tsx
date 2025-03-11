@@ -1,4 +1,7 @@
-import { useUpdateEncounter } from "@/vimOs/useUpdateEncounter";
+import {
+  useUpdateEncounter,
+  useUpdateEncounterSubscription,
+} from "@/vimOs/useUpdateEncounter";
 import { SoapSection } from "../../molecules/SoapSection";
 import type {
   SectionTypes,
@@ -12,46 +15,41 @@ interface NotePanelProps {
   renderHighlightedText: (text: string) => JSX.Element;
 }
 
-// const ENCOUNTER_PRIORITY = {
-//   subjective: [""],
-// } satisfies Record<string, string[]>;
-
-// const calcFieldByPriority = () => {
-//   const priority = ENCOUNTER_PRIORITY[subjective];
-//   const object = {
-//     subjective: {
-//       first: false,
-//       second: false,
-//       third: true,
-//       fourth: true
-//     }
-
-//     for (field in pri)
-//   }
-// };
-
 const useUpdateSubjective = () => {
-  const { updateEncounter, checkCanUpdate } = useUpdateEncounter();
+  const encounterUpdates = useUpdateEncounterSubscription(
+    {
+      subjective: {
+        generalNotes: true,
+        chiefComplaintNotes: true,
+        historyOfPresentIllnessNotes: true,
+        reviewOfSystemsNotes: true,
+      },
+    },
+    "subjective",
+    {
+      subjective: [
+        "chiefComplaintNotes",
+        "reviewOfSystemsNotes",
+      ],
+    }
+  );
+
+  const { updateSubscriptionField, canUpdateSubscriptionParams } =
+    encounterUpdates;
   const { watch } = useNoteFormContext();
 
   const updateSubjectiveNote = () => {
-    const updateOptions = checkCanUpdate({
-      subjective: { generalNotes: true },
-    });
-    const { canUpdate: canUpdateResult } = updateOptions;
-
-    if (canUpdateResult) {
+    if (canUpdateSubscriptionParams) {
       const formValues = watch();
 
-      updateEncounter({
-        subjective: {
-          generalNotes: formValues.subjective,
-        },
-      });
+      updateSubscriptionField(formValues.subjective);
     }
   };
 
-  return { updateSubjectiveNote };
+  return {
+    canUpdate: canUpdateSubscriptionParams,
+    updateSubjectiveNote,
+  };
 };
 
 const useUpdateObjective = () => {
@@ -131,7 +129,7 @@ export const NotesSections = ({
   transcriptionSegments,
   renderHighlightedText,
 }: NotePanelProps) => {
-  const { updateSubjectiveNote } = useUpdateSubjective();
+  const { updateSubjectiveNote, canUpdate } = useUpdateSubjective();
   const { updateObjectiveNote } = useUpdateObjective();
   const { updateAssessmentNote } = useUpdateAssessment();
   const { updatePlanNote } = useUpdatePlan();
@@ -149,6 +147,7 @@ export const NotesSections = ({
         title="Subjective"
         fieldName="subjective"
         isHighlighted={isHighlighted("subjective")}
+        isWriteAvailable={canUpdate}
         renderHighlightedText={renderHighlightedText}
         onPushToEHR={() => {
           updateSubjectiveNote();

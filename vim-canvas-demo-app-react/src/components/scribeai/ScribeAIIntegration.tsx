@@ -347,7 +347,7 @@ export const ScribeAIIntegration = () => {
         customNotes
       };
       
-      setProcessingStatus("Generating VIM clinical note...");
+      setProcessingStatus("Generating clinical note...");
       
       const response = await fetch(endpoint, {
         method: "POST",
@@ -469,7 +469,7 @@ export const ScribeAIIntegration = () => {
       
       toast({ 
         variant: "default", 
-        title: "VIM Note generated successfully!",
+        title: "Note generated successfully!",
         description: autoApply ? "Attempting to apply note to form..." : "Review and apply the note to the form."
       });
       
@@ -478,10 +478,10 @@ export const ScribeAIIntegration = () => {
       setProcessingStatus(null);
       
     } catch (error: any) {
-      console.error("Error generating VIM note:", error);
+      console.error("Error generating note:", error);
       toast({ 
         variant: "destructive", 
-        title: "Error generating VIM note", 
+        title: "Error generating note", 
         description: error.message 
       });
       setProcessingStatus(null);
@@ -1000,7 +1000,7 @@ export const ScribeAIIntegration = () => {
           >
             <CollapsibleTrigger asChild>
               <Button variant="ghost" className="flex w-full justify-between p-2">
-                <span>VIM Note Preview</span>
+                <span>Note Preview</span>
                 <span>{isNotePreviewOpen ? '▲' : '▼'}</span>
               </Button>
             </CollapsibleTrigger>

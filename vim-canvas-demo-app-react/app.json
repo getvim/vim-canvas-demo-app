@@ -1,0 +1,28 @@
+{
+  "name": "ScribeAI VIM Canvas",
+  "description": "A medical transcription and documentation platform for healthcare professionals integrated with VIM",
+  "repository": "https://github.com/yourusername/vim-canvas-demo-app",
+  "keywords": ["vim", "scribeai", "medical", "transcription", "healthcare"],
+  "env": {
+    "CLIENT_ID": {
+      "description": "Your VIM Client ID"
+    },
+    "CLIENT_SECRET": {
+      "description": "Your VIM Client Secret"
+    },
+    "REDIRECT_URL": {
+      "description": "The redirect URL for authentication (will be set automatically)"
+    },
+    "SCRIBEAI_API_KEY": {
+      "description": "Your ScribeAI API Key"
+    }
+  },
+  "buildpacks": [
+    {
+      "url": "heroku/nodejs"
+    },
+    {
+      "url": "https://github.com/heroku/heroku-buildpack-static"
+    }
+  ]
+} 

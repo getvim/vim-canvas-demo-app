@@ -13,15 +13,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
-
-// Import your provided ScribeAI API key from the environment
-const SCRIBEAI_API_KEY = import.meta.env.VITE_SCRIBEAI_API_KEY as string;
-
-// Update to the correct API base URL from the documentation
-const API_BASE_URL = "https://api-devs-8a32c93f7e2d.herokuapp.com";
-
-// VIM Note is now the only note type used
-// NOTE_TYPES constant removed as it's no longer needed
+import { SCRIBEAI_API_KEY, API_BASE_URL } from "@/config/env";
 
 // Interface for parsed note sections
 interface ParsedNote {

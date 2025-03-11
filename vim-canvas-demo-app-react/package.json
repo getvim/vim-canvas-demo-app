@@ -8,6 +8,7 @@
     "dev:functions": "wrangler pages dev --proxy=5173",
     "dev": "concurrently --raw -i \"npm:dev:functions\" \"npm:dev:vite\" ",
     "build": "tsc -b && vite build",
+    "start": "wrangler pages dev ./dist --port $PORT",
     "lint": "eslint .",
     "preview": "vite preview"
   },

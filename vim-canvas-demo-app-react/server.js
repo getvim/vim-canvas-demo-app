@@ -24,18 +24,26 @@ app.use(express.static(path.join(__dirname, 'dist')));
 // API Routes
 app.get('/api/launch', (req, res) => {
   const launchId = req.query.launch_id;
+  const vimOrgId = req.query.vim_organization_id;
+  console.log(`Launch request received with launch_id: ${launchId}, vim_organization_id: ${vimOrgId}`);
+  console.log(`Query params:`, req.query);
+  
   const authorizeUrl = `${VIM_AUTHORIZE_ENDPOINT}?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URL}&response_type=code&scope=openid%20profile%20email${launchId ? `&launch_id=${launchId}` : ''}`;
+  console.log(`Redirecting to: ${authorizeUrl}`);
   res.redirect(authorizeUrl);
 });
 
 app.post('/api/token', async (req, res) => {
   try {
+    console.log('Token request received:', req.body);
     const { code } = req.body;
     
     if (!code) {
+      console.error('No authorization code provided');
       return res.status(400).json({ error: 'Authorization code is required' });
     }
 
+    console.log(`Exchanging code for token with VIM_TOKEN_ENDPOINT: ${VIM_TOKEN_ENDPOINT}`);
     const tokenResponse = await fetch(VIM_TOKEN_ENDPOINT, {
       method: 'POST',
       headers: {
@@ -57,6 +65,7 @@ app.post('/api/token', async (req, res) => {
       return res.status(tokenResponse.status).json(tokenData);
     }
 
+    console.log('Token exchange successful');
     res.json(tokenData);
   } catch (error) {
     console.error('Token exchange error:', error);

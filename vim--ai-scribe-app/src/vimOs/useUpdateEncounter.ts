@@ -2,10 +2,12 @@ import { useEffect, useMemo, useState } from "react";
 import type { EHR } from "vim-os-js-browser/types";
 import { useVimOsContext } from "@/providers/VimOSContext";
 
-export const useUpdateEncounterSubscription = (
+export const useUpdateEncounterSubscription = <
+  T extends keyof EHR.UpdateEncounterParams
+>(
   subscriptionParams: EHR.CanUpdateEncounterParams,
-  sectionName: keyof EHR.UpdateEncounterParams,
-  priorityList: Partial<Record<keyof EHR.UpdateEncounterParams, string[]>>
+  sectionName: T,
+  priorityList: Partial<Record<keyof EHR.UpdateEncounterParams, string[]>> // TODO Support Actual Fieldname // Partial<Record<T, Array<keyof EHR.UpdateEncounterParams[T]>>>
 ) => {
   const vimOS = useVimOsContext();
   const [canUpdateSubscriptionParams, setCanUpdateSubscriptionParams] =
@@ -43,7 +45,6 @@ export const useUpdateEncounterSubscription = (
 
   return useMemo(
     () => ({
-      // Subscription Based API call to update encounter notes
       canUpdateSubscriptionParams,
       subscriptionUpdatableField,
       updateSubscriptionField: (content: string) => {
@@ -82,7 +83,6 @@ export const useUpdateEncounterSubscription = (
     ]
   );
 };
-
 
 export const useUpdateEncounter = () => {
   const vimOS = useVimOsContext();

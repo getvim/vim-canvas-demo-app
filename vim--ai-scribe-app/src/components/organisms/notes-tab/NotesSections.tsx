@@ -1,6 +1,5 @@
 import {
-  useUpdateEncounter,
-  useUpdateEncounterSubscription,
+  useUpdateEncounterSubscription
 } from "@/vimOs/useUpdateEncounter";
 import { SoapSection } from "../../molecules/SoapSection";
 import type {
@@ -16,7 +15,7 @@ interface NotePanelProps {
 }
 
 const useUpdateSubjective = () => {
-  const encounterUpdates = useUpdateEncounterSubscription(
+  const encounterUpdates = useUpdateEncounterSubscription<'subjective'>(
     {
       subjective: {
         generalNotes: true,
@@ -27,10 +26,7 @@ const useUpdateSubjective = () => {
     },
     "subjective",
     {
-      subjective: [
-        "chiefComplaintNotes",
-        "reviewOfSystemsNotes",
-      ],
+      subjective: ["chiefComplaintNotes", "reviewOfSystemsNotes"],
     }
   );
 
@@ -47,81 +43,103 @@ const useUpdateSubjective = () => {
   };
 
   return {
-    canUpdate: canUpdateSubscriptionParams,
+    canUpdateSubjectiveNote: canUpdateSubscriptionParams,
     updateSubjectiveNote,
   };
 };
 
 const useUpdateObjective = () => {
-  const { updateEncounter, checkCanUpdate } = useUpdateEncounter();
+  const encounterUpdates = useUpdateEncounterSubscription<"objective">(
+    {
+      objective: {
+        generalNotes: true,
+        physicalExamNotes: true,
+      },
+    },
+    "objective",
+    {
+      objective: ["generalNotes", "physicalExamNotes"],
+    }
+  );
+
+  const { updateSubscriptionField, canUpdateSubscriptionParams } =
+    encounterUpdates;
   const { watch } = useNoteFormContext();
 
   const updateObjectiveNote = () => {
-    const updateOptions = checkCanUpdate({
-      objective: { generalNotes: true },
-    });
-    const { canUpdate } = updateOptions;
-
-    if (canUpdate) {
+    if (canUpdateSubscriptionParams) {
       const formValues = watch();
 
-      updateEncounter({
-        objective: {
-          generalNotes: formValues.objective,
-        },
-      });
+      updateSubscriptionField(formValues.objective);
     }
   };
 
-  return { updateObjectiveNote };
+  return {
+    canUpdateObjectiveNote: canUpdateSubscriptionParams,
+    updateObjectiveNote,
+  };
 };
 
 const useUpdateAssessment = () => {
-  const { updateEncounter, checkCanUpdate } = useUpdateEncounter();
+  const encounterUpdates = useUpdateEncounterSubscription<"assessment">(
+    {
+      assessment: {
+        generalNotes: true,
+      },
+    },
+    "assessment",
+    {
+      assessment: ["generalNotes"],
+    }
+  );
+
+  const { updateSubscriptionField, canUpdateSubscriptionParams } =
+    encounterUpdates;
   const { watch } = useNoteFormContext();
 
   const updateAssessmentNote = () => {
-    const updateOptions = checkCanUpdate({
-      assessment: { generalNotes: true },
-    });
-    const { canUpdate: canUpdateResult } = updateOptions;
-
-    if (canUpdateResult) {
+    if (canUpdateSubscriptionParams) {
       const formValues = watch();
 
-      updateEncounter({
-        assessment: {
-          generalNotes: formValues.assessment,
-        },
-      });
+      updateSubscriptionField(formValues.assessment);
     }
   };
 
-  return { updateAssessmentNote };
+  return {
+    canUpdateAssessmentNote: canUpdateSubscriptionParams,
+    updateAssessmentNote,
+  };
 };
 
 const useUpdatePlan = () => {
-  const { updateEncounter, checkCanUpdate } = useUpdateEncounter();
+  const encounterUpdates = useUpdateEncounterSubscription<"plan">(
+    {
+      plan: {
+        generalNotes: true,
+      },
+    },
+    "plan",
+    {
+      plan: ["generalNotes"],
+    }
+  );
+
+  const { updateSubscriptionField, canUpdateSubscriptionParams } =
+    encounterUpdates;
   const { watch } = useNoteFormContext();
 
   const updatePlanNote = () => {
-    const updateOptions = checkCanUpdate({
-      plan: { generalNotes: true },
-    });
-    const { canUpdate: canUpdateResult } = updateOptions;
-
-    if (canUpdateResult) {
+    if (canUpdateSubscriptionParams) {
       const formValues = watch();
 
-      updateEncounter({
-        plan: {
-          generalNotes: formValues.plan,
-        },
-      });
+      updateSubscriptionField(formValues.plan);
     }
   };
 
-  return { updatePlanNote };
+  return {
+    canUpdatePlanNote: canUpdateSubscriptionParams,
+    updatePlanNote,
+  };
 };
 
 export const NotesSections = ({
@@ -129,10 +147,12 @@ export const NotesSections = ({
   transcriptionSegments,
   renderHighlightedText,
 }: NotePanelProps) => {
-  const { updateSubjectiveNote, canUpdate } = useUpdateSubjective();
-  const { updateObjectiveNote } = useUpdateObjective();
-  const { updateAssessmentNote } = useUpdateAssessment();
-  const { updatePlanNote } = useUpdatePlan();
+  const { updateSubjectiveNote, canUpdateSubjectiveNote } =
+    useUpdateSubjective();
+  const { updateObjectiveNote, canUpdateObjectiveNote } = useUpdateObjective();
+  const { updateAssessmentNote, canUpdateAssessmentNote } =
+    useUpdateAssessment();
+  const { updatePlanNote, canUpdatePlanNote } = useUpdatePlan();
 
   const isHighlighted = (section: SectionTypes) => {
     if (hoveredSegment === null) return false;
@@ -147,7 +167,7 @@ export const NotesSections = ({
         title="Subjective"
         fieldName="subjective"
         isHighlighted={isHighlighted("subjective")}
-        isWriteAvailable={canUpdate}
+        isWriteAvailable={canUpdateSubjectiveNote}
         renderHighlightedText={renderHighlightedText}
         onPushToEHR={() => {
           updateSubjectiveNote();
@@ -157,6 +177,7 @@ export const NotesSections = ({
         title="Objective"
         fieldName="objective"
         isHighlighted={isHighlighted("objective")}
+        isWriteAvailable={canUpdateObjectiveNote}
         renderHighlightedText={renderHighlightedText}
         onPushToEHR={() => updateObjectiveNote()}
       />
@@ -164,6 +185,7 @@ export const NotesSections = ({
         title="Assessment"
         fieldName="assessment"
         isHighlighted={isHighlighted("assessment")}
+        isWriteAvailable={canUpdateAssessmentNote}
         renderHighlightedText={renderHighlightedText}
         onPushToEHR={() => updateAssessmentNote()}
       />
@@ -171,6 +193,7 @@ export const NotesSections = ({
         title="Plan"
         fieldName="plan"
         isHighlighted={isHighlighted("plan")}
+        isWriteAvailable={canUpdatePlanNote}
         renderHighlightedText={renderHighlightedText}
         onPushToEHR={() => updatePlanNote()}
       />

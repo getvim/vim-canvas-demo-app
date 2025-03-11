@@ -105,7 +105,6 @@ export const SoapSection = ({
     if (window.getSelection()?.toString()) {
       return;
     }
-
     // Don't enter edit mode if clicking on a keyword
     const target = e.target as HTMLElement;
     if (target.hasAttribute("data-keyword")) {

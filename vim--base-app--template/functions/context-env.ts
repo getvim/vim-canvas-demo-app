@@ -6,5 +6,4 @@ export interface Env {
   VIM_AUTHORIZE_ENDPOINT?: string;
   VIM_ISSUER?: string;
   CLIENT_SECRET_FALLBACK?: string;
-  DB: D1Database;
 }

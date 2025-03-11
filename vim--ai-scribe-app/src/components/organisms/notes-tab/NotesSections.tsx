@@ -1,6 +1,4 @@
-import {
-  useUpdateEncounterSubscription
-} from "@/vimOs/useUpdateEncounter";
+import { useUpdateEncounterSubscription } from "@/vimOs/useUpdateEncounter";
 import { SoapSection } from "../../molecules/SoapSection";
 import type {
   SectionTypes,
@@ -15,7 +13,7 @@ interface NotePanelProps {
 }
 
 const useUpdateSubjective = () => {
-  const encounterUpdates = useUpdateEncounterSubscription<'subjective'>(
+  const encounterUpdates = useUpdateEncounterSubscription<"subjective">(
     {
       subjective: {
         generalNotes: true,

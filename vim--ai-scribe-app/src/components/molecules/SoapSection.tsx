@@ -6,6 +6,11 @@ import { useVimOsContext } from "@/providers/VimOSContext";
 import { Button } from "../atoms/Button";
 import { IconButton } from "../atoms/IconButton";
 import { Textarea } from "../atoms/Textarea";
+import {
+  sanitizeEhrText,
+  type TextSanitizationResult,
+} from "@/lib/sanitizeEhrText";
+import { SanitizationWarning } from "./SanitizationWarning";
 
 type FieldName = "subjective" | "objective" | "assessment" | "plan";
 
@@ -35,6 +40,8 @@ export const SoapSection = ({
 
   const [isEditing, setIsEditing] = useState(false);
   const [editValue, setEditValue] = useState(value);
+  const [sanitizeResult, setSanitizeResult] =
+    useState<TextSanitizationResult | null>(null);
 
   // Keep editValue in sync with form value
   useEffect(() => {
@@ -57,22 +64,39 @@ export const SoapSection = ({
   const handleEditClick = () => {
     setEditValue(value);
     setIsEditing(true);
+    setSanitizeResult(null);
   };
 
   const handleSaveClick = () => {
-    onChange(editValue);
-    setIsEditing(false);
+    const result = sanitizeEhrText(editValue);
+    if (result.hasChanges) {
+      setSanitizeResult(result);
+      setEditValue(result.sanitizedText);
+    } else {
+      onChange(editValue);
+      setIsEditing(false);
+      setSanitizeResult(null);
+    }
+  };
+
+  const handleConfirmSanitizedSave = () => {
+    if (sanitizeResult) {
+      onChange(sanitizeResult.sanitizedText);
+      setIsEditing(false);
+      setSanitizeResult(null);
+    }
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     // Save on Ctrl/Cmd + Enter
-    if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+    if ((e.ctrlKey || e.metaKey) && e.key === "Enter") {
       handleSaveClick();
     }
     // Cancel on Escape
-    if (e.key === 'Escape') {
+    if (e.key === "Escape") {
       setEditValue(value);
       setIsEditing(false);
+      setSanitizeResult(null);
     }
   };
 
@@ -81,7 +105,6 @@ export const SoapSection = ({
     if (window.getSelection()?.toString()) {
       return;
     }
-    
     // Don't enter edit mode if clicking on a keyword
     const target = e.target as HTMLElement;
     if (target.hasAttribute("data-keyword")) {
@@ -106,21 +129,32 @@ export const SoapSection = ({
             onClick={isEditing ? handleSaveClick : handleEditClick}
           />
         </div>
-        <div 
+        <div
           className="text-gray-700 text-lg whitespace-pre-line"
           onClick={!isEditing ? handleTextClick : undefined}
         >
           {isEditing ? (
-            <Textarea
-              value={editValue}
-              onChange={(e) => setEditValue(e.target.value)}
-              onKeyDown={handleKeyDown}
-              className="min-h-[200px] text-lg"
-              placeholder={`Enter ${title.toLowerCase()} notes here...`}
-              autoFocus
-            />
+            <>
+              <Textarea
+                value={editValue}
+                onChange={(e) => {
+                  setEditValue(e.target.value);
+                  setSanitizeResult(null);
+                }}
+                onKeyDown={handleKeyDown}
+                className="min-h-[200px] text-lg"
+                placeholder={`Enter ${title.toLowerCase()} notes here...`}
+                autoFocus
+              />
+
+              <SanitizationWarning
+                sanitizeResult={sanitizeResult}
+                handleConfirmSanitizedSave={handleConfirmSanitizedSave}
+                setSanitizeResult={setSanitizeResult}
+              />
+            </>
           ) : (
-            <div className="cursor-text">
+            <div className="cursor-pointer p-3 border border-green-300 rounded-xl">
               {renderHighlightedText(value)}
             </div>
           )}

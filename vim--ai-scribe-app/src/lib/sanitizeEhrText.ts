@@ -40,10 +40,50 @@ const EHR_CHARACTER_REPLACEMENT_RULES: ReplacementRules[] = [
   },
 ];
 
+const SAFE_TEXT_DISALLOWED_SEQUENCES = [
+  "&amp",
+  "&lt",
+  "&gt",
+  "&quot",
+  "&apos",
+  "&#",
+  "]]",
+];
+
+const SAFE_TEXT_REGEX = /^[a-zA-Z 0-9~`!@#$%^&*()-_+={[}\]|\\;:'",<>.\/\?\n\t\r]+$/;
+
 export const sanitizeEhrText = (text: string): TextSanitizationResult => {
   const explanationList: Explanation[] = [];
   let sanitizedText = text;
 
+  // Check if text exceeds 60,000 characters
+  if (text.length > 60000) {
+    explanationList.push({
+      original: text,
+      replacement: "",
+      description: "Text exceeds the maximum allowed length of 60,000 characters",
+    });
+    return {
+      sanitizedText: text,
+      original: text,
+      explanationList,
+      hasChanges: true,
+    };
+  }
+
+  // Check for disallowed sequences
+  SAFE_TEXT_DISALLOWED_SEQUENCES.forEach((sequence) => {
+    if (text.includes(sequence)) {
+      explanationList.push({
+        original: sequence,
+        replacement: "",
+        description: `Remove disallowed sequence '${sequence}'`,
+      });
+      sanitizedText = sanitizedText.replace(new RegExp(sequence, 'g'), "");
+    }
+  });
+
+  // Apply existing replacement rules
   EHR_CHARACTER_REPLACEMENT_RULES.forEach((rule) => {
     const { pattern, replacement, description } = rule;
     const matches = text.match(pattern);
@@ -61,6 +101,16 @@ export const sanitizeEhrText = (text: string): TextSanitizationResult => {
       sanitizedText = sanitizedText.replace(pattern, replacement);
     }
   });
+
+  // Check if text matches SafeText regex
+  const isSafeText = SAFE_TEXT_REGEX.test(sanitizedText);
+  if (!isSafeText) {
+    explanationList.push({
+      original: sanitizedText,
+      replacement: "",
+      description: "Text does not match SafeText pattern",
+    });
+  }
 
   return {
     sanitizedText,

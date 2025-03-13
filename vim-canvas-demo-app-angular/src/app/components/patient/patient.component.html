@@ -1,0 +1,5 @@
+<div *ngIf="patient | async as patientData" class="flex flex-col gap-2 mt-4 p-2 bg-red-100 rounded-lg">
+    <div>Patient Name: <span>{{ patientData.demographics?.firstName }} {{ patientData.demographics?.lastName }}</span></div>
+    <div>Address: <span>{{ patientData.address?.fullAddress }}</span></div>
+  </div>
+  

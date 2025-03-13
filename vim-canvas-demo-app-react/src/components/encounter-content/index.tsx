@@ -39,8 +39,16 @@ export const EncounterContent = () => {
   const { encounter } = useVimOSEncounter();
   const { canUpdate, updateEncounter } = useUpdateEncounter();
   const [enlargedHeader, setEnlargeHeader] = useState(false);
+  
   const methods = useNotesForm();
 
+
+  /**
+   * Because input fields are never disabled (because when they can't be updated we show copy to clipboard UX),
+   * We can't use react-hook-form to determine which inputs are for copy to clipboard and which are for updating.
+   *
+   * So we have to manually check if the input fields are dirty and if they can be updated.
+   */
   const canUpdateObj: EHR.CanUpdateEncounterParams = {
     assessment: {},
     objective: {},
@@ -85,79 +93,71 @@ export const EncounterContent = () => {
   const canUpdateResult = canUpdate(canUpdateObj);
   const areNotesDirty = Object.keys(methods.formState.dirtyFields).length > 0;
 
-  const canUpdateNotes = useMemo(
-    () => ({
-      ...canUpdateResult,
-      canUpdate: areNotesDirty && canUpdateResult.canUpdate,
-    }),
-    [areNotesDirty, canUpdateResult]
-  );
+  const canUpdateNotes = {
+    ...canUpdateResult,
+    canUpdate: areNotesDirty && canUpdateResult.canUpdate,
+  };
 
-  const onNotesSubmit = useCallback(
-    async (data: FormInputs) => {
-      const encounterPayload: EHR.UpdateEncounterParams = {
-        subjective: {
-          generalNotes: canUpdateNotes?.details.subjective?.generalNotes
-            ? data.subjectiveGeneralNotes ?? undefined
-            : undefined,
-          chiefComplaintNotes: canUpdateNotes?.details.subjective
-            ?.chiefComplaintNotes
-            ? data.subjectiveChiefComplaint ?? undefined
-            : undefined,
-          historyOfPresentIllnessNotes: canUpdateNotes?.details.subjective
-            ?.historyOfPresentIllnessNotes
-            ? data.subjectiveHistoryOfPresentIllness ?? undefined
-            : undefined,
-          reviewOfSystemsNotes: canUpdateNotes?.details.subjective
-            ?.reviewOfSystemsNotes
-            ? data.subjectiveReviewOfSystems ?? undefined
-            : undefined,
-        },
-        objective: {
-          generalNotes: canUpdateNotes?.details.objective?.generalNotes
-            ? data.objectiveGeneralNotes ?? undefined
-            : undefined,
-          physicalExamNotes: canUpdateNotes?.details.objective
-            ?.physicalExamNotes
-            ? data.objectivePhysicalExamNotes ?? undefined
-            : undefined,
-        },
-        assessment: {
-          generalNotes: canUpdateNotes?.details.assessment?.generalNotes
-            ? data.assessmentGeneralNotes ?? undefined
-            : undefined,
-        },
-        plan: {
-          generalNotes: canUpdateNotes?.details.plan?.generalNotes
-            ? data.planGeneralNotes ?? undefined
-            : undefined,
-        },
-        patientInstructions: {
-          generalNotes: canUpdateNotes?.details.patientInstructions
-            ?.generalNotes
-            ? data.patientInstructionsGeneralNotes ?? undefined
-            : undefined,
-        },
-      };
+  const onNotesSubmit = async (data: FormInputs) => {
+    const encounterPayload: EHR.UpdateEncounterParams = {
+      subjective: {
+        generalNotes: canUpdateNotes?.details.subjective?.generalNotes
+          ? data.subjectiveGeneralNotes ?? undefined
+          : undefined,
+        chiefComplaintNotes: canUpdateNotes?.details.subjective
+          ?.chiefComplaintNotes
+          ? data.subjectiveChiefComplaint ?? undefined
+          : undefined,
+        historyOfPresentIllnessNotes: canUpdateNotes?.details.subjective
+          ?.historyOfPresentIllnessNotes
+          ? data.subjectiveHistoryOfPresentIllness ?? undefined
+          : undefined,
+        reviewOfSystemsNotes: canUpdateNotes?.details.subjective
+          ?.reviewOfSystemsNotes
+          ? data.subjectiveReviewOfSystems ?? undefined
+          : undefined,
+      },
+      objective: {
+        generalNotes: canUpdateNotes?.details.objective?.generalNotes
+          ? data.objectiveGeneralNotes ?? undefined
+          : undefined,
+        physicalExamNotes: canUpdateNotes?.details.objective?.physicalExamNotes
+          ? data.objectivePhysicalExamNotes ?? undefined
+          : undefined,
+      },
+      assessment: {
+        generalNotes: canUpdateNotes?.details.assessment?.generalNotes
+          ? data.assessmentGeneralNotes ?? undefined
+          : undefined,
+      },
+      plan: {
+        generalNotes: canUpdateNotes?.details.plan?.generalNotes
+          ? data.planGeneralNotes ?? undefined
+          : undefined,
+      },
+      patientInstructions: {
+        generalNotes: canUpdateNotes?.details.patientInstructions?.generalNotes
+          ? data.patientInstructionsGeneralNotes ?? undefined
+          : undefined,
+      },
+    };
 
-      updateEncounter(encounterPayload)
-        .then(() => {
-          toast({
-            variant: "default",
-            title: "Encounter notes updated!",
-          });
-        })
-        .catch((error) => {
-          toast({
-            variant: "destructive",
-            title: "Uh oh! Something went wrong.",
-            description: error ? JSON.stringify(error) : "An error occurred.",
-          });
+    updateEncounter(encounterPayload)
+      .then(() => {
+        toast({
+          variant: "default",
+          title: "Encounter notes updated!",
         });
-      methods.reset();
-    },
-    [canUpdateNotes, methods, toast, updateEncounter]
-  );
+      })
+      .catch((error) => {
+        toast({
+          variant: "destructive",
+          title: "Uh oh! Something went wrong.",
+          description: error ? JSON.stringify(error) : "An error occurred.",
+        });
+      });
+    methods.reset();
+  };
 
   const headerClasses = useMemo(() => {
     return `flex justify-between items-center top-0 z-10 bg-white  p-2  duration-2 ${

@@ -176,7 +176,40 @@ export const EncounterContent = () => {
           description: error ? JSON.stringify(error) : "An error occurred.",
         });
       });
-    methods.reset();
+    methods.reset({
+      subjectiveGeneralNotes: canUpdateNotes?.details.subjective?.generalNotes
+        ? null
+        : undefined,
+      subjectiveChiefComplaint: canUpdateNotes?.details.subjective
+        ?.chiefComplaintNotes
+        ? null
+        : undefined,
+      subjectiveHistoryOfPresentIllness: canUpdateNotes?.details.subjective
+        ?.historyOfPresentIllnessNotes
+        ? null
+        : undefined,
+      subjectiveReviewOfSystems: canUpdateNotes?.details.subjective
+        ?.reviewOfSystemsNotes
+        ? null
+        : undefined,
+      objectiveGeneralNotes: canUpdateNotes?.details.objective?.generalNotes
+        ? null
+        : undefined,
+      objectivePhysicalExamNotes: canUpdateNotes?.details.objective
+        ?.physicalExamNotes
+        ? null
+        : undefined,
+      assessmentGeneralNotes: canUpdateNotes?.details.assessment?.generalNotes
+        ? null
+        : undefined,
+      planGeneralNotes: canUpdateNotes?.details.plan?.generalNotes
+        ? null
+        : undefined,
+      patientInstructionsGeneralNotes: canUpdateNotes?.details
+        .patientInstructions?.generalNotes
+        ? null
+        : undefined,
+    });
   };
 
   const headerClasses = useMemo(() => {

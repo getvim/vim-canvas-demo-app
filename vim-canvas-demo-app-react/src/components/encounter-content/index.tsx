@@ -39,9 +39,8 @@ export const EncounterContent = () => {
   const { encounter } = useVimOSEncounter();
   const { canUpdate, updateEncounter } = useUpdateEncounter();
   const [enlargedHeader, setEnlargeHeader] = useState(false);
-  
-  const methods = useNotesForm();
 
+  const methods = useNotesForm();
 
   /**
    * Because input fields are never disabled (because when they can't be updated we show copy to clipboard UX),
@@ -99,6 +98,27 @@ export const EncounterContent = () => {
   };
 
   const onNotesSubmit = async (data: FormInputs) => {
+    function removeUndefinedProperties(obj: unknown) {
+      if (typeof obj !== "object" || obj === null) {
+        return obj;
+      }
+
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const result: any = {};
+
+      for (const [key, value] of Object.entries(obj)) {
+        if (typeof value === "object" && value !== null) {
+          const nestedResult = removeUndefinedProperties(value);
+          if (Object.keys(nestedResult).length > 0) {
+            result[key] = nestedResult;
+          }
+        } else if (value !== undefined) {
+          result[key] = value;
+        }
+      }
+
+      return result;
+    }
     const encounterPayload: EHR.UpdateEncounterParams = {
       subjective: {
         generalNotes: canUpdateNotes?.details.subjective?.generalNotes
@@ -142,7 +162,7 @@ export const EncounterContent = () => {
       },
     };
 
-    updateEncounter(encounterPayload)
+    updateEncounter(removeUndefinedProperties(encounterPayload))
       .then(() => {
         toast({
           variant: "default",

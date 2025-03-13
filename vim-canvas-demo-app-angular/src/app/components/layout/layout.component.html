@@ -1,5 +1,21 @@
 <div>
-
-   <p> EHR Canvas Demo App</p>
+   <div class="flex justify-between items-center p-4 bg-accent h-[70px]">
+      <div class="flex flex-col gap-1">
+         <span>Vim Canvas</span>
+         <span class="font-bold">Demo</span>
+      </div>
+      <div class="flex gap-1">
+         <div class="hover:cursor-pointer" (click)="onToggleSize('EXTRA_LARGE')">
+            <app-full-layout-icon></app-full-layout-icon>
+         </div>
+         <div class="hover:cursor-pointer" (click)="onToggleSize('LARGE')">
+            <app-half-full-layout-icon></app-half-full-layout-icon>
+         </div>
+         <div class="hover:cursor-pointer" (click)="onToggleSize('CLASSIC')">
+            <app-small-full-layout-icon></app-small-full-layout-icon>
+         </div>
+   
+      </div>
+   </div>
   <app-patient></app-patient>
 </div>

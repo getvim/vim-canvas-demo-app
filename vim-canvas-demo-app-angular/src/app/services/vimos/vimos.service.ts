@@ -44,6 +44,7 @@ export class VimOsService {
   loadVimOs() {
       loadSdk().then((sdk) => {
         this.vimSdk = sdk
+        console.log('vim sdk loaded')
         sdk.hub.setActivationStatus("ENABLED")
         this.subscribeToData(sdk)
       });

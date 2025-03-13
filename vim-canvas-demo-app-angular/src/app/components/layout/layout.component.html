@@ -1,8 +1,8 @@
 <div>
    <div class="flex justify-between items-center p-4 bg-accent h-[70px]">
       <div class="flex flex-col gap-1">
-         <span>Vim Canvas</span>
-         <span class="font-bold">Demo</span>
+         <span class="text-sm">Vim Canvas</span>
+         <span class="font-bold text-sm">Demo</span>
       </div>
       <div class="flex gap-1">
          <div class="hover:cursor-pointer" (click)="onToggleSize('EXTRA_LARGE')">
@@ -17,5 +17,9 @@
    
       </div>
    </div>
-  <app-patient></app-patient>
+   <div class="p-4 flex flex-col gap-4">
+      <app-user></app-user>
+      <app-patient></app-patient>
+   </div>
+
 </div>

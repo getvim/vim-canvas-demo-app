@@ -3,12 +3,14 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/
 import { VimOsService } from '../../services/vimos/vimos.service';
 import { map, Observable, tap } from 'rxjs';
 import { EHR } from 'vim-os-js-browser/types';
+import { AccordionComponent } from "../accordion/accordion.component";
 
 @Component({
   selector: 'app-patient',
   imports: [
-    CommonModule
-  ],
+    CommonModule,
+    AccordionComponent
+],
   templateUrl: './patient.component.html',
   styleUrl: './patient.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush

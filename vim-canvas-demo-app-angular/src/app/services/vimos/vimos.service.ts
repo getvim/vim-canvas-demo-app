@@ -11,12 +11,17 @@ export class VimOsService {
   vimSdk: SDK | undefined;
 
   _patient: BehaviorSubject<EHR.Patient | undefined> = new BehaviorSubject<EHR.Patient | undefined>(undefined);
+
   constructor() { 
 
   }
 
   get patient(): Observable<EHR.Patient | undefined> {
     return this._patient
+  }
+
+  get user() {
+    return of(this.vimSdk?.sessionContext.user)
   }
 
   vimSdkLoaded(): Observable<boolean> {
@@ -28,6 +33,8 @@ export class VimOsService {
       this._patient.next(patient)
   })
   }
+
+
 
 
   enableApp() {

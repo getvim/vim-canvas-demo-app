@@ -6,6 +6,7 @@ import { PatientComponent } from "../patient/patient.component";
 import { FullLayoutIconComponent } from "./icons/full-layout-icon/full-layout-icon.component";
 import { HalfFullLayoutIconComponent } from "./icons/half-full-layout-icon/half-full-layout-icon.component";
 import { SmallFullLayoutIconComponent } from "./icons/small-full-layout-icon/small-full-layout-icon.component";
+import { UserComponent } from "../user/user.component";
 @Component({
   selector: 'app-layout',
   imports: [
@@ -13,7 +14,8 @@ import { SmallFullLayoutIconComponent } from "./icons/small-full-layout-icon/sma
     PatientComponent,
     FullLayoutIconComponent,
     HalfFullLayoutIconComponent,
-    SmallFullLayoutIconComponent
+    SmallFullLayoutIconComponent,
+    UserComponent
 ],
   templateUrl: './layout.component.html',
   styleUrl: './layout.component.scss'

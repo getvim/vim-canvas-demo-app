@@ -35,7 +35,8 @@ export const InputField = ({
     <div className="flex w-full justify-between">
       <div className="relative w-full">
         <Input
-          type={inputType}
+          type={inputType === 'number' ? 'text' : 'text'}
+          pattern={inputType === 'number' ? '[0-9]*' : undefined}
           className="h-7 rounded-r-none"
           value={innerValue}
           onChange={(e) => setInnerValue(e.target.value)}

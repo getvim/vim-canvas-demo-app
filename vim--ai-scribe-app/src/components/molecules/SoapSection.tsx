@@ -17,16 +17,18 @@ type FieldName = "subjective" | "objective" | "assessment" | "plan";
 interface SoapSectionProps {
   title: string;
   fieldName: FieldName;
-  onPushToEHR?: () => void;
   isHighlighted?: boolean;
+  isWriteAvailable?: boolean;
+  onPushToEHR?: () => void;
   renderHighlightedText: (text: string) => JSX.Element;
 }
 
 export const SoapSection = ({
   title,
   fieldName,
-  onPushToEHR = () => {},
   isHighlighted = false,
+  isWriteAvailable = false,
+  onPushToEHR = () => {},
   renderHighlightedText,
 }: SoapSectionProps) => {
   const vimOS = useVimOsContext();
@@ -167,6 +169,8 @@ export const SoapSection = ({
           }}
           fullWidth
           className="py-3 w-2/3 self-center"
+          disabled={!isWriteAvailable}
+          tooltip={!isWriteAvailable ? "EHR write access missing" : "" }
         >
           Push to EHR
         </Button>

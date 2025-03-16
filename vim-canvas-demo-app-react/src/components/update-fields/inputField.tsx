@@ -12,6 +12,7 @@ export const InputField = ({
   onChange,
   disabled,
   inputType = 'text'
+  pattern
 }: UpdateField<string | undefined>) => {
   const { toast } = useToast();
   const [innerValue, setInnerValue] = useState(value);
@@ -35,8 +36,8 @@ export const InputField = ({
     <div className="flex w-full justify-between">
       <div className="relative w-full">
         <Input
-          type={inputType === 'number' ? 'text' : 'text'}
-          pattern={inputType === 'number' ? '[0-9]*' : undefined}
+          type={inputType}
+          pattern={pattern}
           className="h-7 rounded-r-none"
           value={innerValue}
           onChange={(e) => setInnerValue(e.target.value)}

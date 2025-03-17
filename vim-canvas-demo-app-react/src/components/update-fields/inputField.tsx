@@ -11,7 +11,7 @@ export const InputField = ({
   value,
   onChange,
   disabled,
-  inputType = 'text'
+  inputType = 'text',
   pattern
 }: UpdateField<string | undefined>) => {
   const { toast } = useToast();

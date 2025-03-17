@@ -1,4 +1,3 @@
-import { Textarea } from "@/components/ui/textarea";
 import { CopyIcon, Pencil1Icon } from "@radix-ui/react-icons";
 import { useEffect, useRef, useState } from "react";
 import { Button } from "../ui/button";
@@ -11,16 +10,19 @@ import {
   useFormContext,
 } from "react-hook-form";
 import { useToast } from "@/hooks/use-toast";
+import { TextareaWithAdornment } from "../ui/textareaWithAdornment";
 
 export function TextareaField<T extends FieldValues = FieldValues>({
   clearAfterChange,
   onTextareaSubmit,
   placeholder,
+  currentValue,
   ...props
 }: UseControllerProps<T> & {
   placeholder?: string;
   clearAfterChange?: boolean;
   onTextareaSubmit?: (value: string) => void;
+  currentValue?: string;
 }) {
   const { toast } = useToast();
   const { field } = useController(props);
@@ -49,7 +51,8 @@ export function TextareaField<T extends FieldValues = FieldValues>({
   return (
     <div className="flex w-full relative justify-between">
       <div className="relative w-full">
-        <Textarea
+        <TextareaWithAdornment
+          prefixAdornment={currentValue}
           key={key}
           className="disabled:bg-secondary"
           placeholder={placeholder}

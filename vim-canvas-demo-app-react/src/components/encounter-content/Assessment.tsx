@@ -10,8 +10,13 @@ import { SelectField } from "../update-fields/selectField";
 import { TextareaField } from "../update-fields/textAreaField";
 import { EncounterUpdateField } from "../update-fields/updateFieldWrapper";
 import { FormInputs, useNoteFormContext } from "./form";
+import { EHR } from "vim-os-js-browser/types";
 
-export const EncounterAssessment = () => {
+export const EncounterAssessment = ({
+  currentValue,
+}: {
+  currentValue: EHR.Encounter["assessment"];
+}) => {
   const { control } = useNoteFormContext();
   const { encounter } = useVimOSEncounter();
 
@@ -99,6 +104,7 @@ export const EncounterAssessment = () => {
                 onTextareaSubmit={field.onChange}
                 disabled={field.disabled}
                 clearAfterChange
+                currentValue={currentValue?.generalNotes}
               />
             )}
           />

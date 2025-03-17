@@ -23,12 +23,22 @@ import { EncounterPI } from "./PatientInstructions";
 import { EncounterPlan } from "./Plan";
 import { EncounterSubjective } from "./Subjective";
 import { EncounterBillingInformation } from "./BillingInformation";
+import {
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useMemo,
+  useState,
+} from "react";
+
+const scrollY = 530;
 
 export const EncounterContent = () => {
   const { toast } = useToast();
   const { jsonMode } = useAppConfig();
   const { encounter } = useVimOSEncounter();
   const { canUpdate, updateEncounter } = useUpdateEncounter();
+  const [enlargedHeader, setEnlargeHeader] = useState(false);
 
   const methods = useNotesForm();
 
@@ -202,6 +212,34 @@ export const EncounterContent = () => {
     });
   };
 
+  const headerClasses = useMemo(() => {
+    return `flex justify-between items-center top-0 z-10 bg-white  p-2  duration-2 ${
+      enlargedHeader
+        ? " animate-[fadeIn_0.2s_forwards] opacity-0 pr-6 pl-4 fixed top-0  left-0 pt-0  w-full shadow-md"
+        : ""
+    }`;
+  }, [enlargedHeader]);
+
+  const checkIfNeedToSetStickyHeader = useCallback(() => {
+    setEnlargeHeader(window.scrollY > scrollY);
+  }, [setEnlargeHeader]);
+
+  const onScroll = useCallback(() => {
+    checkIfNeedToSetStickyHeader();
+  }, [checkIfNeedToSetStickyHeader]);
+
+  useEffect(() => {
+    checkIfNeedToSetStickyHeader();
+    return () => {
+      setEnlargeHeader(false);
+    };
+  }, [checkIfNeedToSetStickyHeader, setEnlargeHeader]);
+
+  useLayoutEffect(() => {
+    document.addEventListener("scroll", onScroll);
+    return () => document.removeEventListener("scroll", onScroll);
+  }, [onScroll]);
+
   return (
     <div className="w-full">
       {jsonMode ? (
@@ -220,17 +258,16 @@ export const EncounterContent = () => {
           <Separator className="mb-1" />
           <FormProvider {...methods}>
             <form onSubmit={methods.handleSubmit(onNotesSubmit)}>
-              <div className="flex justify-between items-center">
-                <EntitySectionTitle
-                  className="text-md"
-                  title="Clinical notes"
-                />
+              <div className={headerClasses}>
+                <EntitySectionTitle className="text-md" title="SOAP" />
                 <Button
                   size="sm"
                   variant="default"
                   className="pl-2 pr-3 h-8"
                   disabled={!canUpdateNotes?.canUpdate}
-                  onClick={() => {}}
+                  onClick={() => {
+                    methods.handleSubmit(onNotesSubmit)();
+                  }}
                 >
                   <CheckIcon className="mr-2" />
                   Push all notes

@@ -112,6 +112,10 @@ export const ProviderSection = ({
             <EntityFieldReadonlyText text={provider?.facility?.facilityEhrId} />
           </EntityFieldContent>
           <EntityFieldContent>
+            <EntityFieldTitle title="Facility NPI" />
+            <EntityFieldReadonlyText text={provider?.facility?.facilityNpi} />
+          </EntityFieldContent>
+          <EntityFieldContent>
             <EntityFieldTitle title="Facility Name" />
             <EntityFieldReadonlyText text={provider?.facility?.name} />
           </EntityFieldContent>

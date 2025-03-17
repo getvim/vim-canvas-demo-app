@@ -238,6 +238,7 @@ export const ReferralBasicInformation = () => {
               render={({ field: { onChange, value, ...field } }) => (
                 <InputField
                   {...field}
+                  pattern="[0-9]*"
                   value={value?.toString()}
                   onChange={(numberOfVisitsString) => {
                     onChange(

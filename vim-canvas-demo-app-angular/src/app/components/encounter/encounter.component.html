@@ -1,13 +1,42 @@
 @if(encounter | async) {
-    <app-accordion title="Encounter">
-            <div>
-                <div class="flex flex-col gap-4">
-                    <h3>Subjective</h3>
-                    <textarea [disabled]="subjectivePermissions" rows="3"  placeholder="chiefComplaintNotes"></textarea>
-                    <Textarea [disabled]="subjectivePermissions" rows="3"  placeholder="historyOfPresentIllnessNotes"></Textarea>
-                    <Textarea [disabled]="subjectivePermissions" rows="3"  placeholder="reviewOfSystemsNotes"></Textarea>
-                    <Textarea [disabled]="subjectivePermissions" rows="3"  placeholder="generalNotes"></Textarea>
-                </div>    
-            </div>
-    </app-accordion>
+<app-accordion title="Encounter">
+  <form [formGroup]="encounterForm" (ngSubmit)="submitSubjectiveEncounter()">
+    <div>
+      <div class="flex flex-col gap-4" formGroupName="subjective">
+        <h3>Subjective</h3>
+        <textarea
+          formControlName="chiefComplaintNotes"
+          [disabled]="subjectivePermissions()"
+          rows="3"
+          placeholder="chiefComplaintNotes"
+        ></textarea>
+        <textarea
+          [disabled]="subjectivePermissions()"
+          formControlName="historyOfPresentIllnessNotes"
+          rows="3"
+          placeholder="historyOfPresentIllnessNotes"
+        ></textarea>
+        <textarea
+          [disabled]="subjectivePermissions()"
+          formControlName="reviewOfSystemsNotes"
+          rows="3"
+          placeholder="reviewOfSystemsNotes"
+        ></textarea>
+        <textarea
+          [disabled]="subjectivePermissions()"
+          rows="3"
+          formControlName="generalNotes"
+          placeholder="generalNotes"
+        ></textarea>
+        <button
+          type="submit"
+          [disabled]="subjectivePermissions()"
+          class="cursor-pointer"
+        >
+          Submit
+        </button>
+      </div>
+    </div>
+  </form>
+</app-accordion>
 }

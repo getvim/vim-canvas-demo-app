@@ -44,18 +44,10 @@ function App() {
   useEffect(() => {
     vimOs.hub.setActivationStatus("ENABLED");
     vimOs.hub.pushNotification.show({
-      text: `Explore the <b>Vim Canvas™️ Demo</b> app to view SDK capabilities, grab app code, and unlock opportunities`,
+      text: `Explore the <b>ScribeAi</b> to generate notes faster`,
       notificationId: crypto.randomUUID(),
       actionButtons: {
-        leftButton: {
-          text: "View code",
-          buttonStyle: "LINK",
-          callback: () => {
-            setRedirectUrl("https://github.com/getvim/vim-canvas-demo-app");
-            setRedirectModal(true);
-          },
-          openAppButton: true,
-        },
+        
         rightButton: {
           text: "Explore app",
           buttonStyle: "PRIMARY",
@@ -77,12 +69,15 @@ function App() {
     <div className="w-full top-0 left-0 pb-6">
       <Navbar />
 
+      {/* Commented out User section
       <CollapsibleEntity entityTitle="User" entityIconUrl={userSvg}>
         <CollapsibleEntityContent>
           <SessionContextContent />
         </CollapsibleEntityContent>
       </CollapsibleEntity>
+      */}
 
+      {/* Commented out Patient section
       {patient && (
         <CollapsibleEntity entityTitle="Patient" entityIconUrl={patientSvg}>
           <CollapsibleEntityContent>
@@ -90,6 +85,7 @@ function App() {
           </CollapsibleEntityContent>
         </CollapsibleEntity>
       )}
+      */}
       {encounter && (
         <CollapsibleEntity entityTitle="Encounter" entityIconUrl={encounterSvg}>
           <CollapsibleEntityContent>

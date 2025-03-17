@@ -1,10 +1,7 @@
 import { useVimOsContext } from "@/hooks/useVimOsContext";
 import { Cross2Icon } from "@radix-ui/react-icons";
 import { Button } from "./ui/button";
-import { Label } from "./ui/label";
 import { Separator } from "./ui/separator";
-import { Switch } from "./ui/switch";
-import { useAppConfig } from "../hooks/useAppConfig";
 import { useCallback, useState } from "react";
 import { Hub } from "vim-os-js-browser/types";
 import { cn } from "@/lib/utils";
@@ -14,7 +11,6 @@ import { LayoutSmall } from "@/assets/layoutSmall";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "./ui/tooltip";
 
 export const Navbar = () => {
-  const { setJsonMode } = useAppConfig();
   const vimOs = useVimOsContext();
 
   const [appSize, setAppSize] = useState<Hub.ApplicationSize>("CLASSIC");
@@ -33,26 +29,13 @@ export const Navbar = () => {
   return (
     <div className="px-2 pl-4 py-2 bg-accent flex justify-between items-center space-x-2">
       <div>
-        <h2 className="text-sm">Vim Canvas</h2>
-        <h2 className="text-sm font-bold">Demo</h2>
+        <h2 className="text-sm">ScribeAi</h2>
       </div>
       <div
         className={cn("flex items-center h-full", {
           "space-x-1": smallMode,
         })}
       >
-        <div className="flex items-center space-x-1">
-          <Label className="text-xs" htmlFor="json-mode">
-            JSON
-          </Label>
-          <Switch id="json-mode" onCheckedChange={setJsonMode} />
-        </div>
-        {!smallMode && (
-          <Separator
-            orientation={"vertical"}
-            className="mx-1 min-h-[20px] bg-foreground"
-          />
-        )}
         <div className="flex items-center">
           <Button
             size="sm"

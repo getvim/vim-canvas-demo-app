@@ -69,15 +69,12 @@ function App() {
     <div className="w-full top-0 left-0 pb-6">
       <Navbar />
 
-      {/* Commented out User section
       <CollapsibleEntity entityTitle="User" entityIconUrl={userSvg}>
         <CollapsibleEntityContent>
           <SessionContextContent />
         </CollapsibleEntityContent>
       </CollapsibleEntity>
-      */}
 
-      {/* Commented out Patient section
       {patient && (
         <CollapsibleEntity entityTitle="Patient" entityIconUrl={patientSvg}>
           <CollapsibleEntityContent>
@@ -85,7 +82,6 @@ function App() {
           </CollapsibleEntityContent>
         </CollapsibleEntity>
       )}
-      */}
       {encounter && (
         <CollapsibleEntity entityTitle="Encounter" entityIconUrl={encounterSvg}>
           <CollapsibleEntityContent>

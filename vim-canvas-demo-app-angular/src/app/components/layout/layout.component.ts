@@ -7,6 +7,7 @@ import { FullLayoutIconComponent } from "./icons/full-layout-icon/full-layout-ic
 import { HalfFullLayoutIconComponent } from "./icons/half-full-layout-icon/half-full-layout-icon.component";
 import { SmallFullLayoutIconComponent } from "./icons/small-full-layout-icon/small-full-layout-icon.component";
 import { UserComponent } from "../user/user.component";
+import { EncounterComponent } from "../encounter/encounter.component";
 @Component({
   selector: 'app-layout',
   imports: [
@@ -15,7 +16,8 @@ import { UserComponent } from "../user/user.component";
     FullLayoutIconComponent,
     HalfFullLayoutIconComponent,
     SmallFullLayoutIconComponent,
-    UserComponent
+    UserComponent,
+    EncounterComponent
 ],
   templateUrl: './layout.component.html',
   styleUrl: './layout.component.scss'

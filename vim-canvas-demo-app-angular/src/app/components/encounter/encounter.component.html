@@ -1,0 +1,13 @@
+@if(encounter | async) {
+    <app-accordion title="Encounter">
+            <div>
+                <div class="flex flex-col gap-4">
+                    <h3>Subjective</h3>
+                    <textarea [disabled]="subjectivePermissions" rows="3"  placeholder="chiefComplaintNotes"></textarea>
+                    <Textarea [disabled]="subjectivePermissions" rows="3"  placeholder="historyOfPresentIllnessNotes"></Textarea>
+                    <Textarea [disabled]="subjectivePermissions" rows="3"  placeholder="reviewOfSystemsNotes"></Textarea>
+                    <Textarea [disabled]="subjectivePermissions" rows="3"  placeholder="generalNotes"></Textarea>
+                </div>    
+            </div>
+    </app-accordion>
+}

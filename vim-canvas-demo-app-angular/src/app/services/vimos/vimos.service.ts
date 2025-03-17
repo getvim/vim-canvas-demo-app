@@ -12,6 +12,8 @@ export class VimOsService {
 
   _patient: BehaviorSubject<EHR.Patient | undefined> = new BehaviorSubject<EHR.Patient | undefined>(undefined);
 
+  _encounter: BehaviorSubject<EHR.Encounter | undefined> = new BehaviorSubject<EHR.Encounter | undefined>(undefined);
+
   constructor() { 
 
   }
@@ -32,6 +34,9 @@ export class VimOsService {
     sdk.ehr.subscribe('patient', (patient) => {
       this._patient.next(patient)
   })
+    sdk.ehr.subscribe('encounter', (encounter) => {
+      this._encounter.next(encounter)
+    })
   }
 
 

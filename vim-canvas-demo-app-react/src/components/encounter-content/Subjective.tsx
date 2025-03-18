@@ -40,7 +40,7 @@ export const EncounterSubjective = ({
                 onTextareaSubmit={field.onChange}
                 disabled={field.disabled}
                 clearAfterChange
-                currentValue={currentValue?.generalNotes}
+                prefixAdornment={currentValue?.generalNotes}
               />
             )}
           />
@@ -66,7 +66,7 @@ export const EncounterSubjective = ({
                 onTextareaSubmit={field.onChange}
                 disabled={field.disabled}
                 clearAfterChange
-                currentValue={currentValue?.chiefComplaintNotes}
+                prefixAdornment={currentValue?.chiefComplaintNotes}
               />
             )}
           />
@@ -92,7 +92,7 @@ export const EncounterSubjective = ({
                 onTextareaSubmit={field.onChange}
                 disabled={field.disabled}
                 clearAfterChange
-                currentValue={currentValue?.historyOfPresentIllnessNotes}
+                prefixAdornment={currentValue?.historyOfPresentIllnessNotes}
               />
             )}
           />
@@ -118,7 +118,7 @@ export const EncounterSubjective = ({
                 onTextareaSubmit={field.onChange}
                 disabled={field.disabled}
                 clearAfterChange
-                currentValue={currentValue?.reviewOfSystemsNotes}
+                prefixAdornment={currentValue?.reviewOfSystemsNotes}
               />
             )}
           />

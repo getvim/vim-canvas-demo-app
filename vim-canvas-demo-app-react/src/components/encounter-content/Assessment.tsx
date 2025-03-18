@@ -104,7 +104,7 @@ export const EncounterAssessment = ({
                 onTextareaSubmit={field.onChange}
                 disabled={field.disabled}
                 clearAfterChange
-                currentValue={currentValue?.generalNotes}
+                prefixAdornment={currentValue?.generalNotes}
               />
             )}
           />

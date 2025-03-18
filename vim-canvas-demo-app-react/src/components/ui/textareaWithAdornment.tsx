@@ -14,8 +14,8 @@ const TextareaWithAdornment = React.forwardRef<
     <div className="relative">
       <div
         className={cn(
-          "flex flex-col min-h-[80px] w-full rounded-md border border-input px-3 py-2 text-sm ring-offset-background bg-secondary",
-          "overflow-hidden"
+          "flex min-h-[80px] w-full rounded-md border border-input px-3 py-2 text-sm ring-offset-background bg-secondary",
+          "overflow-hidden flex-wrap"
         )}
       >
         {prefixAdornment && (
@@ -25,11 +25,10 @@ const TextareaWithAdornment = React.forwardRef<
         )}
         <textarea
           className={cn(
-            "flex-1 bg-transparent border-none outline-none p-0 resize-none \
-          flex w-full rounded-md border border-input py-2 text-sm ring-offset-background placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50",
+            "flex-1 bg-transparent border-none outline-none pl-[3px] resize-none min-w-[25px] \
+          flex w-full rounded-md border-0 text-sm ring-offset-background placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50",
             className
           )}
-          // ref={mergedRef}
           style={{
             minHeight: "100%",
             width: "100%",

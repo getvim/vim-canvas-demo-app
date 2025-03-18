@@ -16,13 +16,13 @@ export function TextareaField<T extends FieldValues = FieldValues>({
   clearAfterChange,
   onTextareaSubmit,
   placeholder,
-  currentValue,
+  prefixAdornment,
   ...props
 }: UseControllerProps<T> & {
   placeholder?: string;
   clearAfterChange?: boolean;
   onTextareaSubmit?: (value: string) => void;
-  currentValue?: string;
+  prefixAdornment?: string;
 }) {
   const { toast } = useToast();
   const { field } = useController(props);
@@ -52,7 +52,7 @@ export function TextareaField<T extends FieldValues = FieldValues>({
     <div className="flex w-full relative justify-between">
       <div className="relative w-full">
         <TextareaWithAdornment
-          prefixAdornment={currentValue}
+          prefixAdornment={prefixAdornment}
           key={key}
           className="disabled:bg-secondary"
           placeholder={placeholder}

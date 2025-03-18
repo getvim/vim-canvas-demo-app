@@ -40,7 +40,7 @@ export const EncounterObjective = ({
                 onTextareaSubmit={field.onChange}
                 disabled={field.disabled}
                 clearAfterChange
-                currentValue={currentValue?.generalNotes}
+                prefixAdornment={currentValue?.generalNotes}
               />
             )}
           />
@@ -66,7 +66,7 @@ export const EncounterObjective = ({
                 onTextareaSubmit={field.onChange}
                 disabled={field.disabled}
                 clearAfterChange
-                currentValue={currentValue?.physicalExamNotes}
+                prefixAdornment={currentValue?.physicalExamNotes}
               />
             )}
           />

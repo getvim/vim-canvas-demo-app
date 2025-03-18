@@ -14,15 +14,14 @@ import { FormInputs, useNoteFormContext } from "./form";
 export const EncounterAssessment = () => {
   const { control } = useNoteFormContext();
   const { encounter } = useVimOSEncounter();
+  const { assessment } = encounter || {};
 
   return (
     <>
       <EntitySectionTitle title="Assessment" />
       <EntitySectionContent>
         <EntityFieldContent>
-          <EntityFieldReadonlyList
-            list={encounter?.assessment?.diagnosisCodes}
-          />
+          <EntityFieldReadonlyList list={assessment?.diagnosisCodes} />
           <EncounterUpdateField<{ id: string; label: string } | undefined>
             value={undefined}
             canUpdateParam={{
@@ -99,6 +98,7 @@ export const EncounterAssessment = () => {
                 onTextareaSubmit={field.onChange}
                 disabled={field.disabled}
                 clearAfterChange
+                prefixAdornment={assessment?.generalNotes}
               />
             )}
           />

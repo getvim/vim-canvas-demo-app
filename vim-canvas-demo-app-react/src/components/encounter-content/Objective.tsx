@@ -7,9 +7,12 @@ import {
 import { TextareaField } from "../update-fields/textAreaField";
 import { EncounterUpdateField } from "../update-fields/updateFieldWrapper";
 import { FormInputs, useNoteFormContext } from "./form";
+import { useVimOSEncounter } from "@/hooks/useEncounter";
 
 export const EncounterObjective = () => {
   const { control } = useNoteFormContext();
+  const { encounter } = useVimOSEncounter();
+  const { objective } = encounter || {};
   return (
     <>
       <EntitySectionTitle title="Objective" />
@@ -35,6 +38,7 @@ export const EncounterObjective = () => {
                 onTextareaSubmit={field.onChange}
                 disabled={field.disabled}
                 clearAfterChange
+                prefixAdornment={objective?.generalNotes}
               />
             )}
           />
@@ -60,6 +64,7 @@ export const EncounterObjective = () => {
                 onTextareaSubmit={field.onChange}
                 disabled={field.disabled}
                 clearAfterChange
+                prefixAdornment={objective?.physicalExamNotes}
               />
             )}
           />

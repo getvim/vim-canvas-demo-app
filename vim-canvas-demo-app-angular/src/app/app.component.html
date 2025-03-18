@@ -60,6 +60,7 @@
     margin: 0;
     color: var(--gray-700);
   }
+  
 
   main {
     width: 100%;
@@ -177,6 +178,10 @@
   }
 </style>
 
+<div class="h-full w-full fixed" >
+  <ng-lottie [options]="lottieOptions"></ng-lottie>
+
+</div>
 @if (vimSdkLoaded) {
   <router-outlet />
 } @else {

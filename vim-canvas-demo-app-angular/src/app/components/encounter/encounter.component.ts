@@ -20,6 +20,7 @@ import { Subject, tap } from "rxjs";
 })
 export class EncounterComponent implements OnInit, OnDestroy {
   encounterForm!: FormGroup;
+  classes = "text-slate-600 bg-white border border-slate-300 appearance-none rounded-lg px-3.5 py-2.5 outline-none focus:bg-white focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100"
   private readonly destroy$ = new Subject<any>();
 
   constructor(private vimOsService: VimOsService, private fb: FormBuilder) {

@@ -1,6 +1,6 @@
 import { Input } from "@/components/ui/input";
 import { CopyIcon, Pencil1Icon } from "@radix-ui/react-icons";
-import { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { Button } from "../ui/button";
 import { SmallActionButtons } from "../ui/smallActionButtons";
 import { UpdateField } from "../update-fields/types";
@@ -32,6 +32,25 @@ export const InputField = ({
     }, 0);
   };
 
+  const numberInputValidator = useCallback((evt: React.KeyboardEvent<HTMLInputElement>) => {
+    if(inputType === 'number') {
+      if(["e", "E", "+", "-"].includes(evt.key)) {
+        evt.preventDefault();
+      }
+    }
+    
+  }, [inputType])
+
+
+  const numberInputPasteValidator = useCallback((evt: React.ClipboardEvent<HTMLInputElement>) => {
+    if(inputType === 'number') {
+      const clipboardData = evt.clipboardData?.getData('text');
+      if(clipboardData && !/^\d*\.?\d*$/.test(clipboardData)) {
+        evt.preventDefault();
+      }
+    }
+  }, [inputType])
+
   return (
     <div className="flex w-full justify-between">
       <div className="relative w-full">
@@ -43,6 +62,9 @@ export const InputField = ({
           onChange={(e) => setInnerValue(e.target.value)}
           disabled={!editMode}
           ref={inputRef}
+          onKeyDown={numberInputValidator}
+          onPaste={numberInputPasteValidator}
+
         />
         {!editMode && (
           <div

@@ -1,8 +1,9 @@
-import { Component, forwardRef } from "@angular/core";
+import { Component, forwardRef, OnDestroy, OnInit } from "@angular/core";
 import { AccordionComponent } from "../accordion/accordion.component";
 import { CommonModule } from "@angular/common";
 import { VimOsService } from "../../services/vimos/vimos.service";
 import { FormBuilder, FormGroup, NG_VALUE_ACCESSOR, ReactiveFormsModule } from '@angular/forms';
+import { Subject, tap } from "rxjs";
 
 @Component({
   selector: "app-encounter",
@@ -17,8 +18,9 @@ import { FormBuilder, FormGroup, NG_VALUE_ACCESSOR, ReactiveFormsModule } from '
     }
   ]
 })
-export class EncounterComponent {
+export class EncounterComponent implements OnInit, OnDestroy {
   encounterForm!: FormGroup;
+  private readonly destroy$ = new Subject<any>();
 
   constructor(private vimOsService: VimOsService, private fb: FormBuilder) {
     this.encounterForm = this.fb.group({
@@ -29,6 +31,20 @@ export class EncounterComponent {
         generalNotes: undefined,
       })
     })
+
+    this.updateFormFromSdkOnChange();
+  }
+
+  ngOnInit(): void {
+    this.updateFormFromSdkOnChange();
+  }
+
+  updateFormFromSdkOnChange() {
+    this.encounter.pipe(
+      tap(encounter => {
+        this.encounterForm.patchValue(encounter || {})
+      })
+    ).subscribe()
   }
 
   get encounter() {
@@ -55,5 +71,10 @@ export class EncounterComponent {
       ...this.encounterForm.value,
     })
 
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next(null);
+    this.destroy$.complete();
   }
 }

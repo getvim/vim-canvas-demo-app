@@ -14,6 +14,7 @@ export class VimOsService {
 
   _encounter: BehaviorSubject<EHR.Encounter | undefined> = new BehaviorSubject<EHR.Encounter | undefined>(undefined);
 
+  isAppOpen: boolean = false;
   constructor() { 
 
   }
@@ -37,6 +38,14 @@ export class VimOsService {
     sdk.ehr.subscribe('encounter', (encounter) => {
       this._encounter.next(encounter)
     })
+
+    sdk.hub.appState.subscribe('isAppOpen', (isOpen) => {
+      this.isAppOpen = !!isOpen
+      if(isOpen) { 
+        this.vimSdk?.hub.notificationBadge.hide()
+
+      }
+    })
   }
 
 
@@ -52,6 +61,11 @@ export class VimOsService {
 
   showPopup() {
     this.vimSdk?.hub.autoPopup()
+  }
+
+  showBadge(count: number = 0 ) {
+    if(this.isAppOpen)  return;
+    this.vimSdk?.hub.notificationBadge.set(count)
   }
   loadVimOs() {
       loadSdk().then((sdk) => {

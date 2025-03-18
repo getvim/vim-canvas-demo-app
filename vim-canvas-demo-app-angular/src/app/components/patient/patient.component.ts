@@ -42,7 +42,7 @@ export class PatientComponent implements OnInit, OnDestroy {
     return this.vimOsService.patient.pipe(
       tap((patient) => {
         if(patient) {
-            this.vimOsService.showPopup()
+            this.vimOsService.showBadge()
         }
       })
     )

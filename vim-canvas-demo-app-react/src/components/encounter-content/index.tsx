@@ -1,5 +1,5 @@
 import { JSONView } from "@/components/ui/jsonView";
-import { Separator } from "@/components/ui/separator";
+// import { Separator } from "@/components/ui/separator";
 import { useToast } from "@/hooks/use-toast";
 import { useAppConfig } from "@/hooks/useAppConfig";
 import { useVimOSEncounter } from "@/hooks/useEncounter";
@@ -7,16 +7,16 @@ import { useUpdateEncounter } from "@/hooks/useUpdateEncounter";
 import { CheckIcon } from "@radix-ui/react-icons";
 import { FormProvider } from "react-hook-form";
 import { EHR } from "vim-os-js-browser/types";
-import { ProviderSection } from "../Provider";
+// import { ProviderSection } from "../Provider";
 import { Button } from "../ui/button";
 import {
-  EntityFieldContent,
-  EntityFieldReadonlyText,
-  EntityFieldTitle,
+  // EntityFieldContent,
+  // EntityFieldReadonlyText,
+  // EntityFieldTitle,
   EntitySectionTitle,
 } from "../ui/entityContent";
 // import { EncounterAssessment } from "./Assessment";
-import { EncounterBasicInformation } from "./BasicInformation";
+// import { EncounterBasicInformation } from "./BasicInformation";
 import { FormInputs, useNotesForm } from "./form";
 // import { EncounterObjective } from "./Objective";
 // import { EncounterPI } from "./PatientInstructions";
@@ -215,16 +215,6 @@ export const EncounterContent = () => {
         <JSONView value={encounter} />
       ) : (
         <>
-          <EntitySectionTitle title="Identifiers" />
-          <EntityFieldContent>
-            <EntityFieldTitle title="EHR Encounter ID" />
-            <EntityFieldReadonlyText
-              text={encounter?.identifiers?.ehrEncounterId}
-            />
-          </EntityFieldContent>
-          <Separator className="mb-1" />
-          <EncounterBasicInformation />
-          <Separator className="mb-1" />
           <FormProvider {...methods}>
             <form onSubmit={methods.handleSubmit(onNotesSubmit)}>
               <div className="flex justify-between items-center">
@@ -246,19 +236,8 @@ export const EncounterContent = () => {
               
               <ScribeAIIntegration />
               
-              {/* <EncounterSubjective />
-              <Separator className="mb-1" />
-              <EncounterObjective />
-              <Separator className="mb-1" />
-              <EncounterAssessment />
-              <Separator className="mb-1" />
-              <EncounterPlan />
-              <Separator className="mb-1" />
-              <EncounterPI /> */}
             </form>
           </FormProvider>
-          <Separator className="mb-1" />
-          <ProviderSection provider={encounter?.provider} title="Provider" />
         </>
       )}
     </div>

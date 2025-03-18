@@ -10,24 +10,18 @@ import { SelectField } from "../update-fields/selectField";
 import { TextareaField } from "../update-fields/textAreaField";
 import { EncounterUpdateField } from "../update-fields/updateFieldWrapper";
 import { FormInputs, useNoteFormContext } from "./form";
-import { EHR } from "vim-os-js-browser/types";
 
-export const EncounterAssessment = ({
-  currentValue,
-}: {
-  currentValue: EHR.Encounter["assessment"];
-}) => {
+export const EncounterAssessment = () => {
   const { control } = useNoteFormContext();
   const { encounter } = useVimOSEncounter();
+  const { assessment } = encounter || {};
 
   return (
     <>
       <EntitySectionTitle title="Assessment" />
       <EntitySectionContent>
         <EntityFieldContent>
-          <EntityFieldReadonlyList
-            list={encounter?.assessment?.diagnosisCodes}
-          />
+          <EntityFieldReadonlyList list={assessment?.diagnosisCodes} />
           <EncounterUpdateField<{ id: string; label: string } | undefined>
             value={undefined}
             canUpdateParam={{
@@ -104,7 +98,7 @@ export const EncounterAssessment = ({
                 onTextareaSubmit={field.onChange}
                 disabled={field.disabled}
                 clearAfterChange
-                prefixAdornment={currentValue?.generalNotes}
+                prefixAdornment={assessment?.generalNotes}
               />
             )}
           />

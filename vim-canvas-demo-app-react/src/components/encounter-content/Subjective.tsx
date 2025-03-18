@@ -1,4 +1,3 @@
-import { EHR } from "vim-os-js-browser/types";
 import {
   EntityFieldContent,
   EntityFieldTitle,
@@ -8,13 +7,12 @@ import {
 import { TextareaField } from "../update-fields/textAreaField";
 import { EncounterUpdateField } from "../update-fields/updateFieldWrapper";
 import { FormInputs, useNoteFormContext } from "./form";
+import { useVimOSEncounter } from "@/hooks/useEncounter";
 
-export const EncounterSubjective = ({
-  currentValue,
-}: {
-  currentValue: EHR.Encounter["subjective"];
-}) => {
+export const EncounterSubjective = () => {
   const { control } = useNoteFormContext();
+  const { encounter } = useVimOSEncounter();
+  const { subjective } = encounter || {};
   return (
     <>
       <EntitySectionTitle title="Subjective" />
@@ -40,7 +38,7 @@ export const EncounterSubjective = ({
                 onTextareaSubmit={field.onChange}
                 disabled={field.disabled}
                 clearAfterChange
-                prefixAdornment={currentValue?.generalNotes}
+                prefixAdornment={subjective?.generalNotes}
               />
             )}
           />
@@ -66,7 +64,7 @@ export const EncounterSubjective = ({
                 onTextareaSubmit={field.onChange}
                 disabled={field.disabled}
                 clearAfterChange
-                prefixAdornment={currentValue?.chiefComplaintNotes}
+                prefixAdornment={subjective?.chiefComplaintNotes}
               />
             )}
           />
@@ -92,7 +90,7 @@ export const EncounterSubjective = ({
                 onTextareaSubmit={field.onChange}
                 disabled={field.disabled}
                 clearAfterChange
-                prefixAdornment={currentValue?.historyOfPresentIllnessNotes}
+                prefixAdornment={subjective?.historyOfPresentIllnessNotes}
               />
             )}
           />
@@ -118,7 +116,7 @@ export const EncounterSubjective = ({
                 onTextareaSubmit={field.onChange}
                 disabled={field.disabled}
                 clearAfterChange
-                prefixAdornment={currentValue?.reviewOfSystemsNotes}
+                prefixAdornment={subjective?.reviewOfSystemsNotes}
               />
             )}
           />

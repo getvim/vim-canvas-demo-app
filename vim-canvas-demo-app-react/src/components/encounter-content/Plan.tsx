@@ -1,4 +1,3 @@
-import { EHR } from "vim-os-js-browser/types";
 import {
   EntityFieldContent,
   EntityFieldTitle,
@@ -8,13 +7,13 @@ import {
 import { TextareaField } from "../update-fields/textAreaField";
 import { EncounterUpdateField } from "../update-fields/updateFieldWrapper";
 import { FormInputs, useNoteFormContext } from "./form";
+import { useVimOSEncounter } from "@/hooks/useEncounter";
 
-export const EncounterPlan = ({
-  currentValue,
-}: {
-  currentValue: EHR.Encounter["plan"];
-}) => {
+export const EncounterPlan = () => {
   const { control } = useNoteFormContext();
+  const { encounter } = useVimOSEncounter();
+  const { plan } = encounter || {};
+
   return (
     <>
       <EntitySectionTitle title="Plan" />
@@ -40,7 +39,7 @@ export const EncounterPlan = ({
                 onTextareaSubmit={field.onChange}
                 disabled={field.disabled}
                 clearAfterChange
-                prefixAdornment={currentValue?.generalNotes}
+                prefixAdornment={plan?.generalNotes}
               />
             )}
           />

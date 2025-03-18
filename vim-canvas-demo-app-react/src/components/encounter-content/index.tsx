@@ -273,13 +273,13 @@ export const EncounterContent = () => {
                   Push all notes
                 </Button>
               </div>
-              <EncounterSubjective currentValue={encounter?.subjective} />
+              <EncounterSubjective />
               <Separator className="mb-1" />
-              <EncounterObjective currentValue={encounter?.objective} />
+              <EncounterObjective />
               <Separator className="mb-1" />
-              <EncounterAssessment currentValue={encounter?.assessment} />
+              <EncounterAssessment />
               <Separator className="mb-1" />
-              <EncounterPlan currentValue={encounter?.plan} />
+              <EncounterPlan />
               <Separator className="mb-1" />
               <EncounterPI />
               <Separator className="mb-1" />

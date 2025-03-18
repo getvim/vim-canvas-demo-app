@@ -55,6 +55,19 @@ module.exports = {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+
+        "scribe-blue":{
+          DEFAULT: "hsl(var(--scribe-blue))",
+          foreground: "hsl(var(--scribe-white))",
+        },
+        "scribe-green":{
+          DEFAULT: "hsl(var(--scribe-green))",
+          foreground: "hsl(var(--scribe-primary-foreground))",
+        },
+        "scribe-white": {
+          DEFAULT: "hsl(var(--scribe-white))",
+          foreground: "hsl(var(--scribe-primary-foreground))",
+        }
       },
       borderRadius: {
         lg: "var(--radius)",

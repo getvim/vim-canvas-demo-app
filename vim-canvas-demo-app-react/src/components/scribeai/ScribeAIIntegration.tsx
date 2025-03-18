@@ -10,8 +10,8 @@ import {
   EntityFieldTitle 
 } from "../ui/entityContent";
 import { Textarea } from "@/components/ui/textarea";
-import { Switch } from "@/components/ui/switch";
-import { Label } from "@/components/ui/label";
+// import { Switch } from "@/components/ui/switch";
+// import { Label } from "@/components/ui/label";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { SCRIBEAI_API_KEY, API_BASE_URL } from "@/config/env";
 
@@ -846,7 +846,7 @@ export const ScribeAIIntegration = () => {
   };
 
   return (
-    <div className="border rounded-md my-4 bg-gray-50">
+    <div className="border rounded-md my-4 bg-gray-50 p-4">
       <EntitySectionTitle title="ScribeAI Note Generator" />
       <EntitySectionContent>
         <div className="flex flex-wrap gap-2 mb-4 items-center">
@@ -888,23 +888,23 @@ export const ScribeAIIntegration = () => {
         
         <div className="flex-grow"></div>
         
-        <div className="flex items-center space-x-2">
+        {/* <div className="flex items-center space-x-2">
           <Switch
             id="auto-apply"
             checked={autoApply}
             onCheckedChange={setAutoApply}
           />
           <Label htmlFor="auto-apply">Auto-apply to form</Label>
-        </div>
+        </div> */}
         
-        <div className="flex items-center space-x-2">
+        {/* <div className="flex items-center space-x-2">
           <Switch
             id="debug-mode"
             checked={debugMode}
             onCheckedChange={setDebugMode}
           />
           <Label htmlFor="debug-mode">Debug Mode</Label>
-        </div>
+        </div> */}
         
         {debugMode && (
           <Button 

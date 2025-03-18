@@ -1,16 +1,16 @@
-import { CopyIcon, Pencil1Icon } from "@radix-ui/react-icons";
 import { useEffect, useRef, useState } from "react";
-import { Button } from "../ui/button";
-import { SmallActionButtons } from "../ui/smallActionButtons";
-import { useVimOsContext } from "@/hooks/useVimOsContext";
 import {
   FieldValues,
   useController,
   UseControllerProps,
   useFormContext,
 } from "react-hook-form";
+import { CopyIcon, Pencil1Icon } from "@radix-ui/react-icons";
+import { Button } from "@/components/ui/button";
+import { SmallActionButtons } from "@/components/ui/smallActionButtons";
+import { useVimOsContext } from "@/hooks/useVimOsContext";
 import { useToast } from "@/hooks/use-toast";
-import { TextareaWithAdornment } from "../ui/textareaWithAdornment";
+import { TextareaWithAdornment } from "@/components/ui/textareaWithAdornment";
 
 export function TextareaField<T extends FieldValues = FieldValues>({
   clearAfterChange,

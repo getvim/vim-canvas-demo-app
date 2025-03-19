@@ -4,11 +4,11 @@ import { useToast } from "@/hooks/use-toast";
 import { useAppConfig } from "@/hooks/useAppConfig";
 import { useVimOSEncounter } from "@/hooks/useEncounter";
 import { useUpdateEncounter } from "@/hooks/useUpdateEncounter";
-import { CheckIcon } from "@radix-ui/react-icons";
+// import { CheckIcon } from "@radix-ui/react-icons";
 import { FormProvider } from "react-hook-form";
 import { EHR } from "vim-os-js-browser/types";
 // import { ProviderSection } from "../Provider";
-import { Button } from "../ui/button";
+// import { Button } from "../ui/button";
 import {
   // EntityFieldContent,
   // EntityFieldReadonlyText,

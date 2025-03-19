@@ -222,6 +222,7 @@ export const EncounterContent = () => {
                   className="text-md"
                   title="Clinical notes"
                 />
+                {/* Button commented out as it's currently broken - may be needed in the future
                 <Button
                   size="sm"
                   variant="default"
@@ -232,6 +233,7 @@ export const EncounterContent = () => {
                   <CheckIcon className="mr-2" />
                   Push all notes
                 </Button>
+                */}
               </div>
               
               <ScribeAIIntegration />

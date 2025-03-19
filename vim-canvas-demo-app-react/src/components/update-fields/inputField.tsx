@@ -7,6 +7,7 @@ import { UpdateField } from "../update-fields/types";
 import { useVimOsContext } from "@/hooks/useVimOsContext";
 import { useToast } from "@/hooks/use-toast";
 import { isValidNumberChar, isValueAllNumbers } from "../../utils/isNumberChar";
+
 export const InputField = ({
   value,
   onChange,

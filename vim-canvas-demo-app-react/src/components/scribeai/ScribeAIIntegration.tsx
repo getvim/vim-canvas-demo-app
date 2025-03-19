@@ -46,10 +46,10 @@ export const ScribeAIIntegration = () => {
   const [parsedNote, setParsedNote] = useState<ParsedNote | null>(null);
   const [customNotes, setCustomNotes] = useState("");
   const [isRecording, setIsRecording] = useState(false);
-  const [autoApply, setAutoApply] = useState(false);
+  const [autoApply, _setAutoApply] = useState(false);
   const [isNotePreviewOpen, setIsNotePreviewOpen] = useState(false);
   const [processingStatus, setProcessingStatus] = useState<string | null>(null);
-  const [debugMode, setDebugMode] = useState(false);
+  const [debugMode, _setDebugMode] = useState(false);
   const [formFieldsInfo, setFormFieldsInfo] = useState<string>("");
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const recordedChunksRef = useRef<Blob[]>([]);

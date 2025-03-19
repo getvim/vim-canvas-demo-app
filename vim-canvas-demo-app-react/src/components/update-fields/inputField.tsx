@@ -6,13 +6,12 @@ import { SmallActionButtons } from "../ui/smallActionButtons";
 import { UpdateField } from "../update-fields/types";
 import { useVimOsContext } from "@/hooks/useVimOsContext";
 import { useToast } from "@/hooks/use-toast";
-
+import { isValidNumberChar, isValueAllNumbers } from "../../utils/isNumberChar";
 export const InputField = ({
   value,
   onChange,
   disabled,
   inputType = 'text',
-  pattern
 }: UpdateField<string | undefined>) => {
   const { toast } = useToast();
   const [innerValue, setInnerValue] = useState(value);
@@ -34,7 +33,7 @@ export const InputField = ({
 
   const numberInputValidator = useCallback((evt: React.KeyboardEvent<HTMLInputElement>) => {
     if(inputType === 'number') {
-      if(["e", "E", "+", "-"].includes(evt.key)) {
+      if(isValidNumberChar(evt.key)) {
         evt.preventDefault();
       }
     }
@@ -45,7 +44,7 @@ export const InputField = ({
   const numberInputPasteValidator = useCallback((evt: React.ClipboardEvent<HTMLInputElement>) => {
     if(inputType === 'number') {
       const clipboardData = evt.clipboardData?.getData('text');
-      if(clipboardData && !/^\d*\.?\d*$/.test(clipboardData)) {
+      if(clipboardData && isValueAllNumbers(clipboardData)) {
         evt.preventDefault();
       }
     }
@@ -56,7 +55,6 @@ export const InputField = ({
       <div className="relative w-full">
         <Input
           type={inputType}
-          pattern={pattern}
           className="h-7 rounded-r-none"
           value={innerValue}
           onChange={(e) => setInnerValue(e.target.value)}

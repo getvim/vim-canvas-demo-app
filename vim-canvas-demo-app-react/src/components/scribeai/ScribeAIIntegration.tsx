@@ -953,12 +953,12 @@ export const ScribeAIIntegration = () => {
         />
         </EntityFieldContent>
       
-      <div className="flex space-x-2 mb-4">
+      <div className="flex flex-wrap mb-4 md:space-x-2">
         <Button 
           variant="default" 
           disabled={!transcript || uploading || isRecording} 
           onClick={generateNote}
-          className="w-full"
+          className="w-full mb-2 sm:flex-1"
         >
           Generate Note
         </Button>
@@ -967,6 +967,7 @@ export const ScribeAIIntegration = () => {
           <Button 
             variant="outline" 
             onClick={applyParsedNote}
+            className="flex-1 mb-2"
           >
               <CheckIcon className="mr-2 h-4 w-4" />
             Apply to Form
@@ -977,6 +978,7 @@ export const ScribeAIIntegration = () => {
             <Button 
               variant="outline" 
               onClick={copyToClipboard}
+            className="m-0 flex-1 "
             >
               <ClipboardIcon className="mr-2 h-4 w-4" />
               Copy Note

@@ -34,7 +34,7 @@ export const InputField = ({
   };
 
   const numberInputValidator = useCallback((evt: React.KeyboardEvent<HTMLInputElement>) => {
-    if(inputType === 'number') {
+    if(inputType === 'number' && !evt.metaKey) {
       if(!isValueNumber(evt.key)) {
         evt.preventDefault();
       }

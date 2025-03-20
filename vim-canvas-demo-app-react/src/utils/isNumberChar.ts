@@ -1,5 +1,6 @@
 const specialNumberChars = ["e", "E", "+" , "-"];
-const allNumberRegex = /^\s*\d*\.?\d*\s*$/
+const allNumberRegex = /^\s*[\d+\-Ee]*\.?[\d+\-Ee]*\s*$/
+
 
 export const isValidNumberChar = (char: string) => {
     return specialNumberChars.includes(char)

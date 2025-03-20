@@ -13,6 +13,7 @@ export const InputField = ({
   onChange,
   disabled,
   inputType = 'text',
+  min
 }: UpdateField<string | undefined>) => {
   const { toast } = useToast();
   const [innerValue, setInnerValue] = useState(value);
@@ -55,6 +56,7 @@ export const InputField = ({
     <div className="flex w-full justify-between">
       <div className="relative w-full">
         <Input
+          min={min}
           type={inputType}
           className="h-7 rounded-r-none"
           value={innerValue}

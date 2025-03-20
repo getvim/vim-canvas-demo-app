@@ -4,5 +4,5 @@ export interface UpdateField<T = unknown> {
   disabled: boolean;
   onChange: (value: T) => void;
   inputType?: 'text' | 'number' | 'password';
-  pattern?: string
+  min?: number;
 }

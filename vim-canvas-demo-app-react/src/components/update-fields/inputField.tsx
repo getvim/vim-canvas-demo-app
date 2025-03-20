@@ -1,18 +1,19 @@
 import { Input } from "@/components/ui/input";
 import { CopyIcon, Pencil1Icon } from "@radix-ui/react-icons";
-import { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { Button } from "../ui/button";
 import { SmallActionButtons } from "../ui/smallActionButtons";
 import { UpdateField } from "../update-fields/types";
 import { useVimOsContext } from "@/hooks/useVimOsContext";
 import { useToast } from "@/hooks/use-toast";
+import { isValueNumber } from "../../utils/isNumberChar";
 
 export const InputField = ({
   value,
   onChange,
   disabled,
   inputType = 'text',
-  pattern
+  min
 }: UpdateField<string | undefined>) => {
   const { toast } = useToast();
   const [innerValue, setInnerValue] = useState(value);
@@ -32,17 +33,39 @@ export const InputField = ({
     }, 0);
   };
 
+  const numberInputValidator = useCallback((evt: React.KeyboardEvent<HTMLInputElement>) => {
+    if(inputType === 'number' && !evt.metaKey) {
+      if(!isValueNumber(evt.key)) {
+        evt.preventDefault();
+      }
+    }
+    
+  }, [inputType])
+
+
+  const numberInputPasteValidator = useCallback((evt: React.ClipboardEvent<HTMLInputElement>) => {
+    if(inputType === 'number') {
+      const clipboardData = evt.clipboardData?.getData('text');
+      if(clipboardData && !isValueNumber(clipboardData)) {
+        evt.preventDefault();
+      }
+    }
+  }, [inputType])
+
   return (
     <div className="flex w-full justify-between">
       <div className="relative w-full">
         <Input
+          min={min}
           type={inputType}
-          pattern={pattern}
           className="h-7 rounded-r-none"
           value={innerValue}
           onChange={(e) => setInnerValue(e.target.value)}
           disabled={!editMode}
           ref={inputRef}
+          onKeyDown={numberInputValidator}
+          onPaste={numberInputPasteValidator}
+
         />
         {!editMode && (
           <div

@@ -1,0 +1,57 @@
+{
+  "name": "vim-canvas-demo-app-angular",
+  "version": "0.0.0",
+  "scripts": {
+    "ng": "ng",
+    "dev:functions": "wrangler pages dev --proxy=5173 --d1=DB:canvas-demo-db",
+    "dev:client": "ng serve",
+    "dev": "concurrently --raw -i \"npm:dev:functions\" \"npm:dev:client\"",
+    "start": "ng serve",
+    "build": "ng build",
+    "watch": "ng build --watch --configuration development",
+    "test": "ng test"
+  },
+  "private": true,
+  "dependencies": {
+    "@angular/common": "^19.2.0",
+    "@angular/compiler": "^19.2.0",
+    "@angular/core": "^19.2.0",
+    "@angular/forms": "^19.2.0",
+    "@angular/platform-browser": "^19.2.0",
+    "@angular/platform-browser-dynamic": "^19.2.0",
+    "@angular/router": "^19.2.0",
+    "@cfworker/jwt": "^5.2.1",
+    "@tailwindcss/postcss": "^4.0.13",
+    "@tailwindcss/typography": "^0.5.16",
+    "jwt-decode": "^4.0.0",
+    "lottie-web": "^5.12.2",
+    "ngx-lottie": "^13.0.1",
+    "postcss": "^8.5.3",
+    "rxjs": "~7.8.0",
+    "tailwind-merge": "^2.5.2",
+    "tailwindcss": "^4.0.13",
+    "tailwindcss-animate": "^1.0.7",
+    "tslib": "^2.3.0",
+    "vim-os-js-browser": "^2.0.3",
+    "zone.js": "~0.15.0"
+  },
+  "devDependencies": {
+    "@angular-devkit/build-angular": "^19.2.2",
+    "@angular/cli": "^19.2.2",
+    "@angular/compiler-cli": "^19.2.0",
+    "@types/jasmine": "~5.1.0",
+    "concurrently": "^8.2.2",
+    "jasmine-core": "~5.6.0",
+    "karma": "~6.4.0",
+    "karma-chrome-launcher": "~3.2.0",
+    "karma-coverage": "~2.2.0",
+    "karma-jasmine": "~5.1.0",
+    "karma-jasmine-html-reporter": "~2.1.0",
+    "tailwindcss-motion": "^1.1.0",
+    "typescript": "~5.7.2",
+    "wrangler": "^3.72.3"
+  },
+  "scarfSettings": {
+    "enabled": false
+  }
+}

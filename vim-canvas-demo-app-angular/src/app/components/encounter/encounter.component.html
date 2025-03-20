@@ -1,0 +1,46 @@
+@if(vimOsService.encounter()) {
+<app-accordion title="Encounter">
+  <form [formGroup]="encounterForm" (ngSubmit)="submitSubjectiveEncounter()">
+    <div>
+      <div class="flex flex-col gap-4" formGroupName="subjective">
+        <span class="text-sm">Subjective</span>
+        <textarea
+          [ngClass]="classes"
+          formControlName="chiefComplaintNotes"
+          [disabled]="subjectivePermissions()"
+          rows="3"
+          placeholder="chiefComplaintNotes"
+        ></textarea>
+        <textarea
+          [ngClass]="classes"
+          [disabled]="subjectivePermissions()"
+          formControlName="historyOfPresentIllnessNotes"
+          rows="3"
+          placeholder="historyOfPresentIllnessNotes"
+        ></textarea>
+        <textarea
+          [ngClass]="classes"
+          [disabled]="subjectivePermissions()"
+          formControlName="reviewOfSystemsNotes"
+          rows="3"
+          placeholder="reviewOfSystemsNotes"
+        ></textarea>
+        <textarea
+          [ngClass]="classes"
+          [disabled]="subjectivePermissions()"
+          rows="3"
+          formControlName="generalNotes"
+          placeholder="generalNotes"
+        ></textarea>
+        <button
+          type="submit"
+          [disabled]="subjectivePermissions()"
+          class="cursor-pointer"
+        >
+          Submit
+        </button>
+      </div>
+    </div>
+  </form>
+</app-accordion>
+}

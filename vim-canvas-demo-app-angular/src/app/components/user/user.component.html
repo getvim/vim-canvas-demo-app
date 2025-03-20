@@ -1,0 +1,11 @@
+
+<app-accordion [title]="'User'">
+    @if (vimOsService.user | async) {
+        <div class="flex flex-col gap-2">
+            <span class="text-sm">User: {{(vimOsService.user | async )?.identifiers?.ehrUsername}}</span>   
+            <span class="text-sm">email: {{(vimOsService.user | async )?.contactInfo?.email}}</span>   
+            <span class="text-sm">roles: {{(vimOsService.user | async )?.identifiers?.roles}}</span>   
+        </div>
+
+    }
+</app-accordion>

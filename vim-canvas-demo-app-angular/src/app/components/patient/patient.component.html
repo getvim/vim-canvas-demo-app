@@ -1,0 +1,17 @@
+<!-- <div>{{vimOsService.patient| json}}</div> -->
+<div *ngIf="vimOsService.patient() as patientData">
+    <app-accordion [title]="'Patient'">
+        <div class="flex flex-col gap-2 text-sm">
+            <div class="text-sm">
+              Patient Name:
+              <span
+                >{{ patientData.demographics?.firstName }}
+                {{ patientData.demographics?.lastName }}</span
+              >
+            </div>
+            <div>
+              Address: <span>{{ patientData.address?.fullAddress }}</span>
+            </div>
+          </div>
+    </app-accordion>
+</div>

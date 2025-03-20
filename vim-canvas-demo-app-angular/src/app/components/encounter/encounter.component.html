@@ -1,4 +1,4 @@
-@if(encounter | async) {
+@if(vimOsService.encounter()) {
 <app-accordion title="Encounter">
   <form [formGroup]="encounterForm" (ngSubmit)="submitSubjectiveEncounter()">
     <div>

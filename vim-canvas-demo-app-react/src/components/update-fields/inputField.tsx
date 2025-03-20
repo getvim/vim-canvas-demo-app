@@ -6,7 +6,7 @@ import { SmallActionButtons } from "../ui/smallActionButtons";
 import { UpdateField } from "../update-fields/types";
 import { useVimOsContext } from "@/hooks/useVimOsContext";
 import { useToast } from "@/hooks/use-toast";
-import { isValidNumberChar, isValueAllNumbers } from "../../utils/isNumberChar";
+import { isValueNumber } from "../../utils/isNumberChar";
 
 export const InputField = ({
   value,
@@ -35,7 +35,7 @@ export const InputField = ({
 
   const numberInputValidator = useCallback((evt: React.KeyboardEvent<HTMLInputElement>) => {
     if(inputType === 'number') {
-      if(isValidNumberChar(evt.key)) {
+      if(!isValueNumber(evt.key)) {
         evt.preventDefault();
       }
     }
@@ -46,7 +46,7 @@ export const InputField = ({
   const numberInputPasteValidator = useCallback((evt: React.ClipboardEvent<HTMLInputElement>) => {
     if(inputType === 'number') {
       const clipboardData = evt.clipboardData?.getData('text');
-      if(clipboardData && isValueAllNumbers(clipboardData)) {
+      if(clipboardData && !isValueNumber(clipboardData)) {
         evt.preventDefault();
       }
     }

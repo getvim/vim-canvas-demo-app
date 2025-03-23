@@ -11,7 +11,7 @@ export const InputField = ({
   value,
   onChange,
   disabled,
-  inputType = 'text'
+  inputType = "text",
 }: UpdateField<string | undefined>) => {
   const { toast } = useToast();
   const [innerValue, setInnerValue] = useState(value);

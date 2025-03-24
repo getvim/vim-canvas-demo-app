@@ -7,9 +7,12 @@ import {
 import { TextareaField } from "../update-fields/textAreaField";
 import { EncounterUpdateField } from "../update-fields/updateFieldWrapper";
 import { FormInputs, useNoteFormContext } from "./form";
+import { useVimOSEncounter } from "@/hooks/useEncounter";
 
 export const EncounterSubjective = () => {
   const { control } = useNoteFormContext();
+  const { encounter } = useVimOSEncounter();
+  const { subjective } = encounter || {};
   return (
     <>
       <EntitySectionTitle title="Subjective" />
@@ -35,6 +38,7 @@ export const EncounterSubjective = () => {
                 onTextareaSubmit={field.onChange}
                 disabled={field.disabled}
                 clearAfterChange
+                prefixAdornment={subjective?.generalNotes}
               />
             )}
           />
@@ -60,6 +64,7 @@ export const EncounterSubjective = () => {
                 onTextareaSubmit={field.onChange}
                 disabled={field.disabled}
                 clearAfterChange
+                prefixAdornment={subjective?.chiefComplaintNotes}
               />
             )}
           />
@@ -85,6 +90,7 @@ export const EncounterSubjective = () => {
                 onTextareaSubmit={field.onChange}
                 disabled={field.disabled}
                 clearAfterChange
+                prefixAdornment={subjective?.historyOfPresentIllnessNotes}
               />
             )}
           />
@@ -110,6 +116,7 @@ export const EncounterSubjective = () => {
                 onTextareaSubmit={field.onChange}
                 disabled={field.disabled}
                 clearAfterChange
+                prefixAdornment={subjective?.reviewOfSystemsNotes}
               />
             )}
           />

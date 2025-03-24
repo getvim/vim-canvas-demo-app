@@ -35,7 +35,10 @@ The applications in different frameworks demonstrates how to use the VimOS.js Ca
 
 Under the `vim-canvas-demo-app-react` we have a project that uses cloudflare pages to host the Vim Canvas™️ Demo App built with React & also the serverless service needed for the authentication flow.
 
-The app is built with `vite` and `react` and uses `shadcn`, `radix-ui`,`tailwindcss` for the UI components.
+The app is built with `vite` and `react` and uses `shadcn`, `radix-ui`,`tailwindcss` for the UI components, and Cloudfare for back end authentication flow. 
+These are only front end and back end libraries or languages that are used as examples in the demo app. 
+You can use Vim OS SDK in any front or back end language or libraries you are currently using if you already have an application.
+
 
 ### Folder Structure
 
@@ -91,7 +94,7 @@ npm run dev
 > This will start both the backend at `http://localhost:8788` and the frontend at `http://localhost:3000`. <br>
 The backend will proxy the frontend - **making both API & frontend available at `http://localhost:8788`**.
 
-6. Follow up on [Testing Your Application](https://docs.getvim.com/platform/testing.html#testing-your-application) in the official docs
+6. Follow up on [Testing Your Application](https://docs.getvim.com/testing/creating-application.html#create-your-canvas-application) in the official docs
 
 ### Authentication Flow
 

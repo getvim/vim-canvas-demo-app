@@ -15,7 +15,6 @@ export const TextareaWithAdornment = React.forwardRef<
 
   const handleInput = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     const textarea = event.target;
-    textarea.style.height = "auto";
     textarea.style.height = `${textarea.scrollHeight}px`;
   };
 

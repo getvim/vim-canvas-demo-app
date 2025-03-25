@@ -31,7 +31,7 @@ export const TextareaWithAdornment = React.forwardRef<
       <div
         className={cn(
           "flex flex-col w-full rounded-md border border-input px-3 py-2 text-sm ring-offset-background bg-secondary overflow-hidden",
-          editMode && "pb-8 bg-white",
+          { "pb-8 bg-white": editMode },
           className
         )}
       >
@@ -46,7 +46,9 @@ export const TextareaWithAdornment = React.forwardRef<
             if (typeof ref === "function") {
               ref(node);
             } else if (ref) {
-              (ref as React.MutableRefObject<HTMLTextAreaElement | null>).current = node;
+              (
+                ref as React.MutableRefObject<HTMLTextAreaElement | null>
+              ).current = node;
             }
           }}
           className={cn(

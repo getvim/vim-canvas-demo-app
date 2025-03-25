@@ -4,27 +4,57 @@ import { cn } from "@/lib/utils";
 export interface TextareaWithAdornmentProps
   extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
   prefixAdornment?: string;
+  editMode?: boolean;
 }
 
 export const TextareaWithAdornment = React.forwardRef<
   HTMLTextAreaElement,
   TextareaWithAdornmentProps
->(({ className, prefixAdornment, value, ...props }) => {
+>(({ className, prefixAdornment, editMode, value, ...props }, ref) => {
+  const textareaRef = React.useRef<HTMLTextAreaElement | null>(null);
+
+  const handleInput = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const textarea = event.target;
+    textarea.style.height = "auto";
+    textarea.style.height = `${textarea.scrollHeight}px`;
+  };
+
+  React.useEffect(() => {
+    if (textareaRef.current) {
+      textareaRef.current.style.height = "auto";
+      textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
+    }
+  }, [value]);
+
   return (
     <div className="relative">
-      <div className="flex min-h-[80px] w-full rounded-md border border-input px-3 py-2 text-sm ring-offset-background bg-secondary overflow-hidden flex-wrap">
+      <div
+        className={cn(
+          "flex flex-col w-full rounded-md border border-input px-3 py-2 text-sm ring-offset-background bg-secondary overflow-hidden",
+          editMode && "pb-8 bg-white",
+          className
+        )}
+      >
         {prefixAdornment && (
-          <div className="text-sm opacity-80 pointer-events-none inline-block whitespace-pre-wrap">
+          <div className="pb-2 mb-2 border-b border-input text-[12px] opacity-50 pointer-events-none inline-block whitespace-pre-wrap">
             {prefixAdornment}
           </div>
         )}
         <textarea
+          ref={(node) => {
+            textareaRef.current = node;
+            if (typeof ref === "function") {
+              ref(node);
+            } else if (ref) {
+              (ref as React.MutableRefObject<HTMLTextAreaElement | null>).current = node;
+            }
+          }}
           className={cn(
-            "flex-1 bg-transparent border-none outline-none pl-[3px] resize-none min-w-[25px] \
-          flex w-full rounded-md border-0 text-sm ring-offset-background placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50 \
-          min-h-full",
+            "bg-transparent border-none outline-none pl-[3px] resize-none w-full text-[12px] ring-offset-background placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50 placeholder:font-semibold placeholder:text-gray-900 overflow-hidden",
             className
           )}
+          onInput={handleInput}
+          value={value}
           {...props}
         />
       </div>

@@ -49,7 +49,7 @@ export function TextareaField<T extends FieldValues = FieldValues>({
   };
 
   return (
-    <div className="flex w-full relative justify-between">
+    <div className={`flex w-full relative justify-between`}>
       <div className="relative w-full">
         <TextareaWithAdornment
           prefixAdornment={prefixAdornment}
@@ -59,6 +59,7 @@ export function TextareaField<T extends FieldValues = FieldValues>({
           {...field}
           disabled={!editMode}
           ref={textAreaRef}
+          editMode={editMode}
         />
         {!editMode && (
           <div
@@ -70,8 +71,7 @@ export function TextareaField<T extends FieldValues = FieldValues>({
       {!editMode ? (
         <Button
           size={"sm"}
-          variant={"ghost"}
-          className="absolute right-2 top-2 h-7 w-7 p-0"
+          className="absolute right-0 bottom-0 h-7 w-7 p-0 rounded-tr-none rounded-bl-none"
           onClick={turnOnEditMode}
         >
           <Pencil1Icon />

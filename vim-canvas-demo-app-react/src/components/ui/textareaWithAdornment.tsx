@@ -20,7 +20,6 @@ export const TextareaWithAdornment = React.forwardRef<
 
   React.useEffect(() => {
     if (textareaRef.current) {
-      textareaRef.current.style.height = "auto";
       textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
     }
   }, [value]);
@@ -35,7 +34,7 @@ export const TextareaWithAdornment = React.forwardRef<
         )}
       >
         {prefixAdornment && (
-          <div className="pb-2 mb-2 border-b border-input text-[12px] opacity-50 pointer-events-none inline-block whitespace-pre-wrap">
+          <div className="pb-2 mb-2 border-b border-input text-xs opacity-50 pointer-events-none inline-block whitespace-pre-wrap">
             {prefixAdornment}
           </div>
         )}
@@ -51,7 +50,7 @@ export const TextareaWithAdornment = React.forwardRef<
             }
           }}
           className={cn(
-            "bg-transparent border-none outline-none pl-[3px] resize-none w-full text-[12px] ring-offset-background placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50 placeholder:font-semibold placeholder:text-gray-900 overflow-hidden",
+            "bg-transparent border-none outline-none pl-[3px] resize-none w-full text-xs ring-offset-background placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50 placeholder:font-semibold placeholder:text-gray-900 overflow-hidden",
             className
           )}
           onInput={handleInput}

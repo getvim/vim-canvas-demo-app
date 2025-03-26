@@ -49,7 +49,7 @@ export function TextareaField<T extends FieldValues = FieldValues>({
   };
 
   return (
-    <div className={`flex w-full relative justify-between`}>
+    <div className="flex w-full relative justify-between">
       <div className="relative w-full">
         <TextareaWithAdornment
           prefixAdornment={prefixAdornment}

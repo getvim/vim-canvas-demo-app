@@ -32,7 +32,7 @@ export const EntityFieldTitle = ({
   title: string;
   className?: string;
 }) => {
-  return <h3 className={cn("text-xs mt-2 font-bold", className)}>{title}</h3>;
+  return <h3 className={cn("text-xs mt-2 mb-1 font-bold", className)}>{title}</h3>;
 };
 
 export const EntityFieldReadonlyText = ({

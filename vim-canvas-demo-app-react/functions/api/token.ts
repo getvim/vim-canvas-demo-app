@@ -64,6 +64,7 @@ async function isAuthorized(
       return await isUserEligibleToMyApp({
         email: decodedIdToken.payload["email"],
         vimUserId: decodedIdToken.payload["sub"],
+        organization: decodedIdToken.payload["https://getvim.com/organization"],
       });
     } else if (decodedIdToken.valid === false) {
       console.error(
@@ -82,7 +83,17 @@ async function isAuthorized(
   }
 }
 
-async function isUserEligibleToMyApp({ email, vimUserId }) {
-  console.info(`User ${email}, ${vimUserId} is eligible to my app.`);
-  return true;
+async function isUserEligibleToMyApp({ email, vimUserId, organization }) {
+  // add in supabase check?
+  // make a new VIM db
+  // make vimUsers table?
+  // columns: id, vimUserId, email, status (trial, paid, inactive), created_at
+  // sql automation: check status at 30 days after creation, if status = trial, set to inactive
+
+  // need logic to check new users
+  // how do we handle new user signup, what is their user flow?
+  // how can we capture a VIM signup?
+
+  console.info(`User ${email}, ${vimUserId} of organization ${organization} is eligible to my app.`);
+  return false;
 }

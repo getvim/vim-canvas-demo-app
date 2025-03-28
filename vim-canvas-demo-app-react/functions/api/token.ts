@@ -95,5 +95,5 @@ async function isUserEligibleToMyApp({ email, vimUserId, organization }) {
   // how can we capture a VIM signup?
 
   console.info(`User ${email}, ${vimUserId} of organization ${organization} is eligible to my app.`);
-  return false;
+  return true;
 }

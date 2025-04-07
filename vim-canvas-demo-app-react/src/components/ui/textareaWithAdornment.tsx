@@ -13,16 +13,16 @@ export const TextareaWithAdornment = React.forwardRef<
 >(({ className, prefixAdornment, editMode, value, ...props }, ref) => {
   const textareaRef = React.useRef<HTMLTextAreaElement | null>(null);
 
-  const handleInput = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-    const textarea = event.target;
-    textarea.style.height = `${textarea.scrollHeight}px`;
-  };
-
   React.useEffect(() => {
     if (textareaRef.current) {
       textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
     }
   }, [value]);
+
+  const handleInput = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const textarea = event.target;
+    textarea.style.height = `${textarea.scrollHeight}px`;
+  };
 
   return (
     <div className="relative">

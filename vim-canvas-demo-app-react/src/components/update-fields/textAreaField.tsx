@@ -59,7 +59,6 @@ export function TextareaField<T extends FieldValues = FieldValues>({
           {...field}
           disabled={!editMode}
           ref={textAreaRef}
-          editMode={editMode}
         />
         {!editMode && (
           <div

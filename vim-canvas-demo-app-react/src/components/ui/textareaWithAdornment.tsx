@@ -4,6 +4,7 @@ import { cn } from "@/lib/utils";
 export interface TextareaWithAdornmentProps
   extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
   prefixAdornment?: string;
+  editMode?: boolean;
 }
 
 export const TextareaWithAdornment = React.forwardRef<

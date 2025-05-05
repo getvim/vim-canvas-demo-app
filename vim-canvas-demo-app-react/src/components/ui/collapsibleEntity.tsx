@@ -31,6 +31,7 @@ interface CollapsibleEntityProps {
     | "Encounter"
     | "Referral"
     | "Order"
+    | "Claim"
     | `Order - ${EHR.OrderType}`;
   entityIconUrl: string;
   themeColor?: string;

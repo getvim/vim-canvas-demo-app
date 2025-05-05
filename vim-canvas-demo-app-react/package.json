@@ -40,7 +40,7 @@
     "tailwind-merge": "^2.5.2",
     "tailwindcss-animate": "^1.0.7",
     "vim-app-settings": "^1.0.0",
-    "vim-os-js-browser": "^2.0.3"
+    "vim-os-js-browser": "^2.0.6-beta.1"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20240821.1",

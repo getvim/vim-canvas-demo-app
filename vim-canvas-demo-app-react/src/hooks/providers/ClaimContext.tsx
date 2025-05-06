@@ -21,9 +21,6 @@ export const VimOSClaimProvider: React.FC<React.PropsWithChildren> = ({
   useEffect(() => {
     vimOS.ehr.subscribe("claim", (data) => {
       setClaim(data);
-      console.log("Claim serviceLines: ", data?.serviceLines);
-      console.log("Claim renderingProvider: ", data?.renderingProvider);
-      console.log("Claim: ", data);
       updateNotification("claim", data ? 1 : 0);
     });
 

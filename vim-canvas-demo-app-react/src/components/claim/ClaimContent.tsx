@@ -25,14 +25,14 @@ export const ClaimContent: React.FC<ClaimContentProps> = ({ claim }) => {
         <JSONView value={claim} />
       ) : (
         <>
-          <EntitySectionTitle title="Identifier" />
+          <EntitySectionTitle title="Identifiers" />
           <EntitySectionContent>
             <EntityFieldContent>
-              <EntityFieldTitle title="EHR Cliam ID" />
+              <EntityFieldTitle title="EHR claim id" />
               <EntityFieldReadonlyText text={claim?.identifiers?.ehrClaimId} />
             </EntityFieldContent>
             <EntityFieldContent>
-              <EntityFieldTitle title="EHR Encounter ID" />
+              <EntityFieldTitle title="EHR encounter id" />
               <EntityFieldReadonlyText text={claim?.identifiers?.encounterId} />
             </EntityFieldContent>
           </EntitySectionContent>
@@ -46,17 +46,17 @@ export const ClaimContent: React.FC<ClaimContentProps> = ({ claim }) => {
               />
             </EntityFieldContent>
             <EntityFieldContent>
-              <EntityFieldTitle title="Service Date" />
+              <EntityFieldTitle title="Service date" />
               <EntityFieldReadonlyText text={claim?.basicInformation?.serviceDate} />
             </EntityFieldContent>
             <EntityFieldContent>
-              <EntityFieldTitle title="Insurance Name" />
+              <EntityFieldTitle title="Insurance name" />
               <EntityFieldReadonlyText
                 text={claim?.basicInformation?.insuranceName ?? "--"}
               />
             </EntityFieldContent>
             <EntityFieldContent>
-              <EntityFieldTitle title="Place Of Service" />
+              <EntityFieldTitle title="Place of service" />
               <EntityFieldReadonlyText
                   text={claim?.basicInformation?.placeOfService?.description}
               />
@@ -65,37 +65,37 @@ export const ClaimContent: React.FC<ClaimContentProps> = ({ claim }) => {
               />
             </EntityFieldContent>
             <EntityFieldContent>
-              <EntityFieldTitle title="Claim Status" />
+              <EntityFieldTitle title="Claim status" />
               <EntityFieldReadonlyText
                   text={claim?.basicInformation?.claimStatus ?? "--"}
               />
             </EntityFieldContent>
           </EntitySectionContent>
           <Separator className="mb-1" />
-          <ProviderSection provider={claim?.renderingProvider} title="renderingProvider" />
+          <ProviderSection provider={claim?.renderingProvider} title="Rendering provider" />
               <>
-                <EntitySectionTitle title="ServiceLines" />
+                <EntitySectionTitle title="Service lines" />
                 {!claim?.serviceLines || !claim.serviceLines.length ? (
                     <EntityFieldReadonlyList list={[]} />
                 ) : (
                     claim.serviceLines.map((serviceLine) => (
                         <Fragment key={serviceLine?.procedureCode}>
-                          <EntitySectionTitle title="serviceLine" />
+                          <EntitySectionTitle title="Service line" />
                           <EntitySectionContent>
                             <EntityFieldContent>
-                              <EntityFieldTitle title="Procedure Code" />
+                              <EntityFieldTitle title="Procedure code" />
                               <EntityFieldReadonlyText
                                   text={serviceLine?.procedureCode ||  '--'}
                               />
                             </EntityFieldContent>
                             <EntityFieldContent>
-                              <EntityFieldTitle title="Procedure Description" />
+                              <EntityFieldTitle title="Procedure description" />
                               <EntityFieldReadonlyText
                                   text={serviceLine?.procedureDescription ?? "--"}
                               />
                             </EntityFieldContent>
                             <EntityFieldContent>
-                              <EntityFieldTitle title="Procedure System" />
+                              <EntityFieldTitle title="Procedure system" />
                               <EntityFieldReadonlyText
                                   text={serviceLine?.procedureSystem ?? "--"}
                               />
@@ -107,7 +107,7 @@ export const ClaimContent: React.FC<ClaimContentProps> = ({ claim }) => {
                               />
                             </EntityFieldContent>
                             <EntityFieldContent>
-                              <EntityFieldTitle title="Procedures Modifiers" />
+                              <EntityFieldTitle title="Procedures modifiers" />
                               <EntityFieldReadonlyText
                                   text={serviceLine?.proceduresModifiers?.toString() ?? "--"}
                               />

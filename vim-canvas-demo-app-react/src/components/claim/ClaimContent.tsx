@@ -9,7 +9,7 @@ import {
 } from "../ui/entityContent";
 import { JSONView } from "../ui/jsonView";
 import { Separator } from "../ui/separator";
-import {Fragment} from "react";
+import { Fragment } from "react";
 import {ProviderSection} from "@/components/Provider.tsx";
 
 interface ClaimContentProps {
@@ -114,8 +114,8 @@ export const ClaimContent: React.FC<ClaimContentProps> = ({ claim }) => {
                             </EntityFieldContent>
                             <EntityFieldContent>
                               <EntityFieldTitle title="Diagnoses" />
-                              <EntityFieldReadonlyText
-                                  text={serviceLine?.diagnoses?.toString() ?? "--"}
+                              <EntityFieldReadonlyList
+                                  list={serviceLine?.diagnoses}
                               />
                             </EntityFieldContent>
                           </EntitySectionContent>
@@ -124,6 +124,11 @@ export const ClaimContent: React.FC<ClaimContentProps> = ({ claim }) => {
                     ))
                 )}
               </>
+          <EntityFieldTitle title="Additional Diagnoses" />
+          {JSON.stringify(claim?.additionalDiagnoses)}
+          <EntityFieldReadonlyList
+              list={claim?.additionalDiagnoses}
+          />
         </>
       )}
     </div>

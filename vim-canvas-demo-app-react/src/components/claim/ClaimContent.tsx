@@ -56,12 +56,15 @@ export const ClaimContent: React.FC<ClaimContentProps> = ({ claim }) => {
               />
             </EntityFieldContent>
             <EntityFieldContent>
-              <EntityFieldTitle title="Place of service" />
-              <EntityFieldReadonlyText
-                  text={claim?.basicInformation?.placeOfService?.description}
-              />
+              <EntityFieldTitle title="Place of service code" />
               <EntityFieldReadonlyText
                   text={claim?.basicInformation?.placeOfService?.code}
+              />
+            </EntityFieldContent>
+            <EntityFieldContent>
+              <EntityFieldTitle title="Place of service description" />
+              <EntityFieldReadonlyText
+                  text={claim?.basicInformation?.placeOfService?.description}
               />
             </EntityFieldContent>
             <EntityFieldContent>

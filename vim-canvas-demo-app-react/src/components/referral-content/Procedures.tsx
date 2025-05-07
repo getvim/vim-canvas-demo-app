@@ -1,5 +1,5 @@
 import { useVimOSReferral } from "@/hooks/useReferral";
-import { SelectField } from "../update-fields/selectField";
+import { MultiSelectField } from "../update-fields/multiSelectField";
 import { ReferralUpdateField } from "../update-fields/updateFieldWrapper";
 import {
   EntityFieldContent,
@@ -17,27 +17,23 @@ export const ReferralProcedures = () => {
       <EntitySectionContent>
         <EntityFieldContent>
           <EntityFieldReadonlyList list={referral?.procedureCodes?.cpts} />
-          <ReferralUpdateField<{ id: string; label: string } | undefined>
+          <ReferralUpdateField<{ id: string; label: string }[]>
             value={undefined}
             canUpdateParam={{
               procedureCodes: {
                 cpts: true,
               },
             }}
-            valueToUpdatePayload={(value) => ({
+            valueToUpdatePayload={(values) => ({
               procedureCodes: {
-                cpts: value
-                  ? [
-                      {
-                        code: value.id,
-                        description: value.label,
-                      },
-                    ]
-                  : undefined,
+                cpts: values?.map((value) => ({
+                  code: value.id,
+                  description: value.label,
+                })) as [{ code: string; description: string }, ...Array<{ code: string; description: string }>],
               },
             })}
             render={({ field }) => (
-              <SelectField
+              <MultiSelectField
                 placeholder="Add code"
                 includeOptionsFields
                 formatOption={(option) => `${option.id} - ${option.label}`}
@@ -70,6 +66,7 @@ export const ReferralProcedures = () => {
                     label: "Invalid CPT",
                   },
                 ]}
+                direction="up"
                 {...field}
               />
             )}

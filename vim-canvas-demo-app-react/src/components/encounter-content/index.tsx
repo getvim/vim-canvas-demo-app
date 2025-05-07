@@ -213,7 +213,7 @@ export const EncounterContent = () => {
   };
 
   const headerClasses = useMemo(() => {
-    return `flex justify-between items-center top-0 z-10 bg-white  p-2  duration-2 ${
+    return `flex justify-between items-center top-0 z-[100] bg-white  p-2  duration-2 ${
       enlargedHeader
         ? " animate-[fadeIn_0.2s_forwards] opacity-0 pr-6 pl-4 fixed top-0  left-0 pt-0  w-full shadow-md"
         : ""

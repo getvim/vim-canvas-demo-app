@@ -1,5 +1,5 @@
 import { useVimOSReferral } from "@/hooks/useReferral";
-import { SelectField } from "../update-fields/selectField";
+import { MultiSelectField } from "../update-fields/multiSelectField";
 import { ReferralUpdateField } from "../update-fields/updateFieldWrapper";
 import {
   EntityFieldContent,
@@ -17,30 +17,26 @@ export const ReferralConditions = () => {
       <EntitySectionContent>
         <EntityFieldContent>
           <EntityFieldReadonlyList list={referral?.conditions?.diagnosis} />
-          <ReferralUpdateField<{ id: string; label: string } | undefined>
+          <ReferralUpdateField<{ id: string; label: string }[]>
             value={undefined}
             canUpdateParam={{
               conditions: {
                 diagnosis: true,
               },
             }}
-            valueToUpdatePayload={(value) => ({
+            valueToUpdatePayload={(values) => ({
               conditions: {
-                diagnosis: value
-                  ? [
-                      {
-                        code: value.id,
-                        description: value.label,
-                      },
-                    ]
-                  : undefined,
+                diagnosis: values?.map((value) => ({
+                  code: value.id,
+                  description: value.label,
+                })) as [{ code: string; description: string }, ...Array<{ code: string; description: string }>],
               },
             })}
             render={({ field }) => (
-              <SelectField
+              <MultiSelectField
                 placeholder="Add code"
                 includeOptionsFields
-                formatOption={(option) => `${option.id} - ${option.label}`}
+                formatOption={(option: { id: string; label: string }) => `${option.id} - ${option.label}`}
                 options={[
                   { id: "E11.21", label: "DM with nephropathy" },
                   {
@@ -66,7 +62,6 @@ export const ReferralConditions = () => {
                   },
                   { id: "F20.9", label: "Schizophrenia, unspecified" },
                   { id: "A00000", label: "Invalid ICD" },
-
                 ]}
                 {...field}
               />

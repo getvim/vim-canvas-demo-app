@@ -3,7 +3,7 @@ import {
   EntitySectionContent,
   EntitySectionTitle,
 } from "../ui/entityContent";
-import { SelectField } from "../update-fields/selectField";
+import { MultiSelectField } from "../update-fields/multiSelectField";
 import { EncounterUpdateField } from "../update-fields/updateFieldWrapper";
 
 const CPT_CODES_OPTIONS = [
@@ -41,30 +41,27 @@ export const EncounterBillingInformation = () => {
       <EntitySectionTitle title="Billing Information" />
       <EntitySectionContent>
         <EntityFieldContent>
-          <EncounterUpdateField<{ id: string; label: string } | undefined>
+          <EncounterUpdateField<{ id: string; label: string }[]>
             canUpdateParam={{
               billingInformation: {
                 procedureCodes: true,
               },
             }}
-            valueToUpdatePayload={(value) => ({
+            valueToUpdatePayload={(values) => ({
               billingInformation: {
-                procedureCodes: value
-                  ? [
-                      {
-                        code: value.id,
-                        description: value.label,
-                      },
-                    ]
-                  : undefined,
+                procedureCodes: values?.map((value) => ({
+                  code: value.id,
+                  description: value.label,
+                })) as [{ code: string; description: string }, ...Array<{ code: string; description: string }>],
               },
             })}
             render={({ field }) => (
-              <SelectField
+              <MultiSelectField
                 placeholder="Add CPT"
                 includeOptionsFields
-                formatOption={(option) => `${option.id} - ${option.label}`}
+                formatOption={(option: { id: string; label: string }) => `${option.id} - ${option.label}`}
                 options={CPT_CODES_OPTIONS}
+                direction="up"
                 {...field}
               />
             )}

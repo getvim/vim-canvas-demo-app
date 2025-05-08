@@ -8,6 +8,7 @@ import {
   VimOSEncounterProvider,
   VimOSReferralProvider,
   VimOSOrdersProvider,
+  VimOSClaimProvider,
 } from "@/hooks/providers";
 import { AppConfigProvider } from "@/hooks/providers/AppConfigContext";
 
@@ -29,7 +30,9 @@ export const AppWrapper: React.FC<React.PropsWithChildren> = ({ children }) => {
         <VimOSPatientProvider>
           <VimOSReferralProvider>
             <VimOSOrdersProvider>
+              <VimOSClaimProvider>
               <VimOSEncounterProvider>{children}</VimOSEncounterProvider>
+              </VimOSClaimProvider>
             </VimOSOrdersProvider>
           </VimOSReferralProvider>
         </VimOSPatientProvider>

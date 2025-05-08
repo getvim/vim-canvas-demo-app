@@ -1,6 +1,7 @@
 import encounterSvg from "@/assets/encounter.svg";
 
 import patientSvg from "@/assets/patient.svg";
+import claimSvg from "@/assets/claim.svg";
 import referralSvg from "@/assets/referral.svg";
 import userSvg from "@/assets/user.svg";
 import { useEffect, useState } from "react";
@@ -10,6 +11,7 @@ import { Navbar } from "./components/Navbar";
 import { OrdersWrapper } from "./components/orders/OrdersWrapper";
 import { PatientContent } from "./components/PatientContent";
 import { ReferralContent } from "./components/referral-content";
+import { ClaimContent } from "./components/claim/ClaimContent";
 import { SessionContextContent } from "./components/SessionContextContent";
 import { Button } from "./components/ui/button";
 import {
@@ -28,6 +30,7 @@ import { useVimOSEncounter } from "./hooks/useEncounter";
 import { useVimOSOrders } from "./hooks/useOrders";
 import { useVimOSPatient } from "./hooks/usePatient";
 import { useVimOSReferral } from "./hooks/useReferral";
+import { useVimOSClaim } from "./hooks/useClaim";
 import { useVimOsContext } from "./hooks/useVimOsContext";
 import { loadSettings } from "./utils/settings-api";
 import { useIdToken } from "./hooks/useIdToken";
@@ -38,6 +41,7 @@ function App() {
   const { encounter } = useVimOSEncounter();
   const { referral } = useVimOSReferral();
   const { orders } = useVimOSOrders();
+  const { claim } = useVimOSClaim();
   const [redirectUrl, setRedirectUrl] = useState<string | undefined>(undefined);
   const [redirectModalOpen, setRedirectModal] = useState(false);
   const [themeColor, setThemeColor] = useState<string>("#00FFE1");
@@ -139,6 +143,17 @@ function App() {
         </CollapsibleEntity>
       )}
       {orders && <OrdersWrapper orders={orders} themeColor={themeColor} />}
+      {claim && (
+          <CollapsibleEntity
+              entityTitle="Claim"
+              entityIconUrl={claimSvg}
+              themeColor={themeColor}
+          >
+            <CollapsibleEntityContent>
+              <ClaimContent claim={claim} />
+            </CollapsibleEntityContent>
+          </CollapsibleEntity>
+      )}
       <Dialog open={redirectModalOpen} onOpenChange={onRedirectModalChange}>
         <DialogContent className="max-w-[calc(100%-100px)] sm:max-w-[425px]">
           <DialogHeader>

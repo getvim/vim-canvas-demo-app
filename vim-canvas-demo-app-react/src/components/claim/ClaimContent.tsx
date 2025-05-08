@@ -128,7 +128,6 @@ export const ClaimContent: React.FC<ClaimContentProps> = ({ claim }) => {
                 )}
               </>
           <EntityFieldTitle title="Additional Diagnoses" />
-          {JSON.stringify(claim?.additionalDiagnoses)}
           <EntityFieldReadonlyList
               list={claim?.additionalDiagnoses}
           />

@@ -28,9 +28,9 @@ export const TextareaWithAdornment = React.forwardRef<
     <div className="relative">
       <div
         className={cn(
-          "flex flex-col w-full rounded-md border border-input px-3 py-2 text-sm ring-offset-background bg-secondary overflow-hidden",
-          { "pb-8 bg-white": editMode },
-          className
+          "flex flex-col w-full rounded-md border border-input px-3 py-2 text-sm overflow-hidden",
+          className,
+          { "pb-8": editMode }
         )}
       >
         {prefixAdornment && (
@@ -50,7 +50,7 @@ export const TextareaWithAdornment = React.forwardRef<
             }
           }}
           className={cn(
-            "bg-transparent border-none outline-none pl-[3px] resize-none w-full text-xs ring-offset-background placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50 placeholder:font-semibold placeholder:text-gray-900 overflow-hidden",
+            "bg-transparent border-none outline-none pl-[3px] resize-none w-full text-xs ring-offset-background placeholder:text-muted-foreground disabled:cursor-text placeholder:opacity-50 placeholder:font-semibold overflow-hidden cursor-text",
             className
           )}
           onInput={handleInput}

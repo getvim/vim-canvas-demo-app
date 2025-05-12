@@ -54,7 +54,6 @@ export function TextareaField<T extends FieldValues = FieldValues>({
         <TextareaWithAdornment
           prefixAdornment={prefixAdornment}
           key={key}
-          className="disabled:bg-secondary"
           placeholder={placeholder}
           {...field}
           disabled={!editMode}
@@ -63,7 +62,7 @@ export function TextareaField<T extends FieldValues = FieldValues>({
         {!editMode && (
           <div
             onClick={turnOnEditMode}
-            className="absolute top-0 left-0 w-full h-full"
+            className="absolute bottom-0 left-0 w-full h-[50px] cursor-text"
           ></div>
         )}
       </div>

@@ -6,7 +6,7 @@ import {
   EntitySectionContent,
   EntitySectionTitle,
 } from "../ui/entityContent";
-import { SelectField } from "../update-fields/selectField";
+import { MultiSelectField } from "../update-fields/multiSelectField";
 import { TextareaField } from "../update-fields/textAreaField";
 import { EncounterUpdateField } from "../update-fields/updateFieldWrapper";
 import { FormInputs, useNoteFormContext } from "./form";
@@ -22,27 +22,26 @@ export const EncounterAssessment = () => {
       <EntitySectionContent>
         <EntityFieldContent>
           <EntityFieldReadonlyList list={assessment?.diagnosisCodes} />
-          <EncounterUpdateField<{ id: string; label: string } | undefined>
-            value={undefined}
+          <EncounterUpdateField<{ id: string; label: string }[]>
+            value={assessment?.diagnosisCodes?.length ? assessment.diagnosisCodes.map((code) => ({
+              id: code.code,
+              label: code.description || "",
+            })) : undefined}
             canUpdateParam={{
               assessment: {
                 diagnosisCodes: true,
               },
             }}
-            valueToUpdatePayload={(value) => ({
+            valueToUpdatePayload={(values) => ({
               assessment: {
-                diagnosisCodes: value
-                  ? [
-                      {
-                        code: value.id,
-                        description: value.label,
-                      },
-                    ]
-                  : undefined,
+                diagnosisCodes: values?.map((value) => ({
+                  code: value.id,
+                  description: value.label,
+                })) as [{ code: string; description: string }, ...Array<{ code: string; description: string }>],
               },
             })}
             render={({ field }) => (
-              <SelectField
+              <MultiSelectField<{ id: string; label: string }[]>
                 placeholder="Add ICD-10"
                 includeOptionsFields
                 formatOption={(option) => `${option.id} - ${option.label}`}

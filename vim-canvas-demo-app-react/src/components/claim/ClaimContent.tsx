@@ -16,6 +16,12 @@ interface ClaimContentProps {
   claim: EHR.Claim;
 }
 
+function capitalizeFirstLetter(str: string | undefined): string {
+  if (!str) return '';
+  str = str.toLowerCase();
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
 export const ClaimContent: React.FC<ClaimContentProps> = ({ claim }) => {
   const { jsonMode } = useAppConfig();
 
@@ -28,11 +34,11 @@ export const ClaimContent: React.FC<ClaimContentProps> = ({ claim }) => {
           <EntitySectionTitle title="Identifiers" />
           <EntitySectionContent>
             <EntityFieldContent>
-              <EntityFieldTitle title="EHR claim id" />
+              <EntityFieldTitle title="EHR claim ID" />
               <EntityFieldReadonlyText text={claim?.identifiers?.ehrClaimId} />
             </EntityFieldContent>
             <EntityFieldContent>
-              <EntityFieldTitle title="EHR encounter id" />
+              <EntityFieldTitle title="EHR encounter ID" />
               <EntityFieldReadonlyText text={claim?.identifiers?.encounterId} />
             </EntityFieldContent>
           </EntitySectionContent>
@@ -64,7 +70,7 @@ export const ClaimContent: React.FC<ClaimContentProps> = ({ claim }) => {
             <EntityFieldContent>
               <EntityFieldTitle title="Place of service description" />
               <EntityFieldReadonlyText
-                  text={claim?.basicInformation?.placeOfService?.description}
+                  text={capitalizeFirstLetter(claim?.basicInformation?.placeOfService?.description)}
               />
             </EntityFieldContent>
             <EntityFieldContent>
@@ -127,7 +133,7 @@ export const ClaimContent: React.FC<ClaimContentProps> = ({ claim }) => {
                     ))
                 )}
               </>
-          <EntityFieldTitle title="Additional Diagnoses" />
+          <EntityFieldTitle title="Additional diagnoses" />
           <EntityFieldReadonlyList
               list={claim?.additionalDiagnoses}
           />

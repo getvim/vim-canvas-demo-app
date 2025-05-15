@@ -18,32 +18,6 @@ export const EncounterSubjective = () => {
       <EntitySectionTitle title="Subjective" />
       <EntitySectionContent>
         <EntityFieldContent>
-          <EntityFieldTitle title="General notes" />
-          <EncounterUpdateField<string | undefined>
-            canUpdateParam={{
-              subjective: {
-                generalNotes: true,
-              },
-            }}
-            valueToUpdatePayload={(value) => ({
-              subjective: {
-                generalNotes: value,
-              },
-            })}
-            render={({ field }) => (
-              <TextareaField<FormInputs>
-                placeholder="Add notes here"
-                control={control}
-                name={"subjectiveGeneralNotes"}
-                onTextareaSubmit={field.onChange}
-                disabled={field.disabled}
-                clearAfterChange
-                prefixAdornment={subjective?.generalNotes}
-              />
-            )}
-          />
-        </EntityFieldContent>
-        <EntityFieldContent>
           <EntityFieldTitle title="Chief Complaint" />
           <EncounterUpdateField<string | undefined>
             canUpdateParam={{
@@ -65,6 +39,32 @@ export const EncounterSubjective = () => {
                 disabled={field.disabled}
                 clearAfterChange
                 prefixAdornment={subjective?.chiefComplaintNotes}
+              />
+            )}
+          />
+        </EntityFieldContent>
+        <EntityFieldContent>
+          <EntityFieldTitle title="General notes" />
+          <EncounterUpdateField<string | undefined>
+            canUpdateParam={{
+              subjective: {
+                generalNotes: true,
+              },
+            }}
+            valueToUpdatePayload={(value) => ({
+              subjective: {
+                generalNotes: value,
+              },
+            })}
+            render={({ field }) => (
+              <TextareaField<FormInputs>
+                placeholder="Add notes here"
+                control={control}
+                name={"subjectiveGeneralNotes"}
+                onTextareaSubmit={field.onChange}
+                disabled={field.disabled}
+                clearAfterChange
+                prefixAdornment={subjective?.generalNotes}
               />
             )}
           />

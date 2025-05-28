@@ -11,6 +11,7 @@ import {
 } from "../ui/entityContent";
 import { JSONView } from "../ui/jsonView";
 import { Separator } from "../ui/separator";
+import { ProviderSection } from "../Provider";
 
 interface OrderContentProps {
   order: EHR.Order;
@@ -18,6 +19,8 @@ interface OrderContentProps {
 
 export const OrderContent: React.FC<OrderContentProps> = ({ order }) => {
   const { jsonMode } = useAppConfig();
+
+  console.log('vika order', order)
 
   return (
     <div className="w-full">
@@ -116,6 +119,15 @@ export const OrderContent: React.FC<OrderContentProps> = ({ order }) => {
                   </Fragment>
                 ))
               )}
+            </>
+          )}
+          {order?.orderingProvider && (
+            <>
+              <Separator className="mb-1" />
+              <ProviderSection
+                provider={order?.orderingProvider}
+                title="Ordering Provider"
+              />
             </>
           )}
         </>

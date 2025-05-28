@@ -94,6 +94,12 @@ export const OrderContent: React.FC<OrderContentProps> = ({ order }) => {
                         />
                       </EntityFieldContent>
                       <EntityFieldContent>
+                        <EntityFieldTitle title="Form" />
+                        <EntityFieldReadonlyText
+                          text={medication.dosage?.form?.unit ?? "--"}
+                        />
+                      </EntityFieldContent>
+                      <EntityFieldContent>
                         <EntityFieldTitle title="Strength value" />
                         <EntityFieldReadonlyText
                           text={medication.dosage?.strength?.value ?? "--"}

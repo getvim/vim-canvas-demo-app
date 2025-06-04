@@ -20,8 +20,6 @@ interface OrderContentProps {
 export const OrderContent: React.FC<OrderContentProps> = ({ order }) => {
   const { jsonMode } = useAppConfig();
 
-  console.log('vika order', order)
-
   return (
     <div className="w-full">
       {jsonMode ? (
@@ -97,9 +95,9 @@ export const OrderContent: React.FC<OrderContentProps> = ({ order }) => {
                         />
                       </EntityFieldContent>
                       <EntityFieldContent>
-                        <EntityFieldTitle title="Strength value" />
+                        <EntityFieldTitle title="Form" />
                         <EntityFieldReadonlyText
-                          text={medication.dosage?.strength?.value ?? "--"}
+                          text={medication.dosage?.form?.unit ?? "--"}
                         />
                       </EntityFieldContent>
                       <EntityFieldContent>
@@ -115,17 +113,16 @@ export const OrderContent: React.FC<OrderContentProps> = ({ order }) => {
                         />
                       </EntityFieldContent>
                     </EntitySectionContent>
-                    <Separator className="mb-1" />
                   </Fragment>
                 ))
               )}
+              <Separator className="mb-1" />
             </>
           )}
           {order?.orderingProvider && (
             <>
-              <Separator className="mb-1" />
               <ProviderSection
-                provider={order?.orderingProvider}
+                provider={order.orderingProvider}
                 title="Ordering Provider"
               />
             </>

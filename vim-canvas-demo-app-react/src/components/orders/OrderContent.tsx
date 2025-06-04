@@ -11,6 +11,7 @@ import {
 } from "../ui/entityContent";
 import { JSONView } from "../ui/jsonView";
 import { Separator } from "../ui/separator";
+import { ProviderSection } from "../Provider";
 
 interface OrderContentProps {
   order: EHR.Order;
@@ -94,6 +95,12 @@ export const OrderContent: React.FC<OrderContentProps> = ({ order }) => {
                         />
                       </EntityFieldContent>
                       <EntityFieldContent>
+                        <EntityFieldTitle title="Form" />
+                        <EntityFieldReadonlyText
+                          text={medication.dosage?.form?.unit ?? "--"}
+                        />
+                      </EntityFieldContent>
+                      <EntityFieldContent>
                         <EntityFieldTitle title="Strength value" />
                         <EntityFieldReadonlyText
                           text={medication.dosage?.strength?.value ?? "--"}
@@ -112,10 +119,18 @@ export const OrderContent: React.FC<OrderContentProps> = ({ order }) => {
                         />
                       </EntityFieldContent>
                     </EntitySectionContent>
-                    <Separator className="mb-1" />
                   </Fragment>
                 ))
               )}
+              <Separator className="mb-1" />
+            </>
+          )}
+          {order?.orderingProvider && (
+            <>
+              <ProviderSection
+                provider={order.orderingProvider}
+                title="Ordering Provider"
+              />
             </>
           )}
         </>

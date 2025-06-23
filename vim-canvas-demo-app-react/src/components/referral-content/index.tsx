@@ -3,6 +3,7 @@ import { Separator } from "@/components/ui/separator";
 import { useAppConfig } from "@/hooks/useAppConfig";
 import { useVimOSReferral } from "@/hooks/useReferral";
 import { EHR } from "vim-os-js-browser/types";
+import { FormProvider } from "react-hook-form";
 import { ProviderSection } from "../Provider";
 import {
   EntityFieldContent,
@@ -13,6 +14,7 @@ import {
 } from "../ui/entityContent";
 import { SelectField } from "../update-fields/selectField";
 import { ReferralUpdateField } from "../update-fields/updateFieldWrapper";
+import { useReferralForm } from "./form";
 import { ReferralBasicInformation } from "./BasicInformation";
 import { ReferralConditions } from "./Conditions";
 import { ReferralProcedures } from "./Procedures";
@@ -21,13 +23,14 @@ import targetProvidersJson from "./targetProviders.json";
 export const ReferralContent = () => {
   const { jsonMode } = useAppConfig();
   const { referral } = useVimOSReferral();
+  const methods = useReferralForm();
 
   return (
     <div className="w-full">
       {jsonMode ? (
         <JSONView value={referral} />
       ) : (
-        <>
+        <FormProvider {...methods}>
           <EntitySectionTitle title="Identifiers" />
           <EntitySectionContent>
             <EntityFieldContent>
@@ -72,14 +75,15 @@ export const ReferralContent = () => {
             })}
             render={({ field }) => (
               <SelectField
-                valueId={field.value?.npi}
+                valueName="npi"
+                selectedValue={field.value?.npi}
                 placeholder="Select target provider"
                 options={targetProvidersJson}
                 {...field}
               />
             )}
           />
-        </>
+        </FormProvider>
       )}
     </div>
   );

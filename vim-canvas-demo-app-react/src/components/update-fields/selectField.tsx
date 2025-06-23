@@ -17,14 +17,16 @@ interface Option {
 
 interface SelectFieldProps<T> extends UpdateField<T> {
   options: Array<T & Option>;
-  valueId?: string;
+  valueName?: keyof T;
+  selectedValue?: string;
   placeholder: string;
   includeOptionsFields?: boolean;
   formatOption?: (option: T) => string;
 }
 
 export function SelectField<T = unknown>({
-  valueId,
+  valueName = "id" as keyof T,
+  selectedValue,
   placeholder,
   onChange,
   disabled,
@@ -33,13 +35,22 @@ export function SelectField<T = unknown>({
   formatOption,
 }: SelectFieldProps<T>) {
   const [innerValue, setInnerValue] = useState<string | undefined>(
-    options.find((o) => o.id === valueId)?.id
+    options.find(
+      (o) =>
+        o[valueName]?.toString().toLowerCase() === selectedValue?.toLowerCase()
+    )?.id
   );
   const [key, setKey] = useState<number>(+new Date());
 
   useEffect(() => {
-    setInnerValue(options.find((o) => o.id === valueId)?.id);
-  }, [options, valueId]);
+    setInnerValue(
+      options.find(
+        (o) =>
+          o[valueName]?.toString().toLowerCase() ===
+          selectedValue?.toLowerCase()
+      )?.id
+    );
+  }, [options, selectedValue, valueName]);
 
   return (
     <div className="flex w-full justify-between">

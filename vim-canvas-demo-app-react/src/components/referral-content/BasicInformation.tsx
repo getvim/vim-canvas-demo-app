@@ -13,11 +13,15 @@ import {
 import { InputField } from "../update-fields/inputField";
 import { SelectField } from "../update-fields/selectField";
 import targetSpecialtiesJson from "./targetSpecialties.json";
+import { ReferralFormInputs, useReferralFormContext } from "./form";
+import { TextareaField } from "../update-fields/textAreaField";
 
 targetSpecialtiesJson.sort((a, b) => a.label.localeCompare(b.label));
 
 export const ReferralBasicInformation = () => {
   const { referral } = useVimOSReferral();
+
+  const { control } = useReferralFormContext();
 
   return (
     <>
@@ -40,7 +44,8 @@ export const ReferralBasicInformation = () => {
               })}
               render={({ field }) => (
                 <SelectField
-                  valueId={field.value?.id}
+                  valueName="label"
+                  selectedValue={field.value?.id}
                   includeOptionsFields
                   placeholder="Select speciality"
                   options={targetSpecialtiesJson}
@@ -131,7 +136,7 @@ export const ReferralBasicInformation = () => {
               })}
               render={({ field }) => (
                 <SelectField
-                  valueId={field.value?.id?.toUpperCase()}
+                  selectedValue={field.value?.id?.toUpperCase()}
                   includeOptionsFields
                   placeholder="Select priority"
                   options={[
@@ -160,7 +165,17 @@ export const ReferralBasicInformation = () => {
                   authCode: value,
                 },
               })}
-              render={({ field }) => <InputField {...field} />}
+              render={({ field }) => (
+                <TextareaField<ReferralFormInputs>
+                  placeholder="Enter auth code"
+                  control={control}
+                  name={"authCode"}
+                  onTextareaSubmit={field.onChange}
+                  disabled={field.disabled}
+                  clearAfterChange
+                  prefixAdornment={referral?.basicInformation?.authCode}
+                />
+              )}
             />
           </div>
         </EntityFieldContent>
@@ -191,7 +206,17 @@ export const ReferralBasicInformation = () => {
                   reasons: value ? [value] : [],
                 },
               })}
-              render={({ field }) => <InputField {...field} />}
+              render={({ field }) => (
+                <TextareaField<ReferralFormInputs>
+                  placeholder="Enter reasons"
+                  control={control}
+                  name={"reasons"}
+                  onTextareaSubmit={field.onChange}
+                  disabled={field.disabled}
+                  clearAfterChange
+                  prefixAdornment={referral?.basicInformation?.reasons?.[0]}
+                />
+              )}
             />
           </div>
         </EntityFieldContent>
@@ -210,7 +235,17 @@ export const ReferralBasicInformation = () => {
                   notes: value,
                 },
               })}
-              render={({ field }) => <InputField {...field} />}
+              render={({ field }) => (
+                <TextareaField<ReferralFormInputs>
+                  placeholder="Enter notes"
+                  control={control}
+                  name={"notes"}
+                  onTextareaSubmit={field.onChange}
+                  disabled={field.disabled}
+                  clearAfterChange
+                  prefixAdornment={referral?.basicInformation?.notes}
+                />
+              )}
             />
           </div>
         </EntityFieldContent>

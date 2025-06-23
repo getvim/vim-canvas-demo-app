@@ -14,7 +14,7 @@ import {
 } from "../ui/entityContent";
 import { SelectField } from "../update-fields/selectField";
 import { ReferralUpdateField } from "../update-fields/updateFieldWrapper";
-import { useReferralForm } from "./form";
+import { useReferralForm } from "./referral.form";
 import { ReferralBasicInformation } from "./BasicInformation";
 import { ReferralConditions } from "./Conditions";
 import { ReferralProcedures } from "./Procedures";
@@ -23,14 +23,14 @@ import targetProvidersJson from "./targetProviders.json";
 export const ReferralContent = () => {
   const { jsonMode } = useAppConfig();
   const { referral } = useVimOSReferral();
-  const methods = useReferralForm();
+  const formProps = useReferralForm();
 
   return (
     <div className="w-full">
       {jsonMode ? (
         <JSONView value={referral} />
       ) : (
-        <FormProvider {...methods}>
+        <FormProvider {...formProps}>
           <EntitySectionTitle title="Identifiers" />
           <EntitySectionContent>
             <EntityFieldContent>

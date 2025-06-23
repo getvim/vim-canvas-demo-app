@@ -13,7 +13,7 @@ import {
 import { InputField } from "../update-fields/inputField";
 import { SelectField } from "../update-fields/selectField";
 import targetSpecialtiesJson from "./targetSpecialties.json";
-import { ReferralFormInputs, useReferralFormContext } from "./form";
+import { ReferralFormInputs, useReferralFormContext } from "./referral.form";
 import { TextareaField } from "../update-fields/textAreaField";
 
 targetSpecialtiesJson.sort((a, b) => a.label.localeCompare(b.label));
@@ -169,7 +169,7 @@ export const ReferralBasicInformation = () => {
                 <TextareaField<ReferralFormInputs>
                   placeholder="Enter auth code"
                   control={control}
-                  name={"authCode"}
+                  name="authCode"
                   onTextareaSubmit={field.onChange}
                   disabled={field.disabled}
                   clearAfterChange
@@ -210,7 +210,7 @@ export const ReferralBasicInformation = () => {
                 <TextareaField<ReferralFormInputs>
                   placeholder="Enter reasons"
                   control={control}
-                  name={"reasons"}
+                  name="reasons"
                   onTextareaSubmit={field.onChange}
                   disabled={field.disabled}
                   clearAfterChange
@@ -239,7 +239,7 @@ export const ReferralBasicInformation = () => {
                 <TextareaField<ReferralFormInputs>
                   placeholder="Enter notes"
                   control={control}
-                  name={"notes"}
+                  name="notes"
                   onTextareaSubmit={field.onChange}
                   disabled={field.disabled}
                   clearAfterChange

@@ -15,8 +15,6 @@ interface UpdateFieldProps<
   canUpdate: boolean;
   updateOnNewValue: VAL_TO_UPDATE;
   toastSuccessTitle?: string;
-  onSuccess?: () => void;
-
   render: (props: { field: UpdateField<T> }) => JSX.Element;
 }
 
@@ -29,7 +27,6 @@ function EntityUpdateField<
   render,
   canUpdate,
   toastSuccessTitle,
-  onSuccess,
 }: UpdateFieldProps<T, VAL_TO_UPDATE>) {
   const { toast } = useToast();
 
@@ -41,7 +38,6 @@ function EntityUpdateField<
             variant: "default",
             title: toastSuccessTitle,
           });
-          onSuccess?.();
         })
         .catch((error) => {
           toast({
@@ -51,7 +47,7 @@ function EntityUpdateField<
           });
         });
     },
-    [toast, toastSuccessTitle, updateOnNewValue, onSuccess]
+    [toast, toastSuccessTitle, updateOnNewValue]
   );
 
   const renderData = useMemo(
@@ -70,7 +66,7 @@ function EntityUpdateField<
 
 type ReferralUpdateFieldProps<T = unknown> = Pick<
   UpdateFieldProps<T>,
-  "render" | "value" | "onSuccess"
+  "render" | "value"
 > & {
   canUpdateParam: EHR.CanUpdateReferralParams;
   valueToUpdatePayload: (value: T) => EHR.UpdateReferralParams;
@@ -81,7 +77,6 @@ export function ReferralUpdateField<T = unknown>({
   valueToUpdatePayload,
   render,
   canUpdateParam,
-  onSuccess,
 }: ReferralUpdateFieldProps<T>) {
   const { canUpdateParams, updateReferral } = useUpdateReferral(canUpdateParam);
 
@@ -94,14 +89,13 @@ export function ReferralUpdateField<T = unknown>({
       render={render}
       value={value}
       toastSuccessTitle="Referral updated!"
-      onSuccess={onSuccess}
     />
   );
 }
 
 type EncounterUpdateFieldProps<T = unknown> = Pick<
   UpdateFieldProps<T>,
-  "render" | "value" | "onSuccess"
+  "render" | "value"
 > & {
   canUpdateParam: EHR.CanUpdateEncounterParams;
   valueToUpdatePayload: (value: T) => EHR.UpdateEncounterParams;
@@ -112,7 +106,6 @@ export function EncounterUpdateField<T = unknown>({
   valueToUpdatePayload,
   render,
   canUpdateParam,
-  onSuccess,
 }: EncounterUpdateFieldProps<T>) {
   const { canUpdateParams, updateEncounter } =
     useUpdateEncounter(canUpdateParam);
@@ -126,7 +119,6 @@ export function EncounterUpdateField<T = unknown>({
       toastSuccessTitle="Encounter updated!"
       render={render}
       value={value}
-      onSuccess={onSuccess}
     />
   );
 }

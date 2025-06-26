@@ -33,13 +33,12 @@ const removeUndefinedProperties = (obj: unknown) => {
     return obj;
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const result: any = {};
+  const result: Record<string, unknown> = {};
 
   for (const [key, value] of Object.entries(obj)) {
     if (typeof value === "object" && value !== null) {
       const nestedResult = removeUndefinedProperties(value);
-      if (Object.keys(nestedResult).length > 0) {
+      if (Object.keys(nestedResult as Record<string, unknown>).length > 0) {
         result[key] = nestedResult;
       }
     } else if (value !== undefined) {

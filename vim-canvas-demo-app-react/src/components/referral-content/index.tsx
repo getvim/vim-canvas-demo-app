@@ -141,7 +141,7 @@ export const ReferralContent = () => {
           title: "Referral updated!",
         });
       })
-      .catch((error: unknown) => {
+      .catch((error) => {
         toast({
           variant: "destructive",
           title: "Uh oh! Something went wrong.",

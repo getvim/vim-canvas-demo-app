@@ -2,30 +2,59 @@
 import { DatePicker } from "@/components/update-fields/datePicker";
 import { ReferralUpdateField } from "@/components/update-fields/updateFieldWrapper";
 import { useVimOSReferral } from "@/hooks/useReferral";
-import { format, parseISO } from "date-fns";
+import { format } from "date-fns";
 import {
   EntityFieldContent,
   EntityFieldReadonlyText,
   EntityFieldTitle,
   EntitySectionContent,
-  EntitySectionTitle,
 } from "../ui/entityContent";
 import { InputField } from "../update-fields/inputField";
 import { SelectField } from "../update-fields/selectField";
 import targetSpecialtiesJson from "./targetSpecialties.json";
+import priorityOptions from "./priorities.json";
 import { ReferralFormInputs, useReferralFormContext } from "./referral.form";
 import { TextareaField } from "../update-fields/textAreaField";
+import { useController } from "react-hook-form";
 
 targetSpecialtiesJson.sort((a, b) => a.label.localeCompare(b.label));
 
 export const ReferralBasicInformation = () => {
   const { referral } = useVimOSReferral();
-
   const { control } = useReferralFormContext();
+
+  const { field: specialtyField } = useController({
+    name: "specialty",
+    control,
+    defaultValue: referral?.basicInformation?.specialty || null,
+  });
+
+  const { field: startDateField } = useController({
+    name: "startDate",
+    control,
+    defaultValue: referral?.basicInformation?.startDate || null,
+  });
+
+  const { field: endDateField } = useController({
+    name: "endDate",
+    control,
+    defaultValue: referral?.basicInformation?.endDate || null,
+  });
+
+  const { field: priorityField } = useController({
+    name: "priority",
+    control,
+    defaultValue: referral?.basicInformation?.priority || null,
+  });
+
+  const { field: numberOfVisitsField } = useController({
+    name: "numberOfVisits",
+    control,
+    defaultValue: referral?.basicInformation?.numberOfVisits || null,
+  });
 
   return (
     <>
-      <EntitySectionTitle title="Basic Information" />
       <EntitySectionContent>
         <EntityFieldContent>
           <EntityFieldTitle title="Speciality" />
@@ -49,7 +78,13 @@ export const ReferralBasicInformation = () => {
                   includeOptionsFields
                   placeholder="Select speciality"
                   options={targetSpecialtiesJson}
-                  {...field}
+                  onChange={(value) => {
+                    field.onChange(value);
+                  }}
+                  onSelectedChange={(value) => {
+                    specialtyField.onChange(value?.label || null);
+                  }}
+                  disabled={field.disabled}
                 />
               )}
             />
@@ -72,10 +107,17 @@ export const ReferralBasicInformation = () => {
               })}
               render={({ field: { value, onChange, ...field } }) => (
                 <DatePicker
-                  value={value ? parseISO(value) : undefined}
-                  onChange={(date) =>
-                    onChange(date ? format(date, "yyyy-MM-dd") : date)
-                  }
+                  value={value}
+                  onChange={(date) => {
+                    const dateString = date
+                      ? format(date, "yyyy-MM-dd")
+                      : undefined;
+                    onChange(dateString);
+                  }}
+                  onDateChange={(date) => {
+                    const dateString = date ? format(date, "yyyy-MM-dd") : null;
+                    startDateField.onChange(dateString);
+                  }}
                   {...field}
                 />
               )}
@@ -99,10 +141,17 @@ export const ReferralBasicInformation = () => {
               })}
               render={({ field: { value, onChange, ...field } }) => (
                 <DatePicker
-                  value={value ? parseISO(value) : undefined}
-                  onChange={(date) =>
-                    onChange(date ? format(date, "yyyy-MM-dd") : date)
-                  }
+                  value={value}
+                  onChange={(date) => {
+                    const dateString = date
+                      ? format(date, "yyyy-MM-dd")
+                      : undefined;
+                    onChange(dateString);
+                  }}
+                  onDateChange={(date) => {
+                    const dateString = date ? format(date, "yyyy-MM-dd") : null;
+                    endDateField.onChange(dateString);
+                  }}
                   {...field}
                 />
               )}
@@ -131,7 +180,7 @@ export const ReferralBasicInformation = () => {
               }}
               valueToUpdatePayload={(value) => ({
                 basicInformation: {
-                  priority: value.id as any,
+                  priority: value?.id as any,
                 },
               })}
               render={({ field }) => (
@@ -139,12 +188,16 @@ export const ReferralBasicInformation = () => {
                   selectedValue={field.value?.id?.toUpperCase()}
                   includeOptionsFields
                   placeholder="Select priority"
-                  options={[
-                    { id: "ROUTINE", label: "Routine" },
-                    { id: "URGENT", label: "Urgent" },
-                    { id: "STAT", label: "Stat" },
-                  ]}
-                  {...field}
+                  options={priorityOptions}
+                  onChange={(value: { id?: string; label?: string } | null) => {
+                    field.onChange(
+                      value ? { id: value.id } : { id: undefined }
+                    );
+                  }}
+                  onSelectedChange={(value) => {
+                    priorityField.onChange(value?.id || null);
+                  }}
+                  disabled={field.disabled}
                 />
               )}
             />
@@ -275,13 +328,19 @@ export const ReferralBasicInformation = () => {
                   {...field}
                   min={0}
                   inputType="number"
-                  value={value?.toString()}
+                  value={value?.toString() || ""}
                   onChange={(numberOfVisitsString) => {
                     onChange(
                       numberOfVisitsString
                         ? parseInt(numberOfVisitsString)
                         : undefined
                     );
+                  }}
+                  onInputChange={(numberOfVisitsString) => {
+                    const numValue = numberOfVisitsString
+                      ? parseInt(numberOfVisitsString)
+                      : undefined;
+                    numberOfVisitsField.onChange(numValue || null);
                   }}
                 />
               )}

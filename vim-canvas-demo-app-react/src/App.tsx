@@ -144,15 +144,15 @@ function App() {
       )}
       {orders && <OrdersWrapper orders={orders} themeColor={themeColor} />}
       {claim && (
-          <CollapsibleEntity
-              entityTitle="Claim"
-              entityIconUrl={claimSvg}
-              themeColor={themeColor}
-          >
-            <CollapsibleEntityContent>
-              <ClaimContent claim={claim} />
-            </CollapsibleEntityContent>
-          </CollapsibleEntity>
+        <CollapsibleEntity
+          entityTitle="Claim"
+          entityIconUrl={claimSvg}
+          themeColor={themeColor}
+        >
+          <CollapsibleEntityContent>
+            <ClaimContent claim={claim} />
+          </CollapsibleEntityContent>
+        </CollapsibleEntity>
       )}
       <Dialog open={redirectModalOpen} onOpenChange={onRedirectModalChange}>
         <DialogContent className="max-w-[calc(100%-100px)] sm:max-w-[425px]">

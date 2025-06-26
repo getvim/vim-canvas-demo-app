@@ -54,7 +54,7 @@ export const buildEncounterPayload = (
   canUpdateNotes: ReturnType<EHR.IResourceUpdater["canUpdateEncounter"]> & {
     canUpdate: boolean;
   }
-) => {
+): EHR.UpdateEncounterParams => {
   const vimOsFields = Object.keys(
     VIM_OS_PATH_TO_FORM_DATA_MAPPING
   ) as (keyof EHR.UpdateEncounterParams)[];
@@ -84,7 +84,7 @@ export const buildEncounterPayload = (
 
   const payload = removeUndefinedProperties(rawPayload);
 
-  return payload;
+  return payload as EHR.UpdateEncounterParams;
 };
 
 /**

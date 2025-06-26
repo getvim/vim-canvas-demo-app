@@ -109,7 +109,8 @@ export const ReferralContent = () => {
       selectedConditions.length > 0 ||
       selectedTargetProvider;
 
-    const shouldEnableButton = hasFormContent || hasSelections;
+    const shouldEnableButton = Boolean(hasFormContent || hasSelections);
+
     setAreFieldsDirty(shouldEnableButton);
   }, [
     watchedFields,
@@ -151,7 +152,7 @@ export const ReferralContent = () => {
       .finally(() => {
         setSelectedProcedures([]);
         setSelectedConditions([]);
-        setSelectedTargetProvider();
+        setSelectedTargetProvider(undefined);
       });
 
     formProps.reset(prepareResetFields());
@@ -275,7 +276,7 @@ export const ReferralContent = () => {
                   disabled={disabled}
                   onChange={(newProvider: EHR.UpdatableProvider) => {
                     onChange(newProvider);
-                    setSelectedTargetProvider();
+                    setSelectedTargetProvider(undefined);
                   }}
                 />
               )}

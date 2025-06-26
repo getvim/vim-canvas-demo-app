@@ -35,7 +35,9 @@ export function DatePicker({
 }: DatePickerProps) {
   const { toast } = useToast();
   const vimOs = useVimOsContext();
-  const [innerValue, setInnerValue] = useState(value);
+  const [innerValue, setInnerValue] = useState<Date | undefined>(
+    value ? parseISO(value) : undefined
+  );
   const [open, setIsOpen] = useState(false);
 
   useEffect(() => {
@@ -84,9 +86,9 @@ export function DatePicker({
         checkIcon={disabled ? <CopyIcon /> : undefined}
         onCrossClick={(e: React.MouseEvent<HTMLButtonElement>) => {
           e.preventDefault();
-          setInnerValue(value);
           setIsOpen(false);
-          onDateChange?.(value);
+          setInnerValue(undefined);
+          onDateChange?.(undefined);
         }}
         onCheckClick={(e: React.MouseEvent<HTMLButtonElement>) => {
           e.preventDefault();
@@ -99,7 +101,7 @@ export function DatePicker({
               title: "Copied to clipboard",
             });
           } else {
-            onChange(innerValue);
+            onChange(innerValue ? format(innerValue, "yyyy-MM-dd") : undefined);
           }
         }}
       />

@@ -54,7 +54,7 @@ export const buildReferralPayload = (
   selectedProcedures: { id: string; label: string }[],
   selectedConditions: { id: string; label: string }[],
   targetProvider?: EHR.UpdatableProvider
-) => {
+): EHR.UpdateReferralParams => {
   const vimOsFields = Object.keys(
     VIM_OS_PATH_TO_FORM_DATA_MAPPING
   ) as (keyof EHR.UpdateReferralParams)[];
@@ -97,7 +97,7 @@ export const buildReferralPayload = (
   }
 
   const payload = removeUndefinedProperties(rawPayload);
-  return payload;
+  return payload as EHR.UpdateReferralParams;
 };
 
 export const prepareResetFields = (): Partial<ReferralFormInputs> => {

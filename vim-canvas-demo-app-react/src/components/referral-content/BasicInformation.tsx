@@ -16,6 +16,7 @@ import priorityOptions from "./priorities.json";
 import { ReferralFormInputs, useReferralFormContext } from "./referral.form";
 import { TextareaField } from "../update-fields/textAreaField";
 import { useController } from "react-hook-form";
+import { formatContentDate } from "@/utils/formatContentDate";
 
 targetSpecialtiesJson.sort((a, b) => a.label.localeCompare(b.label));
 
@@ -161,7 +162,7 @@ export const ReferralBasicInformation = () => {
         <EntityFieldContent>
           <EntityFieldTitle title="Created at" />
           <EntityFieldReadonlyText
-            text={referral?.basicInformation?.createdDate}
+            text={formatContentDate(referral?.basicInformation?.createdDate)}
           />
         </EntityFieldContent>
         <EntityFieldContent>

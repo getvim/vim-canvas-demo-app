@@ -14,6 +14,7 @@ import {
 } from "./ui/entityContent";
 import { ProviderSection } from "./Provider";
 import { capitalize } from "@/lib/utils";
+import { formatContentDate } from "@/utils/formatContentDate";
 
 export const PatientContent = () => {
   const { jsonMode } = useAppConfig();
@@ -75,7 +76,7 @@ export const PatientContent = () => {
             <EntityFieldContent>
               <EntityFieldTitle title="Date of birth" />
               <EntityFieldReadonlyText
-                text={patient?.demographics?.dateOfBirth}
+                text={formatContentDate(patient?.demographics?.dateOfBirth)}
               />
             </EntityFieldContent>
             <EntityFieldContent>

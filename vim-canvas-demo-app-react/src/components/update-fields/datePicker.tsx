@@ -17,7 +17,7 @@ import { useToast } from "@/hooks/use-toast";
 
 const safeFormat = (date: Date) => {
   try {
-    return format(date, "PPP");
+    return format(date, "MM/dd/yyyy");
   } catch {
     return "";
   }

@@ -56,7 +56,9 @@ export function MultiSelectField<T = unknown>({
   }, [selectedOptions]);
 
   const handleSelectedOptionsChanged = (newValues: string[]) => {
-    const newOptions = newValues?.length ? options.filter((o) => newValues.includes(o.id)) : [];
+    const newOptions = newValues?.length
+      ? options.filter((o) => newValues.includes(o.id))
+      : [];
     setInnerValue(newValues);
     onSelectedChange?.(newOptions);
   };
@@ -67,8 +69,8 @@ export function MultiSelectField<T = unknown>({
   };
 
   const displayOptions = selectedOptions || [];
-  
-  const currentSelectedIds = selectedOptions?.map(option => option.id) || [];
+
+  const currentSelectedIds = selectedOptions?.map((option) => option.id) || [];
 
   return (
     <div className="flex w-full justify-between relative">
@@ -124,7 +126,9 @@ export function MultiSelectField<T = unknown>({
                 <SelectItem
                   key={index}
                   value={option.id}
-                  className={currentSelectedIds.includes(option.id) ? "bg-accent" : ""}
+                  className={
+                    currentSelectedIds.includes(option.id) ? "bg-accent" : ""
+                  }
                   showCheck={false}
                 >
                   <div className="flex items-center gap-2">
@@ -170,7 +174,8 @@ export function MultiSelectField<T = unknown>({
           });
 
           onChange(newValue as T);
-          
+
+          setKey(+new Date());
           handleSelectedOptionsChanged([]);
         }}
       />

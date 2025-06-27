@@ -58,6 +58,7 @@ export const EncounterContent = () => {
     { id: string; label: string }[]
   >([]);
   const [areFieldsDirty, setAreFieldsDirty] = useState(false);
+  const [componentKey, setComponentKey] = useState<number>(+new Date());
 
   /**
    * Because input fields are never disabled (because when they can't be updated we show copy to clipboard UX),
@@ -145,6 +146,7 @@ export const EncounterContent = () => {
       .finally(() => {
         setSelectedDiagnoses([]);
         setSelectedProcedures([]);
+        setComponentKey(+new Date());
       });
 
     formProps.reset(prepareResetFields(canUpdateNotes));
@@ -220,6 +222,7 @@ export const EncounterContent = () => {
               <EncounterAssessment
                 selectedDiagnoses={selectedDiagnoses}
                 setSelectedDiagnoses={setSelectedDiagnoses}
+                key={`${componentKey}-assessment`}
               />
               <Separator className="mb-1" />
               <EncounterPlan />
@@ -229,6 +232,7 @@ export const EncounterContent = () => {
               <EncounterBillingInformation
                 selectedProcedures={selectedProcedures}
                 setSelectedProcedures={setSelectedProcedures}
+                key={`${componentKey}-billing-information`}
               />
             </form>
           </FormProvider>

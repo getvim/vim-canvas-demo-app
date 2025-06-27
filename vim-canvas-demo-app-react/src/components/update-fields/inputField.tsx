@@ -12,9 +12,12 @@ export const InputField = ({
   value,
   onChange,
   disabled,
-  inputType = 'text',
-  min
-}: UpdateField<string | undefined>) => {
+  inputType = "text",
+  min,
+  onInputChange,
+}: UpdateField<string | undefined> & {
+  onInputChange?: (value: string | undefined) => void;
+}) => {
   const { toast } = useToast();
   const [innerValue, setInnerValue] = useState(value);
   const [editMode, setEditMode] = useState(false);
@@ -33,24 +36,28 @@ export const InputField = ({
     }, 0);
   };
 
-  const numberInputValidator = useCallback((evt: React.KeyboardEvent<HTMLInputElement>) => {
-    if(inputType === 'number' && !evt.metaKey) {
-      if(!isValueNumber(evt.key)) {
-        evt.preventDefault();
+  const numberInputValidator = useCallback(
+    (evt: React.KeyboardEvent<HTMLInputElement>) => {
+      if (inputType === "number" && !evt.metaKey) {
+        if (!isValueNumber(evt.key)) {
+          evt.preventDefault();
+        }
       }
-    }
-    
-  }, [inputType])
+    },
+    [inputType]
+  );
 
-
-  const numberInputPasteValidator = useCallback((evt: React.ClipboardEvent<HTMLInputElement>) => {
-    if(inputType === 'number') {
-      const clipboardData = evt.clipboardData?.getData('text');
-      if(clipboardData && !isValueNumber(clipboardData)) {
-        evt.preventDefault();
+  const numberInputPasteValidator = useCallback(
+    (evt: React.ClipboardEvent<HTMLInputElement>) => {
+      if (inputType === "number") {
+        const clipboardData = evt.clipboardData?.getData("text");
+        if (clipboardData && !isValueNumber(clipboardData)) {
+          evt.preventDefault();
+        }
       }
-    }
-  }, [inputType])
+    },
+    [inputType]
+  );
 
   return (
     <div className="flex w-full justify-between">
@@ -60,12 +67,14 @@ export const InputField = ({
           type={inputType}
           className="h-7 rounded-r-none"
           value={innerValue}
-          onChange={(e) => setInnerValue(e.target.value)}
+          onChange={(e) => {
+            setInnerValue(e.target.value);
+            onInputChange?.(e.target.value);
+          }}
           disabled={!editMode}
           ref={inputRef}
           onKeyDown={numberInputValidator}
           onPaste={numberInputPasteValidator}
-
         />
         {!editMode && (
           <div
@@ -84,11 +93,13 @@ export const InputField = ({
         </Button>
       ) : (
         <SmallActionButtons
+          isCheckBtnDisabled={!innerValue?.length}
           tooltipContent={disabled ? "Copy to clipboard" : undefined}
           checkIcon={disabled ? <CopyIcon /> : undefined}
           onCrossClick={() => {
             setEditMode(false);
             setInnerValue(value);
+            onInputChange?.(value);
           }}
           onCheckClick={() => {
             setEditMode(false);

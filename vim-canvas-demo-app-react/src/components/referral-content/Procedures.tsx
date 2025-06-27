@@ -7,9 +7,26 @@ import {
   EntitySectionContent,
   EntitySectionTitle,
 } from "../ui/entityContent";
+import { useController } from "react-hook-form";
+import { useReferralFormContext } from "./referral.form";
 
-export const ReferralProcedures = () => {
+interface ReferralProceduresProps {
+  selectedProcedures: { id: string; label: string }[];
+  setSelectedProcedures: (procedures: { id: string; label: string }[]) => void;
+}
+
+export const ReferralProcedures = ({
+  selectedProcedures,
+  setSelectedProcedures,
+}: ReferralProceduresProps) => {
   const { referral } = useVimOSReferral();
+  const { control } = useReferralFormContext();
+
+  const { field: procedureField } = useController({
+    name: "procedureCodes",
+    control,
+    defaultValue: [],
+  });
 
   return (
     <>
@@ -29,7 +46,10 @@ export const ReferralProcedures = () => {
                 cpts: values?.map((value) => ({
                   code: value.id,
                   description: value.label,
-                })) as [{ code: string; description: string }, ...Array<{ code: string; description: string }>],
+                })) as [
+                  { code: string; description: string },
+                  ...Array<{ code: string; description: string }>
+                ],
               },
             })}
             render={({ field }) => (
@@ -37,6 +57,11 @@ export const ReferralProcedures = () => {
                 placeholder="Add code"
                 includeOptionsFields
                 formatOption={(option) => `${option.id} - ${option.label}`}
+                selectedOptions={selectedProcedures}
+                onSelectedChange={(options) => {
+                  setSelectedProcedures(options);
+                  procedureField.onChange(options);
+                }}
                 options={[
                   {
                     id: "99203",

@@ -7,9 +7,26 @@ import {
   EntitySectionContent,
   EntitySectionTitle,
 } from "../ui/entityContent";
+import { useController } from "react-hook-form";
+import { useReferralFormContext } from "./referral.form";
 
-export const ReferralConditions = () => {
+interface ReferralConditionsProps {
+  selectedConditions: { id: string; label: string }[];
+  setSelectedConditions: (conditions: { id: string; label: string }[]) => void;
+}
+
+export const ReferralConditions = ({
+  selectedConditions,
+  setSelectedConditions,
+}: ReferralConditionsProps) => {
   const { referral } = useVimOSReferral();
+  const { control } = useReferralFormContext();
+
+  const { field: conditionField } = useController({
+    name: "conditions",
+    control,
+    defaultValue: [],
+  });
 
   return (
     <>
@@ -29,14 +46,24 @@ export const ReferralConditions = () => {
                 diagnosis: values?.map((value) => ({
                   code: value.id,
                   description: value.label,
-                })) as [{ code: string; description: string }, ...Array<{ code: string; description: string }>],
+                })) as [
+                  { code: string; description: string },
+                  ...Array<{ code: string; description: string }>
+                ],
               },
             })}
             render={({ field }) => (
               <MultiSelectField
                 placeholder="Add code"
                 includeOptionsFields
-                formatOption={(option: { id: string; label: string }) => `${option.id} - ${option.label}`}
+                formatOption={(option: { id: string; label: string }) =>
+                  `${option.id} - ${option.label}`
+                }
+                selectedOptions={selectedConditions}
+                onSelectedChange={(options) => {
+                  setSelectedConditions(options);
+                  conditionField.onChange(options);
+                }}
                 options={[
                   { id: "E11.21", label: "DM with nephropathy" },
                   {
@@ -63,6 +90,7 @@ export const ReferralConditions = () => {
                   { id: "F20.9", label: "Schizophrenia, unspecified" },
                   { id: "A00000", label: "Invalid ICD" },
                 ]}
+                direction="up"
                 {...field}
               />
             )}

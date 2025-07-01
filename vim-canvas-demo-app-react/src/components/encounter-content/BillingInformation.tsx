@@ -5,6 +5,8 @@ import {
 } from "../ui/entityContent";
 import { MultiSelectField } from "../update-fields/multiSelectField";
 import { EncounterUpdateField } from "../update-fields/updateFieldWrapper";
+import { useEncounterFormContext } from "./encounter.form";
+import { useController } from "react-hook-form";
 
 const CPT_CODES_OPTIONS = [
   {
@@ -35,7 +37,23 @@ const CPT_CODES_OPTIONS = [
   { id: "9999", label: "Invalid CPT" },
 ];
 
-export const EncounterBillingInformation = () => {
+interface EncounterBillingInformationProps {
+  selectedProcedures: { id: string; label: string }[];
+  setSelectedProcedures: (procedures: { id: string; label: string }[]) => void;
+}
+
+export const EncounterBillingInformation = ({
+  selectedProcedures,
+  setSelectedProcedures,
+}: EncounterBillingInformationProps) => {
+  const { control } = useEncounterFormContext();
+
+  const { field: procedureField } = useController({
+    name: "procedureCodes",
+    control,
+    defaultValue: [],
+  });
+
   return (
     <>
       <EntitySectionTitle title="Billing Information" />
@@ -52,16 +70,26 @@ export const EncounterBillingInformation = () => {
                 procedureCodes: values?.map((value) => ({
                   code: value.id,
                   description: value.label,
-                })) as [{ code: string; description: string }, ...Array<{ code: string; description: string }>],
+                })) as [
+                  { code: string; description: string },
+                  ...Array<{ code: string; description: string }>
+                ],
               },
             })}
             render={({ field }) => (
               <MultiSelectField
                 placeholder="Add CPT"
                 includeOptionsFields
-                formatOption={(option: { id: string; label: string }) => `${option.id} - ${option.label}`}
+                formatOption={(option: { id: string; label: string }) =>
+                  `${option.id} - ${option.label}`
+                }
                 options={CPT_CODES_OPTIONS}
                 direction="up"
+                selectedOptions={selectedProcedures}
+                onSelectedChange={(options) => {
+                  setSelectedProcedures(options);
+                  procedureField.onChange(options);
+                }}
                 {...field}
               />
             )}

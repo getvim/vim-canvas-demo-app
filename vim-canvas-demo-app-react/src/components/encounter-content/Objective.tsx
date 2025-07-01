@@ -6,11 +6,11 @@ import {
 } from "../ui/entityContent";
 import { TextareaField } from "../update-fields/textAreaField";
 import { EncounterUpdateField } from "../update-fields/updateFieldWrapper";
-import { FormInputs, useNoteFormContext } from "./form";
+import { FormInputs, useEncounterFormContext } from "./encounter.form";
 import { useVimOSEncounter } from "@/hooks/useEncounter";
 
 export const EncounterObjective = () => {
-  const { control } = useNoteFormContext();
+  const { control } = useEncounterFormContext();
   const { encounter } = useVimOSEncounter();
   const { objective } = encounter || {};
   return (

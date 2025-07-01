@@ -1,5 +1,5 @@
 import { useVimOSReferral } from "@/hooks/useReferral";
-import { MultiSelectField } from "../update-fields/multiSelectField";
+import { MultiSelectFieldDeprecated } from "../update-fields/multiSelectFieldDeprecated";
 import { ReferralUpdateField } from "../update-fields/updateFieldWrapper";
 import {
   EntityFieldContent,
@@ -33,7 +33,7 @@ export const ReferralProcedures = () => {
               },
             })}
             render={({ field }) => (
-              <MultiSelectField
+              <MultiSelectFieldDeprecated
                 placeholder="Add code"
                 includeOptionsFields
                 formatOption={(option) => `${option.id} - ${option.label}`}

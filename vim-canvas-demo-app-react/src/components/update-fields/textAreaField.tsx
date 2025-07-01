@@ -86,6 +86,7 @@ export function TextareaField<T extends FieldValues = FieldValues>({
             setKey(+new Date());
             resetField(field.name);
           }}
+          isCheckBtnDisabled={!field.value?.length}
           onCheckClick={() => {
             setEditMode(false);
             if (field.disabled) {

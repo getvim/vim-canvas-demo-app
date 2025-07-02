@@ -23,7 +23,7 @@ interface MultiSelectFieldProps<T> extends UpdateField<T> {
   includeOptionsFields?: boolean;
   formatOption?: (option: Option) => string;
   direction?: "up" | "down";
-  onSelectedChange?: (option: Option[]) => void;
+  onSelectedChange: (option: Option[]) => void;
   selectedOptions?: Option[];
 }
 
@@ -60,7 +60,7 @@ export function MultiSelectField<T = unknown>({
       ? options.filter((o) => newValues.includes(o.id))
       : [];
     setInnerValue(newValues);
-    onSelectedChange?.(newOptions);
+    onSelectedChange(newOptions);
   };
 
   const handleRemoveOption = (optionId: string) => {

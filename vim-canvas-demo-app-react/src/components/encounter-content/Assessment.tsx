@@ -60,9 +60,7 @@ export const EncounterAssessment = () => {
                 includeOptionsFields
                 formatOption={(option) => `${option.id} - ${option.label}`}
                 selectedOptions={diagnosisField.value ?? undefined}
-                onSelectedChange={(options) => {
-                  diagnosisField.onChange(options);
-                }}
+                onSelectedChange={diagnosisField.onChange}
                 options={[
                   { id: "E11.21", label: "DM with nephropathy" },
                   {

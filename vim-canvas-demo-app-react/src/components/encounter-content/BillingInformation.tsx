@@ -78,9 +78,7 @@ export const EncounterBillingInformation = () => {
                 options={CPT_CODES_OPTIONS}
                 direction="up"
                 selectedOptions={procedureField.value ?? undefined}
-                onSelectedChange={(options) => {
-                  procedureField.onChange(options);
-                }}
+                onSelectedChange={procedureField.onChange}
                 {...field}
               />
             )}

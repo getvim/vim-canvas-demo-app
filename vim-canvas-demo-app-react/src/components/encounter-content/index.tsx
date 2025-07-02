@@ -96,6 +96,7 @@ export const EncounterContent = () => {
     );
 
     setAreFieldsDirty(hasDirtyFieldsWithValues);
+    setComponentKey(+new Date());
   }, [watchedFields, formProps.formState.dirtyFields]);
 
   const canUpdateResult = canUpdate(canUpdateObj);

@@ -37,15 +37,7 @@ const CPT_CODES_OPTIONS = [
   { id: "9999", label: "Invalid CPT" },
 ];
 
-interface EncounterBillingInformationProps {
-  selectedProcedures: { id: string; label: string }[];
-  setSelectedProcedures: (procedures: { id: string; label: string }[]) => void;
-}
-
-export const EncounterBillingInformation = ({
-  selectedProcedures,
-  setSelectedProcedures,
-}: EncounterBillingInformationProps) => {
+export const EncounterBillingInformation = () => {
   const { control } = useEncounterFormContext();
 
   const { field: procedureField } = useController({
@@ -85,9 +77,8 @@ export const EncounterBillingInformation = ({
                 }
                 options={CPT_CODES_OPTIONS}
                 direction="up"
-                selectedOptions={selectedProcedures}
+                selectedOptions={procedureField.value ?? undefined}
                 onSelectedChange={(options) => {
-                  setSelectedProcedures(options);
                   procedureField.onChange(options);
                 }}
                 {...field}

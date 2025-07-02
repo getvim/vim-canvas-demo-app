@@ -14,10 +14,7 @@ export const InputField = ({
   disabled,
   inputType = "text",
   min,
-  onInputChange,
-}: UpdateField<string | undefined> & {
-  onInputChange?: (value: string | undefined) => void;
-}) => {
+}: UpdateField<string | undefined>) => {
   const { toast } = useToast();
   const [innerValue, setInnerValue] = useState(value);
   const [editMode, setEditMode] = useState(false);
@@ -67,10 +64,7 @@ export const InputField = ({
           type={inputType}
           className="h-7 rounded-r-none"
           value={innerValue}
-          onChange={(e) => {
-            setInnerValue(e.target.value);
-            onInputChange?.(e.target.value);
-          }}
+          onChange={(e) => setInnerValue(e.target.value)}
           disabled={!editMode}
           ref={inputRef}
           onKeyDown={numberInputValidator}
@@ -93,13 +87,11 @@ export const InputField = ({
         </Button>
       ) : (
         <SmallActionButtons
-          isCheckBtnDisabled={!innerValue?.length}
           tooltipContent={disabled ? "Copy to clipboard" : undefined}
           checkIcon={disabled ? <CopyIcon /> : undefined}
           onCrossClick={() => {
             setEditMode(false);
             setInnerValue(value);
-            onInputChange?.(value);
           }}
           onCheckClick={() => {
             setEditMode(false);

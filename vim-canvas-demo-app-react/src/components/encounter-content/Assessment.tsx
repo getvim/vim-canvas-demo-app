@@ -12,15 +12,7 @@ import { EncounterUpdateField } from "../update-fields/updateFieldWrapper";
 import { FormInputs, useEncounterFormContext } from "./encounter.form";
 import { useController } from "react-hook-form";
 
-interface EncounterAssessmentProps {
-  selectedDiagnoses: { id: string; label: string }[];
-  setSelectedDiagnoses: (diagnoses: { id: string; label: string }[]) => void;
-}
-
-export const EncounterAssessment = ({
-  selectedDiagnoses,
-  setSelectedDiagnoses,
-}: EncounterAssessmentProps) => {
+export const EncounterAssessment = () => {
   const { control } = useEncounterFormContext();
   const { encounter } = useVimOSEncounter();
   const { assessment } = encounter || {};
@@ -67,9 +59,8 @@ export const EncounterAssessment = ({
                 placeholder="Add ICD-10"
                 includeOptionsFields
                 formatOption={(option) => `${option.id} - ${option.label}`}
-                selectedOptions={selectedDiagnoses}
+                selectedOptions={diagnosisField.value ?? undefined}
                 onSelectedChange={(options) => {
-                  setSelectedDiagnoses(options);
                   diagnosisField.onChange(options);
                 }}
                 options={[

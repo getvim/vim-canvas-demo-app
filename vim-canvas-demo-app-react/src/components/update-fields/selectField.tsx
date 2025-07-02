@@ -22,7 +22,6 @@ interface SelectFieldProps<T> extends UpdateField<T> {
   placeholder: string;
   includeOptionsFields?: boolean;
   formatOption?: (option: T) => string;
-  onSelectedChange?: (value: T) => void;
 }
 
 export function SelectField<T = unknown>({
@@ -34,7 +33,6 @@ export function SelectField<T = unknown>({
   options,
   includeOptionsFields,
   formatOption,
-  onSelectedChange,
 }: SelectFieldProps<T>) {
   const [innerValue, setInnerValue] = useState<string | undefined>(
     options.find(
@@ -58,10 +56,7 @@ export function SelectField<T = unknown>({
     <div className="flex w-full justify-between">
       <Select
         key={key}
-        onValueChange={(value) => {
-          setInnerValue(value);
-          onSelectedChange?.(options.find((o) => o.id === value) as T);
-        }}
+        onValueChange={setInnerValue}
         value={innerValue}
         disabled={disabled}
       >
@@ -86,7 +81,6 @@ export function SelectField<T = unknown>({
           e.preventDefault();
           setInnerValue(undefined);
           setKey(+new Date());
-          onSelectedChange?.(undefined as T);
         }}
         onCheckClick={(e) => {
           e.preventDefault();

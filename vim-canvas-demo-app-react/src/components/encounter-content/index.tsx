@@ -51,12 +51,6 @@ export const EncounterContent = () => {
   });
 
   const [enlargedHeader, setEnlargeHeader] = useState(false);
-  const [selectedProcedures, setSelectedProcedures] = useState<
-    { id: string; label: string }[]
-  >([]);
-  const [selectedDiagnoses, setSelectedDiagnoses] = useState<
-    { id: string; label: string }[]
-  >([]);
   const [areFieldsDirty, setAreFieldsDirty] = useState(false);
   const [componentKey, setComponentKey] = useState<number>(+new Date());
 
@@ -101,16 +95,8 @@ export const EncounterContent = () => {
       }
     );
 
-    const hasSelectedOptions =
-      selectedDiagnoses.length > 0 || selectedProcedures.length > 0;
-
-    setAreFieldsDirty(hasDirtyFieldsWithValues || hasSelectedOptions);
-  }, [
-    watchedFields,
-    formProps.formState.dirtyFields,
-    selectedDiagnoses,
-    selectedProcedures,
-  ]);
+    setAreFieldsDirty(hasDirtyFieldsWithValues);
+  }, [watchedFields, formProps.formState.dirtyFields]);
 
   const canUpdateResult = canUpdate(canUpdateObj);
 
@@ -120,14 +106,7 @@ export const EncounterContent = () => {
   };
 
   const onEncounterSubmit = async (data: FormInputs) => {
-    const encounterPayload = buildEncounterPayload(
-      {
-        ...data,
-        diagnosisCodes: selectedDiagnoses,
-        procedureCodes: selectedProcedures,
-      },
-      canUpdateNotes
-    );
+    const encounterPayload = buildEncounterPayload(data, canUpdateNotes);
 
     updateEncounter(encounterPayload)
       .then(() => {
@@ -144,8 +123,6 @@ export const EncounterContent = () => {
         });
       })
       .finally(() => {
-        setSelectedDiagnoses([]);
-        setSelectedProcedures([]);
         setComponentKey(+new Date());
       });
 
@@ -219,19 +196,13 @@ export const EncounterContent = () => {
               <Separator className="mb-1" />
               <EncounterObjective />
               <Separator className="mb-1" />
-              <EncounterAssessment
-                selectedDiagnoses={selectedDiagnoses}
-                setSelectedDiagnoses={setSelectedDiagnoses}
-                key={`${componentKey}-assessment`}
-              />
+              <EncounterAssessment key={`${componentKey}-assessment`} />
               <Separator className="mb-1" />
               <EncounterPlan />
               <Separator className="mb-1" />
               <EncounterPI />
               <Separator className="mb-1" />
               <EncounterBillingInformation
-                selectedProcedures={selectedProcedures}
-                setSelectedProcedures={setSelectedProcedures}
                 key={`${componentKey}-billing-information`}
               />
             </form>

@@ -12,6 +12,7 @@ import {
 import { JSONView } from "../ui/jsonView";
 import { Separator } from "../ui/separator";
 import { ProviderSection } from "../Provider";
+import { formatContentDate } from "@/utils/formatContentDate";
 
 interface OrderContentProps {
   order: EHR.Order;
@@ -39,7 +40,7 @@ export const OrderContent: React.FC<OrderContentProps> = ({ order }) => {
             <EntityFieldContent>
               <EntityFieldTitle title="Created date" />
               <EntityFieldReadonlyText
-                text={order?.basicInformation?.createdDate}
+                text={formatContentDate(order?.basicInformation?.createdDate)}
               />
             </EntityFieldContent>
             <EntityFieldContent>

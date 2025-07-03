@@ -11,12 +11,17 @@ import { isValueNumber } from "../../utils/isNumberChar";
 export const InputField = ({
   value,
   onChange,
+  onInputChange,
   disabled,
   inputType = "text",
   min,
-}: UpdateField<string | undefined>) => {
+  isDirty,
+}: UpdateField<string | undefined> & {
+  isDirty: boolean;
+  onInputChange: (value: string | null) => void;
+}) => {
   const { toast } = useToast();
-  const [innerValue, setInnerValue] = useState(value);
+  const [innerValue, setInnerValue] = useState<string | undefined>(value);
   const [editMode, setEditMode] = useState(false);
   const vimOs = useVimOsContext();
   const inputRef = useRef<HTMLInputElement>(null);
@@ -64,7 +69,10 @@ export const InputField = ({
           type={inputType}
           className="h-7 rounded-r-none"
           value={innerValue}
-          onChange={(e) => setInnerValue(e.target.value)}
+          onChange={(e) => {
+            setInnerValue(e.target.value);
+            onInputChange(e.target.value);
+          }}
           disabled={!editMode}
           ref={inputRef}
           onKeyDown={numberInputValidator}
@@ -89,20 +97,23 @@ export const InputField = ({
         <SmallActionButtons
           tooltipContent={disabled ? "Copy to clipboard" : undefined}
           checkIcon={disabled ? <CopyIcon /> : undefined}
+          isCheckBtnDisabled={!isDirty}
           onCrossClick={() => {
             setEditMode(false);
             setInnerValue(value);
+            onInputChange(null);
           }}
           onCheckClick={() => {
             setEditMode(false);
             if (disabled) {
-              vimOs.utils.copyToClipboard(innerValue ?? "");
+              vimOs.utils.copyToClipboard(value ?? "");
               toast({
                 variant: "default",
                 title: "Copied to clipboard",
               });
             } else {
               onChange(innerValue);
+              onInputChange(null);
             }
           }}
         />

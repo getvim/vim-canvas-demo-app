@@ -5,7 +5,7 @@ import {
   SelectItem,
   SelectTrigger,
 } from "@/components/ui/select";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { SmallActionButtons } from "../ui/smallActionButtons";
 import { UpdateField } from "../update-fields/types";
 import { X } from "lucide-react";
@@ -18,7 +18,6 @@ interface Option {
 
 interface MultiSelectFieldProps<T> extends UpdateField<T> {
   options: Array<Option>;
-  valueId?: string[];
   placeholder: string;
   includeOptionsFields?: boolean;
   formatOption?: (option: Option) => string;
@@ -28,7 +27,6 @@ interface MultiSelectFieldProps<T> extends UpdateField<T> {
 }
 
 export function MultiSelectField<T = unknown>({
-  valueId,
   placeholder,
   onChange,
   onSelectedChange,
@@ -39,32 +37,20 @@ export function MultiSelectField<T = unknown>({
   direction = "down",
   selectedOptions,
 }: MultiSelectFieldProps<T>) {
-  const [innerValue, setInnerValue] = useState<string[]>(
-    Array.isArray(valueId) ? valueId : []
-  );
   const [key, setKey] = useState<number>(+new Date());
-
-  useEffect(() => {
-    setInnerValue(Array.isArray(valueId) ? valueId : []);
-  }, [valueId]);
-
-  useEffect(() => {
-    if (selectedOptions) {
-      const newInnerValue = selectedOptions.map((option: Option) => option.id);
-      setInnerValue(newInnerValue);
-    }
-  }, [selectedOptions]);
 
   const handleSelectedOptionsChanged = (newValues: string[]) => {
     const newOptions = newValues?.length
       ? options.filter((o) => newValues.includes(o.id))
       : [];
-    setInnerValue(newValues);
     onSelectedChange(newOptions);
   };
 
   const handleRemoveOption = (optionId: string) => {
-    const newValues = innerValue.filter((v: string) => v !== optionId);
+    const newValues =
+      selectedOptions
+        ?.filter((v: Option) => v.id !== optionId)
+        ?.map((v: Option) => v.id) || [];
     handleSelectedOptionsChanged(newValues);
   };
 
@@ -150,7 +136,7 @@ export function MultiSelectField<T = unknown>({
       <SmallActionButtons
         className="absolute right-0 bottom-0 w-auto"
         disabled={disabled}
-        isCheckBtnDisabled={!innerValue?.length}
+        isCheckBtnDisabled={!currentSelectedIds?.length}
         crossClassName="rounded-tl-md border"
         checkClassName="rounded-tr-none"
         onCrossClick={(e: React.MouseEvent<HTMLButtonElement>) => {

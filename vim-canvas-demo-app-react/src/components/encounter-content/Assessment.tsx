@@ -9,12 +9,19 @@ import {
 import { MultiSelectField } from "../update-fields/multiSelectField";
 import { TextareaField } from "../update-fields/textAreaField";
 import { EncounterUpdateField } from "../update-fields/updateFieldWrapper";
-import { FormInputs, useNoteFormContext } from "./form";
+import { FormInputs, useEncounterFormContext } from "./encounter.form";
+import { useController } from "react-hook-form";
 
 export const EncounterAssessment = () => {
-  const { control } = useNoteFormContext();
+  const { control } = useEncounterFormContext();
   const { encounter } = useVimOSEncounter();
   const { assessment } = encounter || {};
+
+  const { field: diagnosisField } = useController({
+    name: "diagnosisCodes",
+    control,
+    defaultValue: [],
+  });
 
   return (
     <>
@@ -23,10 +30,14 @@ export const EncounterAssessment = () => {
         <EntityFieldContent>
           <EntityFieldReadonlyList list={assessment?.diagnosisCodes} />
           <EncounterUpdateField<{ id: string; label: string }[]>
-            value={assessment?.diagnosisCodes?.length ? assessment.diagnosisCodes.map((code) => ({
-              id: code.code,
-              label: code.description || "",
-            })) : undefined}
+            value={
+              assessment?.diagnosisCodes?.length
+                ? assessment.diagnosisCodes.map((code) => ({
+                    id: code.code,
+                    label: code.description || "",
+                  }))
+                : undefined
+            }
             canUpdateParam={{
               assessment: {
                 diagnosisCodes: true,
@@ -37,7 +48,10 @@ export const EncounterAssessment = () => {
                 diagnosisCodes: values?.map((value) => ({
                   code: value.id,
                   description: value.label,
-                })) as [{ code: string; description: string }, ...Array<{ code: string; description: string }>],
+                })) as [
+                  { code: string; description: string },
+                  ...Array<{ code: string; description: string }>
+                ],
               },
             })}
             render={({ field }) => (
@@ -45,6 +59,8 @@ export const EncounterAssessment = () => {
                 placeholder="Add ICD-10"
                 includeOptionsFields
                 formatOption={(option) => `${option.id} - ${option.label}`}
+                selectedOptions={diagnosisField.value ?? undefined}
+                onSelectedChange={diagnosisField.onChange}
                 options={[
                   { id: "E11.21", label: "DM with nephropathy" },
                   {

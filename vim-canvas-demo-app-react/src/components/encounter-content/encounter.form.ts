@@ -10,8 +10,10 @@ export interface FormInputs {
   assessmentGeneralNotes?: string | null;
   planGeneralNotes?: string | null;
   patientInstructionsGeneralNotes?: string | null;
+  diagnosisCodes?: { id: string; label: string }[] | null;
+  procedureCodes?: { id: string; label: string }[] | null;
 }
 
-export const useNotesForm = useForm<FormInputs>;
+export const useEncounterForm = useForm<FormInputs>;
 
-export const useNoteFormContext = useFormContext<FormInputs>;
+export const useEncounterFormContext = useFormContext<FormInputs>;

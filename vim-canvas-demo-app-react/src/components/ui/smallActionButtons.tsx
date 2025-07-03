@@ -18,6 +18,7 @@ interface SmallActionButtonsProps {
   tooltipContent?: string;
   disabled?: boolean;
   checkIcon?: ReactElement;
+  isCheckBtnDisabled?: boolean;
 }
 
 export const SmallActionButtons = ({
@@ -29,6 +30,7 @@ export const SmallActionButtons = ({
   tooltipContent,
   checkIcon,
   disabled,
+  isCheckBtnDisabled,
 }: SmallActionButtonsProps) => {
   return (
     <div className={cn("w-[73px]", className)}>
@@ -51,7 +53,7 @@ export const SmallActionButtons = ({
               size={"sm"}
               className={cn("rounded-l-none h-7 w-7 p-0", checkClassName)}
               onClick={onCheckClick}
-              disabled={disabled}
+              disabled={disabled || isCheckBtnDisabled}
             >
               {checkIcon ?? <CheckIcon />}
             </Button>

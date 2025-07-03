@@ -7,7 +7,7 @@ import {
   EntitySectionTitle,
 } from "../ui/entityContent";
 import { capitalize } from "@/lib/utils";
-
+import { formatContentDate } from "@/utils/formatContentDate";
 export const EncounterBasicInformation = () => {
   const { encounter } = useVimOSEncounter();
 
@@ -18,7 +18,9 @@ export const EncounterBasicInformation = () => {
         <EntityFieldContent>
           <EntityFieldTitle title="Encounter date" />
           <EntityFieldReadonlyText
-            text={encounter?.basicInformation?.encounterDateOfService}
+            text={formatContentDate(
+              encounter?.basicInformation?.encounterDateOfService
+            )}
           />
         </EntityFieldContent>
         <EntityFieldContent>

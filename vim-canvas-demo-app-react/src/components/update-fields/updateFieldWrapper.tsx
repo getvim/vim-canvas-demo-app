@@ -15,7 +15,6 @@ interface UpdateFieldProps<
   canUpdate: boolean;
   updateOnNewValue: VAL_TO_UPDATE;
   toastSuccessTitle?: string;
-
   render: (props: { field: UpdateField<T> }) => JSX.Element;
 }
 

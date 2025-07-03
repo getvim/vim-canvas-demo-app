@@ -12,8 +12,8 @@ export const InputField = ({
   value,
   onChange,
   disabled,
-  inputType = 'text',
-  min
+  inputType = "text",
+  min,
 }: UpdateField<string | undefined>) => {
   const { toast } = useToast();
   const [innerValue, setInnerValue] = useState(value);
@@ -33,24 +33,28 @@ export const InputField = ({
     }, 0);
   };
 
-  const numberInputValidator = useCallback((evt: React.KeyboardEvent<HTMLInputElement>) => {
-    if(inputType === 'number' && !evt.metaKey) {
-      if(!isValueNumber(evt.key)) {
-        evt.preventDefault();
+  const numberInputValidator = useCallback(
+    (evt: React.KeyboardEvent<HTMLInputElement>) => {
+      if (inputType === "number" && !evt.metaKey) {
+        if (!isValueNumber(evt.key)) {
+          evt.preventDefault();
+        }
       }
-    }
-    
-  }, [inputType])
+    },
+    [inputType]
+  );
 
-
-  const numberInputPasteValidator = useCallback((evt: React.ClipboardEvent<HTMLInputElement>) => {
-    if(inputType === 'number') {
-      const clipboardData = evt.clipboardData?.getData('text');
-      if(clipboardData && !isValueNumber(clipboardData)) {
-        evt.preventDefault();
+  const numberInputPasteValidator = useCallback(
+    (evt: React.ClipboardEvent<HTMLInputElement>) => {
+      if (inputType === "number") {
+        const clipboardData = evt.clipboardData?.getData("text");
+        if (clipboardData && !isValueNumber(clipboardData)) {
+          evt.preventDefault();
+        }
       }
-    }
-  }, [inputType])
+    },
+    [inputType]
+  );
 
   return (
     <div className="flex w-full justify-between">
@@ -65,7 +69,6 @@ export const InputField = ({
           ref={inputRef}
           onKeyDown={numberInputValidator}
           onPaste={numberInputPasteValidator}
-
         />
         {!editMode && (
           <div

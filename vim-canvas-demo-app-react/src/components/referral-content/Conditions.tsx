@@ -1,5 +1,5 @@
 import { useVimOSReferral } from "@/hooks/useReferral";
-import { MultiSelectField } from "../update-fields/multiSelectField";
+import { MultiSelectFieldDeprecated } from "../update-fields/multiSelectFieldDeprecated";
 import { ReferralUpdateField } from "../update-fields/updateFieldWrapper";
 import {
   EntityFieldContent,
@@ -29,14 +29,19 @@ export const ReferralConditions = () => {
                 diagnosis: values?.map((value) => ({
                   code: value.id,
                   description: value.label,
-                })) as [{ code: string; description: string }, ...Array<{ code: string; description: string }>],
+                })) as [
+                  { code: string; description: string },
+                  ...Array<{ code: string; description: string }>
+                ],
               },
             })}
             render={({ field }) => (
-              <MultiSelectField
+              <MultiSelectFieldDeprecated
                 placeholder="Add code"
                 includeOptionsFields
-                formatOption={(option: { id: string; label: string }) => `${option.id} - ${option.label}`}
+                formatOption={(option: { id: string; label: string }) =>
+                  `${option.id} - ${option.label}`
+                }
                 options={[
                   { id: "E11.21", label: "DM with nephropathy" },
                   {

@@ -76,6 +76,7 @@ export function SelectField<T = unknown>({
 
       <SmallActionButtons
         disabled={disabled}
+        isCheckBtnDisabled={!innerValue}
         onCrossClick={(e) => {
           e.preventDefault();
           setInnerValue(undefined);

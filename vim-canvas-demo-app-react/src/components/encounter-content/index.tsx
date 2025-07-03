@@ -4,8 +4,7 @@ import { useToast } from "@/hooks/use-toast";
 import { useAppConfig } from "@/hooks/useAppConfig";
 import { useVimOSEncounter } from "@/hooks/useEncounter";
 import { useUpdateEncounter } from "@/hooks/useUpdateEncounter";
-import { CheckIcon } from "@radix-ui/react-icons";
-import { FormProvider } from "react-hook-form";
+import { FormProvider, useWatch } from "react-hook-form";
 import { EHR } from "vim-os-js-browser/types";
 import { ProviderSection } from "../Provider";
 import { Button } from "../ui/button";
@@ -17,7 +16,7 @@ import {
 } from "../ui/entityContent";
 import { EncounterAssessment } from "./Assessment";
 import { EncounterBasicInformation } from "./BasicInformation";
-import { FormInputs, useNotesForm } from "./form";
+import { FormInputs, useEncounterForm } from "./encounter.form";
 import { EncounterObjective } from "./Objective";
 import { EncounterPI } from "./PatientInstructions";
 import { EncounterPlan } from "./Plan";
@@ -30,17 +29,30 @@ import {
   useMemo,
   useState,
 } from "react";
+import {
+  FORM_DATA_TO_VIM_OS_PATH_MAPPING,
+  prepareResetFields,
+  buildEncounterPayload,
+} from "./encounter.helpers";
+import { set, isEmpty } from "lodash-es";
 
 const scrollY = 530;
 
 export const EncounterContent = () => {
   const { toast } = useToast();
   const { jsonMode } = useAppConfig();
+
   const { encounter } = useVimOSEncounter();
   const { canUpdate, updateEncounter } = useUpdateEncounter();
-  const [enlargedHeader, setEnlargeHeader] = useState(false);
 
-  const methods = useNotesForm();
+  const formProps = useEncounterForm();
+  const watchedFields = useWatch({
+    control: formProps.control,
+  });
+
+  const [enlargedHeader, setEnlargeHeader] = useState(false);
+  const [areFieldsDirty, setAreFieldsDirty] = useState(false);
+  const [componentKey, setComponentKey] = useState<number>(+new Date());
 
   /**
    * Because input fields are never disabled (because when they can't be updated we show copy to clipboard UX),
@@ -48,121 +60,56 @@ export const EncounterContent = () => {
    *
    * So we have to manually check if the input fields are dirty and if they can be updated.
    */
-  const canUpdateObj: EHR.CanUpdateEncounterParams = {
-    assessment: {},
-    objective: {},
-    patientInstructions: {},
-    plan: {},
-    subjective: {},
-  };
+  const canUpdateObj: EHR.CanUpdateEncounterParams = useMemo(
+    () => ({
+      assessment: {},
+      objective: {},
+      patientInstructions: {},
+      plan: {},
+      subjective: {},
+      billingInformation: {},
+    }),
+    []
+  );
 
-  for (const key in methods.formState.dirtyFields) {
-    const fieldName = key as keyof FormInputs;
-    switch (fieldName) {
-      case "subjectiveGeneralNotes":
-        canUpdateObj.subjective!.generalNotes = true;
-        break;
-      case "subjectiveChiefComplaint":
-        canUpdateObj.subjective!.chiefComplaintNotes = true;
-        break;
-      case "subjectiveHistoryOfPresentIllness":
-        canUpdateObj.subjective!.historyOfPresentIllnessNotes = true;
-        break;
-      case "subjectiveReviewOfSystems":
-        canUpdateObj.subjective!.reviewOfSystemsNotes = true;
-        break;
-      case "objectiveGeneralNotes":
-        canUpdateObj.objective!.generalNotes = true;
-        break;
-      case "objectivePhysicalExamNotes":
-        canUpdateObj.objective!.physicalExamNotes = true;
-        break;
-      case "assessmentGeneralNotes":
-        canUpdateObj.assessment!.generalNotes = true;
-        break;
-      case "planGeneralNotes":
-        canUpdateObj.plan!.generalNotes = true;
-        break;
-      case "patientInstructionsGeneralNotes":
-        canUpdateObj.patientInstructions!.generalNotes = true;
-        break;
+  useEffect(() => {
+    const changedFields = Object.keys(formProps.formState.dirtyFields);
+    if (changedFields.length > 0) {
+      changedFields.forEach((key) => {
+        const fieldPath =
+          FORM_DATA_TO_VIM_OS_PATH_MAPPING[key as keyof FormInputs];
+        if (fieldPath) {
+          set(canUpdateObj, fieldPath, true);
+        }
+      });
     }
-  }
+  }, [formProps.formState.dirtyFields, canUpdateObj, watchedFields]);
+
+  useEffect(() => {
+    const dirtyFields = formProps.formState.dirtyFields;
+
+    const hasDirtyFieldsWithValues = Object.keys(dirtyFields).some(
+      (fieldName) => {
+        const fieldValue = watchedFields[fieldName as keyof FormInputs];
+        return !isEmpty(fieldValue);
+      }
+    );
+
+    setAreFieldsDirty(hasDirtyFieldsWithValues);
+    setComponentKey(+new Date());
+  }, [watchedFields, formProps.formState.dirtyFields]);
 
   const canUpdateResult = canUpdate(canUpdateObj);
-  const areNotesDirty = Object.keys(methods.formState.dirtyFields).length > 0;
 
   const canUpdateNotes = {
     ...canUpdateResult,
-    canUpdate: areNotesDirty && canUpdateResult.canUpdate,
+    canUpdate: areFieldsDirty && canUpdateResult.canUpdate,
   };
 
-  const onNotesSubmit = async (data: FormInputs) => {
-    function removeUndefinedProperties(obj: unknown) {
-      if (typeof obj !== "object" || obj === null) {
-        return obj;
-      }
+  const onEncounterSubmit = async (data: FormInputs) => {
+    const encounterPayload = buildEncounterPayload(data, canUpdateNotes);
 
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const result: any = {};
-
-      for (const [key, value] of Object.entries(obj)) {
-        if (typeof value === "object" && value !== null) {
-          const nestedResult = removeUndefinedProperties(value);
-          if (Object.keys(nestedResult).length > 0) {
-            result[key] = nestedResult;
-          }
-        } else if (value !== undefined) {
-          result[key] = value;
-        }
-      }
-
-      return result;
-    }
-    const encounterPayload: EHR.UpdateEncounterParams = {
-      subjective: {
-        generalNotes: canUpdateNotes?.details.subjective?.generalNotes
-          ? data.subjectiveGeneralNotes ?? undefined
-          : undefined,
-        chiefComplaintNotes: canUpdateNotes?.details.subjective
-          ?.chiefComplaintNotes
-          ? data.subjectiveChiefComplaint ?? undefined
-          : undefined,
-        historyOfPresentIllnessNotes: canUpdateNotes?.details.subjective
-          ?.historyOfPresentIllnessNotes
-          ? data.subjectiveHistoryOfPresentIllness ?? undefined
-          : undefined,
-        reviewOfSystemsNotes: canUpdateNotes?.details.subjective
-          ?.reviewOfSystemsNotes
-          ? data.subjectiveReviewOfSystems ?? undefined
-          : undefined,
-      },
-      objective: {
-        generalNotes: canUpdateNotes?.details.objective?.generalNotes
-          ? data.objectiveGeneralNotes ?? undefined
-          : undefined,
-        physicalExamNotes: canUpdateNotes?.details.objective?.physicalExamNotes
-          ? data.objectivePhysicalExamNotes ?? undefined
-          : undefined,
-      },
-      assessment: {
-        generalNotes: canUpdateNotes?.details.assessment?.generalNotes
-          ? data.assessmentGeneralNotes ?? undefined
-          : undefined,
-      },
-      plan: {
-        generalNotes: canUpdateNotes?.details.plan?.generalNotes
-          ? data.planGeneralNotes ?? undefined
-          : undefined,
-      },
-      patientInstructions: {
-        generalNotes: canUpdateNotes?.details.patientInstructions?.generalNotes
-          ? data.patientInstructionsGeneralNotes ?? undefined
-          : undefined,
-      },
-    };
-
-    updateEncounter(removeUndefinedProperties(encounterPayload))
+    updateEncounter(encounterPayload)
       .then(() => {
         toast({
           variant: "default",
@@ -175,41 +122,12 @@ export const EncounterContent = () => {
           title: "Uh oh! Something went wrong.",
           description: error ? JSON.stringify(error) : "An error occurred.",
         });
+      })
+      .finally(() => {
+        setComponentKey(+new Date());
       });
-    methods.reset({
-      subjectiveGeneralNotes: canUpdateNotes?.details.subjective?.generalNotes
-        ? null
-        : undefined,
-      subjectiveChiefComplaint: canUpdateNotes?.details.subjective
-        ?.chiefComplaintNotes
-        ? null
-        : undefined,
-      subjectiveHistoryOfPresentIllness: canUpdateNotes?.details.subjective
-        ?.historyOfPresentIllnessNotes
-        ? null
-        : undefined,
-      subjectiveReviewOfSystems: canUpdateNotes?.details.subjective
-        ?.reviewOfSystemsNotes
-        ? null
-        : undefined,
-      objectiveGeneralNotes: canUpdateNotes?.details.objective?.generalNotes
-        ? null
-        : undefined,
-      objectivePhysicalExamNotes: canUpdateNotes?.details.objective
-        ?.physicalExamNotes
-        ? null
-        : undefined,
-      assessmentGeneralNotes: canUpdateNotes?.details.assessment?.generalNotes
-        ? null
-        : undefined,
-      planGeneralNotes: canUpdateNotes?.details.plan?.generalNotes
-        ? null
-        : undefined,
-      patientInstructionsGeneralNotes: canUpdateNotes?.details
-        .patientInstructions?.generalNotes
-        ? null
-        : undefined,
-    });
+
+    formProps.reset(prepareResetFields(canUpdateNotes));
   };
 
   const headerClasses = useMemo(() => {
@@ -256,34 +174,38 @@ export const EncounterContent = () => {
           <Separator className="mb-1" />
           <EncounterBasicInformation />
           <Separator className="mb-1" />
-          <FormProvider {...methods}>
-            <form onSubmit={methods.handleSubmit(onNotesSubmit)}>
+          <FormProvider {...formProps}>
+            <form onSubmit={formProps.handleSubmit(onEncounterSubmit)}>
               <div className={headerClasses}>
                 <EntitySectionTitle className="text-md" title="SOAP" />
                 <Button
                   size="sm"
                   variant="default"
-                  className="pl-2 pr-3 h-8"
+                  className="pl-3 pr-3 h-8"
                   disabled={!canUpdateNotes?.canUpdate}
-                  onClick={() => {
-                    methods.handleSubmit(onNotesSubmit)();
+                  type="button"
+                  onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    formProps.handleSubmit(onEncounterSubmit)();
                   }}
                 >
-                  <CheckIcon className="mr-2" />
-                  Push all notes
+                  Push all to EHR
                 </Button>
               </div>
               <EncounterSubjective />
               <Separator className="mb-1" />
               <EncounterObjective />
               <Separator className="mb-1" />
-              <EncounterAssessment />
+              <EncounterAssessment key={`${componentKey}-assessment`} />
               <Separator className="mb-1" />
               <EncounterPlan />
               <Separator className="mb-1" />
               <EncounterPI />
               <Separator className="mb-1" />
-              <EncounterBillingInformation />
+              <EncounterBillingInformation
+                key={`${componentKey}-billing-information`}
+              />
             </form>
           </FormProvider>
           <Separator className="mb-1" />

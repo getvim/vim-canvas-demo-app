@@ -5,6 +5,8 @@ import {
 } from "../ui/entityContent";
 import { MultiSelectField } from "../update-fields/multiSelectField";
 import { EncounterUpdateField } from "../update-fields/updateFieldWrapper";
+import { useEncounterFormContext } from "./encounter.form";
+import { useController } from "react-hook-form";
 
 const CPT_CODES_OPTIONS = [
   {
@@ -36,6 +38,14 @@ const CPT_CODES_OPTIONS = [
 ];
 
 export const EncounterBillingInformation = () => {
+  const { control } = useEncounterFormContext();
+
+  const { field: procedureField } = useController({
+    name: "procedureCodes",
+    control,
+    defaultValue: [],
+  });
+
   return (
     <>
       <EntitySectionTitle title="Billing Information" />
@@ -52,16 +62,23 @@ export const EncounterBillingInformation = () => {
                 procedureCodes: values?.map((value) => ({
                   code: value.id,
                   description: value.label,
-                })) as [{ code: string; description: string }, ...Array<{ code: string; description: string }>],
+                })) as [
+                  { code: string; description: string },
+                  ...Array<{ code: string; description: string }>
+                ],
               },
             })}
             render={({ field }) => (
               <MultiSelectField
                 placeholder="Add CPT"
                 includeOptionsFields
-                formatOption={(option: { id: string; label: string }) => `${option.id} - ${option.label}`}
+                formatOption={(option: { id: string; label: string }) =>
+                  `${option.id} - ${option.label}`
+                }
                 options={CPT_CODES_OPTIONS}
                 direction="up"
+                selectedOptions={procedureField.value ?? undefined}
+                onSelectedChange={procedureField.onChange}
                 {...field}
               />
             )}

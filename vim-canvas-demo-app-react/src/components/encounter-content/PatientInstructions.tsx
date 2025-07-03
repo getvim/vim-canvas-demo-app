@@ -1,3 +1,4 @@
+import { useVimOSEncounter } from "@/hooks/useEncounter";
 import {
   EntityFieldContent,
   EntityFieldTitle,
@@ -6,10 +7,13 @@ import {
 } from "../ui/entityContent";
 import { TextareaField } from "../update-fields/textAreaField";
 import { EncounterUpdateField } from "../update-fields/updateFieldWrapper";
-import { FormInputs, useNoteFormContext } from "./form";
+import { FormInputs, useEncounterFormContext } from "./encounter.form";
 
 export const EncounterPI = () => {
-  const { control } = useNoteFormContext();
+  const { control } = useEncounterFormContext();
+  const { encounter } = useVimOSEncounter();
+  const { patientInstructions } = encounter || {};
+
   return (
     <>
       <EntitySectionTitle title="Patient Instructions" />
@@ -35,6 +39,7 @@ export const EncounterPI = () => {
                 onTextareaSubmit={field.onChange}
                 disabled={field.disabled}
                 clearAfterChange
+                prefixAdornment={patientInstructions?.generalNotes}
               />
             )}
           />

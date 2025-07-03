@@ -1,0 +1,5 @@
+[
+  { "id": "ROUTINE", "label": "Routine" },
+  { "id": "URGENT", "label": "Urgent" },
+  { "id": "STAT", "label": "Stat" }
+]

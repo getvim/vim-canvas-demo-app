@@ -17,36 +17,35 @@ interface Option {
 
 interface SelectFieldProps<T> extends UpdateField<T> {
   options: Array<T & Option>;
-  valueName?: keyof T;
+  valueName: string;
   selectedValue?: string;
   placeholder: string;
   includeOptionsFields?: boolean;
+  isDirty: boolean;
   formatOption?: (option: T) => string;
+  onSelectedChange: (value: T | null) => void;
 }
 
 export function SelectField<T = unknown>({
-  valueName = "id" as keyof T,
+  valueName,
   selectedValue,
   placeholder,
   onChange,
+  isDirty,
   disabled,
   options,
   includeOptionsFields,
   formatOption,
+  onSelectedChange,
 }: SelectFieldProps<T>) {
-  const [innerValue, setInnerValue] = useState<string | undefined>(
-    options.find(
-      (o) =>
-        o[valueName]?.toString().toLowerCase() === selectedValue?.toLowerCase()
-    )?.id
-  );
+  const [innerValue, setInnerValue] = useState<string | undefined>();
   const [key, setKey] = useState<number>(+new Date());
 
   useEffect(() => {
     setInnerValue(
       options.find(
         (o) =>
-          o[valueName]?.toString().toLowerCase() ===
+          o?.[valueName as keyof T]?.toString()?.toLowerCase() ===
           selectedValue?.toLowerCase()
       )?.id
     );
@@ -56,7 +55,10 @@ export function SelectField<T = unknown>({
     <div className="flex w-full justify-between">
       <Select
         key={key}
-        onValueChange={setInnerValue}
+        onValueChange={(value: string) => {
+          setInnerValue(value);
+          onSelectedChange?.(options.find((o) => o.id === value) as T);
+        }}
         value={innerValue}
         disabled={disabled}
       >
@@ -76,11 +78,13 @@ export function SelectField<T = unknown>({
 
       <SmallActionButtons
         disabled={disabled}
-        isCheckBtnDisabled={!innerValue}
+        isCheckBtnDisabled={!isDirty}
         onCrossClick={(e) => {
           e.preventDefault();
-          setInnerValue(undefined);
           setKey(+new Date());
+
+          setInnerValue(undefined);
+          onSelectedChange(null);
         }}
         onCheckClick={(e) => {
           e.preventDefault();
@@ -96,6 +100,7 @@ export function SelectField<T = unknown>({
                 }
               : newValue) as T
           );
+          onSelectedChange(null);
         }}
       />
     </div>

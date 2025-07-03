@@ -1,5 +1,5 @@
 import { useVimOSReferral } from "@/hooks/useReferral";
-import { MultiSelectFieldDeprecated } from "../update-fields/multiSelectFieldDeprecated";
+import { MultiSelectField } from "../update-fields/multiSelectField";
 import { ReferralUpdateField } from "../update-fields/updateFieldWrapper";
 import {
   EntityFieldContent,
@@ -7,9 +7,18 @@ import {
   EntitySectionContent,
   EntitySectionTitle,
 } from "../ui/entityContent";
+import { useController } from "react-hook-form";
+import { useReferralFormContext } from "./referral.form";
 
 export const ReferralConditions = () => {
   const { referral } = useVimOSReferral();
+  const { control } = useReferralFormContext();
+
+  const { field: conditionField } = useController({
+    name: "conditions",
+    control,
+    defaultValue: [],
+  });
 
   return (
     <>
@@ -36,12 +45,14 @@ export const ReferralConditions = () => {
               },
             })}
             render={({ field }) => (
-              <MultiSelectFieldDeprecated
+              <MultiSelectField
                 placeholder="Add code"
                 includeOptionsFields
                 formatOption={(option: { id: string; label: string }) =>
                   `${option.id} - ${option.label}`
                 }
+                selectedOptions={conditionField.value || []}
+                onSelectedChange={conditionField.onChange}
                 options={[
                   { id: "E11.21", label: "DM with nephropathy" },
                   {
@@ -68,6 +79,7 @@ export const ReferralConditions = () => {
                   { id: "F20.9", label: "Schizophrenia, unspecified" },
                   { id: "A00000", label: "Invalid ICD" },
                 ]}
+                direction="up"
                 {...field}
               />
             )}

@@ -1,5 +1,5 @@
 import { useVimOSReferral } from "@/hooks/useReferral";
-import { MultiSelectFieldDeprecated } from "../update-fields/multiSelectFieldDeprecated";
+import { MultiSelectField } from "../update-fields/multiSelectField";
 import { ReferralUpdateField } from "../update-fields/updateFieldWrapper";
 import {
   EntityFieldContent,
@@ -7,9 +7,18 @@ import {
   EntitySectionContent,
   EntitySectionTitle,
 } from "../ui/entityContent";
+import { useController } from "react-hook-form";
+import { useReferralFormContext } from "./referral.form";
 
 export const ReferralProcedures = () => {
   const { referral } = useVimOSReferral();
+  const { control } = useReferralFormContext();
+
+  const { field: procedureField } = useController({
+    name: "procedureCodes",
+    control,
+    defaultValue: [],
+  });
 
   return (
     <>
@@ -29,14 +38,19 @@ export const ReferralProcedures = () => {
                 cpts: values?.map((value) => ({
                   code: value.id,
                   description: value.label,
-                })) as [{ code: string; description: string }, ...Array<{ code: string; description: string }>],
+                })) as [
+                  { code: string; description: string },
+                  ...Array<{ code: string; description: string }>
+                ],
               },
             })}
             render={({ field }) => (
-              <MultiSelectFieldDeprecated
+              <MultiSelectField
                 placeholder="Add code"
                 includeOptionsFields
                 formatOption={(option) => `${option.id} - ${option.label}`}
+                selectedOptions={procedureField.value || []}
+                onSelectedChange={procedureField.onChange}
                 options={[
                   {
                     id: "99203",

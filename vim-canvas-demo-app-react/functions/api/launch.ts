@@ -7,6 +7,16 @@ export const onRequestGet: PagesFunction<Env> = async (context) => {
   const queryParams = url.searchParams;
   const launchId = queryParams.get("launch_id");
   const launchType = queryParams.get("launch_type");
+  const ehrUrl = queryParams.get("ehr_url");
+
+  if (ehrUrl) {
+    /** @see https://docs.getvim.com/vim-os-js/authentication#_1-the-launch-endpoint
+     * check if needed - ehrUrl is in whitelist - if not handle: send email / log warning / etc.
+     * make sure to strip host from ehrUrl - only use pathname
+     * if ehrUrl is not in whitelist - send email / log warning / etc. possibly also returning 403
+     * if ehrUrl is in whitelist, continue
+     */
+  }
 
   // Redirect to the settings application page if the launch type is APP_SETTINGS
   let redirect_uri = context.env.REDIRECT_URL ?? "http://localhost:8788";

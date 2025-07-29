@@ -52,7 +52,6 @@ export const EncounterContent = () => {
 
   const [enlargedHeader, setEnlargeHeader] = useState(false);
   const [areFieldsDirty, setAreFieldsDirty] = useState(false);
-  const [componentKey, setComponentKey] = useState<number>(+new Date());
 
   /**
    * Because input fields are never disabled (because when they can't be updated we show copy to clipboard UX),
@@ -96,7 +95,6 @@ export const EncounterContent = () => {
     );
 
     setAreFieldsDirty(hasDirtyFieldsWithValues);
-    setComponentKey(+new Date());
   }, [watchedFields, formProps.formState.dirtyFields]);
 
   const canUpdateResult = canUpdate(canUpdateObj);
@@ -122,9 +120,6 @@ export const EncounterContent = () => {
           title: "Uh oh! Something went wrong.",
           description: error ? JSON.stringify(error) : "An error occurred.",
         });
-      })
-      .finally(() => {
-        setComponentKey(+new Date());
       });
 
     formProps.reset(prepareResetFields(canUpdateNotes));
@@ -197,15 +192,13 @@ export const EncounterContent = () => {
               <Separator className="mb-1" />
               <EncounterObjective />
               <Separator className="mb-1" />
-              <EncounterAssessment key={`${componentKey}-assessment`} />
+              <EncounterAssessment />
               <Separator className="mb-1" />
               <EncounterPlan />
               <Separator className="mb-1" />
               <EncounterPI />
               <Separator className="mb-1" />
-              <EncounterBillingInformation
-                key={`${componentKey}-billing-information`}
-              />
+              <EncounterBillingInformation />
             </form>
           </FormProvider>
           <Separator className="mb-1" />

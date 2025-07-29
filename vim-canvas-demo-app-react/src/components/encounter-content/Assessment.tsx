@@ -27,7 +27,7 @@ export const EncounterAssessment = () => {
     <>
       <EntitySectionTitle title="Assessment" />
       <EntitySectionContent>
-        <EntityFieldContent>
+        <EntityFieldContent key={`${diagnosisField.value}-diagnosis-codes`}>
           <EntityFieldReadonlyList list={assessment?.diagnosisCodes} />
           <EncounterUpdateField<{ id: string; label: string }[]>
             value={

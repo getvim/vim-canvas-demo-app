@@ -50,7 +50,7 @@ export const EncounterBillingInformation = () => {
     <>
       <EntitySectionTitle title="Billing Information" />
       <EntitySectionContent>
-        <EntityFieldContent>
+        <EntityFieldContent key={`${procedureField.value}-procedure-codes`}>
           <EncounterUpdateField<{ id: string; label: string }[]>
             canUpdateParam={{
               billingInformation: {

@@ -17,6 +17,7 @@ export const FORM_DATA_TO_VIM_OS_PATH_MAPPING: Record<
   assessmentGeneralNotes: "assessment.generalNotes",
   planGeneralNotes: "plan.generalNotes",
   patientInstructionsGeneralNotes: "patientInstructions.generalNotes",
+  encounterNotesGeneralNotes: "encounterNotes.generalNotes",
   diagnosisCodes: "assessment.diagnosisCodes",
   procedureCodes: "billingInformation.procedureCodes",
 };

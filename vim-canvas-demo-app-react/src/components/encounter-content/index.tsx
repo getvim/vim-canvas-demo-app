@@ -22,6 +22,7 @@ import { EncounterPI } from "./PatientInstructions";
 import { EncounterPlan } from "./Plan";
 import { EncounterSubjective } from "./Subjective";
 import { EncounterBillingInformation } from "./BillingInformation";
+import { EncounterGeneralNotes } from "./EncounterNotes";
 import {
   useCallback,
   useEffect,
@@ -67,6 +68,7 @@ export const EncounterContent = () => {
       plan: {},
       subjective: {},
       billingInformation: {},
+      encounterNotes: {},
     }),
     []
   );

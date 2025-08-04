@@ -201,6 +201,8 @@ export const EncounterContent = () => {
               <EncounterPI />
               <Separator className="mb-1" />
               <EncounterBillingInformation />
+              <Separator className="mb-1" />
+              <EncounterGeneralNotes />
             </form>
           </FormProvider>
           <Separator className="mb-1" />

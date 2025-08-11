@@ -43,17 +43,6 @@ export const EncounterContent = () => {
   const { toast } = useToast();
   const { jsonMode } = useAppConfig();
 
-  const { encounter } = useVimOSEncounter();
-  const { canUpdate, updateEncounter } = useUpdateEncounter();
-
-  const formProps = useEncounterForm();
-  const watchedFields = useWatch({
-    control: formProps.control,
-  });
-
-  const [enlargedHeader, setEnlargeHeader] = useState(false);
-  const [areFieldsDirty, setAreFieldsDirty] = useState(false);
-
   /**
    * Because input fields are never disabled (because when they can't be updated we show copy to clipboard UX),
    * We can't use react-hook-form to determine which inputs are for copy to clipboard and which are for updating.
@@ -72,6 +61,22 @@ export const EncounterContent = () => {
     }),
     []
   );
+
+  const { encounter } = useVimOSEncounter();
+  const { canUpdate, updateEncounter, canUpdateParams } =
+    useUpdateEncounter(canUpdateObj);
+
+  const formProps = useEncounterForm();
+  const watchedFields = useWatch({
+    control: formProps.control,
+  });
+
+  const [enlargedHeader, setEnlargeHeader] = useState(false);
+  const [areFieldsDirty, setAreFieldsDirty] = useState(false);
+
+  const canUpdateNotes = {
+    canUpdate: areFieldsDirty && canUpdateParams,
+  };
 
   useEffect(() => {
     const changedFields = Object.keys(formProps.formState.dirtyFields);
@@ -99,14 +104,8 @@ export const EncounterContent = () => {
     setAreFieldsDirty(hasDirtyFieldsWithValues);
   }, [watchedFields, formProps.formState.dirtyFields]);
 
-  const canUpdateResult = canUpdate(canUpdateObj);
-
-  const canUpdateNotes = {
-    ...canUpdateResult,
-    canUpdate: areFieldsDirty && canUpdateResult.canUpdate,
-  };
-
   const onEncounterSubmit = async (data: FormInputs) => {
+    const canUpdateNotes = canUpdate(canUpdateObj);
     const encounterPayload = buildEncounterPayload(data, canUpdateNotes);
 
     updateEncounter(encounterPayload)

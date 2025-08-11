@@ -108,6 +108,7 @@ export const EncounterContent = () => {
 
   const onEncounterSubmit = async (data: FormInputs) => {
     const encounterPayload = buildEncounterPayload(data, canUpdateNotes);
+    console.log("encounterPayload", Object.keys(encounterPayload));
 
     updateEncounter(encounterPayload)
       .then(() => {

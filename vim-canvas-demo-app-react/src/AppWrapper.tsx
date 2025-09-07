@@ -31,7 +31,7 @@ export const AppWrapper: React.FC<React.PropsWithChildren> = ({ children }) => {
           <VimOSReferralProvider>
             <VimOSOrdersProvider>
               <VimOSClaimProvider>
-              <VimOSEncounterProvider>{children}</VimOSEncounterProvider>
+                <VimOSEncounterProvider>{children}</VimOSEncounterProvider>
               </VimOSClaimProvider>
             </VimOSOrdersProvider>
           </VimOSReferralProvider>

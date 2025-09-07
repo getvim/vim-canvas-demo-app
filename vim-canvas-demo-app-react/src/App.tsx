@@ -40,11 +40,11 @@ function App() {
   const { patient } = useVimOSPatient();
   const { encounter } = useVimOSEncounter();
   const { referral } = useVimOSReferral();
-  const { orders } = useVimOSOrders();
+  const { orders, orderCreatedEvents } = useVimOSOrders();
   const { claim } = useVimOSClaim();
   const [redirectUrl, setRedirectUrl] = useState<string | undefined>(undefined);
   const [redirectModalOpen, setRedirectModal] = useState(false);
-  const [themeColor, setThemeColor] = useState<string>("#00FFE1");
+  const [themeColor, setThemeColor] = useState<string>("#04B39F");
   const { idToken } = useIdToken();
 
   useEffect(() => {
@@ -142,7 +142,11 @@ function App() {
           </CollapsibleEntityContent>
         </CollapsibleEntity>
       )}
-      {orders && <OrdersWrapper orders={orders} themeColor={themeColor} />}
+      <OrdersWrapper
+        orders={orders}
+        orderCreatedEvents={orderCreatedEvents}
+        themeColor={themeColor}
+      />
       {claim && (
         <CollapsibleEntity
           entityTitle="Claim"

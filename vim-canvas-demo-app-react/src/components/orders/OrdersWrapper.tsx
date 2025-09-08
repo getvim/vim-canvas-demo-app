@@ -33,6 +33,7 @@ export const OrdersWrapper: React.FC<{
     <>
       {orders?.map((order, index) => {
         const orderType = order.basicInformation?.type;
+        const orderKey = order.identifiers?.ehrOrderId ?? index;
         return (
           <CollapsibleEntity
             entityTitle={"Order"}
@@ -40,7 +41,7 @@ export const OrdersWrapper: React.FC<{
             entityIconUrl={(orderType && orderIcons[orderType]) ?? orderSvg}
             themeColor={themeColor}
             badge="State"
-            key={index}
+            key={orderKey}
           >
             <CollapsibleEntityContent>
               <OrderContent order={order} />
@@ -51,6 +52,7 @@ export const OrdersWrapper: React.FC<{
       {orderCreatedEvents.map((orderCreatedEvent, index) => {
         const { payload: order, receivedAt } = orderCreatedEvent;
         const orderType = order.basicInformation?.type;
+        const orderKey = order.identifiers?.ehrOrderId ?? index;
         return (
           <CollapsibleEntity
             entityTitle="Order created"
@@ -75,7 +77,7 @@ export const OrdersWrapper: React.FC<{
                 <Trash2 className="w-4 h-4" />
               </Button>
             }
-            key={index}
+            key={orderKey}
           >
             <CollapsibleEntityContent variant="dashed">
               <OrderContent order={order} />

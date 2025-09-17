@@ -6,7 +6,6 @@ import { JSONView } from "./ui/jsonView";
 import { Separator } from "./ui/separator";
 import {
   EntityFieldContent,
-  EntityFieldReadonlyList,
   EntityFieldReadonlyText,
   EntityFieldTitle,
   EntitySectionContent,
@@ -15,6 +14,7 @@ import {
 import { ProviderSection } from "./Provider";
 import { capitalize } from "@/lib/utils";
 import { formatContentDate } from "@/utils/formatContentDate";
+import { PatientEnhancements } from "./patient-enhancements/patient-enhancements";
 
 export const PatientContent = () => {
   const { jsonMode } = useAppConfig();
@@ -161,10 +161,9 @@ export const PatientContent = () => {
             </EntityFieldContent>
           </EntitySectionContent>
           <Separator className="mb-1" />
-          <EntitySectionTitle title="Problem list" />
-          <EntityFieldReadonlyList list={problemList} />
-          <Separator className="mb-1" />
           <ProviderSection provider={patient?.pcp} title="Provider" />
+          <Separator className="mb-1" />
+          <PatientEnhancements />
         </>
       )}
     </div>

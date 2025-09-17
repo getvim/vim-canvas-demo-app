@@ -1,12 +1,9 @@
 import { useAppConfig } from "@/hooks/useAppConfig";
 import { useVimOSPatient } from "@/hooks/usePatient";
-import { useEffect, useState } from "react";
-import { EHR } from "vim-os-js-browser/types";
 import { JSONView } from "./ui/jsonView";
 import { Separator } from "./ui/separator";
 import {
   EntityFieldContent,
-  EntityFieldReadonlyList,
   EntityFieldReadonlyText,
   EntityFieldTitle,
   EntitySectionContent,
@@ -15,19 +12,11 @@ import {
 import { ProviderSection } from "./Provider";
 import { capitalize } from "@/lib/utils";
 import { formatContentDate } from "@/utils/formatContentDate";
+import { PatientEnhancements } from "./patient-enhancements/PatientEnhancements";
 
 export const PatientContent = () => {
   const { jsonMode } = useAppConfig();
   const { patient } = useVimOSPatient();
-  const [problemList, setProblemList] = useState<EHR.Diagnosis[] | undefined>();
-
-  useEffect(() => {
-    if (patient) {
-      (async () => {
-        setProblemList(await patient.getProblemList());
-      })();
-    }
-  }, [patient?.identifiers.vimPatientId, setProblemList]);
 
   return (
     <div className="w-full">
@@ -161,10 +150,9 @@ export const PatientContent = () => {
             </EntityFieldContent>
           </EntitySectionContent>
           <Separator className="mb-1" />
-          <EntitySectionTitle title="Problem list" />
-          <EntityFieldReadonlyList list={problemList} />
-          <Separator className="mb-1" />
           <ProviderSection provider={patient?.pcp} title="Provider" />
+          <Separator className="mb-1" />
+          <PatientEnhancements />
         </>
       )}
     </div>

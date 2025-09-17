@@ -12,7 +12,7 @@ import {
 import { ProviderSection } from "./Provider";
 import { capitalize } from "@/lib/utils";
 import { formatContentDate } from "@/utils/formatContentDate";
-import { PatientEnhancements } from "./patient-enhancements/patient-enhancements";
+import { PatientEnhancements } from "./patient-enhancements/PatientEnhancements";
 
 export const PatientContent = () => {
   const { jsonMode } = useAppConfig();

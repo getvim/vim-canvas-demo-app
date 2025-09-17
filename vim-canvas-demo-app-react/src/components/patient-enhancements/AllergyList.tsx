@@ -26,7 +26,7 @@ export const AllergyList = ({ allergies }: AllergyListProps) => {
       <CollapsibleTrigger asChild>
         <Button
           variant="ghost"
-          className="w-full h-[50px] flex items-center hover:bg-gray-100 bg-white justify-between p-2"
+          className="w-full h-[50px] flex items-center hover:bg-gray-100 bg-white justify-between p-0"
         >
           <div className="flex gap-2 items-center">
             <div className="flex flex-col items-start">
@@ -46,23 +46,11 @@ export const AllergyList = ({ allergies }: AllergyListProps) => {
           <div className="w-full">
             {allergies.map((allergy, index) => (
               <div key={index} className="mb-4">
-                <EntityFieldContent>
-                  <EntityFieldTitle title="Allergy" />
-                  <EntityFieldReadonlyText
-                    text={allergy.allergyDetails.name || "--"}
-                  />
-                </EntityFieldContent>
-                <EntityFieldContent>
-                  <EntityFieldTitle title="Reaction" />
-                  <EntityFieldReadonlyText
-                    text={allergy.allergyReactionDetails?.name || "--"}
-                  />
-                </EntityFieldContent>
                 <div className="grid grid-cols-2 gap-4">
                   <EntityFieldContent>
-                    <EntityFieldTitle title="Onset date" />
+                    <EntityFieldTitle title="Allergy" />
                     <EntityFieldReadonlyText
-                      text={allergy.basicInformation.onsetDate || "--"}
+                      text={allergy.allergyDetails.name || "--"}
                     />
                   </EntityFieldContent>
                   <EntityFieldContent>
@@ -74,9 +62,23 @@ export const AllergyList = ({ allergies }: AllergyListProps) => {
                 </div>
                 <div className="grid grid-cols-2 gap-4">
                   <EntityFieldContent>
+                    <EntityFieldTitle title="Reaction" />
+                    <EntityFieldReadonlyText
+                      text={allergy.allergyReactionDetails?.name || "--"}
+                    />
+                  </EntityFieldContent>
+                  <EntityFieldContent>
                     <EntityFieldTitle title="Severity" />
                     <EntityFieldReadonlyText
                       text={allergy.allergyReactionDetails?.severity || "--"}
+                    />
+                  </EntityFieldContent>
+                </div>
+                <div className="grid grid-cols-2 gap-4">
+                  <EntityFieldContent>
+                    <EntityFieldTitle title="Onset date" />
+                    <EntityFieldReadonlyText
+                      text={allergy.basicInformation.onsetDate || "--"}
                     />
                   </EntityFieldContent>
                   <EntityFieldContent>

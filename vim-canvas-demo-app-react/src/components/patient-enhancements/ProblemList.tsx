@@ -26,7 +26,7 @@ export const ProblemList = ({ problems }: ProblemListProps) => {
       <CollapsibleTrigger asChild>
         <Button
           variant="ghost"
-          className="w-full h-[50px] flex items-center hover:bg-gray-100 bg-white justify-between p-2"
+          className="w-full h-[50px] flex items-center hover:bg-gray-100 bg-white justify-between p-0"
         >
           <div className="flex gap-2 items-center">
             <div className="flex flex-col items-start">

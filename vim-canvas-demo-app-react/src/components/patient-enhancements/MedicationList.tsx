@@ -26,7 +26,7 @@ export const MedicationList = ({ medications }: MedicationListProps) => {
       <CollapsibleTrigger asChild>
         <Button
           variant="ghost"
-          className="w-full h-[50px] flex items-center hover:bg-gray-100 bg-white justify-between p-2"
+          className="w-full h-[50px] flex items-center hover:bg-gray-100 bg-white justify-between p-0"
         >
           <div className="flex gap-2 items-center">
             <div className="flex flex-col items-start">
@@ -47,7 +47,7 @@ export const MedicationList = ({ medications }: MedicationListProps) => {
             {medications.map((medication, index) => (
               <div key={index} className="mb-4">
                 <EntityFieldContent>
-                  <EntityFieldTitle title="Medication Name" />
+                  <EntityFieldTitle title="Medication name" />
                   <EntityFieldReadonlyText
                     text={medication.basicInformation?.medicationName || "--"}
                   />
@@ -81,7 +81,7 @@ export const MedicationList = ({ medications }: MedicationListProps) => {
                   </EntityFieldContent>
                 </div>
                 <EntityFieldContent>
-                  <EntityFieldTitle title="Prescription date" />
+                  <EntityFieldTitle title="Added date" />
                   <EntityFieldReadonlyText
                     text={medication.addedDate || "--"}
                   />

@@ -1,7 +1,5 @@
 import { useAppConfig } from "@/hooks/useAppConfig";
 import { useVimOSPatient } from "@/hooks/usePatient";
-import { useEffect, useState } from "react";
-import { EHR } from "vim-os-js-browser/types";
 import { JSONView } from "./ui/jsonView";
 import { Separator } from "./ui/separator";
 import {
@@ -19,15 +17,6 @@ import { PatientEnhancements } from "./patient-enhancements/patient-enhancements
 export const PatientContent = () => {
   const { jsonMode } = useAppConfig();
   const { patient } = useVimOSPatient();
-  const [problemList, setProblemList] = useState<EHR.Diagnosis[] | undefined>();
-
-  useEffect(() => {
-    if (patient) {
-      (async () => {
-        setProblemList(await patient.getProblemList());
-      })();
-    }
-  }, [patient?.identifiers.vimPatientId, setProblemList]);
 
   return (
     <div className="w-full">

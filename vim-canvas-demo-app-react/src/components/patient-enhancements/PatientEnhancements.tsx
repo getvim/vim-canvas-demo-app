@@ -89,7 +89,9 @@ export const PatientEnhancements = () => {
           );
         }
       } catch (error) {
-        const errorMessage = error?.data?.includes("is not supported")
+        const errorMessage = (error as { data?: string })?.data?.includes(
+          "is not supported"
+        )
           ? `${capitalize(
               enhancement.name
             )} is not supported in this EHR system yet.`

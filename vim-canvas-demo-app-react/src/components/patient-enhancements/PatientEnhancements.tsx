@@ -5,6 +5,7 @@ import { ProblemList } from "./ProblemList";
 import { MedicationList } from "./MedicationList";
 import { AllergyList } from "./AllergyList";
 import { EHR } from "vim-os-js-browser/types";
+import { capitalize } from "@/lib/utils";
 
 type EnhancementName = "problem list" | "medication list" | "allergy list";
 
@@ -45,12 +46,19 @@ export const PatientEnhancements = () => {
   const [loadingStates, setLoadingStates] = useState<
     Partial<Record<EnhancementName, boolean>>
   >({});
+  const [errorStates, setErrorStates] = useState<
+    Partial<Record<EnhancementName, string>>
+  >({});
 
   const onEnhancementClick = useCallback(
     async (enhancement: Enhancement) => {
       if (!patient) return;
 
-      // Set loading state
+      // Clear any previous error and set loading state
+      setErrorStates((prev) => ({
+        ...prev,
+        [enhancement.name]: undefined,
+      }));
       setLoadingStates((prev) => ({
         ...prev,
         [enhancement.name]: true,
@@ -80,6 +88,18 @@ export const PatientEnhancements = () => {
             `Unknown enhancement function: ${enhancement.function}`
           );
         }
+      } catch (error) {
+        const errorMessage =
+          (error as { data?: { message?: string } }).data?.message ===
+          "NOT_SUPPORTED_IN_EHR_SYSTEM" //not supported
+            ? `${capitalize(
+                enhancement.name
+              )} is not supported in this EHR system yet.`
+            : `Failed to fetch ${enhancement.name}. Please try again.`;
+        setErrorStates((prev) => ({
+          ...prev,
+          [enhancement.name]: errorMessage,
+        }));
       } finally {
         // Clear loading state
         setLoadingStates((prev) => ({
@@ -110,22 +130,39 @@ export const PatientEnhancements = () => {
               `Get patient ${enhancement.name}`
             )}
           </Button>
-          {enhancementResult[enhancement.name] && (
+          {(enhancementResult[enhancement.name] ||
+            errorStates[enhancement.name]) && (
             <div className="mt-2">
-              {enhancement.name === "problem list" &&
-                enhancementResult["problem list"] && (
-                  <ProblemList problems={enhancementResult["problem list"]} />
-                )}
-              {enhancement.name === "medication list" &&
-                enhancementResult["medication list"] && (
-                  <MedicationList
-                    medications={enhancementResult["medication list"]}
-                  />
-                )}
-              {enhancement.name === "allergy list" &&
-                enhancementResult["allergy list"] && (
-                  <AllergyList allergies={enhancementResult["allergy list"]} />
-                )}
+              {errorStates[enhancement.name] ? (
+                <div className="w-full p-4 bg-red-50 border border-red-200 rounded-lg">
+                  <div className="flex items-center gap-2">
+                    <p className="text-red-700 text-sm font-medium">
+                      {errorStates[enhancement.name]}
+                    </p>
+                  </div>
+                </div>
+              ) : (
+                <>
+                  {enhancement.name === "problem list" &&
+                    enhancementResult["problem list"] && (
+                      <ProblemList
+                        problems={enhancementResult["problem list"]}
+                      />
+                    )}
+                  {enhancement.name === "medication list" &&
+                    enhancementResult["medication list"] && (
+                      <MedicationList
+                        medications={enhancementResult["medication list"]}
+                      />
+                    )}
+                  {enhancement.name === "allergy list" &&
+                    enhancementResult["allergy list"] && (
+                      <AllergyList
+                        allergies={enhancementResult["allergy list"]}
+                      />
+                    )}
+                </>
+              )}
             </div>
           )}
         </div>

@@ -7,12 +7,17 @@ import { AllergyList } from "./AllergyList";
 import { EHR } from "vim-os-js-browser/types";
 import { capitalize } from "@/lib/utils";
 
-type EnhancementName = "problem list" | "medication list" | "allergy list";
+type EnhancementName =
+  | "problem list"
+  | "medication list"
+  | "allergy list"
+  | "lab results";
 
 type EnhancementFunction =
   | "getProblemList"
   | "getMedicationList"
-  | "getAllergyList";
+  | "getAllergyList"
+  | "getLabResults";
 
 type Enhancement = {
   name: EnhancementName;
@@ -32,6 +37,10 @@ const enhancements: Enhancement[] = [
     name: "allergy list",
     function: "getAllergyList",
   },
+  {
+    name: "lab results",
+    function: "getLabResults",
+  },
 ];
 
 export const PatientEnhancements = () => {
@@ -41,6 +50,7 @@ export const PatientEnhancements = () => {
       "problem list": EHR.PatientDiagnosis[];
       "medication list": EHR.PatientMedication[];
       "allergy list": EHR.Allergy[];
+      "lab results": EHR.LabResult[];
     }>
   >({});
   const [loadingStates, setLoadingStates] = useState<
@@ -82,6 +92,12 @@ export const PatientEnhancements = () => {
           setEnhancementResult((prev) => ({
             ...prev,
             "allergy list": result,
+          }));
+        } else if (enhancement.function === "getLabResults") {
+          const result = await patient.getLabResults();
+          setEnhancementResult((prev) => ({
+            ...prev,
+            "lab results": result,
           }));
         } else {
           throw new Error(
@@ -159,6 +175,12 @@ export const PatientEnhancements = () => {
                     enhancementResult["allergy list"] && (
                       <AllergyList
                         allergies={enhancementResult["allergy list"]}
+                      />
+                    )}
+                  {enhancement.name === "lab results" &&
+                    enhancementResult["lab results"] && (
+                      <LabResults
+                        labResults={enhancementResult["lab results"]}
                       />
                     )}
                 </>

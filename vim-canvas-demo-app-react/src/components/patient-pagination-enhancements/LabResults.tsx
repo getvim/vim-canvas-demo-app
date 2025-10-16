@@ -52,7 +52,7 @@ export const LabResults = ({ labResults, onNextPage }: LabResultsProps) => {
               </div>
               <div>
                 <EntityFieldTitle title="System" />
-                <EntityFieldReadonlyText text="CPT-II" />
+                <EntityFieldReadonlyText text="supported ICD-10" />
               </div>
             </div>
             <div className="grid grid-cols-2 gap-4 mt-2">

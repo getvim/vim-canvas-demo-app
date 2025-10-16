@@ -37,10 +37,6 @@ const enhancements: Enhancement[] = [
     name: "allergy list",
     function: "getAllergyList",
   },
-  {
-    name: "lab results",
-    function: "getLabResults",
-  },
 ];
 
 export const PatientEnhancements = () => {
@@ -92,12 +88,6 @@ export const PatientEnhancements = () => {
           setEnhancementResult((prev) => ({
             ...prev,
             "allergy list": result,
-          }));
-        } else if (enhancement.function === "getLabResults") {
-          const result = await patient.getLabResults();
-          setEnhancementResult((prev) => ({
-            ...prev,
-            "lab results": result,
           }));
         } else {
           throw new Error(
@@ -175,12 +165,6 @@ export const PatientEnhancements = () => {
                     enhancementResult["allergy list"] && (
                       <AllergyList
                         allergies={enhancementResult["allergy list"]}
-                      />
-                    )}
-                  {enhancement.name === "lab results" &&
-                    enhancementResult["lab results"] && (
-                      <LabResults
-                        labResults={enhancementResult["lab results"]}
                       />
                     )}
                 </>

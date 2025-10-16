@@ -26,6 +26,7 @@ const safeFormat = (date: Date) => {
 interface DatePickerProps extends UpdateField<string | undefined> {
   onDateChange: (date: Date | undefined) => void;
   isDirty: boolean;
+  hideActionButtons?: boolean;
 }
 
 export function DatePicker({
@@ -34,6 +35,7 @@ export function DatePicker({
   disabled,
   onDateChange,
   isDirty,
+  hideActionButtons = false,
 }: DatePickerProps) {
   const { toast } = useToast();
   const vimOs = useVimOsContext();
@@ -58,7 +60,8 @@ export function DatePicker({
               disabled={disabled}
               variant={"outline"}
               className={cn(
-                "w-full h-7 justify-start text-left font-normal rounded-r-none",
+                "w-full h-7 justify-start text-left font-normal",
+                !hideActionButtons && "rounded-r-none",
                 !innerValue && "text-muted-foreground"
               )}
             >
@@ -81,33 +84,37 @@ export function DatePicker({
         </Popover>
       </div>
 
-      <SmallActionButtons
-        isCheckBtnDisabled={!isDirty}
-        disabled={disabled}
-        tooltipContent={disabled ? "Copy to clipboard" : undefined}
-        checkIcon={disabled ? <CopyIcon /> : undefined}
-        onCrossClick={(e: React.MouseEvent<HTMLButtonElement>) => {
-          e.preventDefault();
-          setIsOpen(false);
-          setInnerValue(undefined);
-          onDateChange(undefined);
-        }}
-        onCheckClick={(e: React.MouseEvent<HTMLButtonElement>) => {
-          e.preventDefault();
-          setIsOpen(false);
-          if (disabled) {
-            const dateText = innerValue ? safeFormat(innerValue) : "";
-            vimOs.utils.copyToClipboard(dateText);
-            toast({
-              variant: "default",
-              title: "Copied to clipboard",
-            });
-          } else {
-            onChange(innerValue ? format(innerValue, "yyyy-MM-dd") : undefined);
+      {!hideActionButtons && (
+        <SmallActionButtons
+          isCheckBtnDisabled={!isDirty}
+          disabled={disabled}
+          tooltipContent={disabled ? "Copy to clipboard" : undefined}
+          checkIcon={disabled ? <CopyIcon /> : undefined}
+          onCrossClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+            e.preventDefault();
+            setIsOpen(false);
+            setInnerValue(undefined);
             onDateChange(undefined);
-          }
-        }}
-      />
+          }}
+          onCheckClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+            e.preventDefault();
+            setIsOpen(false);
+            if (disabled) {
+              const dateText = innerValue ? safeFormat(innerValue) : "";
+              vimOs.utils.copyToClipboard(dateText);
+              toast({
+                variant: "default",
+                title: "Copied to clipboard",
+              });
+            } else {
+              onChange(
+                innerValue ? format(innerValue, "yyyy-MM-dd") : undefined
+              );
+              onDateChange(undefined);
+            }
+          }}
+        />
+      )}
     </div>
   );
 }

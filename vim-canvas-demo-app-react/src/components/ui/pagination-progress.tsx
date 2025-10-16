@@ -1,4 +1,4 @@
-interface PaginationHeaderProps {
+interface PaginationProgressProps {
   currentPage: number;
   totalPageNumber: number;
   totalItems: number;
@@ -6,13 +6,13 @@ interface PaginationHeaderProps {
   enhancement: string;
 }
 
-export const PaginationHeader = ({
+export const PaginationProgress = ({
   currentPage,
   totalPageNumber,
   totalItems,
   numberOfFetchedItems,
   enhancement,
-}: PaginationHeaderProps) => {
+}: PaginationProgressProps) => {
   const progressPercentage = Math.round(
     (numberOfFetchedItems / totalItems) * 100
   );
@@ -22,13 +22,13 @@ export const PaginationHeader = ({
   return (
     <div className="flex flex-col items-center space-y-2 py-4">
       {/* Page Number Display */}
-      <div className="text-lg font-bold">
+      <div className="text-xs font-bold mr-4">
         Page {currentPage} of {totalPageNumber}
       </div>
 
       {/* Progress Indicator */}
-      <div className="flex items-center space-x-2">
-        <span className="text-sm">Progress:</span>
+      <div className="flex items-center space-x-1">
+        <span className="text-xs">Progress:</span>
         <div className="flex space-x-1">
           {Array.from({ length: totalDots }, (_, index) => (
             <div
@@ -39,11 +39,11 @@ export const PaginationHeader = ({
             />
           ))}
         </div>
-        <span className="text-sm">{progressPercentage}% complete</span>
+        <span className="text-xs">{progressPercentage}% complete</span>
       </div>
 
       {/* Loaded Items Count */}
-      <div className="text-sm">
+      <div className="text-xs">
         {numberOfFetchedItems} of {totalItems} {enhancement} results loaded
       </div>
     </div>

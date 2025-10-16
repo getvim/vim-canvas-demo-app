@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { Button } from "../ui/button";
 import { CaretUpIcon } from "@radix-ui/react-icons";
 

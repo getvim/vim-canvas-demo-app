@@ -7,17 +7,12 @@ import { AllergyList } from "./AllergyList";
 import { EHR } from "vim-os-js-browser/types";
 import { capitalize } from "@/lib/utils";
 
-type EnhancementName =
-  | "problem list"
-  | "medication list"
-  | "allergy list"
-  | "lab results";
+type EnhancementName = "problem list" | "medication list" | "allergy list";
 
 type EnhancementFunction =
   | "getProblemList"
   | "getMedicationList"
-  | "getAllergyList"
-  | "getLabResults";
+  | "getAllergyList";
 
 type Enhancement = {
   name: EnhancementName;
@@ -46,7 +41,6 @@ export const PatientEnhancements = () => {
       "problem list": EHR.PatientDiagnosis[];
       "medication list": EHR.PatientMedication[];
       "allergy list": EHR.Allergy[];
-      "lab results": EHR.LabResult[];
     }>
   >({});
   const [loadingStates, setLoadingStates] = useState<

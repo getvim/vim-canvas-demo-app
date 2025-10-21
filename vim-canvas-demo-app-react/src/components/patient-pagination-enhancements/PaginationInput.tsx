@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { Button } from "../ui/button";
 import { DatePicker } from "@/components/update-fields/datePicker";
 import { format } from "date-fns";
@@ -16,23 +16,33 @@ export const PaginationInput = ({
   onActionClick,
   isLoading = false,
 }: PaginationInputProps) => {
-  const today = new Date();
-  const defaultFromDate = () => {
+  const [fromDate, setFromDate] = useState<Date>(() => {
+    const today = new Date();
     const thirtyDaysAgo = new Date(today);
     thirtyDaysAgo.setDate(today.getDate() - 30);
     return thirtyDaysAgo;
-  };
-  const defaultUntilDate = () => {
-    return today;
-  };
-  const [fromDate, setFromDate] = useState<Date>(defaultFromDate());
-  const [untilDate, setUntilDate] = useState<Date>(defaultUntilDate());
+  });
+  const [untilDate, setUntilDate] = useState<Date>(() => new Date());
 
-  const handleActionClick = () => {
+  const handleActionClick = useCallback(() => {
     const fromDateString = fromDate ? format(fromDate, "yyyy-MM-dd") : "";
     const untilDateString = untilDate ? format(untilDate, "yyyy-MM-dd") : "";
     onActionClick(fromDateString, untilDateString);
-  };
+  }, [fromDate, untilDate, onActionClick]);
+
+  const handleFromDateChange = useCallback((date: Date | undefined) => {
+    if (date) {
+      setFromDate(date);
+    }
+  }, []);
+
+  const handleUntilDateChange = useCallback((date: Date | undefined) => {
+    if (date) {
+      setUntilDate(date);
+    }
+  }, []);
+
+  const handleNoOp = useCallback(() => {}, []);
 
   return (
     <div className="space-y-4">
@@ -42,14 +52,8 @@ export const PaginationInput = ({
         value={fromDate ? format(fromDate, "yyyy-MM-dd") : ""}
         isDirty={Boolean(fromDate)}
         disabled={false}
-        onChange={() => {}}
-        onDateChange={(date) => {
-          if (date) {
-            setFromDate(date);
-          } else if (fromDate) {
-            setFromDate(fromDate);
-          }
-        }}
+        onChange={handleNoOp}
+        onDateChange={handleFromDateChange}
       />
 
       <EntityFieldTitle title="Until date" />
@@ -57,14 +61,8 @@ export const PaginationInput = ({
         hideActionButtons={true}
         value={untilDate ? format(untilDate, "yyyy-MM-dd") : ""}
         isDirty={Boolean(untilDate)}
-        onChange={() => {}}
-        onDateChange={(date) => {
-          if (date) {
-            setUntilDate(date);
-          } else if (untilDate) {
-            setUntilDate(untilDate);
-          }
-        }}
+        onChange={handleNoOp}
+        onDateChange={handleUntilDateChange}
       />
 
       <Button

@@ -2,16 +2,19 @@ import { parseJwt } from "@cfworker/jwt";
 import { Env } from "../context-env";
 
 async function getToken(context, code: string, client_secret: string) {
-  return fetch("http://localhost:6078/v1/oauth/token", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      client_id: context.env.CLIENT_ID,
-      code,
-      client_secret,
-      grant_type: "authorization_code",
-    }),
-  });
+  return fetch(
+    context.env.VIM_TOKEN_ENDPOINT ?? "https://api.getvim.com/v1/oauth/token",
+    {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        client_id: context.env.CLIENT_ID,
+        code,
+        client_secret,
+        grant_type: "authorization_code",
+      }),
+    }
+  );
 }
 
 export const onRequestPost: PagesFunction<Env> = async (context) => {

@@ -3,6 +3,7 @@ import { Button } from "../ui/button";
 import { DatePicker } from "@/components/update-fields/datePicker";
 import { format } from "date-fns";
 import { EntityFieldTitle } from "../ui/entityContent";
+import { Loading } from "../ui/loading";
 
 interface PaginationInputProps {
   actionName: string;
@@ -56,7 +57,6 @@ export const PaginationInput = ({
         hideActionButtons={true}
         value={untilDate ? format(untilDate, "yyyy-MM-dd") : ""}
         isDirty={Boolean(untilDate)}
-        disabled={false}
         onChange={() => {}}
         onDateChange={(date) => {
           if (date) {
@@ -72,14 +72,7 @@ export const PaginationInput = ({
         disabled={isLoading}
         className="w-full bg-white border-2 border-black text-gray-800 hover:bg-gray-50 disabled:opacity-50"
       >
-        {isLoading ? (
-          <div className="flex items-center gap-2">
-            <div className="animate-spin rounded-full h-4 w-4 border-2 border-gray-600 border-t-transparent"></div>
-            Loading...
-          </div>
-        ) : (
-          `Get specific time ${actionName}`
-        )}
+        {isLoading ? <Loading /> : `Get specific time ${actionName}`}
       </Button>
     </div>
   );

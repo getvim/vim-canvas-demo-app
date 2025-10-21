@@ -13,7 +13,8 @@ import { ProviderSection } from "./Provider";
 import { capitalize } from "@/lib/utils";
 import { formatContentDate } from "@/utils/formatContentDate";
 import { PatientEnhancements } from "./patient-enhancements/PatientEnhancements";
-import { PatientPaginationEnhancements } from "./patient-pagination-enhancements/PatientPaginationEnhancements";
+import { VitalsList } from "./patient-pagination-enhancements/VitalsList";
+import { LabResults } from "./patient-pagination-enhancements/LabResults";
 
 export const PatientContent = () => {
   const { jsonMode } = useAppConfig();
@@ -154,7 +155,8 @@ export const PatientContent = () => {
           <ProviderSection provider={patient?.pcp} title="Provider" />
           <Separator className="mb-1" />
           <PatientEnhancements />
-          <PatientPaginationEnhancements />
+          <LabResults />
+          <VitalsList />
         </>
       )}
     </div>

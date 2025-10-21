@@ -6,6 +6,7 @@ import { MedicationList } from "./MedicationList";
 import { AllergyList } from "./AllergyList";
 import { EHR } from "vim-os-js-browser/types";
 import { capitalize } from "@/lib/utils";
+import { Loading } from "../ui/loading";
 
 type EnhancementName = "problem list" | "medication list" | "allergy list";
 
@@ -122,10 +123,7 @@ export const PatientEnhancements = () => {
             className="w-full justify-center bg-white border-2 border-black text-gray-800 hover:bg-gray-50 disabled:opacity-50"
           >
             {loadingStates[enhancement.name] ? (
-              <div className="flex items-center gap-2">
-                <div className="animate-spin rounded-full h-4 w-4 border-2 border-gray-600 border-t-transparent"></div>
-                Loading...
-              </div>
+              <Loading />
             ) : (
               `Get patient ${enhancement.name}`
             )}

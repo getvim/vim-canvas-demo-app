@@ -9,7 +9,7 @@ import { DiagnosisMultiSelectField } from '../update-fields/diagnosisMultiSelect
 import { TextareaField } from '../update-fields/textAreaField';
 import { EncounterUpdateField } from '../update-fields/updateFieldWrapper';
 import { FormInputs, useEncounterFormContext } from './encounter.form';
-import { useEffect, useMemo, useState, useRef } from 'react';
+import { useEffect, useMemo, useState, useRef, useCallback } from 'react';
 import { useWatch } from 'react-hook-form';
 import { Button } from '../ui/button';
 import { Pencil1Icon } from '@radix-ui/react-icons';
@@ -18,8 +18,8 @@ import { TextareaWithAdornment } from '../ui/textareaWithAdornment';
 import { EHR } from 'vim-os-js-browser/types';
 
 /**
- * Type definition for a diagnosis code with note (API format)
- * Matches the structure expected by the API: { code, description, note }
+ * Type definition for a diagnosis code with note (API response format)
+ * Matches the structure returned by the API
  */
 interface DiagnosisCodeWithNote {
   code: string;
@@ -34,6 +34,16 @@ interface DiagnosisCodeWithNote {
 interface FormDiagnosisCode {
   id: string;
   label: string;
+  note?: string;
+}
+
+/**
+ * Type definition for diagnosis code API payload
+ * Used when sending diagnosis codes to the API (description is required)
+ */
+interface DiagnosisCodePayload {
+  code: string;
+  description: string;
   note?: string;
 }
 
@@ -63,7 +73,7 @@ const DIAGNOSIS_CODES_CAN_UPDATE_PARAM = {
 
 const DIAGNOSIS_CODES_NOTES_CAN_UPDATE_PARAM = {
   assessment: {
-    diagnosisCodes: true,
+    diagnosisCodesNotes: true,
   },
 } as const;
 
@@ -72,6 +82,46 @@ const GENERAL_NOTES_CAN_UPDATE_PARAM = {
     generalNotes: true,
   },
 } as const;
+
+// ============================================================================
+// HELPER FUNCTIONS
+// ============================================================================
+
+/**
+ * Creates a single diagnosis code entry for the API payload.
+ * Converts from various formats to the API-expected format.
+ */
+const createDiagnosisCodeEntry = (
+  code: string,
+  description: string,
+  note?: string,
+): DiagnosisCodePayload => {
+  return {
+    code,
+    description,
+    ...(note && { note }),
+  };
+};
+
+/**
+ * Creates the full payload for updating diagnosis codes.
+ * Handles both single diagnosis codes and arrays of diagnosis codes.
+ * Returns a properly typed payload for the EncounterUpdateField component.
+ */
+const createDiagnosisCodesUpdatePayload = (
+  codes: DiagnosisCodePayload | DiagnosisCodePayload[],
+) => {
+  const diagnosisCodes = Array.isArray(codes) ? codes : [codes];
+  return {
+    assessment: {
+      diagnosisCodes: diagnosisCodes as [DiagnosisCodePayload, ...DiagnosisCodePayload[]],
+    },
+  };
+};
+
+// ============================================================================
+// COMPONENTS
+// ============================================================================
 
 /**
  * Editable note field for diagnosis codes (both saved and new)
@@ -248,20 +298,15 @@ const SavedDiagnosisCodesList = ({
             <div className="mt-2">
               <DiagnosisCodeNoteFieldWithUpdate
                 value={currentNote || item.note}
-                valueToUpdatePayload={(noteValue) => ({
-                  assessment: {
-                    diagnosisCodes: [
-                      {
-                        code: item.code,
-                        description: item.description || '',
-                        note: noteValue || undefined,
-                      },
-                    ] as [
-                      { code: string; description: string; note?: string },
-                      ...Array<{ code: string; description: string; note?: string }>,
-                    ],
-                  },
-                })}
+                valueToUpdatePayload={(noteValue) =>
+                  createDiagnosisCodesUpdatePayload(
+                    createDiagnosisCodeEntry(
+                      item.code,
+                      item.description || '',
+                      noteValue || undefined,
+                    ),
+                  )
+                }
                 originalNote={item.note}
                 currentNote={currentNote}
                 onChange={(newNote) => onNoteChange(item, newNote)}
@@ -315,20 +360,11 @@ const NewDiagnosisCodesList = ({
           <div className="mt-2">
             <DiagnosisCodeNoteFieldWithUpdate
               value={code}
-              valueToUpdatePayload={(item) => ({
-                assessment: {
-                  diagnosisCodes: [
-                    {
-                      code: item.id,
-                      description: item.label,
-                      note: item.note || undefined,
-                    },
-                  ] as [
-                    { code: string; description: string; note?: string },
-                    ...Array<{ code: string; description: string; note?: string }>,
-                  ],
-                },
-              })}
+              valueToUpdatePayload={(item) =>
+                createDiagnosisCodesUpdatePayload(
+                  createDiagnosisCodeEntry(item.id, item.label, item.note),
+                )
+              }
               currentNote={code.note || ''}
               onChange={(newNote) => onNoteChange(code.id, newNote)}
               onSaveSuccess={() => {
@@ -462,104 +498,116 @@ export const EncounterAssessment = () => {
    * Handles changes to the multi-select dropdown
    * Updates the form control with newly selected codes while preserving saved code updates
    */
-  const handleSelectionChange = (selected: FormDiagnosisCode[]) => {
-    // Convert selected options to form format
-    const newFormCodes: FormDiagnosisCode[] = selected.map((option) => {
-      // Preserve existing note if the code was already selected
-      const existingCode = formDiagnosisCodes.find(
-        (code: FormDiagnosisCode) => code.id === option.id,
-      );
-      return {
-        id: option.id,
-        label: option.label,
-        note: existingCode?.note || '',
-      };
-    });
+  const handleSelectionChange = useCallback(
+    (selected: FormDiagnosisCode[]) => {
+      // Convert selected options to form format
+      const newFormCodes: FormDiagnosisCode[] = selected.map((option) => {
+        // Preserve existing note if the code was already selected
+        const existingCode = formDiagnosisCodes.find(
+          (code: FormDiagnosisCode) => code.id === option.id,
+        );
+        return {
+          id: option.id,
+          label: option.label,
+          note: existingCode?.note || '',
+        };
+      });
 
-    // Get saved code updates from form control
-    const savedCodeUpdates = formDiagnosisCodes.filter((code: FormDiagnosisCode) => {
-      const savedCodeIds = new Set(savedDiagnosisCodes.map((sc) => sc.code));
-      return savedCodeIds.has(code.id);
-    });
+      // Get saved code updates from form control
+      const savedCodeUpdates = formDiagnosisCodes.filter((code: FormDiagnosisCode) => {
+        const savedCodeIds = new Set(savedDiagnosisCodes.map((sc) => sc.code));
+        return savedCodeIds.has(code.id);
+      });
 
-    // Combine new codes with saved code updates
-    const allCodes = [...savedCodeUpdates, ...newFormCodes];
+      // Combine new codes with saved code updates
+      const allCodes = [...savedCodeUpdates, ...newFormCodes];
 
-    // Update form control and mark as dirty to enable "Push all to EHR" button
-    setValue('diagnosisCodes', allCodes, { shouldDirty: true });
-  };
+      // Update form control and mark as dirty to enable "Push all to EHR" button
+      setValue('diagnosisCodes', allCodes, { shouldDirty: true });
+    },
+    [formDiagnosisCodes, savedDiagnosisCodes, setValue],
+  );
 
   /**
    * Handles note updates for a specific diagnosis code (new codes only)
    * Updates the note in the form control while preserving saved code updates
    */
-  const handleNoteChange = (codeId: string, noteValue: string) => {
-    const updatedCodes = formDiagnosisCodes.map((code: FormDiagnosisCode) => {
-      if (code.id === codeId) {
-        return { ...code, note: noteValue };
-      }
-      return code;
-    });
-    // Update form control and mark as dirty to enable "Push all to EHR" button
-    setValue('diagnosisCodes', updatedCodes, { shouldDirty: true });
-  };
+  const handleNoteChange = useCallback(
+    (codeId: string, noteValue: string) => {
+      const updatedCodes = formDiagnosisCodes.map((code: FormDiagnosisCode) => {
+        if (code.id === codeId) {
+          return { ...code, note: noteValue };
+        }
+        return code;
+      });
+      // Update form control and mark as dirty to enable "Push all to EHR" button
+      setValue('diagnosisCodes', updatedCodes, { shouldDirty: true });
+    },
+    [formDiagnosisCodes, setValue],
+  );
 
   /**
    * Handles note updates for saved diagnosis codes
    * Adds/updates the code in form control to track the change
    * Removes the code if the note is empty (no change to save)
    */
-  const handleSavedCodeNoteChange = (savedCode: DiagnosisCodeWithNote, noteValue: string) => {
-    // If note is empty, remove this saved code from form control
-    if (!noteValue || noteValue.trim().length === 0) {
-      const updatedCodes = formDiagnosisCodes.filter(
-        (code: FormDiagnosisCode) => code.id !== savedCode.code,
+  const handleSavedCodeNoteChange = useCallback(
+    (savedCode: DiagnosisCodeWithNote, noteValue: string) => {
+      // If note is empty, remove this saved code from form control
+      if (!noteValue || noteValue.trim().length === 0) {
+        const updatedCodes = formDiagnosisCodes.filter(
+          (code: FormDiagnosisCode) => code.id !== savedCode.code,
+        );
+        setValue('diagnosisCodes', updatedCodes.length > 0 ? updatedCodes : null, {
+          shouldDirty: updatedCodes.length > 0,
+        });
+        return;
+      }
+
+      // Check if this code is already in the form control
+      const existingIndex = formDiagnosisCodes.findIndex(
+        (code: FormDiagnosisCode) => code.id === savedCode.code,
       );
-      setValue('diagnosisCodes', updatedCodes.length > 0 ? updatedCodes : null, {
-        shouldDirty: updatedCodes.length > 0,
-      });
-      return;
-    }
 
-    // Check if this code is already in the form control
-    const existingIndex = formDiagnosisCodes.findIndex(
-      (code: FormDiagnosisCode) => code.id === savedCode.code,
-    );
+      let updatedCodes: FormDiagnosisCode[];
+      if (existingIndex >= 0) {
+        // Update existing entry
+        updatedCodes = formDiagnosisCodes.map((code: FormDiagnosisCode, index: number) => {
+          if (index === existingIndex) {
+            return { ...code, note: noteValue };
+          }
+          return code;
+        });
+      } else {
+        // Add new entry for this saved code
+        updatedCodes = [
+          ...formDiagnosisCodes,
+          {
+            id: savedCode.code,
+            label: savedCode.description || '',
+            note: noteValue,
+          },
+        ];
+      }
 
-    let updatedCodes: FormDiagnosisCode[];
-    if (existingIndex >= 0) {
-      // Update existing entry
-      updatedCodes = formDiagnosisCodes.map((code: FormDiagnosisCode, index: number) => {
-        if (index === existingIndex) {
-          return { ...code, note: noteValue };
-        }
-        return code;
-      });
-    } else {
-      // Add new entry for this saved code
-      updatedCodes = [
-        ...formDiagnosisCodes,
-        {
-          id: savedCode.code,
-          label: savedCode.description || '',
-          note: noteValue,
-        },
-      ];
-    }
-
-    // Update form control and mark as dirty
-    setValue('diagnosisCodes', updatedCodes, { shouldDirty: true });
-  };
+      // Update form control and mark as dirty
+      setValue('diagnosisCodes', updatedCodes, { shouldDirty: true });
+    },
+    [formDiagnosisCodes, setValue],
+  );
 
   /**
    * Removes a code from form control after individual save
    */
-  const handleRemoveCodeFromForm = (codeId: string) => {
-    const updatedCodes = formDiagnosisCodes.filter((c: FormDiagnosisCode) => c.id !== codeId);
-    setValue('diagnosisCodes', updatedCodes.length > 0 ? updatedCodes : null, {
-      shouldDirty: updatedCodes.length > 0,
-    });
-  };
+  const handleRemoveCodeFromForm = useCallback(
+    (codeId: string) => {
+      const updatedCodes = formDiagnosisCodes.filter((c: FormDiagnosisCode) => c.id !== codeId);
+      setValue('diagnosisCodes', updatedCodes.length > 0 ? updatedCodes : null, {
+        shouldDirty: updatedCodes.length > 0,
+      });
+    },
+    [formDiagnosisCodes, setValue],
+  );
 
   // ============================================================================
   // EFFECTS
@@ -625,22 +673,11 @@ export const EncounterAssessment = () => {
           <EncounterUpdateField<FormDiagnosisCode[]>
             value={formDiagnosisCodes}
             canUpdateParam={DIAGNOSIS_CODES_CAN_UPDATE_PARAM}
-            valueToUpdatePayload={(items) => {
-              // Convert form format to API format for bulk save
-              const diagnosisCodes = items.map((item) => ({
-                code: item.id,
-                description: item.label,
-                ...(item.note && { note: item.note }),
-              }));
-              return {
-                assessment: {
-                  diagnosisCodes: diagnosisCodes as [
-                    { code: string; description: string; note?: string },
-                    ...Array<{ code: string; description: string; note?: string }>,
-                  ],
-                },
-              };
-            }}
+            valueToUpdatePayload={(items) =>
+              createDiagnosisCodesUpdatePayload(
+                items.map((item) => createDiagnosisCodeEntry(item.id, item.label, item.note)),
+              )
+            }
             render={({ field }) => (
               <DiagnosisMultiSelectField<FormDiagnosisCode[]>
                 placeholder="Add ICD-10"

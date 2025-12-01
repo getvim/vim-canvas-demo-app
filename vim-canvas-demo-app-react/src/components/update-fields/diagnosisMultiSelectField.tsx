@@ -9,6 +9,8 @@ import { SmallActionButtons } from '../ui/smallActionButtons';
 import { UpdateField } from '../update-fields/types';
 import { X } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { useCallback, useMemo } from 'react';
+import { EntityFieldTitle } from '../ui/entityContent';
 
 interface Option {
   id: string;
@@ -38,42 +40,52 @@ export function DiagnosisMultiSelectField<T = unknown>({
   selectedOptions = [],
   disabledOptionIds = new Set(),
 }: DiagnosisMultiSelectFieldProps<T>) {
-  const selectedIds = new Set(selectedOptions.map((opt) => opt.id));
+  const selectedIds = useMemo(
+    () => new Set(selectedOptions.map((opt) => opt.id)),
+    [selectedOptions],
+  );
 
-  const handleToggleOption = (optionId: string) => {
-    // Prevent selection of disabled options
-    if (disabledOptionIds.has(optionId)) {
-      return;
-    }
+  const handleToggleOption = useCallback(
+    (optionId: string) => {
+      // Prevent selection of disabled options
+      if (disabledOptionIds.has(optionId)) {
+        return;
+      }
 
-    const isSelected = selectedIds.has(optionId);
-    const newSelectedOptions = isSelected
-      ? selectedOptions.filter((opt) => opt.id !== optionId)
-      : [...selectedOptions, options.find((opt) => opt.id === optionId)!];
+      const isSelected = selectedIds.has(optionId);
+      const newSelectedOptions = isSelected
+        ? selectedOptions.filter((opt) => opt.id !== optionId)
+        : [...selectedOptions, options.find((opt) => opt.id === optionId)!];
 
-    onSelectedChange(newSelectedOptions);
-  };
+      onSelectedChange(newSelectedOptions);
+    },
+    [disabledOptionIds, selectedIds, selectedOptions, options, onSelectedChange],
+  );
 
-  const handleRemoveOption = (optionId: string) => {
-    onSelectedChange(selectedOptions.filter((opt) => opt.id !== optionId));
-  };
+  const handleRemoveOption = useCallback(
+    (optionId: string) => {
+      onSelectedChange(selectedOptions.filter((opt) => opt.id !== optionId));
+    },
+    [onSelectedChange, selectedOptions],
+  );
 
-  const handleClearAll = () => {
+  const handleClearAll = useCallback(() => {
     onSelectedChange([]);
-  };
+  }, [onSelectedChange]);
 
-  const handleSubmit = () => {
+  const handleSubmit = useCallback(() => {
     const valueToSubmit = selectedOptions.map((option) => {
       const { id, label, ...rest } = option;
       return includeOptionsFields ? { id, label, ...rest } : rest;
     });
     onChange(valueToSubmit as T);
     onSelectedChange([]);
-  };
+  }, [selectedOptions, includeOptionsFields, onChange, onSelectedChange]);
 
   return (
     <div className="flex w-full justify-between relative">
       <div className="flex-grow">
+        <EntityFieldTitle title="Diagnosis codes" />
         <Select onValueChange={handleToggleOption} value="" disabled={disabled}>
           <SelectTrigger className={cn('w-full h-auto text-start min-h-[24px] rounded-md pb-8')}>
             {selectedOptions.length > 0 ? (

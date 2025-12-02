@@ -1,4 +1,4 @@
-import { useForm, useFormContext } from "react-hook-form";
+import { useForm, useFormContext } from 'react-hook-form';
 
 export interface FormInputs {
   subjectiveGeneralNotes?: string | null;
@@ -11,7 +11,7 @@ export interface FormInputs {
   planGeneralNotes?: string | null;
   patientInstructionsGeneralNotes?: string | null;
   encounterNotesGeneralNotes?: string | null;
-  diagnosisCodes?: { id: string; label: string }[] | null;
+  diagnosisCodes?: { id: string; label: string; note?: string }[] | null;
   procedureCodes?: { id: string; label: string }[] | null;
 }
 

@@ -53,14 +53,7 @@ export const ReferralContent = () => {
     control: formProps.control,
   });
 
-  const canUpdateObj: EHR.CanUpdateReferralParams = useMemo(
-    () => ({
-      basicInformation: {},
-      procedureCodes: {},
-      conditions: {},
-    }),
-    []
-  );
+  const canUpdateObj: EHR.CanUpdateReferralParams = useMemo(() => ({}), []);
 
   useEffect(() => {
     const changedFields = Object.keys(formProps.formState.dirtyFields);

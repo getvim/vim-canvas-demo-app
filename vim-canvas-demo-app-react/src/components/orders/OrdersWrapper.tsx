@@ -14,7 +14,6 @@ import { OrderContent } from "./OrderContent";
 import type { WorkflowEvent } from "@/types/workflowEvent";
 import { formatContentDate } from "@/utils/formatContentDate";
 import { Button } from "../ui/button";
-import { capitalize } from "@/lib/utils";
 
 const orderIcons: Record<EHR.OrderType, string> = {
   DI: orderDiSvg,
@@ -37,7 +36,7 @@ export const OrdersWrapper: React.FC<{
         return (
           <CollapsibleEntity
             entityTitle={"Order"}
-            titleSuffix={orderType ? `- ${capitalize(orderType)}` : ""}
+            titleSuffix={orderType ? `- ${orderType?.toUpperCase()}` : "DI"}
             entityIconUrl={(orderType && orderIcons[orderType]) ?? orderSvg}
             themeColor={themeColor}
             badge="State"
@@ -56,7 +55,7 @@ export const OrdersWrapper: React.FC<{
         return (
           <CollapsibleEntity
             entityTitle="Order created"
-            titleSuffix={orderType ? `- ${capitalize(orderType)}` : ""}
+            titleSuffix={orderType ? `- ${orderType?.toUpperCase()}` : ""}
             subtitle={formatContentDate(receivedAt, {
               format: "hh:mm:ss aa",
             })}

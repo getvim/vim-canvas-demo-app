@@ -37,7 +37,11 @@ export const EncounterBasicInformation = () => {
           <EntityFieldTitle title="Self pay" />
           <EntityFieldReadonlyText
             text={
-              encounter?.basicInformation?.selfPay?.toString()
+              encounter?.basicInformation?.selfPay === undefined
+                ? undefined
+                : encounter?.basicInformation?.selfPay
+                ? "Yes"
+                : "No"
             }
           />
         </EntityFieldContent>

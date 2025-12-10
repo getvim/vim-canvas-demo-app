@@ -40,8 +40,8 @@ export const EncounterBasicInformation = () => {
               encounter?.basicInformation?.selfPay === undefined
                 ? undefined
                 : encounter?.basicInformation?.selfPay
-                ? "Yes"
-                : "No"
+                ? "True"
+                : "False"
             }
           />
         </EntityFieldContent>

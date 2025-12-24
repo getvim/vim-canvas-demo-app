@@ -54,7 +54,7 @@ export const OrderContent: React.FC<OrderContentProps> = ({ order }) => {
               />
             </EntityFieldContent>
             <EntityFieldContent>
-              <EntityFieldTitle title="Order Name" />
+              <EntityFieldTitle title="Order name" />
               <EntityFieldReadonlyText
                 text={order?.basicInformation?.orderName}
               />

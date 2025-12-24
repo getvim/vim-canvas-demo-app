@@ -53,6 +53,12 @@ export const OrderContent: React.FC<OrderContentProps> = ({ order }) => {
                 text={order?.basicInformation?.ehrEncounterId}
               />
             </EntityFieldContent>
+            <EntityFieldContent>
+              <EntityFieldTitle title="Order Name" />
+              <EntityFieldReadonlyText
+                text={order?.basicInformation?.orderName}
+              />
+            </EntityFieldContent>
           </EntitySectionContent>
           <Separator className="mb-1" />
           <EntitySectionTitle title="Assessments" />

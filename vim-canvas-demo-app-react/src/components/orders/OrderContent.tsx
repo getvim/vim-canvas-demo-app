@@ -1,6 +1,6 @@
-import { useAppConfig } from "@/hooks/useAppConfig";
-import { Fragment } from "react";
-import { EHR } from "vim-os-js-browser/types";
+import { useAppConfig } from '@/hooks/useAppConfig';
+import { Fragment } from 'react';
+import { EHR } from 'vim-os-js-browser/types';
 import {
   EntityFieldContent,
   EntityFieldReadonlyList,
@@ -8,11 +8,11 @@ import {
   EntityFieldTitle,
   EntitySectionContent,
   EntitySectionTitle,
-} from "../ui/entityContent";
-import { JSONView } from "../ui/jsonView";
-import { Separator } from "../ui/separator";
-import { ProviderSection } from "../Provider";
-import { formatContentDate } from "@/utils/formatContentDate";
+} from '../ui/entityContent';
+import { JSONView } from '../ui/jsonView';
+import { Separator } from '../ui/separator';
+import { ProviderSection } from '../Provider';
+import { formatContentDate } from '@/utils/formatContentDate';
 
 interface OrderContentProps {
   order: EHR.Order;
@@ -49,9 +49,11 @@ export const OrderContent: React.FC<OrderContentProps> = ({ order }) => {
             </EntityFieldContent>
             <EntityFieldContent>
               <EntityFieldTitle title="EHR Encounter ID" />
-              <EntityFieldReadonlyText
-                text={order?.basicInformation?.ehrEncounterId}
-              />
+              <EntityFieldReadonlyText text={order?.basicInformation?.ehrEncounterId} />
+            </EntityFieldContent>
+            <EntityFieldContent>
+              <EntityFieldTitle title="Reason" />
+              <EntityFieldReadonlyText text={order?.basicInformation?.reason} />
             </EntityFieldContent>
           </EntitySectionContent>
           <Separator className="mb-1" />
@@ -65,13 +67,18 @@ export const OrderContent: React.FC<OrderContentProps> = ({ order }) => {
           <EntitySectionTitle title="Procedure Codes" />
           <EntitySectionContent>
             <EntityFieldContent>
-              <EntityFieldReadonlyList
-                list={order?.procedureCodes?.procedureCodes}
-              />
+              <EntityFieldReadonlyList list={order?.procedureCodes?.procedureCodes} />
             </EntityFieldContent>
           </EntitySectionContent>
           <Separator className="mb-1" />
-          {order?.basicInformation?.type === "RX" && (
+          <EntitySectionTitle title="Loinc Codes" />
+          <EntitySectionContent>
+            <EntityFieldContent>
+              <EntityFieldReadonlyList list={order?.loincCodes} />
+            </EntityFieldContent>
+          </EntitySectionContent>
+          <Separator className="mb-1" />
+          {order?.basicInformation?.type === 'RX' && (
             <>
               <EntitySectionTitle title="Medications" />
               {!order?.medications || !order.medications.length ? (
@@ -84,40 +91,34 @@ export const OrderContent: React.FC<OrderContentProps> = ({ order }) => {
                       <EntityFieldContent>
                         <EntityFieldTitle title="Medication Name" />
                         <EntityFieldReadonlyText
-                          text={
-                            medication.basicInformation?.medicationName ?? "--"
-                          }
+                          text={medication.basicInformation?.medicationName ?? '--'}
                         />
                       </EntityFieldContent>
                       <EntityFieldContent>
                         <EntityFieldTitle title="NDC code" />
                         <EntityFieldReadonlyText
-                          text={medication.basicInformation?.ndcCode ?? "--"}
+                          text={medication.basicInformation?.ndcCode ?? '--'}
                         />
                       </EntityFieldContent>
                       <EntityFieldContent>
                         <EntityFieldTitle title="Form" />
-                        <EntityFieldReadonlyText
-                          text={medication.dosage?.form?.unit ?? "--"}
-                        />
+                        <EntityFieldReadonlyText text={medication.dosage?.form?.unit ?? '--'} />
                       </EntityFieldContent>
                       <EntityFieldContent>
                         <EntityFieldTitle title="Strength value" />
                         <EntityFieldReadonlyText
-                          text={medication.dosage?.strength?.value ?? "--"}
+                          text={medication.dosage?.strength?.value ?? '--'}
                         />
                       </EntityFieldContent>
                       <EntityFieldContent>
                         <EntityFieldTitle title="Quantity value" />
                         <EntityFieldReadonlyText
-                          text={medication.dosage?.quantity?.value ?? "--"}
+                          text={medication.dosage?.quantity?.value ?? '--'}
                         />
                       </EntityFieldContent>
                       <EntityFieldContent>
                         <EntityFieldTitle title="Quantity unit" />
-                        <EntityFieldReadonlyText
-                          text={medication.dosage?.quantity?.unit ?? "--"}
-                        />
+                        <EntityFieldReadonlyText text={medication.dosage?.quantity?.unit ?? '--'} />
                       </EntityFieldContent>
                     </EntitySectionContent>
                   </Fragment>
@@ -128,10 +129,7 @@ export const OrderContent: React.FC<OrderContentProps> = ({ order }) => {
           )}
           {order?.orderingProvider && (
             <>
-              <ProviderSection
-                provider={order.orderingProvider}
-                title="Ordering Provider"
-              />
+              <ProviderSection provider={order.orderingProvider} title="Ordering Provider" />
             </>
           )}
         </>

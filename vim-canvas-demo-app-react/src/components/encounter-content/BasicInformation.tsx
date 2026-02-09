@@ -33,6 +33,18 @@ export const EncounterBasicInformation = () => {
             }
           />
         </EntityFieldContent>
+        <EntityFieldContent>
+          <EntityFieldTitle title="Self pay" />
+          <EntityFieldReadonlyText
+            text={
+              encounter?.basicInformation?.selfPay === undefined
+                ? undefined
+                : encounter?.basicInformation?.selfPay
+                ? "True"
+                : "False"
+            }
+          />
+        </EntityFieldContent>
       </EntitySectionContent>
     </>
   );

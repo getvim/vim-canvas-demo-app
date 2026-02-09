@@ -271,7 +271,9 @@ export const ReferralBasicInformation = () => {
                   onTextareaSubmit={field.onChange}
                   disabled={field.disabled}
                   clearAfterChange
-                  prefixAdornment={referral?.basicInformation?.reasons?.[0]}
+                  prefixAdornment={referral?.basicInformation?.reasons?.join(
+                    ", "
+                  )}
                 />
               )}
             />

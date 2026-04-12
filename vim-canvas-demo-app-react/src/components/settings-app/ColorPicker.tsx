@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect, useCallback } from "react";
-import { ChromePicker, ColorResult } from "react-color";
+import { HexColorPicker } from "react-colorful";
 
 interface ColorPickerProps {
   color: string;
@@ -32,18 +32,11 @@ const useColorPickerModal = ({
     };
   }, []);
 
-  const handleColorChange = useCallback(
-    (newColor: ColorResult) => {
-      onChange(newColor.hex);
-    },
-    [onChange]
-  );
-
   return {
     colorPickerRef,
     showColorPickerModal,
     setShowColorPickerModal,
-    handleColorChange,
+    handleColorChange: onChange,
   };
 };
 
@@ -62,7 +55,7 @@ export const ColorPicker: React.FC<ColorPickerProps> = ({
     (e: React.ChangeEvent<HTMLInputElement>) => {
       onChange(e.target.value);
     },
-    [onChange]
+    [onChange],
   );
 
   return (
@@ -96,11 +89,7 @@ export const ColorPicker: React.FC<ColorPickerProps> = ({
 
       {showColorPickerModal && (
         <div ref={colorPickerRef} className="absolute top-20 left-0 z-10">
-          <ChromePicker
-            color={color}
-            onChange={handleColorChange}
-            disableAlpha
-          />
+          <HexColorPicker color={color} onChange={handleColorChange} />
         </div>
       )}
     </div>

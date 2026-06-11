@@ -12,7 +12,11 @@ export const useIdToken = () => {
   useEffect(() => {
     if (sessionContext) {
       (async () => {
-        setIdToken((await sessionContext.getIdToken())?.idToken);
+        try {
+          setIdToken((await sessionContext.getIdToken())?.idToken);
+        } catch {
+          // SDK error — leave idToken undefined
+        }
       })();
     }
   }, [sessionContext, setIdToken]);

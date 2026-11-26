@@ -110,6 +110,10 @@ On top of using VimOS.js to integrate your application's iframe within Vim Conne
 
 This settings application is implemented under `/settings` route.
 
+Organization admins can enable the Adapter Actions tab from this page. The tab is hidden by default, and users see the change the next time the demo loads.
+
+Apply the D1 migration before deploying this version. From `vim-canvas-demo-app-react`, run `npx wrangler d1 migrations apply canvas-demo-db --remote` for the target deployment database. For a fresh local database, initialize it with `npx wrangler d1 execute canvas-demo-db --local --file=sql/settings.sql`, then run `npx wrangler d1 migrations apply canvas-demo-db --local`.
+
 [For further information](https://docs.getvim.com/platform/platform.html#app-settings)
 
 # Vim Canvas™️ Pricing

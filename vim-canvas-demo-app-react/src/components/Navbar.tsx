@@ -5,8 +5,8 @@ import { Label } from "./ui/label";
 import { Separator } from "./ui/separator";
 import { Switch } from "./ui/switch";
 import { useAppConfig } from "../hooks/useAppConfig";
-import { useCallback, useState } from "react";
-import { Hub } from "vim-os-js-browser/types";
+import { useCallback } from "react";
+import type { Hub } from "vim-os-js-browser/types";
 import { cn } from "@/lib/utils";
 import { LayoutFull } from "@/assets/layoutFull";
 import { LayoutLarge } from "@/assets/layoutLarge";
@@ -20,18 +20,13 @@ import {
 
 interface NavBarProps {
   themeColor?: string;
+  appSize: Hub.ApplicationSize;
+  onAppSizeChange: (size: Hub.ApplicationSize) => void;
 }
 
-export const Navbar: React.FC<NavBarProps> = ({ themeColor }) => {
+export const Navbar: React.FC<NavBarProps> = ({ themeColor, appSize, onAppSizeChange }) => {
   const { setJsonMode } = useAppConfig();
   const vimOs = useVimOsContext();
-
-  const [appSize, setAppSize] = useState<Hub.ApplicationSize>("CLASSIC");
-
-  const handleAppSizeChange = (size: Hub.ApplicationSize) => {
-    setAppSize(size);
-    vimOs.hub.setDynamicAppSize(size);
-  };
 
   const handleAppClose = useCallback(() => {
     vimOs.hub.closeApp();
@@ -46,7 +41,9 @@ export const Navbar: React.FC<NavBarProps> = ({ themeColor }) => {
     >
       <div>
         <h2 className="text-sm">Vim Canvas</h2>
-        <h2 className="text-sm font-bold">Demo</h2>
+        <h2 className="text-sm font-bold">
+          {import.meta.env.DEV ? "Local Demo" : "Demo"}
+        </h2>
       </div>
       <div
         className={cn("flex items-center h-full", {
@@ -70,7 +67,9 @@ export const Navbar: React.FC<NavBarProps> = ({ themeColor }) => {
             size="sm"
             variant="ghost"
             className="p-1 h-fit hover:bg-green-100/60 group"
-            onClick={() => handleAppSizeChange("EXTRA_LARGE")}
+            aria-label="Extra large app size"
+            aria-pressed={appSize === "EXTRA_LARGE"}
+            onClick={() => onAppSizeChange("EXTRA_LARGE")}
           >
             <LayoutFull
               fill={appSize !== "EXTRA_LARGE" ? "#099484" : undefined}
@@ -81,7 +80,9 @@ export const Navbar: React.FC<NavBarProps> = ({ themeColor }) => {
             size="sm"
             variant="ghost"
             className="p-1 h-fit hover:bg-green-100/60 group"
-            onClick={() => handleAppSizeChange("LARGE")}
+            aria-label="Large app size"
+            aria-pressed={appSize === "LARGE"}
+            onClick={() => onAppSizeChange("LARGE")}
           >
             <LayoutLarge
               fill={appSize !== "LARGE" ? "#099484" : undefined}
@@ -92,7 +93,9 @@ export const Navbar: React.FC<NavBarProps> = ({ themeColor }) => {
             size="sm"
             variant="ghost"
             className="p-1 h-fit hover:bg-green-100/60 group"
-            onClick={() => handleAppSizeChange("CLASSIC")}
+            aria-label="Classic app size"
+            aria-pressed={appSize === "CLASSIC"}
+            onClick={() => onAppSizeChange("CLASSIC")}
           >
             <LayoutSmall
               fill={appSize !== "CLASSIC" ? "#099484" : undefined}

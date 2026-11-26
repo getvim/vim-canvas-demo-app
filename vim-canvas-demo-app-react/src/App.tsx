@@ -35,8 +35,8 @@ import { useVimOSPatient } from "./hooks/usePatient";
 import { useVimOSReferral } from "./hooks/useReferral";
 import { useVimOSClaim } from "./hooks/useClaim";
 import { useVimOsContext } from "./hooks/useVimOsContext";
-import type { Settings } from "../types";
-import { loadAdapterActionsEnabled, loadSettings } from "./utils/settings-api";
+import type { PublicOrganizationSettings, Settings } from "../types";
+import { loadPublicOrganizationSettings, loadSettings } from "./utils/settings-api";
 import { useIdToken } from "./hooks/useIdToken";
 
 function App() {
@@ -52,14 +52,20 @@ function App() {
     token: string;
     settings: Settings | null;
   }>();
-  const [enabledOrganizationId, setEnabledOrganizationId] = useState<number>();
+  const [publicOrganizationSettings, setPublicOrganizationSettings] = useState<{
+    organizationId: number;
+    settings: PublicOrganizationSettings;
+  }>();
   const [appSize, setAppSize] = useState<Hub.ApplicationSize>("CLASSIC");
   const { idToken } = useIdToken();
   const organizationId = vimOs.sessionContext?.organization?.identifiers?.id;
   const settings = authenticatedSettings?.token === idToken ? authenticatedSettings?.settings : null;
-  const themeColor = settings?.theme_color || "#04B39F";
+  const publicSettings = publicOrganizationSettings?.organizationId === organizationId
+    ? publicOrganizationSettings?.settings
+    : undefined;
+  const themeColor = (idToken ? settings?.theme_color : publicSettings?.themeColor) || "#04B39F";
   const adapterActionsEnabled = organizationId
-    ? enabledOrganizationId === organizationId
+    ? publicSettings?.enabled === true
     : settings?.adapter_actions_enabled === true;
   const appExpanded = appSize === "EXTRA_LARGE";
 
@@ -124,12 +130,12 @@ function App() {
 
     const controller = new AbortController();
     const { signal } = controller;
-    loadAdapterActionsEnabled(organizationId, signal)
-      .then((enabled) => {
-        if (!signal.aborted) setEnabledOrganizationId(enabled ? organizationId : undefined);
+    loadPublicOrganizationSettings(organizationId, signal)
+      .then((settings) => {
+        if (!signal.aborted) setPublicOrganizationSettings({ organizationId, settings });
       })
       .catch((error) => {
-        if (!signal.aborted) console.error("Failed to load Adapter Actions setting", error);
+        if (!signal.aborted) console.error("Failed to load public organization settings", error);
       });
 
     return () => controller.abort();

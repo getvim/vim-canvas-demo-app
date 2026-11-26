@@ -1,3 +1,4 @@
+import type { PublicOrganizationSettings } from "../../types";
 import type { Env } from "../context-env";
 
 export const onRequestGet: PagesFunction<Env> = async ({ request, env }) => {
@@ -14,13 +15,17 @@ export const onRequestGet: PagesFunction<Env> = async ({ request, env }) => {
 
   try {
     const settings = await env.DB.prepare(
-      "SELECT adapter_actions_enabled FROM settings WHERE organization_id = ?"
+      "SELECT adapter_actions_enabled, theme_color FROM settings WHERE organization_id = ?"
     )
       .bind(organizationId)
-      .first<{ adapter_actions_enabled: number }>();
+      .first<{ adapter_actions_enabled: number; theme_color: string }>();
 
-    return Response.json({ enabled: settings?.adapter_actions_enabled === 1 }, { headers });
+    const publicSettings: PublicOrganizationSettings = {
+      enabled: settings?.adapter_actions_enabled === 1,
+      themeColor: settings?.theme_color ?? null,
+    };
+    return Response.json(publicSettings, { headers });
   } catch {
-    return Response.json({ error: "Adapter Actions setting is unavailable" }, { status: 503, headers });
+    return Response.json({ error: "Organization settings are unavailable" }, { status: 503, headers });
   }
 };

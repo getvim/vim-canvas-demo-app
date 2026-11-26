@@ -5,8 +5,11 @@ import claimSvg from "@/assets/claim.svg";
 import referralSvg from "@/assets/referral.svg";
 import userSvg from "@/assets/user.svg";
 import { useEffect, useState } from "react";
+import type { Hub } from "vim-os-js-browser/types";
+import { AdapterActions } from "./components/AdapterActions";
 import { EncounterContent } from "./components/encounter-content";
 import { Footer } from "./components/Footer";
+import { DemoTabs } from "./components/DemoTabs";
 import { Navbar } from "./components/Navbar";
 import { OrdersWrapper } from "./components/orders/OrdersWrapper";
 import { PatientContent } from "./components/PatientContent";
@@ -45,7 +48,14 @@ function App() {
   const [redirectUrl, setRedirectUrl] = useState<string | undefined>(undefined);
   const [redirectModalOpen, setRedirectModal] = useState(false);
   const [themeColor, setThemeColor] = useState<string>("#04B39F");
+  const [appSize, setAppSize] = useState<Hub.ApplicationSize>("CLASSIC");
   const { idToken } = useIdToken();
+  const appExpanded = appSize === "EXTRA_LARGE";
+
+  function changeAppSize(size: Hub.ApplicationSize) {
+    setAppSize(size);
+    vimOs.hub.setDynamicAppSize(size);
+  }
 
   useEffect(() => {
     vimOs.hub.setActivationStatus("ENABLED");
@@ -97,67 +107,76 @@ function App() {
 
   return (
     <div className="w-full top-0 left-0 pb-6">
-      <Navbar themeColor={themeColor} />
+      <Navbar themeColor={themeColor} appSize={appSize} onAppSizeChange={changeAppSize} />
 
-      <CollapsibleEntity
-        entityTitle="User"
-        entityIconUrl={userSvg}
-        themeColor={themeColor}
+      <DemoTabs
+        actions={
+          <AdapterActions
+            expanded={appExpanded}
+            onToggleExpanded={() => changeAppSize(appExpanded ? "CLASSIC" : "EXTRA_LARGE")}
+          />
+        }
       >
-        <CollapsibleEntityContent>
-          <SessionContextContent />
-        </CollapsibleEntityContent>
-      </CollapsibleEntity>
+        <CollapsibleEntity
+          entityTitle="User"
+          entityIconUrl={userSvg}
+          themeColor={themeColor}
+        >
+          <CollapsibleEntityContent>
+            <SessionContextContent />
+          </CollapsibleEntityContent>
+        </CollapsibleEntity>
 
-      {patient && (
-        <CollapsibleEntity
-          entityTitle="Patient"
-          entityIconUrl={patientSvg}
+        {patient && (
+          <CollapsibleEntity
+            entityTitle="Patient"
+            entityIconUrl={patientSvg}
+            themeColor={themeColor}
+          >
+            <CollapsibleEntityContent>
+              <PatientContent />
+            </CollapsibleEntityContent>
+          </CollapsibleEntity>
+        )}
+        {encounter && (
+          <CollapsibleEntity
+            entityTitle="Encounter"
+            entityIconUrl={encounterSvg}
+            themeColor={themeColor}
+          >
+            <CollapsibleEntityContent>
+              <EncounterContent />
+            </CollapsibleEntityContent>
+          </CollapsibleEntity>
+        )}
+        {referral && (
+          <CollapsibleEntity
+            entityTitle="Referral"
+            entityIconUrl={referralSvg}
+            themeColor={themeColor}
+          >
+            <CollapsibleEntityContent>
+              <ReferralContent />
+            </CollapsibleEntityContent>
+          </CollapsibleEntity>
+        )}
+        <OrdersWrapper
+          orders={orders}
+          orderCreatedEvents={orderCreatedEvents}
           themeColor={themeColor}
-        >
-          <CollapsibleEntityContent>
-            <PatientContent />
-          </CollapsibleEntityContent>
-        </CollapsibleEntity>
-      )}
-      {encounter && (
-        <CollapsibleEntity
-          entityTitle="Encounter"
-          entityIconUrl={encounterSvg}
-          themeColor={themeColor}
-        >
-          <CollapsibleEntityContent>
-            <EncounterContent />
-          </CollapsibleEntityContent>
-        </CollapsibleEntity>
-      )}
-      {referral && (
-        <CollapsibleEntity
-          entityTitle="Referral"
-          entityIconUrl={referralSvg}
-          themeColor={themeColor}
-        >
-          <CollapsibleEntityContent>
-            <ReferralContent />
-          </CollapsibleEntityContent>
-        </CollapsibleEntity>
-      )}
-      <OrdersWrapper
-        orders={orders}
-        orderCreatedEvents={orderCreatedEvents}
-        themeColor={themeColor}
-      />
-      {claim && (
-        <CollapsibleEntity
-          entityTitle="Claim"
-          entityIconUrl={claimSvg}
-          themeColor={themeColor}
-        >
-          <CollapsibleEntityContent>
-            <ClaimContent claim={claim} />
-          </CollapsibleEntityContent>
-        </CollapsibleEntity>
-      )}
+        />
+        {claim && (
+          <CollapsibleEntity
+            entityTitle="Claim"
+            entityIconUrl={claimSvg}
+            themeColor={themeColor}
+          >
+            <CollapsibleEntityContent>
+              <ClaimContent claim={claim} />
+            </CollapsibleEntityContent>
+          </CollapsibleEntity>
+        )}
+      </DemoTabs>
       <Dialog open={redirectModalOpen} onOpenChange={onRedirectModalChange}>
         <DialogContent className="max-w-[calc(100%-100px)] sm:max-w-[425px]">
           <DialogHeader>

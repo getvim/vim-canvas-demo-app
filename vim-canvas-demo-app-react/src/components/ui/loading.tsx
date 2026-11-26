@@ -1,8 +1,8 @@
-export const Loading = () => {
+export const Loading = ({ label = "Loading..." }: { label?: string }) => {
   return (
-    <div className="flex items-center gap-2">
-      <div className="animate-spin rounded-full h-4 w-4 border-2 border-gray-600 border-t-transparent"></div>
-      Loading...
-    </div>
+    <span className="inline-flex items-center gap-2">
+      <span aria-hidden="true" className="size-4 animate-spin rounded-full border-2 border-current border-t-transparent" />
+      {label}
+    </span>
   );
 };

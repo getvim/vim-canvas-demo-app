@@ -258,9 +258,11 @@ export function AdapterActions({ expanded, onToggleExpanded }: {
               <SelectTrigger id="adapter-action-timeout" className="w-20 rounded-md border-slate-300 text-xs">
                 <SelectValue />
               </SelectTrigger>
-              <SelectContent>
+              <SelectContent align="start" className="min-w-0">
                 {adapterActionTimeouts.map((seconds) => (
-                  <SelectItem key={seconds} value={String(seconds)}>{seconds} s</SelectItem>
+                  <SelectItem key={seconds} value={String(seconds)} className="focus:bg-teal-50 focus:text-teal-900">
+                    {seconds} s
+                  </SelectItem>
                 ))}
               </SelectContent>
             </Select>

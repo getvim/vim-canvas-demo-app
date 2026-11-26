@@ -41,9 +41,7 @@ export const Navbar: React.FC<NavBarProps> = ({ themeColor, appSize, onAppSizeCh
     >
       <div>
         <h2 className="text-sm">Vim Canvas</h2>
-        <h2 className="text-sm font-bold">
-          {import.meta.env.DEV ? "Local Demo" : "Demo"}
-        </h2>
+        <h2 className="text-sm font-bold">Demo</h2>
       </div>
       <div
         className={cn("flex items-center h-full", {

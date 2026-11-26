@@ -35,7 +35,8 @@ import { useVimOSPatient } from "./hooks/usePatient";
 import { useVimOSReferral } from "./hooks/useReferral";
 import { useVimOSClaim } from "./hooks/useClaim";
 import { useVimOsContext } from "./hooks/useVimOsContext";
-import { loadSettings } from "./utils/settings-api";
+import type { PublicOrganizationSettings, Settings } from "../types";
+import { loadPublicOrganizationSettings, loadSettings } from "./utils/settings-api";
 import { useIdToken } from "./hooks/useIdToken";
 
 function App() {
@@ -47,10 +48,25 @@ function App() {
   const { claim } = useVimOSClaim();
   const [redirectUrl, setRedirectUrl] = useState<string | undefined>(undefined);
   const [redirectModalOpen, setRedirectModal] = useState(false);
-  const [themeColor, setThemeColor] = useState<string>("#04B39F");
-  const [adapterActionsEnabled, setAdapterActionsEnabled] = useState(false);
+  const [authenticatedSettings, setAuthenticatedSettings] = useState<{
+    token: string;
+    settings: Settings | null;
+  }>();
+  const [publicOrganizationSettings, setPublicOrganizationSettings] = useState<{
+    organizationId: number;
+    settings: PublicOrganizationSettings;
+  }>();
   const [appSize, setAppSize] = useState<Hub.ApplicationSize>("CLASSIC");
   const { idToken } = useIdToken();
+  const organizationId = vimOs.sessionContext?.organization?.identifiers?.id;
+  const settings = authenticatedSettings?.token === idToken ? authenticatedSettings?.settings : null;
+  const publicSettings = publicOrganizationSettings?.organizationId === organizationId
+    ? publicOrganizationSettings?.settings
+    : undefined;
+  const themeColor = (idToken ? settings?.theme_color : publicSettings?.themeColor) || "#04B39F";
+  const adapterActionsEnabled = organizationId
+    ? publicSettings?.enabled === true
+    : settings?.adapter_actions_enabled === true;
   const appExpanded = appSize === "EXTRA_LARGE";
 
   function changeAppSize(size: Hub.ApplicationSize) {
@@ -100,17 +116,30 @@ function App() {
     let active = true;
     loadSettings(idToken)
       .then((settings) => {
-        if (!active) return;
-        if (settings?.theme_color) setThemeColor(settings.theme_color);
-        setAdapterActionsEnabled(settings?.adapter_actions_enabled === true);
+        if (active) setAuthenticatedSettings({ token: idToken, settings });
       })
       .catch((error) => console.error("Failed to load settings", error));
 
     return () => {
       active = false;
-      setAdapterActionsEnabled(false);
     };
   }, [idToken]);
+
+  useEffect(() => {
+    if (!organizationId) return;
+
+    const controller = new AbortController();
+    const { signal } = controller;
+    loadPublicOrganizationSettings(organizationId, signal)
+      .then((settings) => {
+        if (!signal.aborted) setPublicOrganizationSettings({ organizationId, settings });
+      })
+      .catch((error) => {
+        if (!signal.aborted) console.error("Failed to load public organization settings", error);
+      });
+
+    return () => controller.abort();
+  }, [organizationId]);
 
   return (
     <div className="w-full top-0 left-0 pb-6">

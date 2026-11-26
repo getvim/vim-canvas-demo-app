@@ -48,6 +48,7 @@ function App() {
   const [redirectUrl, setRedirectUrl] = useState<string | undefined>(undefined);
   const [redirectModalOpen, setRedirectModal] = useState(false);
   const [themeColor, setThemeColor] = useState<string>("#04B39F");
+  const [adapterActionsEnabled, setAdapterActionsEnabled] = useState(false);
   const [appSize, setAppSize] = useState<Hub.ApplicationSize>("CLASSIC");
   const { idToken } = useIdToken();
   const appExpanded = appSize === "EXTRA_LARGE";
@@ -94,15 +95,21 @@ function App() {
   };
 
   useEffect(() => {
-    const fetchSettings = async () => {
-      const settings = await loadSettings(idToken!);
-      setThemeColor((prev) =>
-        settings?.theme_color ? settings.theme_color : prev
-      );
+    if (!idToken) return;
+
+    let active = true;
+    loadSettings(idToken)
+      .then((settings) => {
+        if (!active) return;
+        if (settings?.theme_color) setThemeColor(settings.theme_color);
+        setAdapterActionsEnabled(settings?.adapter_actions_enabled === true);
+      })
+      .catch((error) => console.error("Failed to load settings", error));
+
+    return () => {
+      active = false;
+      setAdapterActionsEnabled(false);
     };
-    if (idToken) {
-      fetchSettings();
-    }
   }, [idToken]);
 
   return (
@@ -110,12 +117,12 @@ function App() {
       <Navbar themeColor={themeColor} appSize={appSize} onAppSizeChange={changeAppSize} />
 
       <DemoTabs
-        actions={
+        actions={adapterActionsEnabled ? (
           <AdapterActions
             expanded={appExpanded}
             onToggleExpanded={() => changeAppSize(appExpanded ? "CLASSIC" : "EXTRA_LARGE")}
           />
-        }
+        ) : undefined}
       >
         <CollapsibleEntity
           entityTitle="User"

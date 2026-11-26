@@ -18,16 +18,18 @@ type SdkFactory = (
   tokens?: { idToken: string }
 ) => SDK;
 
+export const adapterActionTimeouts = [30, 60] as const;
+export type AdapterActionTimeout = (typeof adapterActionTimeouts)[number];
+
 export type AdapterActionConnection = {
   available: ReadonlySet<AdapterAction>;
-  execute: (action: AdapterAction, input: unknown) => Promise<unknown>;
+  execute: (action: AdapterAction, input: unknown, timeoutSeconds: AdapterActionTimeout) => Promise<unknown>;
 };
 
 type AppSdk = { sdk: SDK; actions: AdapterActionConnection | null };
 
 export const AdapterActionsContext = createContext<AdapterActionConnection | null>(null);
 
-const responseTimeoutMs = 30_000;
 let appSdk: Promise<AppSdk> | undefined;
 
 function isRecord(value: unknown): value is Record<string, unknown> {
@@ -91,7 +93,7 @@ function createAdapterActionConnection(
 
   return {
     available,
-    async execute(action, input) {
+    async execute(action, input, timeoutSeconds) {
       if (!available.has(action)) {
         throw new Error("This action is unavailable for the current app and EHR.");
       }
@@ -106,8 +108,8 @@ function createAdapterActionConnection(
       try {
         return await new Promise((resolve, reject) => {
           timeout = setTimeout(
-            () => reject(new Error("Timed out waiting for Vim OS.")),
-            responseTimeoutMs
+            () => reject(new Error(`Timed out waiting for Vim OS after ${timeoutSeconds} seconds.`)),
+            timeoutSeconds * 1000
           );
 
           port1.onmessage = ({ data }: MessageEvent<unknown>) => {

@@ -6,7 +6,7 @@ import { useVimOSEncounter } from "@/hooks/useEncounter";
 import { useVimOSPatient } from "@/hooks/usePatient";
 import { adapterActionInputs, adapterActions, type AdapterAction } from "@/lib/adapter-action-inputs";
 import { cn } from "@/lib/utils";
-import { AdapterActionsContext } from "@/utils/adapterActions";
+import { AdapterActionsContext, adapterActionTimeouts, type AdapterActionTimeout } from "@/utils/adapterActions";
 import { AdapterActionResponse, type ActionResponse } from "./AdapterActionResponse";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
@@ -116,6 +116,7 @@ export function AdapterActions({ expanded, onToggleExpanded }: {
   const [action, setAction] = useState<AdapterAction>(
     () => adapterActions.find((name) => connection?.available.has(name)) ?? adapterActions[0]
   );
+  const [timeoutSeconds, setTimeoutSeconds] = useState<AdapterActionTimeout>(adapterActionTimeouts[0]);
   const [busy, setBusy] = useState(false);
   const [result, setResult] = useState<ActionResponse>();
   const [error, setError] = useState<string>();
@@ -162,7 +163,7 @@ export function AdapterActions({ expanded, onToggleExpanded }: {
     setResult(undefined);
     setError(undefined);
     try {
-      setResult(formatActionResponse(await connection.execute(action, input)));
+      setResult(formatActionResponse(await connection.execute(action, input, timeoutSeconds)));
     } catch (error) {
       setError(actionError(error));
     } finally {
@@ -242,8 +243,28 @@ export function AdapterActions({ expanded, onToggleExpanded }: {
             </fieldset>
           )}
         </div>
-        <div className="flex items-center justify-end gap-3 border-t border-slate-100 bg-slate-50 px-3.5 py-2.5">
+        <div className="flex flex-wrap items-center justify-between gap-3 border-t border-slate-100 bg-slate-50 px-3.5 py-2.5">
           <span role="status" className="sr-only">{busy ? "Waiting for Vim OS." : ""}</span>
+          <div className="flex items-center gap-2">
+            <Label htmlFor="adapter-action-timeout" className="text-xs font-medium text-slate-700">Timeout</Label>
+            <Select
+              value={String(timeoutSeconds)}
+              disabled={busy}
+              onValueChange={(value) => {
+                const seconds = adapterActionTimeouts.find((seconds) => String(seconds) === value);
+                if (seconds !== undefined) setTimeoutSeconds(seconds);
+              }}
+            >
+              <SelectTrigger id="adapter-action-timeout" className="w-20 rounded-md border-slate-300 text-xs">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                {adapterActionTimeouts.map((seconds) => (
+                  <SelectItem key={seconds} value={String(seconds)}>{seconds} s</SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
           <Button
             type="submit"
             size="sm"
